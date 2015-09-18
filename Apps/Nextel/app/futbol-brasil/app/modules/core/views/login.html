@@ -1,0 +1,128 @@
+<div id="wrapper">
+    <div class="scroller">
+
+
+
+        <div class="row">
+
+            <div class="col-xs-12">
+
+
+
+
+
+                <div class="well text-center">
+
+                    <form name="msisdnForm" ng-submit="doMsisdnLogin()" class="form-horizontal">
+                        <fieldset>
+                            <div class="form-group">
+
+                              <div class="alert alert-dismissable alert-success"   ng-show="flash.getMessage().length">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <strong style="font-size:1.8em;">{{flash.getMessage()}}</strong>
+                              </div>
+
+                                <label for="msisdnInput" class="col-xs-12 control-label" translate>LOGIN.MSISDN_LABEL</label>
+
+                                <div class="col-xs-9 col-xs-push-1">
+                                    <div class="input-group">
+                                        <!--span class="input-group-addon">+58</span-->
+                                        <label for="msisdnInput" class="col-xs-12 control-label sr-only"
+                                               translate>LOGIN.MSISDN_LABEL</label>
+                                        <input type="tel" class="form-control empty" ng-model="msisdn" maxlength="11"
+                                               id="msisdnInput" placeholder="{{ 'LOGIN.MSISDN_HOLDER' | translate }}">
+                                        <span class="material-input"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                  <label for="passwordInput" class="col-xs-12 control-label" translate>LOGIN.PASSWORD_LABEL</label>
+
+                                <div class="col-xs-9 col-xs-push-1">
+                                    <input type="password" class="form-control empty" ng-model="password"
+                                           id="passwordInput" placeholder="{{ 'LOGIN.PASSWORD_HELPER' | translate }}">
+                                    <span class="material-input"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button type="submit" class="btn btn-block btn-orange touch-enable">
+                                        <div class="row">
+                                            <div class="col-xs-10">
+                                                <span translate>LOGIN.LOGIN_LABEL</span>
+                                            </div>
+                                            <div class="col-xs-2 text-right">
+                                                <span><i class="mdi-navigation-chevron-right"></i></span>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+
+                    <div class="list-group">
+                        <a ui-sref="remind" class="list-group-item list-item">
+                            <div class="col-xs-10">
+                                <span class="h-login-button" translate>LOGIN.REMIND_LABEL</span>
+                            </div>
+                            <div class="col-xs-2 text-right">
+                                <span><i class="mdi-navigation-chevron-right"></i></span>
+                            </div>
+                        </a>
+                        <!--div class="full-separator"></div>
+                        <a ui-sref="language-selection" class="list-group-item list-item">
+                            <div class="col-xs-10">
+                                <span translate>LOGIN.CHANGE_LANGUAGE_LABEL</span>
+                            </div>
+                            <div class="col-xs-2 text-right">
+                                <span><i class="mdi-navigation-chevron-right"></i></span>
+                            </div>
+                        </a-->
+                        <!--div class="full-separator"></div>
+                        <a ui-sref="how" class="list-group-item list-item">
+                            <div class="col-xs-10">
+                                <span class="h-login-button" translate>LOGIN.TUTORIAL_LABEL</span>
+                            </div>
+                            <div class="col-xs-2 text-right">
+                                <span><i class="mdi-navigation-chevron-right"></i></span>
+                            </div>
+                        </a-->
+                        <div class="full-separator"></div>
+                        <a ui-sref="terms" class="list-group-item list-item">
+                          <div class="col-xs-10">
+                            <span class="h-login-button" translate>LOGIN.TERMS_LABEL</span>
+                          </div>
+                          <div class="col-xs-2 text-right">
+                            <span><i class="mdi-navigation-chevron-right"></i></span>
+                          </div>
+                        </a>
+                    </div>
+
+                    <form name="msisdnForm" ng-submit="enterAsGuest()" class="form-horizontal">
+                        <fieldset>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button type="submit" class="btn btn-block btn-orange touch-enable">
+                                        <div class="row">
+                                            <div class="col-xs-10">
+                                                <span translate>LOGIN.ENTER_AS_GUEST_LABEL</span>
+                                            </div>
+                                            <div class="col-xs-2 text-right">
+                                                <span><i class="mdi-navigation-chevron-right"></i></span>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

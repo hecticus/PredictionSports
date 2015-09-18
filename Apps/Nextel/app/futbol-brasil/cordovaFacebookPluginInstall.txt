@@ -1,0 +1,1 @@
+cordova -d plugin add https://github.com/Wizcorp/phonegap-facebook-plugin --variable APP_ID="320314531485580" --variable APP_NAME="FutbolBrasil"
