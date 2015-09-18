@@ -7,21 +7,21 @@
   </appender>
   
   <appender name="FILEUPS" class="ch.qos.logback.core.FileAppender">
-     <file>/home/plessmann/Development/projects/newsapps/FutbolBrasil/web/logs/upstream.log</file>
+     <file>/var/log/timsports/upstream.log</file>
      <encoder>
        <pattern>%date - [%level] - %message%n%xException</pattern>
      </encoder>
    </appender>
 
     <appender name="FILESECURED" class="ch.qos.logback.core.FileAppender">
-        <file>/home/plessmann/Development/projects/newsapps/FutbolBrasil/web/logs/secured.log</file>
+        <file>/var/log/timsports/secured.log</file>
         <encoder>
             <pattern>%date - [%level] - %message%n%xException</pattern>
         </encoder>
     </appender>
 
     <appender name="FILEREQUESTS" class="ch.qos.logback.core.FileAppender">
-        <file>/home/plessmann/Development/projects/newsapps/FutbolBrasil/web/logs/requests.log</file>
+        <file>/var/log/timsports/requests.log</file>
         <encoder>
             <pattern>%date - [%level] - %message%n%xException</pattern>
         </encoder>
