@@ -1,0 +1,214 @@
+<div class="row h-points" ng-show="hasCompetition">
+  <div class="col-xs-12">
+    <h3 ng-bind="getNameClient"
+        style="text-align:center;
+            text-transform: uppercase;
+            color:#ffffff;" ></h3>
+  </div>
+  <div style="position:absolute; top: 150px; background: #ffffff; width: 100%; height:2px;"></div>
+
+
+  <div  style="position:absolute;
+              top: 100px;
+              left:0;
+              right: 0;
+              display:block;
+              width:100px;
+              height: 100px;
+              line-height: 25px;
+              background-color: rgb(122,184,0)  !important;
+              border-radius: 50%;
+              text-align:center;
+              color:   rgb(0,40,120);
+              font-size:1.8em;
+              margin: 0 auto  !important;
+              border-style: solid;
+              border-width: 2px;
+              border-color: #ffffff;">
+
+    <div style="height:35px; position: absolute; top: 0; left: 0; bottom: 0; right: 0; margin: auto; color:#ffffff; ">
+      <span ng-bind="points"  style="text-transform: uppercase; font-size:2em !important; display:block;" ></span>
+      <span translate style="font-size: 1em; ">LEADERBOARD.POINTS</span>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<div id="wrapper" class="page">
+  <div class="scroller">
+    <div class="container"  ng-show="hasCompetition">
+
+      <div class="row h-header yellow"  >
+        <div class="col-xs-6" style="text-align:left;">
+          <span style="margin-left: 5px;" translate>LEADERBOARD.TOURNAMENT</span>
+        </div>
+        <div class="col-xs-6" style="text-align:center;">
+          <span  translate>TITLE_NEXT_MATCH</span>
+        </div>
+      </div>
+      <div class="row h-list" style="background:#ffffff;"  >
+
+
+        <div class="col-xs-12 h-ellipsis-truncate"
+             ng-repeat="league in leagues track by league.id_competitions"
+             ng-click="showContentPrediction($index)" >
+
+          <img class="h-shield" ng-src="{{getCompetitionShield(league.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+          <span class="h-headline">{{league.competiton_type.name}}</span>
+
+          <div style="float:right; color: rgb(122,184,0) !important; ">
+            <span class="h-headline" ng-bind="getEndOfTime(league.match.date)" style="font-size:1.2em; text-transform: capitalize; "></span>
+            <i class=" mdi-navigation-chevron-right" style="font-size:1.4em; vertical-align:middle;"></i>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+<div id="wrapperH" class="page" style="left: 100%;" >
+  <div id="scroller" ng-style="getTotalWidth()">
+    <ul>
+      <li ng-style="getWidth()" ng-repeat="league in leagues"  >
+        <div class="container">
+
+          <div class="row h-header green">
+            <div class="col-xs-2" ng-click="prevPage($index)">
+              <span class="mdi-navigation-arrow-back" ng-hide="leagues[$index-1].name === undefined"></span>
+            </div>
+            <div class="col-xs-8 h-ellipsis-truncate">
+              <img class="h-shield  h-tree" ng-src="{{getCompetitionShield(league.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+              <span ng-bind="league.competiton_type.name" class="caption"></span>
+            </div>
+            <div class="col-xs-2" ng-click="nextPage($index)">
+              <span  class="mdi-navigation-arrow-forward" ng-hide="leagues[$index+1].name === undefined"></span>
+            </div>
+          </div>
+
+          <div class="row h-header red">
+            <div ng-show="league.bet" class="col-xs-12 text-center"
+                 ng-click="saveBet($index, league.id_competitions)">
+
+              <span>{{leagues[$index].bet.client_bets}}</span>
+              <span translate>SECTIONS.BETS.PREDICTIONS</span>
+              <span>/</span>
+              <span>{{leagues[$index].bet.total_bets}}</span>
+              <span translate>SECTIONS.NOTISTATS.MATCHES</span>
+
+            </div>
+          </div>
+
+          <div class="row" ng-hide="league.empty">
+            <div id="{{vWrapper.getName($index)}}" class="wrapper">
+              <div class="scroller" >
+                <div class="container">
+
+                  <div class="row">
+                  <div class="col-xs-12"
+                       ng-repeat="fixture in league.fixtures"
+                       on-last-repeat>
+
+                    <table class="table" >
+                      <thead>
+                      <tr>
+                        <th colspan="3" class="h-header light-blue">
+                          <span ng-bind="getDate(fixture.date)"></span>
+                        </th>
+                      </tr>
+                      </thead>
+                      <tbody>
+
+                      <tr ng-repeat="match in fixture.matches" class="h-match" >
+
+                        <td class="col-xs-4"
+                            ng-click="setBet(match.status.id_status, 0, $parent.$parent.$index, $parent.$index, $index)"
+                            ng-class="{active: match.bet.client_bet === 0, winner: match.home_team_goals >= match.away_team_goals}">
+
+                          <figure>
+                            <img class="h-shield" ng-src="{{match.home_team.team_logo}}" onerror="this.src='img/shield-1.png'">
+                            <figcaption><span ng-bind="match.home_team.short_name" class="h-name-team"></span></figcaption>
+                          </figure>
+
+                        </td>
+
+                        <td class="col-xs-4"
+                            ng-click="setBet(match.status.id_status, 1, $parent.$parent.$index, $parent.$index, $index)"
+                            ng-class="{active: match.bet.client_bet == 1}">
+
+                          <span ng-bind="match.home_team_goals" class="h-goal-team" ng-if="match.status.id_status != 3"></span>
+                          <span  class="h-goal-team" ng-if="match.status.id_status != 3">-</span>
+                          <span ng-bind="match.away_team_goals" class="h-goal-team" ng-if="match.status.id_status != 3"></span>
+                          <br />
+
+                          <span ng-bind="getTime(match.date)" class="h-time"></span>
+                          <br/>
+                          <span class="status _{{match.status.id_status}}">
+                            {{ match.status.name | translate}}
+                          </span>
+                        </td>
+
+                        <td class="col-xs-4"
+                            ng-click="setBet(match.status.id_status, 2, $parent.$parent.$index,$parent.$index,$index)"
+                            ng-class="{active: match.bet.client_bet == 2, winner: match.away_team_goals >= match.home_team_goals}">
+
+
+                          <figure>
+                            <img class="h-shield" ng-src="{{match.away_team.team_logo}}" onerror="this.src='img/shield-2.png'">
+                            <figcaption>
+                              <span ng-bind="match.away_team.short_name" class="h-name-team"></span>
+                            </figcaption>
+                          </figure>
+
+
+                        </td>
+
+                      </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                  <div class="row h-source" ng-show="showSource" style="border-top: solid 1pt rgb(254,209,0);">
+                    <div class="col-xs-12" style="padding: 15px  !important; text-align:left; ">
+                      {{'NEWS.SOURCE' | translate}} <span>: Perform Group</span>
+                    </div>
+                  </div>
+
+
+                </div>	<!--container-->
+              </div>	<!--scroller-->
+            </div> <!--wrapper-->
+          </div> <!--row-->
+
+
+
+        </div>
+
+        <div  class="no-content-panel" ng-show="league.empty" >
+          <i class="mdi-action-info-outline"></i>
+          <div class="no-content-panel-title" translate>EMPTY_STATES.PREDICTIONS</div>
+        </div>
+
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="row" ng-hide="hasCompetition">
+  <div class="col-xs-12 news">
+    <div class="no-content-panel" >
+      <i class="mdi-action-info-outline"></i>
+      <div class="no-content-panel-title" translate>EMPTY_STATES.POINTS</div>
+    </div>
+  </div>
+</div>

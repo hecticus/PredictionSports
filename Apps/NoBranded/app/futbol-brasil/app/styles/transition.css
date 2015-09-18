@@ -1,0 +1,21 @@
+/* Estilo de capa general */
+.page {position:absolute; top:0; left:0; -webkit-transform:translate3d(0, 0, 0); transform:translate3d(0, 0, 0); background-color: #ffffff;}
+/* Estilo de capa izquierda */
+.page.left {-webkit-transform: translate3d(-100%, 0, 0); transform: translate3d(-100%, 0, 0);}
+/* Estilo de capa central */
+.page.center {-webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0);}
+/* Estilo de capa derecha */
+.page.right {-webkit-transform: translate3d(100%, 0, 0); transform: translate3d(100%, 0, 0);}
+/* Estilo de animaci�n general */
+.page.transition {-webkit-transition-duration: .50s; transition-duration: .50s; }
+/* Estilo de animaci�n general */
+
+
+
+
+
+.page.rightShort {-webkit-transform: translate3d(80%, 0, 0); transform: translate3d(80%, 0, 0);}
+.page.leftShort {-webkit-transform: translate3d(-80%, 0, 0); transform: translate3d(-80%, 0, 0);}
+
+/*.page.rightShortHalf {-webkit-transform: translate3d(50%, 0, 0); transform: translate3d(50%, 0, 0);}
+.page.leftShortHalf {-webkit-transform: translate3d(-50%, 0, 0); transform: translate3d(-50%, 0, 0);}*/

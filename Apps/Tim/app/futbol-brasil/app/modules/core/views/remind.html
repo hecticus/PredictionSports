@@ -1,0 +1,65 @@
+<div id="wrapper" class="full-wrapper" style="top: 50px; background-color: transparent">
+    <div class="scroller" style="background-color: transparent">
+        <div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="well">
+                        <h3 translate>LOGIN.REMIND.HERO.TITLE</h3>
+                        <h5 translate>LOGIN.REMIND.HERO.MESSAGE</h5>
+                        <h6 class="text-muted" translate>LOGIN.REMIND.HERO.SMALL_PRINT</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="well text-center">
+                        <form name="remindForm" ng-submit="sendMsisdn()" class="form-horizontal">
+                            <fieldset>
+                                <legend translate>LOGIN.REMIND.LABEL</legend>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <!--span class="input-group-addon">+58</span-->
+                                        <span class="input-group-addon">&nbsp;&nbsp;</span>
+                                        <label for="msisdnInput" class="col-xs-2 control-label sr-only"
+                                               translate>LOGIN.MSISDN_LABEL</label>
+                                        <input type="tel" class="form-control empty" maxlength="11" ng-model="msisdn"
+                                               id="msisdnInput" placeholder="{{ 'LOGIN.MSISDN_HOLDER' | translate }}">
+                                        <span class="material-input"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <button type="submit" class="btn btn-block btn-orange touch-enable">
+                                            <div class="row">
+                                                <div class="col-xs-10">
+                                                    <span translate>LOGIN.REMIND_LABEL</span>
+                                                </div>
+                                                <div class="col-xs-2 text-right">
+                                                    <span><i class="mdi-navigation-chevron-right"></i></span>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </form>
+
+                        <div class="list-group">
+                            <a ui-sref="terms" class="list-group-item list-item">
+                                <div class="col-xs-10">
+                                    <span class="h-login-button" translate>LOGIN.TERMS_LABEL</span>
+                                </div>
+                                <div class="col-xs-2 text-right">
+                                    <span><i class="mdi-navigation-chevron-right"></i></span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

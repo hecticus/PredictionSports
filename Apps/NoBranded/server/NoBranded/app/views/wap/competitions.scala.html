@@ -1,0 +1,29 @@
+@(HD: models.wap.HandsetDetection)(jCompetitions: com.fasterxml.jackson.databind.JsonNode)(route: String)
+
+@if(HD.getLevelSupport() < models.wap.HandsetDetection.HTML) {
+
+} else {
+
+    @html4(true,route, HD){
+        <div class="row">
+        @for(competition <- jCompetitions.get("competitions").iterator()) {
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 h-list" >
+
+                    @if(route == "scorers") {
+                        <a href='@routes.Wap.scorers(competition.get("id_competitions").asInt())'>@competition.get("name").asText()</a>
+                    }
+
+                    @if(route == "matches") {
+                        <a href='@routes.Wap.matches(competition.get("id_competitions").asInt(),0)'>@competition.get("name").asText()</a>
+                    }
+
+                    @if(route == "mtm") {
+                        <a href='@routes.Wap.matches(competition.get("id_competitions").asInt(),0)'>@competition.get("name").asText()</a>
+                    }
+                </div>
+
+        }
+        </div>
+    }
+
+}

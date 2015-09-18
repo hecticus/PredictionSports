@@ -1,0 +1,15 @@
+<div id="update-modal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" ng-bind="$root.updateInfo.title"></h4>
+            </div>
+            <div class="modal-body" ng-bind-html="$root.updateInfo.html"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal" ng-if="!$root.updateInfo.mandatory">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="goToStore()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>

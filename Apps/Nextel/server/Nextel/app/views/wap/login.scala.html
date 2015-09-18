@@ -1,0 +1,100 @@
+@(clientForm: Form[models.wap.Client], HD: models.wap.HandsetDetection, step: Integer)
+@import play.i18n._
+
+@if(HD.getLevelSupport() < models.wap.HandsetDetection.HTML) {
+
+    @xhtml(HD){
+
+        @if(step == 0) {
+
+            <h4>@Messages.get("LOGIN_TITLE")</h4>
+            <h5>@Messages.get("LOGIN_TITLE_MSISDN")</h5>
+
+            @if(flash.containsKey("error_msisdn")) {
+                <h6 style="color:red;">@flash.get("error_msisdn")</h6>
+            }
+
+            <form  method="post" action="@routes.Wap.getPassword()">
+                <input type="text" name="msisdn" size="10" /><br /><br/>
+                <input type="submit" value='@Messages.get("BUTTON_NEXT")' />
+            </form>
+
+        } else {
+
+            <h4>@Messages.get("LOGIN_TITLE_PASSWORD")</h4>
+            <h5>@(clientForm("msisdn").value)</h5>
+
+            @if(flash.containsKey("error_password")) {
+                <h6 style="color:red;">@flash.get("error_password")</h6>
+            }
+
+            <form id="create" method="post" action="@routes.Wap.createClient()">
+                <input type="hidden" name="msisdn" value='@(clientForm("msisdn").value)'  />
+                <input type="password" name="password" size="10" /><br /><br/>
+                <input type="submit" value='@Messages.get("BUTTON_CONFIRM")'>
+            </form>
+
+            <form id="again" method="post" action="@routes.Wap.getPassword()">
+                <input type="hidden" name="msisdn" value='@(clientForm("msisdn").value)' />
+                <a href="javascript:document.getElementById('again').submit();">@Messages.get("BUTTON_AGAIN_PASSWORD")</a>
+            </form>
+        }
+
+    }
+
+} else {
+
+    @html4(false,"",HD){
+        <div class="row">
+
+            @if(step == 0) {
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding:5px !important" >
+
+                    <h4>@Messages.get("LOGIN_TITLE")</h4>
+                    <h5>@Messages.get("LOGIN_TITLE_MSISDN")</h5>
+
+                    @if(flash.containsKey("error_msisdn")) {
+                        <h6 style="color:red;">@flash.get("error_msisdn")</h6>
+                    }
+
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding:5px !important">
+                    <form method="post" action="@routes.Wap.getPassword()">
+                        <input type="text" name="msisdn" size="15" /><br /><br />
+                        <input type="submit" value='@Messages.get("BUTTON_NEXT")' />
+                    </form>
+                </div>
+
+            } else {
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding:5px !important">
+
+                    <h4>@Messages.get("LOGIN_TITLE_PASSWORD")</h4>
+                    <!--h5>@(clientForm("msisdn").value)</h5-->
+
+                    @if(flash.containsKey("error_password")) {
+                        <h6 style="color:red;">@flash.get("error_password")</h6>
+                    }
+
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding:5px !important">
+                    <form id="create" method="post" action="@routes.Wap.createClient()">
+                        <input type="hidden" name="msisdn" value='@(clientForm("msisdn").value)'   />
+                        <input type="password" name="password" size="10" /><br /><br />
+                        <input type="submit" value='@Messages.get("BUTTON_CONFIRM")'>
+                    </form>
+                    <form id="again" method="post" action="@routes.Wap.getPassword()">
+                        <input type="hidden" name="msisdn" value='@(clientForm("msisdn").value)' />
+                        <br />
+                        <a href="javascript:document.getElementById('again').submit();">@Messages.get("BUTTON_AGAIN_PASSWORD")</a>
+                        <br />
+                        <br />
+                    </form>
+                </div>
+
+            }
+
+        </div>
+    }
+}

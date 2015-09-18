@@ -1,0 +1,347 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+
+
+OPTIONS        /*url                                                                      controllers.Application.options(url: String)
+
+GET            /                                                                          controllers.Wap.index()
+GET            /index                                                                     controllers.Wap.index()
+GET            /news/:id                                                                  controllers.Wap.news(id:Integer)
+GET            /matches                                                                   controllers.Wap.matches(id:Integer, page: Integer)
+GET            /competitions                                                              controllers.Wap.competitions(route:String)
+GET            /scorers                                                                   controllers.Wap.scorers(id:Integer)
+GET            /mtm                                                                       controllers.Wap.mtm(id:Integer, match:Integer, event: Integer)
+GET            /login                                                                     controllers.Wap.getLogin()
+POST           /login/password                                                            controllers.Wap.getPassword()
+POST           /login/create                                                              controllers.Wap.createClient()
+
+GET            /check/*name                                                               controllers.Application.checkFile(name: String)
+GET            /api/loading/:width/:height/:version/:so                                   controllers.Application.getAppSettings(width: Integer, height: Integer, version : String, so : String)
+
+# Home page
+
+#GET     /                      		                                                                     controllers.Application.index(p:Int ?= 0, s ?= "sort", o ?= "asc", f ?= "")
+#GET     /index                                                                                              controllers.Application.index(p:Int ?= 0, s ?= "sort", o ?= "asc", f ?= "")
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET            /assets/*file                                                              controllers.Assets.at(path="/public", file)
+
+
+
+#Clients
+POST           /sportsapi/v1/clients/create                                            controllers.client.FootballClients.create()
+POST           /sportsapi/v1/clients/update/:id                                        controllers.client.FootballClients.update(id : Integer)
+POST           /sportsapi/v1/clients/delete/:id                                        controllers.client.Clients.delete(id : Integer)
+GET            /sportsapi/v1/clients/get/:id/:upstreamChannel                          controllers.client.FootballClients.get(id : Integer, upstreamChannel : String, pmc : Boolean?=false)
+GET            /sportsapi/v1/clients/list                                              controllers.client.Clients.list(pageSize: Integer?=0, page: Integer?=0, pmc : Boolean?=false)
+GET            /sportsapi/v1/clients/alerts/:id                                        controllers.client.FootballClients.getPushAlertsForClient(id : Integer)
+GET            /sportsapi/v1/clients/bets/get/:id/:idCompetition                       controllers.client.FootballClients.getBetsForCompetition(id : Integer, idCompetition : Integer)
+GET            /sportsapi/v1/clients/bets/get/date/:id/:date                           controllers.client.FootballClients.getBetsForDate(id : Integer, date : String)
+GET            /sportsapi/v1/clients/bets/get/:id                                      controllers.client.FootballClients.getBets(id : Integer)
+POST           /sportsapi/v1/clients/bets/create/:id                                   controllers.client.FootballClients.createBets(id : Integer)
+GET            /sportsapi/v1/clients/dashboard/:id/:idLanguage                         controllers.client.FootballClients.dashboard(id : Integer, idLanguage : Integer)
+
+
+GET            /sportsapi/v1/clients/leaderboard/get/:id/:idTournament/:idPhase        controllers.client.FootballClients.getLeaderboardForClient(id : Integer, idTournament : Integer, idPhase : Integer)
+GET            /sportsapi/v1/clients/leaderboard/global/get/:id/:idTournament          controllers.client.FootballClients.getLeaderboardForClient(id : Integer, idTournament : Integer, idPhase : Integer?=0)
+GET            /sportsapi/v1/clients/leaderboard/personal/tournament/:id               controllers.client.FootballClients.getPersonalLeaderboardForClient(id: Integer, idTournament: Integer?=0, idPhase: Integer?=0, global : Boolean?=true)
+GET            /sportsapi/v1/clients/leaderboard/personal/phase/:id                    controllers.client.FootballClients.getPersonalLeaderboardForClient(id: Integer, idTournament: Integer?=0, idPhase: Integer?=0, global : Boolean?=false)
+GET            /sportsapi/v1/clients/leaderboard/total/:id                             controllers.client.FootballClients.getLeaderboardTotalForClient(id: Integer)
+
+
+GET            /sportsapi/v1/clients/scorers/:idClient                                 controllers.client.FootballManager.getScorers(idClient : Integer)
+
+
+GET            /sportsapi/v1/languages                                                 controllers.client.Clients.getActiveLanguages()
+
+#funciones para obtener imagenes locales
+#GET     /sportsapi/v1/localimages/:file/:size                                                           controllers.ImageProcessing.getLocalResourceBySize(file : String, size : String)
+#imagen width and height
+GET            /sportsapi/v1/localimages/:file/:width                                  controllers.ImageProcessing.getLocalResourceByWidth(file : String, width : Integer)
+
+
+#V2 RESTify routes
+
+#Clients
+POST           /sportsapi/v2/client                                                    controllers.client.FootballClients.create()
+GET            /sportsapi/v2/client/:id                                                controllers.client.FootballClients.get(id : Integer, upstreamChannel : String ?= "Android", pmc : Boolean ?= false)
+PUT            /sportsapi/v2/client/:id                                                controllers.client.FootballClients.update(id : Integer)
+DELETE         /sportsapi/v2/client/:id                                                controllers.client.Clients.delete(id : Integer)
+GET            /sportsapi/v2/client/:id/alerts                                         controllers.client.FootballClients.getPushAlertsForClient(id : Integer)
+POST           /sportsapi/v2/client/:id/bet                                            controllers.client.FootballClients.createBet(id : Integer)
+POST           /sportsapi/v2/client/:id/bets                                           controllers.client.FootballClients.createBets(id : Integer)
+GET            /sportsapi/v2/client/:id/bets                                           controllers.client.FootballClients.getBets(id : Integer)
+GET            /sportsapi/v2/client/:id/bets/:idCompetition                            controllers.client.FootballClients.getBetsForCompetition(id : Integer, idCompetition : Integer)
+GET            /sportsapi/v2/client/:id/leaderboard/global/:idTournament               controllers.client.FootballClients.getLeaderboardForClient(id : Integer, idTournament : Integer, idPhase : Integer?=0)
+GET            /sportsapi/v2/client/:id/leaderboard/personal/tournament                controllers.client.FootballClients.getPersonalLeaderboardForClient(id: Integer, idTournament: Integer?=0, idPhase: Integer?=0, global : Boolean?=true)
+GET            /sportsapi/v2/client/:id/leaderboard/personal/phase                     controllers.client.FootballClients.getPersonalLeaderboardForClient(id: Integer, idTournament: Integer?=0, idPhase: Integer?=0, global : Boolean?=false)
+POST           /sportsapi/v2/client/:id/upstream                                       controllers.Upstream.sendClientEvent(id : Integer)
+GET            /sportsapi/v2/clients                                                   controllers.client.Clients.list(pageSize: Integer?=0, page: Integer?=0, pmc : Boolean?=false)
+
+GET            /sportsapi/v2/locale.json                                               controllers.client.FootballClients.getLocale(lang : String)
+POST           /sportsapi/v2/locale.json                                               controllers.client.FootballClients.setLocale(lang : String)
+
+# Home page
+GET            /admin                                                                     controllers.Application.index()
+# Authenticate
+GET            /admin/restricted                                                          controllers.Application.restricted
+GET            /admin/assets/javascript/routes.js                                         controllers.Application.jsRoutes
+
+GET            /admin/profile                                                             controllers.Application.profile
+
+GET            /admin/login                                                               controllers.Application.login
+POST           /admin/login                                                               controllers.Application.doLogin
+
+GET            /admin/logout                                                              com.feth.play.module.pa.controllers.Authenticate.logout
+GET            /admin/authenticate/:provider                                              com.feth.play.module.pa.controllers.Authenticate.authenticate(provider: String)
+
+GET            /admin/signup                                                              controllers.Application.signup
+POST           /admin/signup                                                              controllers.Application.doSignup
+
+GET            /admin/accounts/unverified                                                 controllers.Signup.unverified
+GET            /admin/authenticate/:provider/denied                                       controllers.Signup.oAuthDenied(provider: String)
+
+GET            /admin/accounts/verify/:token                                              controllers.Signup.verify(token: String)
+GET            /admin/accounts/exists                                                     controllers.Signup.exists
+
+GET            /admin/accounts/password/reset/:token                                      controllers.Signup.resetPassword(token: String)
+POST           /admin/accounts/password/reset                                             controllers.Signup.doResetPassword
+
+GET            /admin/accounts/password/change                                            controllers.Account.changePassword
+POST           /admin/accounts/password/change                                            controllers.Account.doChangePassword
+
+GET            /admin/accounts/verify                                                     controllers.Account.verifyEmail
+
+GET            /admin/accounts/add                                                        controllers.Account.link
+
+GET            /admin/accounts/link                                                       controllers.Account.askLink
+POST           /accounts/link                                                             controllers.Account.doLink
+
+GET            /admin/accounts/merge                                                      controllers.Account.askMerge
+POST           /admin/accounts/merge                                                      controllers.Account.doMerge
+
+GET            /admin/login/password/forgot                                               controllers.Signup.forgotPassword(email: String ?= "")
+POST           /admin/login/password/forgot                                               controllers.Signup.doForgotPassword
+
+#CountriesView
+# CountriesView list (look at the default values for pagination parameters)
+GET            /admin/countries/list                                                      controllers.CountriesView.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET            /admin/countries/lsort                                                     controllers.CountriesView.lsort()
+# Add CountriesView
+GET            /admin/countries/blank                                                     controllers.CountriesView.blank()
+POST           /admin/countries                                                           controllers.CountriesView.submit()
+# Edit existing CountriesView
+GET            /admin/countries/sort/:ids                                                 controllers.CountriesView.sort(ids:String)
+GET            /admin/countries/:id                                                       controllers.CountriesView.edit(id:Integer)
+POST           /admin/countries/:id                                                       controllers.CountriesView.update(id:Integer)
+# Delete a CountriesView
+POST           /admin/countries/:id/delete                                                controllers.CountriesView.delete(id:Integer)
+
+#LanguagesView
+# LanguagesView list (look at the default values for pagination parameters)
+GET            /admin/languages/list                                                      controllers.LanguagesView.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET            /admin/languages/lsort                                                     controllers.LanguagesView.lsort()
+# Add LanguagesView
+GET            /admin/languages/blank                                                     controllers.LanguagesView.blank()
+POST           /admin/languages                                                           controllers.LanguagesView.submit()
+# Edit existing LanguagesView
+GET            /admin/languages/sort/:ids                                                 controllers.LanguagesView.sort(ids:String)
+GET            /admin/languages/:id                                                       controllers.LanguagesView.edit(id:Integer)
+POST           /admin/languages/:id                                                       controllers.LanguagesView.update(id:Integer)
+# Delete a LanguagesView
+POST           /admin/languages/:id/delete                                                controllers.LanguagesView.delete(id:Integer)
+
+#TimezonesView
+# TimezonesView list (look at the default values for pagination parameters)
+GET            /admin/timezones/list                                                      controllers.TimezonesView.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET            /admin/timezones/lsort                                                     controllers.TimezonesView.lsort()
+# Add TimezonesView
+GET            /admin/timezones/blank                                                     controllers.TimezonesView.blank()
+POST           /admin/timezones                                                           controllers.TimezonesView.submit()
+# Edit existing TimezonesView
+GET            /admin/timezones/sort/:ids                                                 controllers.TimezonesView.sort(ids:String)
+GET            /admin/timezones/:id                                                       controllers.TimezonesView.edit(id:Integer)
+POST           /admin/timezones/:id                                                       controllers.TimezonesView.update(id:Integer)
+# Delete a TimezonesView
+POST           /admin/timezones/:id/delete                                                controllers.TimezonesView.delete(id:Integer)
+
+#DevicesView
+# DevicesView list (look at the default values for pagination parameters)
+GET            /admin/devices/list                                                        controllers.DevicesView.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET            /admin/devices/lsort                                                       controllers.DevicesView.lsort()
+# Add DevicesView
+GET            /admin/devices/blank                                                       controllers.DevicesView.blank()
+POST           /admin/devices                                                             controllers.DevicesView.submit()
+# Edit existing DevicesView
+GET            /admin/devices/sort/:ids                                                   controllers.DevicesView.sort(ids:String)
+GET            /admin/devices/:id                                                         controllers.DevicesView.edit(id:Integer)
+POST           /admin/devices/:id                                                         controllers.DevicesView.update(id:Integer)
+# Delete a DevicesView
+POST           /admin/devices/:id/delete                                                  controllers.DevicesView.delete(id:Integer)
+
+
+#InstancesView
+# InstancesView list (look at the default values for pagination parameters)
+GET            /admin/instances/list                                                      controllers.InstancesView.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET            /admin/instances/lsort                                                     controllers.InstancesView.lsort()
+# Add InstancesView
+GET            /admin/instances/blank                                                     controllers.InstancesView.blank()
+POST           /admin/instances                                                           controllers.InstancesView.submit()
+# Edit existing InstancesView
+GET            /admin/instances/sort/:ids                                                 controllers.InstancesView.sort(ids:String)
+GET            /admin/instances/:id                                                       controllers.InstancesView.edit(id:Integer)
+POST           /admin/instances/:id                                                       controllers.InstancesView.update(id:Integer)
+# Delete a InstancesView
+POST           /admin/instances/:id/delete                                                controllers.InstancesView.delete(id:Integer)
+
+#JobsView
+# JobsView list (look at the default values for pagination parameters)
+GET            /admin/jobs/list                                                           controllers.JobsView.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET            /admin/jobs/lsort                                                          controllers.JobsView.lsort()
+# Add JobsView
+GET            /admin/jobs/blank                                                          controllers.JobsView.blank()
+POST           /admin/jobs                                                                controllers.JobsView.submit()
+# Edit existing JobsView
+GET            /admin/jobs/sort/:ids                                                      controllers.JobsView.sort(ids:String)
+GET            /admin/jobs/:id                                                            controllers.JobsView.edit(id:Long)
+POST           /admin/jobs/:id                                                            controllers.JobsView.update(id:Long)
+# Delete a JobsView
+POST           /admin/jobs/:id/delete                                                     controllers.JobsView.delete(id:Long)
+
+#ConfigsView
+# ConfigsView list (look at the default values for pagination parameters)
+GET            /admin/configurations/list                                                 controllers.ConfigsView.list(p:Int ?= 0, s ?= "configKey", o ?= "asc", f ?= "")
+GET            /admin/configurations/lsort                                                controllers.ConfigsView.lsort()
+# Add ConfigsView
+GET            /admin/configurations/blank                                                controllers.ConfigsView.blank()
+POST           /admin/configurations                                                      controllers.ConfigsView.submit()
+# Edit existing ConfigsView
+GET            /admin/configurations/sort/:ids                                            controllers.ConfigsView.sort(ids:String)
+GET            /admin/configurations/:id                                                  controllers.ConfigsView.edit(id:Long)
+POST           /admin/configurations/:id                                                  controllers.ConfigsView.update(id:Long)
+# Delete a ConfigsView
+POST           /admin/configurations/:id/delete                                           controllers.ConfigsView.delete(id:Long)
+
+#UsersView
+# UsersView list (look at the default values for pagination parameters)
+GET            /admin/users/list                                                          controllers.UsersView.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+#GET     /admin/users/lsort		                                                                        controllers.UsersView.lsort()
+# Add UsersView
+# Edit existing UsersView
+#GET     /admin/users/sort/:ids	                                                                        controllers.UsersView.sort(ids:String)
+GET            /admin/users/:id                                                           controllers.UsersView.edit(id:Long)
+POST           /admin/users/:id                                                           controllers.UsersView.update(id:Long)
+# Delete a UsersView
+POST           /admin/users/:id/delete                                                    controllers.UsersView.delete(id:Long)
+
+#Rutas de FootballManager
+
+GET            /newsapi/v1/news/get/:idNews                                                                    controllers.client.FootballManager.getNewsById(idNews:Long)
+GET            /newsapi/v1/news/search/:idApp                                                                  controllers.client.FootballManager.getNews(idApp:Integer, offset: Integer=0, count:Integer=20)
+GET            /newsapi/v1/news/search/:idApp/:offset/:count                                                   controllers.client.FootballManager.getNews(idApp:Integer, offset: Integer, count:Integer)
+
+#NewsScroll
+GET            /newsapi/v1/news/scroll/up/first/:idApp/:newsId                                                 controllers.client.FootballManager.getRecentNews(idApp:Integer, idLanguage : Integer?=405, newsId: Long, newest: Boolean?=true, first:Boolean?=true)
+GET            /newsapi/v1/news/scroll/up/first/:idApp/:idLanguage/:newsId                                     controllers.client.FootballManager.getRecentNews(idApp:Integer, idLanguage : Integer, newsId: Long, newest: Boolean?=true, first:Boolean?=true)
+GET            /newsapi/v1/news/scroll/up/rest/:idApp/:newsId                                                  controllers.client.FootballManager.getRecentNews(idApp:Integer, idLanguage : Integer?=405, newsId: Long, newest: Boolean?=true, first:Boolean?=false)
+GET            /newsapi/v1/news/scroll/up/rest/:idApp/:idLanguage/:newsId                                      controllers.client.FootballManager.getRecentNews(idApp:Integer, idLanguage : Integer, newsId: Long, newest: Boolean?=true, first:Boolean?=false)
+GET            /newsapi/v1/news/scroll/down/first/:idApp/:newsId                                               controllers.client.FootballManager.getRecentNews(idApp:Integer, idLanguage : Integer?=405, newsId: Long, newest: Boolean?=false, first:Boolean?=true)
+GET            /newsapi/v1/news/scroll/down/first/:idApp/:idLanguage/:newsId                                   controllers.client.FootballManager.getRecentNews(idApp:Integer, idLanguage : Integer, newsId: Long, newest: Boolean?=false, first:Boolean?=true)
+GET            /newsapi/v1/news/scroll/down/rest/:idApp/:newsId                                                controllers.client.FootballManager.getRecentNews(idApp:Integer, idLanguage : Integer?=405, newsId: Long, newest: Boolean?=false, first:Boolean?=false)
+GET            /newsapi/v1/news/scroll/down/rest/:idApp/:idLanguage/:newsId                                    controllers.client.FootballManager.getRecentNews(idApp:Integer, idLanguage : Integer, newsId: Long, newest: Boolean?=false, first:Boolean?=false)
+GET            /newsapi/v1/news/scroll/:idApp                                                                  controllers.client.FootballManager.getRecentNews(idApp:Integer, idLanguage : Integer?=405, newsId: Long?=0, newest:Boolean?=false, first:Boolean?=true)
+GET            /newsapi/v1/news/scroll/:idApp/:idLanguage                                                      controllers.client.FootballManager.getRecentNews(idApp:Integer, idLanguage : Integer, newsId: Long?=0, newest:Boolean?=false, first:Boolean?=true)
+GET            /newsapi/v1/news/scroll/:idApp/:newsId/:newest/:first                                           controllers.client.FootballManager.getRecentNews(idApp:Integer, idLanguage : Integer?=405, newsId: Long, newest:Boolean, first:Boolean)
+GET            /newsapi/v1/news/scroll/:idApp/:idLanguage/:newsId/:newest/:first                               controllers.client.FootballManager.getRecentNews(idApp:Integer, idLanguage : Integer, newsId: Long, newest:Boolean, first:Boolean)
+#
+##afp futbol
+GET            /footballapi/v1/team/competition/all/:idCompetition                                             controllers.client.FootballManager.getTeams(idCompetition: Long)
+GET            /footballapi/v1/team/app/all/:idApp                                                             controllers.client.FootballManager.getTeamsForApp(idApp: Integer, pageSize: Integer?=0, page: Integer?=0)
+GET            /footballapi/v1/team/get/:id                                                                    controllers.client.FootballManager.getTeam(id: Long)
+GET            /footballapi/v1/phase/getList/:idComp                                                           controllers.client.FootballManager.getPhases(idComp: Long, sd: String?="", end: String?="")
+GET            /footballapi/v1/phase/get/:id                                                                   controllers.client.FootballManager.getPhase(id: Long)
+GET            /footballapi/v1/matches/get                                                                     controllers.client.FootballManager.getGameMatches(phase : Long?=0,sd: String?="",ed: String?="",st: Integer?=0)
+GET            /footballapi/v1/matches/get/ext/:id                                                             controllers.client.FootballManager.getGameMatchByExternalId(id: Long,events: Boolean?=false)
+GET            /footballapi/v1/matches/get/fifa/:id                                                            controllers.client.FootballManager.getGameMatchByFifaId(id: Long,events: Boolean?=false)
+GET            /footballapi/v1/matches/get/:id                                                                 controllers.client.FootballManager.getGameMatch(id: Long,events: Boolean?=false)
+GET            /footballapi/v1/matches/events/get/ext/:id                                                      controllers.client.FootballManager.getEventsByExternalMatch(id: Long,act: String?="",p: String?="",ts :String?="", te :String?="")
+GET            /footballapi/v1/matches/events/get/fifa/:id                                                     controllers.client.FootballManager.getEventsByFifaMatch(id: Long,act: String?="",p: String?="",ts :String?="", te :String?="")
+GET            /footballapi/v1/matches/events/get/:id                                                          controllers.client.FootballManager.getEvents(id: Long,act: String?="",p: String?="",ts :String?="", te :String?="")
+GET            /footballapi/v1/ranking/get/:id                                                                 controllers.client.FootballManager.getRankingByIdPhase(id : String, ext : Boolean = false )
+GET            /footballapi/v1/ranking/get/ext/:id                                                             controllers.client.FootballManager.getRankingByIdPhase(id : String, ext : Boolean = true )
+GET            /footballapi/v1/ranking/get/global/:id                                                          controllers.client.FootballManager.getGlobalRanking(id : Long)
+
+GET            /footballapi/v1/matches/get/ids/:idApp                                                          controllers.client.FootballManager.getFixturesByIDs(idApp : Integer)
+GET            /footballapi/v1/matches/finished/get/:idCompetition                                             controllers.client.FootballManager.getTodayFinished(idCompetition : Long)
+GET            /footballapi/v1/matches/finished/get/:idCompetition/:date                                       controllers.client.FootballManager.getFinishedByDate(idCompetition : Long, date : String)
+GET            /footballapi/v1/matches/date/get/:idApp/:date                                                   controllers.client.FootballManager.getFixturesDate(idApp : Integer, date : String, idLanguage : Integer?=405, timezoneName : String ?= "")
+GET            /footballapi/v1/matches/date/get/:idApp/:date/:idLanguage                                       controllers.client.FootballManager.getFixturesDate(idApp : Integer, date : String, idLanguage : Integer, timezoneName : String ?= "")
+GET            /footballapi/v1/matches/all/date/get/:idApp/:date                                               controllers.client.FootballManager.getFixturesDateAll(idApp : Integer, date : String, idLanguage : Integer?=405, timezoneName : String ?= "")
+GET            /footballapi/v1/matches/all/date/get/:idApp/:date/:idLanguage                                   controllers.client.FootballManager.getFixturesDateAll(idApp : Integer, date : String, idLanguage : Integer, timezoneName : String ?= "")
+GET            /footballapi/v1/matches/competition/date/grouped/:idApp/:idCompetition                          controllers.client.FootballManager.getFixturesForCompetitionGroupByDate(idApp : Integer, idCompetition: Long, timezoneName : String ?= "")
+GET            /footballapi/v1/matches/date/grouped/:idApp                                                     controllers.client.FootballManager.getFixturesGroupByDate(idApp : Integer, timezoneName : String ?= "")
+GET            /footballapi/v1/matches/date/paged/:idApp/:date                                                 controllers.client.FootballManager.getFixturesDatePaged(idApp: Integer, idLanguage : Integer?=405, date : String, pageSize: Integer?=0, page: Integer?=0, timezoneName : String ?= "")
+GET            /footballapi/v1/matches/date/paged/:idApp/:idLanguage/:date                                     controllers.client.FootballManager.getFixturesDatePaged(idApp: Integer, idLanguage : Integer, date : String, pageSize: Integer?=0, page: Integer?=0, timezoneName : String ?= "")
+
+GET            /footballapi/v1/matches/competition/date/paged/:idApp/:idCompetition/:date                      controllers.client.FootballManager.getFixturesCompetitionDatePaged(idApp: Integer, idCompetition: Integer, date : String, pageSize: Integer?=0, page: Integer?=0, timezoneName : String ?= "")
+
+GET            /footballapi/v1/competitions/list/ids/:idApp                                                    controllers.client.FootballManager.getActiveCompetitions(idApp : Integer, idLanguage : Integer?=0, ids: Boolean?=true, closestMatch: Boolean?=false, timezoneName : String ?= "")
+GET            /footballapi/v1/competitions/list/:idApp                                                        controllers.client.FootballManager.getActiveCompetitions(idApp : Integer, idLanguage : Integer?=405, ids: Boolean?=false, closestMatch: Boolean?=false, timezoneName : String ?= "")
+GET            /footballapi/v1/competitions/list/:idApp/:idLanguage                                            controllers.client.FootballManager.getActiveCompetitions(idApp : Integer, idLanguage : Integer, ids: Boolean?=false, closestMatch: Boolean?=false, timezoneName : String ?= "")
+GET            /footballapi/v1/competitions/phases/notify/:idApp                                               controllers.client.FootballManager.getPhasesToNotify(idApp : Integer)
+GET            /footballapi/v1/competitions/phases/:idApp/:idCompetition                                       controllers.client.FootballManager.getPhasesForCompetition(idApp : Integer, idCompetition: Integer, idLanguage : Integer?=405, timezoneName : String ?= "")
+GET            /footballapi/v1/competitions/phases/:idApp/:idCompetition/:idLanguage                           controllers.client.FootballManager.getPhasesForCompetition(idApp : Integer, idCompetition: Integer, idLanguage : Integer, timezoneName : String ?= "")
+GET            /footballapi/v1/competitions/phases/latest/:idApp/:idCompetition/:date                          controllers.client.FootballManager.getCurrentAndLastPhaseForCompetition(idApp : Integer, idCompetition: Integer, date : String, idLanguage : Integer?=405)
+GET            /footballapi/v1/competitions/phases/latest/:idApp/:idCompetition/:date/:idLanguage              controllers.client.FootballManager.getCurrentAndLastPhaseForCompetition(idApp : Integer, idCompetition: Integer, date : String, idLanguage : Integer)
+
+#MaM
+GET            /footballapi/v1/matches/mam/:idApp/:idCompetition/:idMatch                                      controllers.client.FootballManager.getMinuteToMinuteForCompetition(idApp : Integer, idCompetition: Integer, idMatch : Long, idLanguage : Integer?=405, idEvent: Long?=0, forward: Boolean?=false)
+GET            /footballapi/v1/matches/mam/:idApp/:idCompetition/:idMatch/:idLanguage                          controllers.client.FootballManager.getMinuteToMinuteForCompetition(idApp : Integer, idCompetition: Integer, idMatch : Long, idLanguage : Integer, idEvent: Long?=0, forward: Boolean?=false)
+GET            /footballapi/v1/matches/mam/next/:idApp/:idCompetition/:idMatch/:idEvent                        controllers.client.FootballManager.getMinuteToMinuteForCompetition(idApp : Integer, idCompetition: Integer, idMatch : Long, idLanguage : Integer?=405, idEvent: Long, forward: Boolean?=true)
+GET            /footballapi/v1/matches/mam/next/:idApp/:idCompetition/:idMatch/:idLanguage/:idEvent            controllers.client.FootballManager.getMinuteToMinuteForCompetition(idApp : Integer, idCompetition: Integer, idMatch : Long, idLanguage : Integer, idEvent: Long, forward: Boolean?=true)
+GET            /footballapi/v1/matches/mam/previous/:idApp/:idCompetition/:idMatch/:idEvent                    controllers.client.FootballManager.getMinuteToMinuteForCompetition(idApp : Integer, idCompetition: Integer, idMatch : Long, idLanguage : Integer?=405, idEvent: Long, forward: Boolean?=false)
+GET            /footballapi/v1/matches/mam/previous/:idApp/:idCompetition/:idMatch/:idLanguage/:idEvent        controllers.client.FootballManager.getMinuteToMinuteForCompetition(idApp : Integer, idCompetition: Integer, idMatch : Long, idLanguage : Integer, idEvent: Long, forward: Boolean?=false)
+#
+#
+##NEW VERSION
+GET            /footballapi/v1/competitions/ranking/:idApp/:idCompetition/:idPhase                             controllers.client.FootballManager.getRankingsForPhase(idApp : Integer, idCompetition: Integer, idLanguage : Integer?=405, idPhase: Long, way: Integer?=0)
+GET            /footballapi/v1/competitions/ranking/:idApp/:idCompetition/:idLanguage/:idPhase                 controllers.client.FootballManager.getRankingsForPhase(idApp : Integer, idCompetition: Integer, idLanguage : Integer, idPhase: Long, way: Integer?=0)
+GET            /footballapi/v1/competitions/ranking/:idApp/:idCompetition                                      controllers.client.FootballManager.getRankingsForPhase(idApp : Integer, idCompetition: Integer, idLanguage : Integer?=405, idPhase: Long?=0, way: Integer?=0)
+GET            /footballapi/v1/competitions/ranking/:idApp/:idCompetition/:idLanguage                          controllers.client.FootballManager.getRankingsForPhase(idApp : Integer, idCompetition: Integer, idLanguage : Integer, idPhase: Long?=0, way: Integer?=0)
+GET            /footballapi/v1/competitions/ranking/next/:idApp/:idCompetition/:idPhase                        controllers.client.FootballManager.getRankingsForPhase(idApp : Integer, idCompetition: Integer, idLanguage : Integer?=405, idPhase: Long, way: Integer?=1)
+GET            /footballapi/v1/competitions/ranking/next/:idApp/:idCompetition/:idLanguage/:idPhase            controllers.client.FootballManager.getRankingsForPhase(idApp : Integer, idCompetition: Integer, idLanguage : Integer, idPhase: Long, way: Integer?=1)
+GET            /footballapi/v1/competitions/ranking/previous/:idApp/:idCompetition/:idPhase                    controllers.client.FootballManager.getRankingsForPhase(idApp : Integer, idCompetition: Integer, idLanguage : Integer?=405, idPhase: Long, way: Integer?=-1)
+GET            /footballapi/v1/competitions/ranking/previous/:idApp/:idCompetition/:idLanguage/:idPhase        controllers.client.FootballManager.getRankingsForPhase(idApp : Integer, idCompetition: Integer, idLanguage : Integer, idPhase: Long, way: Integer?=-1)
+
+#
+##new football api
+##players
+GET            /footballapi/v1/players/topScorers/:idApp                                                       controllers.client.FootballManager.getCompetitionTopScorersForClient(idApp: Integer)
+GET            /footballapi/v1/players/topScorers/:idCompetition/:date                                         controllers.client.FootballManager.getTopScorers(idCompetition: Long, date: String)
+GET            /footballapi/v1/players/competitions/scorers/:idApp                                             controllers.client.FootballManager.getTopScorersByCompetition(idApp: Integer, pageSize: Integer?=0, page: Integer?=0)
+GET            /footballapi/v1/players/competition/scorers/:idApp/:idCompetition                               controllers.client.FootballManager.getCompetitionTopScorers(idApp: Integer, idCompetition: Integer, pageSize: Integer?=0, page: Integer?=0)
+#
+##calendar
+GET            /footballapi/v1/calendar/get/:idCompetition                                                     controllers.client.FootballManager.getAllFixtures(idCompetition: Long)
+
+##football manager
+GET            /api/v1/rankings/get/:idApp/:formattedToday                                                     controllers.client.FootballManager.getRankings(idApp: Integer, idLanguage : Integer?=405, formattedToday: String)
+GET            /api/v1/rankings/get/:idApp/:idLanguage/:formattedToday                                         controllers.client.FootballManager.getRankings(idApp: Integer, idLanguage : Integer, formattedToday: String)
+#
+##pushableEvents
+GET            /footballapi/v1/pushable/get/:idApp                                                             controllers.client.FootballManager.getPushableEventsForApp(idApp: Integer)
+#
+##calendar
+GET            /api/v1/calendar/get/date/gt/:idApp/:idCompetition/:date                                        controllers.client.FootballManager.getCalendar(idApp: Integer, idCompetition: Integer, date: String, phase: Long?=0, operator: String?="gt")
+GET            /api/v1/calendar/get/date/lt/:idApp/:idCompetition/:date                                        controllers.client.FootballManager.getCalendar(idApp: Integer, idCompetition: Integer, date: String, phase: Long?=0, operator: String?="lt")
+GET            /api/v1/calendar/get/date/eq/:idApp/:idCompetition/:date                                        controllers.client.FootballManager.getCalendar(idApp: Integer, idCompetition: Integer, date: String, phase: Long?=0, operator: String?="eq")
+GET            /api/v1/calendar/get/phase/gt/:idApp/:idCompetition/:phase                                      controllers.client.FootballManager.getCalendar(idApp: Integer, idCompetition: Integer, date: String?="", phase: Long, operator: String?="gt")
+GET            /api/v1/calendar/get/phase/lt/:idApp/:idCompetition/:phase                                      controllers.client.FootballManager.getCalendar(idApp: Integer, idCompetition: Integer, date: String?="", phase: Long, operator: String?="lt")
+GET            /api/v1/calendar/get/phase/eq/:idApp/:idCompetition/:phase                                      controllers.client.FootballManager.getCalendar(idApp: Integer, idCompetition: Integer, date: String?="", phase: Long, operator: String?="eq")
+GET            /api/v1/calendar/get/:idApp/:idCompetition                                                      controllers.client.FootballManager.getCalendar(idApp: Integer, idCompetition: Integer, date: String?="", phase: Long?=0, operator: String?="gt")
+
+->             /jobcore                                                                   JobCore.Routes
+->             /upstream                                                                  UpstreamAPIConnector.Routes

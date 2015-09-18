@@ -1,0 +1,14 @@
+ /** (landscape) **/
+  /*@media all and (orientation : landscape) {
+    #screen-block-landscape {
+      display:block;
+    }
+  }*/
+
+  /** (portrait) **/
+ /* @media all and  (orientation : portrait) {
+    #screen-block-landscape {
+      display:none;
+    }
+  }*/
+

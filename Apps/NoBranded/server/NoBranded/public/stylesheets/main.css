@@ -1,0 +1,4 @@
+.phone_template, .twipsies.well.localization_template, .twipsies.well.country_template, .twipsies.well.media_template, .twipsies.well.category_template, .twipsies.well.socialNetworks_template, .twipsies.well.role_template, .twipsies.well.timezone_template {
+    display:none !important;
+}
+

@@ -1,0 +1,82 @@
+<div id="wrapperH">
+    <div id="scroller" ng-style="getTotalWidth()">
+        <ul>
+            <li ng-style="getWidth()" ng-repeat="league in leagues" >
+                <div class="container">
+
+                  <div class="row h-header green">
+                    <div class="col-xs-2" ng-click="prevPage($index)">
+                      <span class="mdi-navigation-arrow-back" ng-hide="leagues[$index-1].name === undefined"></span>
+                    </div>
+                    <div class="col-xs-8 h-ellipsis-truncate">
+                      <img class="h-shield h-tree" ng-src="{{getCompetitionShield(league.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+                      <span ng-bind="league.competiton_type.name" class="caption"></span>
+                    </div>
+                    <div class="col-xs-2" ng-click="nextPage($index)">
+                      <span  class="mdi-navigation-arrow-forward" ng-hide="leagues[$index+1].name === undefined"></span>
+                    </div>
+                  </div>
+
+                    <div class="row" ng-hide="league.empty">
+                        <div id="{{vWrapper.getName($index)}}" class="wrapper">
+                            <div class="scroller">
+                                <div class="container">
+                                  <div class="row" >
+                                    <div class="col-xs-12" >
+                                        <table  ng-show="league.scorers" class="table h-table">
+                                            <thead>
+                                            <tr>
+                                                <th class="h-header yellow" translate style="text-align: left;">SCORERS.PLAYER_NAME_LABEL</th>
+                                                <th class="h-header yellow" translate style="text-align: left;">SCORERS.TEAM_LABEL</th>
+                                                <th class="h-header yellow" translate>SCORERS.GOALS_LABEL</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            <tr ng-repeat="scorer in league.scorers"
+                                                ng-class="{'active' : $odd}" on-last-repeat>
+                                                <td class="text-left">
+
+                                                    <span class="text-center-vertical"
+                                                          ng-bind="scorer.name" ></span>
+                                                </td>
+                                                <td class="text-left">
+
+                                                    <span class="text-center-vertical"
+                                                          ng-bind="scorer.team.short_name"></span>
+                                                </td>
+                                                <td>
+                                                    <span class="text-center-vertical"
+                                                          ng-bind="scorer.goals" style="font-weight:bold;"></span>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                  </div>
+
+                                  <div class="row h-source" ng-show="showSource" style="border-top: solid 1pt rgb(254,209,0);">
+                                    <div class="col-xs-12" style="padding: 15px  !important; text-align:left; ">
+                                      {{'NEWS.SOURCE' | translate}} <span>: Perform Group</span>
+                                    </div>
+                                  </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-show="league.empty">
+                        <div class="col-xs-12 news">
+                            <div class="no-content-panel" style="margin-top: 50px !important;">
+                                <i class="mdi-action-info-outline"></i>
+                                <div class="no-content-panel-title" translate>EMPTY_STATES.SCORERS</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

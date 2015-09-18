@@ -1,0 +1,203 @@
+@(loginForm: Form[_])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import com.feth.play.module.pa.views.html._
+
+@main(Messages("playauthenticate.login.title")) {
+	
+	<div class="well bs-component">
+	
+
+  		
+  		
+	
+		<div class="row">
+			<div class="col-lg-6">
+				
+				@helper.form(routes.Application.doLogin, 'class -> "form-horizontal") {
+		
+					@if(loginForm.hasGlobalErrors) {
+				 		<div class="alert alert-dismissable alert-danger">
+					    	<button type="button" class="close" data-dismiss="alert">×</button>
+					    	<h4>Danger!</h4>
+					    	<p>@loginForm.globalError.message</p>
+						</div>
+			        }
+
+					<fieldset>
+					  	<legend>@Messages("playauthenticate.login.title")</legend>
+			
+		
+			
+					 	<div class="form-group">		 		
+					        <label for="email" class="col-lg-2 control-label">Email</label>
+					        <div id="email_field" class="col-lg-8" >
+					            <input id="email" name="email" type="email" class="form-control" placeholder="Email">
+						        <span class="help-inline"></span>
+						        <span class="help-block"></span> 
+					        </div>
+					    </div>
+				  	
+				  		<div class="form-group" >		 		
+					        <label for="password" class="col-lg-2 control-label">Password</label>
+					       	<div id="password_field" class="col-lg-8">
+					            <input id="password" name="password" type="password" class="form-control" placeholder="Contraseña">
+					           	<span class="help-inline"></span>
+						        <span class="help-block"></span> 
+					        </div>
+					    </div>
+				
+				
+						<div class="form-group">
+            				<div class="col-lg-10 col-lg-offset-2">
+                				<button type="submit" class="btn btn-primary" value="@Messages("playauthenticate.login.now")">@Messages("playauthenticate.login.now")</button>
+            				</div>
+        				</div>
+
+
+				  	
+				  	</fieldset>
+				
+				}
+
+                @**<div class="form-group">
+                    <div class="col-lg-10">
+                        <a href="@controllers.routes.Application.signup" class="btn btn-primary">@Messages("playauthenticate.signup.title")</a>
+                    </div>
+                </div>*@
+				
+				
+			</div>	
+		</div>
+		
+		
+		
+	</div>
+
+
+
+  <div id="login" class="row">
+
+    <!--div class="col-lg-6 span3">
+      @* Display proprietary login form *@
+    	@helper.form(routes.Application.doLogin) {
+
+        @if(loginForm.hasGlobalErrors) {
+          <p class="error">
+            <span class="label label-important">@loginForm.globalError.message</span>
+          </p>
+        }
+
+        @_emailPartial(loginForm)
+
+        @inputPassword(
+          loginForm("password"),
+          '_showConstraints -> false,
+          '_label -> Messages("playauthenticate.login.password.placeholder")
+        )
+
+        <input type="submit" value="@Messages("playauthenticate.login.now")" class="btn btn-primary"><br/>
+        <br/>
+        <a href="javascript:void(0);" onclick="window.location.href = jsRoutes.controllers.Signup.forgotPassword($('#email').val() || null).absoluteURL();">@Messages("playauthenticate.login.forgot.password")</a>
+
+    	}
+    </div>
+
+    <div class="col-lg-6 span3">
+      @Messages("playauthenticate.login.oauth")
+      @* Display list of available providers *@
+      @_providerPartial(skipCurrent=false)
+      @providerAvailable("basic") { available: Boolean =>
+          @if(available) {
+              <br>
+              <a href="@com.feth.play.module.pa.controllers.routes.Authenticate.authenticate("basic")">@Messages("playauthenticate.login.basic")</a>
+          }
+      }
+    </div-->
+
+  </div>
+
+}
+
+
+
+<!--form class="form-horizontal">
+    <fieldset>
+        <legend>Legend</legend>
+        <div class="form-group">
+            <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+            <div class="col-lg-10">
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+            <div class="col-lg-10">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Checkbox
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFile" class="col-lg-2 control-label">File</label>
+            <div class="col-lg-10">
+                <input type="text" readonly="" class="form-control floating-label" placeholder="Browse...">
+                <input type="file" id="inputFile" multiple="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="textArea" class="col-lg-2 control-label">Textarea</label>
+            <div class="col-lg-10">
+                <textarea class="form-control" rows="3" id="textArea"></textarea>
+                <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Radios</label>
+            <div class="col-lg-10">
+                <div class="radio radio-primary">
+                    <label>
+                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                        Option one is this
+                    </label>
+                </div>
+                <div class="radio radio-primary">
+                    <label>
+                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                        Option two can be something else
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="select" class="col-lg-2 control-label">Selects</label>
+            <div class="col-lg-10">
+                <select class="form-control" id="select">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <br>
+                <select multiple="" class="form-control">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button class="btn btn-default">Cancel</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+</form-->

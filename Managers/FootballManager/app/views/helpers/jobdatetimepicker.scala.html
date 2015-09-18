@@ -1,0 +1,39 @@
+@(initValue: Field, nameId: String, label: String, args: (Symbol,Any)*)
+@* see http://eonasdan.github.io/bootstrap-datetimepicker/ *@
+@epochToDate(epoch: String) = @{
+     if(nameId.equalsIgnoreCase("date")){
+        epoch
+     } else {
+        if(!epoch.isEmpty){
+            val df = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm")
+            /**df.setTimeZone(java.util.TimeZone.getDefault())*/
+            df.format(epoch.toLong)
+        }
+     }
+}
+
+
+@helper.input(initValue, args:_*) { (id, name, value, htmlArgs) =>
+    <dl>
+        <dt>@label</dt>
+        <dd>
+            <div class="input-group" id="@{name}z" data-date="@epochToDate(value.getOrElse(""+System.currentTimeMillis))" data-date-format=@htmlArgs('format) >
+                <span class="input-group-addon datepickerbutton">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                <input type='text' id="@id" name="@name" value="@epochToDate(value.getOrElse(""+System.currentTimeMillis))" data-date-format=@htmlArgs('format) @toHtmlArgs(htmlArgs.filterKeys(_ != 'value)) />
+            </div>
+            <span class="add-on">
+                <i class="icon-remove-circle" onclick='$("#@name").val("")'></i>
+            </span>
+            <script>
+                $(function(){
+                    $('#@{name}z').datetimepicker();
+                });
+            </script>
+        </dd>
+    </dl>
+}
+
+
+
