@@ -1,0 +1,38 @@
+@(HD: models.wap.HandsetDetection)(jScorers: com.fasterxml.jackson.databind.JsonNode)(nameCompetition: String)
+@import play.i18n._
+
+@if(HD.getLevelSupport() < models.wap.HandsetDetection.HTML) {
+
+} else {
+
+    @html4(true,"scorers",HD){
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th style="background: rgb(122,184,0);" colspan="4">@nameCompetition</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th style="text-align:left; ">@Messages.get("PLAYER_LABEL")</th>
+                        <th style="text-align:left; ">@Messages.get("TEAM_LABEL")</th>
+                        <th>@Messages.get("GOALS_LABEL")</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @for(index <- 0 until jScorers.size){
+                    <tr>
+                        <td><span style="vertical-align: middle;">@{index + 1}</span></td>
+                        <td style="text-align: left;"><span style="vertical-align: middle;">@jScorers.get(index).get("name").asText()</span></td>
+                        <td style="text-align: left;"><span style="vertical-align: middle;">@jScorers.get(index).get("team").get("name").asText()</span></td>
+                        <td><span style="vertical-align: middle;">@jScorers.get(index).get("goals").asText()</span></td>
+                    </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        <div>
+    }
+
+}

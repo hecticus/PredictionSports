@@ -1,0 +1,25 @@
+<div id="wrapper2" class="page" style="left: 100%;" >
+    <div class="row-back" ng-click="prevPage()">
+        <div class="row" style="margin-top: 10px !important;">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                <i class="icon mdi-navigation-arrow-back" style="margin-left: 10px;"></i>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="text-align: right;" >
+                <i class="icon mdi-social-share" style="margin-right: 10px;" ></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="scroller">
+        <div class="container" >
+            <div class="row" style="margin-top: 32px !important;" >
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 news"  >
+                    <h3 class="title">{{contentNews.title}}</h3>
+                    <i class="icon mdi-device-access-time"></i>
+                    <span class="moment">{{fromNow(contentNews.publicationDate)}}</span>
+                    <p class="body">{{contentNews.body}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

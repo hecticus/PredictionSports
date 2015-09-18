@@ -1,0 +1,13 @@
+<div id="info-modal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i ng-class="$root.displayInfo.icon"></i> {{$root.displayInfo.title}}</h4>
+            </div>
+            <div class="modal-body" ng-bind-html="$root.displayInfo.html"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
