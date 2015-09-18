@@ -1,0 +1,112 @@
+@(currentPage: com.avaje.ebean.Page[models.news.News], currentSortBy: String, currentOrder: String, currentFilter: String)
+
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage:Int, newSortBy:String) = @{
+
+    var sortBy = currentSortBy
+    var order = currentOrder
+
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+
+    // Generate the link
+    controllers.routes.Application.index(newPage, sortBy, order, currentFilter)
+
+}
+
+
+
+@main("Futebol Brasil - Gerente") {
+
+	<div class="bs-docs-section">
+
+	    <div class="row">
+	    	<div class="col-lg-12">
+				<h2>&Uacute;ltimas noticias</h2>
+			</div>
+	    </div>
+
+	    <div class="row">
+	    	<div class="col-lg-12">
+				<div class="bs-component">
+					<div class="list-group">
+						@for((news, index) <-  currentPage.getList().zipWithIndex) {
+							<div class="list-group-item">
+								<a href="@controllers.routes.Application.getNewsById(news.getId())">
+                                	@if(news.getResources().size >= 1) {
+                                		<div class="row-picture">
+                                			<img class="circle" src="@news.getResources().get(0).getUrl()" alt="icon">
+                                		</div>
+                                	} else {
+                                		<div class="row-action-primary">
+                                    		<i class="icon-material-photo"></i>
+                                		</div>
+                                	}
+
+                                    <div class="row-content">
+                                        <h4 class="list-group-item-heading">@Html(news.getHeadLine()) <span class="badge">@news.getResources().size</span></h4>
+                                        <p class="list-group-item-text">@Html(news.getSummary())</p>
+                                    </div>
+                                </a>
+                            </div>
+                        	<div class="list-group-separator">
+                        		<!--separator-->
+                        	</div>
+						}
+					</div>
+				</div>
+			</div>
+	    </div>
+
+	</div>
+
+	<div class="bs-docs-section">
+		<div class="row">
+	    	<div class="col-lg-12">
+
+	    		<ul class="pager">
+
+	    			 @if(currentPage.hasPrev) {
+	    				<li class="previous">
+	    					<a href="@link(currentPage.getPageIndex - 1, null)">← Anterior</a>
+	    				</li>
+	    			 } else {
+	    			 	<li class="previous disabled">
+	    			 		<a href="javascript:void(0)">← Anterior</a>
+						</li>
+	    			 }
+
+	    			<li class="current">
+						<a>Listando del @currentPage.getDisplayXtoYofZ(" al "," de ")</a>
+					</li>
+
+    				@if(currentPage.hasNext) {
+						<li class="next">
+							<a href="@link(currentPage.getPageIndex + 1, null)">Pr&oacute;ximo →</a>
+						</li>
+    				} else {
+    					<li class="next disabled">
+    						<a href="javascript:void(0)">Pr&oacute;ximo →</a>
+						</li>
+    				}
+
+				</ul>
+
+
+	    	</div>
+	    </div>
+	</div>
+
+}

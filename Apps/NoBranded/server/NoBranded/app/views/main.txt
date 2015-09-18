@@ -1,0 +1,257 @@
+@(title: String, nav: String = "")(content: Html)
+
+@import be.objectify.deadbolt.java.views.html._
+@import be.objectify.deadbolt.core.utils.TemplateUtils._
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+    	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+        <!--link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/carousel.css")"-->
+
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/ripples.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/material-wfont.min.css")">
+
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <script src="@routes.Assets.at("javascripts/jquery-2.1.1.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript"></script>
+
+        <script src="@routes.Assets.at("javascripts/ripples.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/material.min.js")" type="text/javascript"></script>
+
+
+		<script>
+			$(function() {
+
+
+				var _fPostAjaXJSON = function(_url, _data) {
+
+					try {
+					  	return $.ajax({
+							url: _url,
+							data: JSON.stringify(_data),
+							type: 'POST',
+							dataType: 'json',
+							contentType: "application/json; charset=utf-8",
+						}).fail(function(jqXHR, textStatus, errorThrown) {
+							return false;
+						});
+					} catch (e) {
+						return false;
+					}
+
+				};
+
+
+
+				$(document).on('dragstart', '.row-picture' ,function (e) {
+				    var dataTransfer = e.originalEvent.dataTransfer;
+				    dataTransfer.setData('text/html', this.id);
+				});
+
+				$(document).on('dragover', '.list-group-item.related',function (e) {
+				   	var event = e.originalEvent;
+				    if (event.preventDefault) event.preventDefault();
+				    return false;
+				});
+
+				$(document).on('drop', '.list-group-item.related' ,function (e) {
+				  	var event = e.originalEvent;
+				    if (event.stopPropagation) event.stopPropagation();
+				    var dataTransfer = event.dataTransfer;
+				    var draggedId = dataTransfer.getData('text/html');
+				    var draggedElement = $('#' + draggedId);
+				    draggedElement.removeClass('relatable');
+				    draggedElement.addClass('related');
+				    $('.list-group-item.related').append(draggedElement[0].outerHTML);
+				    draggedElement.remove();
+				    return false;
+
+				});
+
+
+				$(document).on('dragover', '.list-group-item.relatable' ,function (e) {
+				   	var event = e.originalEvent;
+				    if (event.preventDefault) event.preventDefault();
+				    return false;
+				});
+
+				$(document).on('drop', '.list-group-item.relatable' ,function (e) {
+				  	var event = e.originalEvent;
+				    if (event.stopPropagation) event.stopPropagation();
+				    var dataTransfer = event.dataTransfer;
+				    var draggedId = dataTransfer.getData('text/html');
+				    var draggedElement = $('#' + draggedId);
+				    draggedElement.removeClass('related');
+				    draggedElement.addClass('relatable');
+				    $('.list-group-item.relatable').append( draggedElement[0].outerHTML);
+				    draggedElement.remove();
+				    return false;
+				});
+
+
+
+				$('#save').click(function () {
+
+					var _data = {news:0,resources:[]};
+					var _btn = $(this);
+
+					_btn.button('loading');
+
+					_data.news = _btn.data('news');
+
+					$('div.row-picture.related').each(function(index) {
+						_data.resources.push($(this).data('resource'));
+					});
+
+
+
+					var _oAjax = _fPostAjaXJSON('http://127.0.0.1:9100/resource/update',_data);
+
+					if (_oAjax) {
+
+						_oAjax.always(function () {
+							_btn.button('reset');
+						});
+
+						_oAjax.done(function(_json) {
+							$('.alert-success').show();
+							setTimeout(function(){
+								$('.alert-success').hide();
+							}, 5000);
+						});
+
+						_oAjax.fail(function() {
+							$('.alert-success').show();
+							setTimeout(function() {
+								$('.alert-success').hide();
+							}, 5000);
+						});
+
+					} else {
+						_btn.button('reset');
+					}
+
+
+				});
+
+
+				$(document).on('click','div.modal-footer button.btn-primary',function(e) {
+
+					var _id = $('#img div').attr('id');
+
+					if ($(this).hasClass('related')) {
+						$('.list-group-item.relatable').append($('#img').html());
+						$('.list-group-item.related #' + _id).remove();
+					} else {
+						$('.list-group-item.related').append($('#img').html());
+						$('.list-group-item.relatable #' + _id).remove();
+					}
+
+					$('#img').remove();
+					$('#myModal').modal('hide');
+
+				});
+
+
+				$(document).on('click','img.img-rounded',function(e) {
+
+					var _src = $(this).attr('src');
+
+					if ($(this).parent().hasClass('related')) {
+
+						$(this).parent().removeClass('related');
+						$(this).parent().addClass('relatable');
+
+						$('.modal-footer button.btn-primary').removeClass('relatable');
+						$('.modal-footer button.btn-primary').addClass('related');
+						$('.modal-footer button.btn-primary').html('Quitar');
+
+					} else{
+
+						$(this).parent().removeClass('relatable');
+						$(this).parent().addClass('related');
+
+						$('.modal-footer button.btn-primary').removeClass('related');
+						$('.modal-footer button.btn-primary').addClass('relatable');
+						$('.modal-footer button.btn-primary').html('Agregar');
+
+					}
+
+					var _html = '<div class="row">';
+						_html += '<div class="col-sm-12 col-md-12">';
+						_html += ' <div class="thumbnail">';
+						_html += '<img  alt="' + _src + '" src="' + _src +  '" >';
+						_html += '<div class="caption">';
+						_html += '<h3>Thumbnail etiqueta</h3>';
+						_html += '<p>...</p>';
+						_html += '</div>';
+						_html += '</div>';
+						_html += '</div>';
+						_html += '</div>';
+
+
+						_html += '<div id="img" style="display:none;">';
+						_html += $(this).parent()[0].outerHTML;
+						_html += '</div>';
+
+
+
+					$('.modal-body').empty();
+				    $('.modal-body').html(_html);
+
+				});
+
+
+			});
+
+		</script>
+
+
+    </head>
+    <body>
+
+    	<div class="container">
+
+	    	<div class="navbar navbar-default">
+				<div class="navbar-header">
+			        <a class="navbar-brand" href="@controllers.routes.Application.index()">Inicio</a>
+			    </div>
+
+				<div class="navbar-collapse collapse navbar-responsive-collapse">
+			        <ul class="nav navbar-nav navbar-right">
+			            <li class="dropdown">
+
+			            	@subjectPresentOr() {
+          						@defining(Application.getLocalUser(session())) { user =>
+									<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><span class="glyphicon glyphicon-user"></span>&nbsp;@user.name <b class="caret"></b></a>
+            						<ul class="dropdown-menu">
+			                    		<li><a href="@routes.Application.profile()">@Messages("playauthenticate.navigation.profile")</a></li>
+			                    		<li class="divider"></li>
+			                    		<li><a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout()"><span class="glyphicon glyphicon-off"></span>&nbsp;@Messages("playauthenticate.navigation.logout")</a></li>
+			                		</ul>
+            					}
+          					}{
+            					<a href="@routes.Application.login()" class="dropdown-toggle @("disabled".when(nav == "login"))" data-toggle="dropdown">@Messages("playauthenticate.navigation.login")</a>
+          					}
+
+			            </li>
+			        </ul>
+			    </div>
+			</div>
+
+    		@content
+
+    		<footer>
+        		<p>&copy; Hecticus Software Inc. 2014</p>
+    		</footer>
+
+    	</div>
+
+
+    </body>
+</html>
+

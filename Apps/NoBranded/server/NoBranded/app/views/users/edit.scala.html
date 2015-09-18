@@ -1,0 +1,143 @@
+@(id: Long, userViewForm: Form[models.User])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import helpers._
+
+@title = {}
+
+@roleGroup(field: Field, className: String = "role") = {
+    <div class="twipsies well @className">
+        <a class="removeRole btn btn-primary danger pull-right">@Messages("users.role.remove")</a>
+        @select(
+            field("id"),
+            models.SecurityRole.toSeq,
+            '_label -> Messages("users.role"),
+            'class -> "form-control"
+        )
+    </div>
+}
+
+@main(title = Messages("users.edit"), nav = "create") {
+
+    @if(userViewForm.hasErrors) {
+        <div class="alert alert-dismissable alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>@Messages("generic.error.title")</strong> @Messages("generic.error.content")
+            <p>@userViewForm.errorsAsJson</p>
+        </div>
+    }
+
+    @helper.form(routes.Signup.doForgotPassword) {
+        @_emailPartial(userViewForm)
+        <input type="submit" value="@Messages("playauthenticate.password.forgot.cta")" class="btn btn-primary">
+    }
+
+    @helper.form(controllers.routes.UsersView.update(id), 'enctype -> "multipart/form-data", 'id -> "form") {
+
+        <fieldset>
+            <legend>@Messages("users.info")</legend>
+
+            @materialCheckbox(
+                userViewForm("active"),
+                'label -> Messages("users.active"),
+                '_help -> Messages("users.active.help"),
+                'class -> "allCheckbox"
+            )
+
+
+            @inputText(
+                userViewForm("name"),
+                '_label -> Messages("users.name"),
+                '_help -> Messages("users.name.help"),
+                'class -> "form-control",
+                '_error -> userViewForm.globalError
+            )
+
+            @inputText(
+                userViewForm("email"),
+                '_label -> Messages("users.email"),
+                '_help -> Messages("users.email.help"),
+                'class -> "form-control",
+                '_error -> userViewForm.globalError
+            )
+
+            @inputText(
+                userViewForm("firstName"),
+                '_label -> Messages("users.firstName"),
+                '_help -> Messages("users.firstName.help"),
+                'class -> "form-control",
+                '_error -> userViewForm.globalError
+            )
+
+            @inputText(
+                userViewForm("lastName"),
+                '_label -> Messages("users.lastName"),
+                '_help -> Messages("users.lastName.help"),
+                'class -> "form-control",
+                '_error -> userViewForm.globalError
+            )
+
+
+
+            <div id="roles">
+
+                @repeat(userViewForm("securityRoles")) { role =>
+
+                    @roleGroup(role)
+
+                }
+                @roleGroup(
+                    userViewForm("securityRoles[x]"),
+                    className = "role_template"
+                )
+
+                <div class="manage">
+                    <a class="addRole btn btn-primary success">@Messages("users.role.add")</a>
+                </div>
+
+            </div>
+
+        </fieldset>
+
+        <div class="actions">
+            <input type="submit" value=@Messages("users.submit.update") class="btn btn-success">
+            <a href="@controllers.routes.UsersView.list()" class="btn btn-primary">@Messages("generic.cancel")</a>
+        </div>
+
+    }
+
+    @form(controllers.routes.UsersView.delete(id), 'class -> "topRight") {
+        <input type="submit" value=@Messages("users.submit.delete") class="btn btn-danger">
+
+    }
+
+    <script type="text/javascript" charset="utf-8">
+
+        $(document).on('click','.removeRole', function(e) {
+            $(this).parents('.role').remove()
+            renumberRole()
+        })
+
+        $(document).on('click','.addRole', function(e) {
+            var template = $('.role_template')
+            template.before('<div class="twipsies well role">' + template.html() + '</div>')
+            renumberRole()
+        })
+
+        var renumberRole = function() {
+            $('.role').each(function(i) {
+                $('select', this).each(function() {
+                    $(this).attr('name', $(this).attr('name').replace(/securityRoles\[.+?\]/g, 'securityRoles[' + i + ']'))
+                })
+            })
+        }
+
+        $('#form').submit(function() {
+            $('.role_template').remove()
+        })
+
+
+    </script>
+
+}

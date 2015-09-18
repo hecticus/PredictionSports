@@ -1,0 +1,85 @@
+@(HD: models.wap.HandsetDetection)(jMatches: com.fasterxml.jackson.databind.JsonNode)(jCompetition: com.fasterxml.jackson.databind.JsonNode)(limit: Integer)(page: Integer)
+@import play.i18n._
+
+
+@currentTime(fecha: String) = @{
+
+    import java.util.Date
+    import java.text.SimpleDateFormat
+
+    val isoFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+    isoFormat.setTimeZone(TimeZone.getTimeZone("America/Sao_Paulo"));
+    val dates = isoFormat.parse(fecha);
+    val curTimeFormat = new SimpleDateFormat("HH:mm").format(dates)
+    curTimeFormat.format(curTimeFormat)
+}
+
+@if(HD.getLevelSupport() < models.wap.HandsetDetection.HTML) {
+
+} else {
+
+    @html4(true,"matches",HD){
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                <table style="width: 100% !important;">
+                    <thead>
+                    <tr>
+                        <th colspan="3">
+                            <span>@jCompetition.get("competition").get("name").asText()</span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @for(item <- jMatches.get("fixtures").iterator()) {
+                        <tr style="width: 100% !important; height-min:25px  !important;" class="h-list">
+
+                            <td style="width: 33% !important;" >
+                                <span>@item.get("homeTeam").get("name").asText()</span>
+                                <br />
+                                <span  class="goal">@item.get("home_team_goals").asText()</span>
+                            </td>
+
+                            <td style="width: 33% !important;">
+                                <span>@currentTime(item.get("date").asText())</span>
+                                <br />
+                                @if(item.get("status").get("id_status").asInt() != 3) {
+                                    <a href='@routes.Wap.mtm(jCompetition.get("competition").get("id").asInt(),item.get("id_game_matches").asInt(),0)' class='status _@{item.get("status").get("id_status").asText()}'>@Messages.get("MATCH-STATUS-" + item.get("status").get("id_status").asText())</a>
+                                } else {
+                                    <span  class='status _@{item.get("status").get("id_status").asText()}'>@Messages.get("MATCH-STATUS-" + item.get("status").get("id_status").asText())</span>
+                                }
+                            </td>
+
+                            <td style="width: 33% !important;">
+                                <span>@item.get("awayTeam").get("name").asText()</span>
+                                <br />
+                                <span  class="goal">@item.get("away_team_goals").asText()</span>
+                            </td>
+
+                        </tr>
+                    }
+
+                    </tbody>
+                </table>
+            </div>
+        <div>
+
+
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="text-align:right;" >
+                @if(page > 0) {
+                    <a href='@routes.Wap.matches(jCompetition.get("competition").get("id").asInt(),{page - 1})'>anterior&nbsp;</a>
+                }
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="text-align:left;" >
+                @if(Math.ceil((jMatches.get("total").asInt()/limit)).toInt > 0) {
+                    @if(page < Math.ceil((jMatches.get("total").asInt()/limit)).toInt) {
+                        <a href='@routes.Wap.matches(jCompetition.get("competition").get("id").asInt(),{page + 1})'>&nbsp;siguiente</a>
+                    }
+                }
+            </div>
+        </div>
+    }
+
+}
