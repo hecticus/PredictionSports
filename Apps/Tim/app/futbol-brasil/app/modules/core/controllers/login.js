@@ -18,6 +18,9 @@ angular
 
             $scope.msisdn = '';
             $scope.password = '';
+            $scope.prefix = '+' + Client.prefix;
+            $scope.formController = {"msisdn": {"length" : {"min": 11, "max" : 12}}};
+
 
             //$scope.isWeb = false;
 
@@ -172,7 +175,6 @@ angular
             $scope.sendMsisdn = function(){
                 $scope.$emit('load');
                 if($scope.msisdn){
-                    //console.log('sendMsisdn. msisdn: ' + $scope.msisdn);
                     Upstream.clickedSubscriptionPromptEvent();
                     Client.setMsisdn($scope.msisdn,
                         function(){
@@ -182,7 +184,7 @@ angular
                         },
                         function(){
                             //$scope.$emit('unload');
-                            console.log('Error saving MSISDN');
+                            //console.log('Error saving MSISDN');
                         }
                     );
                 } else {
@@ -200,12 +202,16 @@ angular
             $scope.doMsisdnLogin = function(){
                 $scope.$emit('load');
                 if($scope.password && $scope.msisdn){
-                    ClientManager.createOrUpdateClient(
-                        {
-                            'msisdn' : $scope.msisdn,
-                            'password' : $scope.password
+                    Client.setMsisdn($scope.msisdn,
+                        function(){
+                          ClientManager.createOrUpdateClient(
+                          {
+                              'msisdn' : $scope.msisdn,
+                              'password' : $scope.password
+                          }
+                          , true, loginSuccess, loginError);
                         }
-                        , true, loginSuccess, loginError);
+                    );
                     Client.setNoGuest();
                 } else {
                     if(!$scope.msisdn){

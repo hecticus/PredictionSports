@@ -13,6 +13,8 @@ angular
             var FILE_KEY_CLIENT = "APPDATACLIENT";
             var FILE_KEY_CLIENT_PUSH_ALERTS = "APPDATACLIENTPUSHALERTS";
             var FILE_KEY_CLIENT_DATASAFE = "APPDATACLIENTDATASAFE";
+            var prefix = '55';
+
 
             var localStorage = $localStorage;
             var hasToUpdateRegId = false;
@@ -20,6 +22,7 @@ angular
             var clientDataSafe = false;
             var client = {};
             var currentVersion = 0;
+
             //noinspection UnnecessaryLocalVariableJS
             var service = {
 
@@ -30,6 +33,8 @@ angular
                  * @return {boolean} Returns a boolean value
                  */
                 init : init,
+
+                prefix : prefix,
 
                 updateClient : updateClient,
 
@@ -59,7 +64,7 @@ angular
                  * @return {boolean} Returns a boolean value
                  */
                 isActiveClient : isActiveClient,
-                
+
                 markClientAsNotOK : markClientAsNotOK,
 
                 getClientId : function(){
@@ -124,7 +129,7 @@ angular
                 setFriends : setFriends,
 
                 getFriendsIds : getFriendsIds,
-                
+
                 setActiveStatus : setActiveStatus
             };
 
@@ -135,7 +140,7 @@ angular
                 return deferred.promise;
             }
 
-            function updateClient(data, password) {                
+            function updateClient(data, password) {
                 var deferred = $q.defer();
                 if(!data){
                     deferred.reject();
@@ -146,10 +151,10 @@ angular
                 client.session = data.session;
                 client.auth_token = data.auth_token;
                 client.nickname = data.nickname;
-                
+
                 if(data.status){
                     setActiveStatus(data.status);
-                }                
+                }
 
                 if(data.language){
                     setLanguage(data.language);
@@ -204,7 +209,7 @@ angular
                 //return !!(status > 0 && status != 2);
                 return client.active && client.active === true;
             }
-            
+
             function setActiveStatus(status) {
                 client.active = !!(status > 0 && status != 2);
                 //client.active = false;
@@ -249,7 +254,7 @@ angular
                 localStorage[FILE_KEY_CLIENT_DATASAFE] = 'true';
                 return clientDataSafe;
             }
-            
+
             function markClientAsNotOK() {
                 clientDataSafe = false;
                 localStorage[FILE_KEY_CLIENT_DATASAFE] = 'false';
@@ -259,14 +264,14 @@ angular
             function setMsisdn(msisdn, successCallback, errorCallback) {
                 try{
                     msisdn = (''+msisdn).replace(/^\s+|\s+$/g, "");
-                    if(isNaN(msisdn) && (msisdn.length < 8 || msisdn.length > 11)){
+                    if(isNaN(msisdn) && (msisdn.length < 11 || msisdn.length > 12)){
                         typeof errorCallback == "function" && errorCallback();
                     }
 
                     for(var i = 0; i < msisdn.length; ++i){
                         parseInt(msisdn[i],10);
                     }
-                    client.msisdn = msisdn;
+                    client.msisdn = prefix + msisdn;
                     saveClient();
 
                     typeof successCallback == "function" && successCallback();

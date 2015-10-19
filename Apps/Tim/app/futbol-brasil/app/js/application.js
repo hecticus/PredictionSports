@@ -38,11 +38,11 @@ angular
 
                 $fbProvider.init(320314531485580);
                 $twtProvider.init().trimText(true);
-                
+
                 ezfbProvider.setInitParams({
                     /******CAMBIAR POR APPID DE PRODUCCION******/
                     appId: '1379325579064871'
-                }); 
+                });
 
             }
 
