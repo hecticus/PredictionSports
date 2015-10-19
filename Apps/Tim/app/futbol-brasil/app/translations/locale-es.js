@@ -139,6 +139,18 @@
         "MESSAGE" : "Por favor, lea los términos y condiciones en el sitio web http://www.tim.com.br/. Mediante el uso de la aplicación, el usuario se obliga a todos los Términos y Condiciones."
     },
 
+
+    "FORM-CONTROL": {
+        "MSISDN" : {
+          "REQUIRED" : "The número de teléfono es obligatorio",
+          "MIN-LENGTH" : "La longitud mínima requerida es ",
+          "MAX-LENGTH" : "La longitud máxima requerida es "
+        },
+        "PASSWORD" : {
+          "REQUIRED" : "La contraseña es obligatoria"
+        }
+    },
+
     "ALERT": {
 
       "FACEBOOK" : {
@@ -245,7 +257,7 @@
           "SUBTITLE": "Fecha desfasada",
           "MSG": "La fecha del partido está desfasada"
       },
-      
+
       "FB_SHARE" : {
             "TITLE" : "News Share",
             "SUBTITLE": "Warning",

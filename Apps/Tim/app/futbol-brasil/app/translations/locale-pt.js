@@ -139,6 +139,17 @@
         "MESSAGE" : "Por favor, leia os Termos e Condições no site http://www.tim.com.br/.  Ao usar o aplicativo o usuário concorda com todos os Termos e Condições."
     },
 
+    "FORM-CONTROL": {
+        "MSISDN" : {
+          "REQUIRED" : "É necessário o número de telefone",
+          "MIN-LENGTH" : "O comprimento mínimo necessário é ",
+          "MAX-LENGTH" : "O comprimento máximo necessário é "
+        },
+        "PASSWORD" : {
+          "REQUIRED" : "A senha é necessária"
+        }
+    },
+
     "ALERT": {
 
         "FACEBOOK" : {
@@ -245,7 +256,7 @@
             "SUBTITLE": "Data desatualizado",
             "MSG": "A data de partida está desatualizado"
         },
-        
+
         "FB_SHARE" : {
             "TITLE" : "News Share",
             "SUBTITLE": "Warning",

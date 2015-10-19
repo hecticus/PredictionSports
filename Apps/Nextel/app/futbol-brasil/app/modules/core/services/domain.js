@@ -10,8 +10,8 @@ angular
     .factory('Domain', ['$localStorage', 'App','Client','CordovaDevice',
         function($localStorage, App, Client,CordovaDevice){
 
-            var football_manager_url = 'http://footballmanager.hecticus.com/';
-            var brazil_football_manager_url = 'http://brazil.footballmanager.hecticus.com/';
+            var football_manager_url = 'http://nextel.sports.hecticus.com/';
+            var brazil_football_manager_url = 'http://nextel.sports.hecticus.com/';
             var appId = '1';
             var apiVersion = 'v1';
             var provisionalLang = null;
@@ -95,27 +95,27 @@ angular
 
                 upstream: function () {
                   var ClientId = getClientId();
-                  if (ClientId) return brazil_football_manager_url + 'futbolbrasil/v2/client/' + getClientId() + '/upstream' + getSecurityToken('?');
+                  if (ClientId) return brazil_football_manager_url + 'sportsapi/v2/client/' + getClientId() + '/upstream' + getSecurityToken('?');
                   return false;
                 },
 
                 languages:  function () {
-                  return brazil_football_manager_url + 'futbolbrasil/' + apiVersion + '/languages'  + getSecurityToken('?');
+                  return brazil_football_manager_url + 'sportsapi/' + apiVersion + '/languages'  + getSecurityToken('?');
                 },
 
                 client: {
                     create: function () {
                       //console.log('client->create');
-                      return brazil_football_manager_url + 'futbolbrasil/' + apiVersion + '/clients/create' + getSecurityToken('?');
+                      return brazil_football_manager_url + 'sportsapi/' + apiVersion + '/clients/create' + getSecurityToken('?');
                     },
                     update: function () {
                         //console.log('client->update');
-                        return brazil_football_manager_url + 'futbolbrasil/'
+                        return brazil_football_manager_url + 'sportsapi/'
                             + apiVersion + '/clients/update/' + getClientId() + getSecurityToken('?');
                     },
                     get: function (clientId, upstreamChannel) {
                           //console.log('client->get');
-                        return brazil_football_manager_url + 'futbolbrasil/'
+                        return brazil_football_manager_url + 'sportsapi/'
                             + apiVersion + '/clients/get/'
                             + clientId + '/' + upstreamChannel + getSecurityToken('?');
                     }
@@ -133,7 +133,7 @@ angular
 
                     //console.log('domain -> competitionsPrediction');
 
-                    return brazil_football_manager_url + 'futbolbrasil/'
+                    return brazil_football_manager_url + 'sportsapi/'
                     + apiVersion + '/clients/dashboard/' +  clientId + '/' + getLang()
                     +  getGMT('?') + getSecurityToken('&') ;
 
@@ -227,7 +227,7 @@ angular
 
                 bets: {
                     get: function (_competition) {
-                        return brazil_football_manager_url + 'futbolbrasil/'
+                        return brazil_football_manager_url + 'sportsapi/'
                             + apiVersion + '/clients/bets/get/'
                             + getClientId() + '/' + _competition
                             + getGMT('?')
@@ -235,7 +235,7 @@ angular
                     },
 
                     getToday: function (_date) {
-                      return brazil_football_manager_url + 'futbolbrasil/'
+                      return brazil_football_manager_url + 'sportsapi/'
                           + apiVersion + '/clients/bets/get/date/'
                           + getClientId() + '/' + _date
                           + getGMT('?')
@@ -243,7 +243,7 @@ angular
                     },
 
                     create : function() {
-                        return brazil_football_manager_url + 'futbolbrasil/'
+                        return brazil_football_manager_url + 'sportsapi/'
                             + 'v2' + '/client/' + getClientId() + '/bet' + getSecurityToken('?');
                     }
                 },
@@ -251,12 +251,13 @@ angular
                 leaderboard:  {
 
                     total: function() {
-                        return 'http://brazil.footballmanager.hecticus.com/futbolbrasil/v1/clients/leaderboard/total/' + getClientId()
+                        return football_manager_url
+                        + 'sportsapi/v1/clients/leaderboard/total/' + getClientId()
                         + getSecurityToken('?');
                     },
 
                     phase: function (_competition, _phase) {
-                        return brazil_football_manager_url+ 'futbolbrasil/'
+                        return brazil_football_manager_url+ 'sportsapi/'
                             + apiVersion + '/clients/leaderboard/get/'
                             + getClientId() + '/' + _competition + '/' + _phase
                             + getGMT('?')
@@ -264,7 +265,7 @@ angular
                     },
 
                     competition: function (_competition) {
-                        return brazil_football_manager_url + 'futbolbrasil/'
+                        return brazil_football_manager_url + 'sportsapi/'
                             + apiVersion + '/clients/leaderboard/global/get/'
                             + getClientId() + '/' + _competition
                             + getGMT('?')
@@ -275,7 +276,7 @@ angular
 
                         competition: function() {
                             return brazil_football_manager_url
-                                + 'futbolbrasil/'
+                                + 'sportsapi/'
                                 + apiVersion + '/clients/leaderboard/personal/tournament/'
                                 + getClientId()
                                 + getGMT('?')
@@ -284,7 +285,7 @@ angular
                         phase: {
                             index : function(){
                                 return brazil_football_manager_url
-                                    + 'futbolbrasil/'
+                                    + 'sportsapi/'
                                     + apiVersion + '/clients/leaderboard/personal/phase/'
                                     + getClientId()
                                     + getGMT('?')
