@@ -139,6 +139,17 @@
         "MESSAGE" : "Please read the Terms & Conditions on the website http://www.tim.com.br/. By using the application the user agrees to all the Terms & Conditions."
     },
 
+    "FORM-CONTROL": {
+        "MSISDN" : {
+          "REQUIRED" : "The phone number is required",
+          "MIN-LENGTH" : "The required minimum length is ",
+          "MAX-LENGTH" : "The maximum length required is "
+        },
+        "PASSWORD" : {
+          "REQUIRED" : "The password is required"
+        }
+    },
+
     "ALERT": {
 
           "FACEBOOK" : {
@@ -245,7 +256,7 @@
             "SUBTITLE": "Outdated event",
             "MSG": "The match date is outdated"
           },
-          
+
           "FB_SHARE" : {
             "TITLE" : "News Share",
             "SUBTITLE": "Warning",

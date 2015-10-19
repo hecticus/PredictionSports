@@ -109,7 +109,8 @@ angular
 
 
                 if(client.msisdn){
-                    jData.login = client.msisdn;
+                    //jData.login = client.msisdn;
+                    jData.login = Client.getMsisdn();
                 }
 
                 if(client.password){
