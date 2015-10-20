@@ -16,17 +16,18 @@ public class Loading  extends Controller {
 
     public static Integer LIMIT = 5;
     public static Integer MIN_LENGTH_MSISDN = 11;
-    public static Integer MAX_LENGTH_MSISDN = 11;
+    public static Integer MAX_LENGTH_MSISDN = 12;
     public static Integer COUNTRY = 1; //Brasil
     public static Integer LANGUAGE = 405; //Portuguese
     public static String UPSTREAM_CHANNEL = "WEB";
     public static String UPSTREAM_EVENT_LOGIN = "LOGIN";
     public static Form<Client> form = form(Client.class);
 
-    public static final String URL_FOOTBALL_MANAGER = "http://footballmanager.hecticus.com/";
-    public static final String URL_FOOTBALL_MANAGER_BRAZIL = "http://brazil.footballmanager.hecticus.com/";
-    public static final String URL_HTML5 = "http://timfutebol.hecticus.com/";
+    public static final String URL_FOOTBALL_MANAGER = "http://tim.sports.hecticus.com/";
+    public static final String URL_FOOTBALL_MANAGER_BRAZIL = "http://tim.sports.hecticus.com/";
+    public static final String URL_HTML5 = "http://m.timpalpites.com/";
     public static final String VERSION = "v1";
+    public static final String PREFIX = "55";
 
     private JsonNode jLoading;
 

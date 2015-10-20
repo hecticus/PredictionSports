@@ -15,7 +15,7 @@
             }
 
             <form  method="post" action="@routes.Wap.getPassword()">
-                <input type="text" name="msisdn" size="10" /><br /><br/>
+                <input type="text" name="msisdn" size="12" /><br /><br/>
                 <input type="submit" value='@Messages.get("BUTTON_NEXT")' />
             </form>
 
@@ -30,7 +30,7 @@
 
             <form id="create" method="post" action="@routes.Wap.createClient()">
                 <input type="hidden" name="msisdn" value='@(clientForm("msisdn").value)'  />
-                <input type="password" name="password" size="10" /><br /><br/>
+                <input type="password" name="password" size="12" /><br /><br/>
                 <input type="submit" value='@Messages.get("BUTTON_CONFIRM")'>
             </form>
 

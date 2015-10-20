@@ -41,8 +41,10 @@ public class Wap extends Loading {
             return false;
         }
 
+        System.out.println("HD.getLevelSupport() -> " + HD.getLevelSupport());
+
         if ((HD.getLevelSupport() == null)
-                || (HD.getLevelSupport() >= HandsetDetection.HTML4_AJAX)) {
+                || (HD.getLevelSupport() > HandsetDetection.HTML4_AJAX)) {
             return true;
         }
 
@@ -77,8 +79,8 @@ public class Wap extends Loading {
                 return redirect(controllers.routes.Wap.getLogin());
             }
 
-
-            String sDomain =  URL_FOOTBALL_MANAGER_BRAZIL + "futbolbrasil/v1/clients/create" + getSecuretyTokenParam("?");
+            sMsisdn = PREFIX + filledForm.field("msisdn").value();
+            String sDomain =  URL_FOOTBALL_MANAGER_BRAZIL + "sportsapi/v1/clients/create" + getSecuretyTokenParam("?");
             ObjectNode jCompetition = Json.newObject();
             jCompetition.put("country", COUNTRY);
             jCompetition.put("login", sMsisdn);
@@ -126,11 +128,11 @@ public class Wap extends Loading {
                 return ok(login.render(filledForm,HD,1));
             }
 
-            String sDomain =  URL_FOOTBALL_MANAGER_BRAZIL + "futbolbrasil/v1/clients/create" + getSecuretyTokenParam("?");
-
+            String sDomain =  URL_FOOTBALL_MANAGER_BRAZIL + "sportsapi/v1/clients/create" + getSecuretyTokenParam("?");
+            String sMsisdn = PREFIX + filledForm.field("msisdn").value();
             ObjectNode jCompetition = Json.newObject();
             jCompetition.put("country",COUNTRY);
-            jCompetition.put("login", filledForm.field("msisdn").value());
+            jCompetition.put("login", sMsisdn);
             jCompetition.put("password",filledForm.field("password").value());
             jCompetition.put("language",LANGUAGE);
             jCompetition.put("upstreamChannel",UPSTREAM_CHANNEL);
@@ -146,7 +148,7 @@ public class Wap extends Loading {
             System.out.println(filledForm.field("password").value());
             System.out.println("</createClient>");*/
 
-            if ((iError == 0) || (isTestMsisdnClient(filledForm.field("msisdn").value()) >= 0)) {
+            if ((iError == 0) || (isTestMsisdnClient(sMsisdn) >= 0)) {
                 setAccessControl(filledForm);
                 return redirect(controllers.routes.Wap.index());
             } else {
@@ -260,7 +262,7 @@ public class Wap extends Loading {
             SimpleDateFormat sDf = new SimpleDateFormat ("yyyyMMdd");
 
             String sDomain = URL_FOOTBALL_MANAGER
-                    + "footballapi/"
+                    + "sportsapi/"
                     + VERSION
                     + "/matches/competition/date/paged/1/" + idCompetition
                     + "/" + sDf.format(dNow)
@@ -303,7 +305,7 @@ public class Wap extends Loading {
             if (!getAccessControl())
                 return redirect(controllers.routes.Wap.getLogin());
 
-            String sDomain = URL_FOOTBALL_MANAGER + "footballapi/"+ VERSION + "/matches/mam/next/1"
+            String sDomain = URL_FOOTBALL_MANAGER + "sportsapi/"+ VERSION + "/matches/mam/next/1"
                     + "/" + idCompetition
                     + "/" + idMatch
                     + "/" + LANGUAGE
@@ -349,7 +351,7 @@ public class Wap extends Loading {
                 return redirect(controllers.routes.Wap.getLogin());
 
             String sDomain = URL_FOOTBALL_MANAGER
-                    + "footballapi/"
+                    + "sportsapi/"
                     + VERSION + "/players/competition/scorers/1/"
                     + idCompetition + "?pageSize=10&page=0&timezoneName=" + getGMTParam()
                     + getSecuretyTokenParam("&");
@@ -375,7 +377,7 @@ public class Wap extends Loading {
 
         HandsetDetection HD = new HandsetDetection();
         JsonNode jCompetitions = (JsonNode) Cache.get("competitions");
-        String sDomain = URL_FOOTBALL_MANAGER + "footballapi/" + VERSION + "/competitions/list/1/" + LANGUAGE
+        String sDomain = URL_FOOTBALL_MANAGER + "sportsapi/" + VERSION + "/competitions/list/1/" + LANGUAGE
                 + "?timezoneName=" + getGMTParam() + getSecuretyTokenParam("&");
 
         if (jCompetitions == null) {
@@ -410,9 +412,11 @@ public class Wap extends Loading {
             response().setCookie("id", filledForm.field("id").value(), 86400);
         }
 
+        String sMsisdn = PREFIX + filledForm.field("msisdn").value();
+
         if (filledForm.field("msisdn").value() != null) {
-            session("msisdn", filledForm.field("msisdn").value());
-            response().setCookie("msisdn", filledForm.field("msisdn").value(), 86400);
+            session("msisdn", sMsisdn);
+            response().setCookie("msisdn", sMsisdn, 86400);
         }
 
         if (filledForm.field("password").value() != null) {
