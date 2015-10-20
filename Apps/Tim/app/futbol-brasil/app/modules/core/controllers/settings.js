@@ -134,7 +134,7 @@ angular
                             };
                             getStatus();
                       });
-                      
+
                     }
                 }
             };
@@ -186,6 +186,7 @@ angular
 
             function getStatus(){
                 //if(!!window.facebookConnectPlugin) {
+                    $scope.setFbButtonMsg();
                     FacebookManager.getStatus(function (result) {
                         if (result) {
                             $scope.fbObject.fbStatus = result.status;
