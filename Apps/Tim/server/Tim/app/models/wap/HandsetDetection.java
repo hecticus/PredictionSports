@@ -28,6 +28,7 @@ public class HandsetDetection  extends Controller {
     private String general_platform; // Android|iOS|Series40
     private String general_platform_version;
     private String general_type; // Mobile|Tablet
+    private Boolean html_web_3_2;
 
     private String general_vendor;
     private String general_model;
@@ -59,21 +60,29 @@ public class HandsetDetection  extends Controller {
                 JsonNode jHdSpecs = jDevice.get("hd_specs");
                 JsonNode jDisplay = jDevice.get("display");
 
-
                 /*System.out.println("---------------------------------");
                 System.out.println(jDevice.toString());
+                System.out.println("---------------------------------");
                 System.out.println(jHdSpecs.get("general_platform").asText());
+                System.out.println("---------------------------------");
                 System.out.println(jHdSpecs.get("general_platform_version").asText());
+                System.out.println("---------------------------------");
                 System.out.println(jHdSpecs.get("general_type").asText());
+                System.out.println("---------------------------------");
                 System.out.println(jHdSpecs.get("general_vendor").asText());
+                System.out.println("---------------------------------");
                 System.out.println(jHdSpecs.get("general_model").asText());
-                System.out.println(jDisplay.get("resolution_width").asText());
+                System.out.println("---------------------------------");
+                System.out.println(jDisplay.toString());
                 System.out.println("---------------------------------");*/
 
+                this.html_web_3_2 = jMarkup.get("html_web_3_2").asBoolean();
                 this.levelSupport = jMarkup.get("xhtml_support_level").asInt();
                 this.contentType = jXhtmlUi.get("xhtmlmp_preferred_mime_type").asText();
-                this.resolution_width = jDisplay.get("resolution_width").asText();
-                this.resolution_height = jDisplay.get("resolution_height").asText();
+                //this.resolution_width = jDisplay.get("resolution_width").asText();
+                //this.resolution_height = jDisplay.get("resolution_height").asText();
+                this.resolution_width = jDisplay.get("max_image_width").asText();
+                this.resolution_height = jDisplay.get("max_image_height").asText();
                 this.general_platform = jHdSpecs.get("general_platform").asText();
                 this.general_platform_version = jHdSpecs.get("general_platform_version").asText();
                 this.general_type = jHdSpecs.get("general_type").asText();
@@ -94,11 +103,11 @@ public class HandsetDetection  extends Controller {
                     _zizeBanner = "h_hight.jpg";
                 }
 
-                Promise<WSResponse> wsResponse = WS.url(oLoading.URL_FOOTBALL_MANAGER + "sportsapi/v1/localimages/" + _zizeBanner + "/"+ jDisplay.get("resolution_width").asText()).get();
+                Promise<WSResponse> wsResponse = WS.url(oLoading.URL_FOOTBALL_MANAGER + "sportsapi/v1/localimages/" + _zizeBanner + "/"+ jDisplay.get("max_image_width").asText()).get();
 
-                System.out.println("<BANNER>");
-                System.out.println(oLoading.URL_FOOTBALL_MANAGER + "sportsapi/v1/localimages/" + _zizeBanner + "/"+ jDisplay.get("resolution_width").asText());
-                System.out.println("</BANNER>");
+                /*System.out.println("<BANNER>");
+                System.out.println(oLoading.URL_FOOTBALL_MANAGER + "sportsapi/v1/localimages/" + _zizeBanner + "/"+ jDisplay.get("max_image_width").asText());
+                System.out.println("</BANNER>");*/
 
                 JsonNode jResponse = wsResponse.get(10000).asJson();
                 Integer iError = jResponse.get("error").asInt();
@@ -111,6 +120,10 @@ public class HandsetDetection  extends Controller {
                 } else {
                     response().setContentType("text/html");
                 }
+
+                if(!this.html_web_3_2)
+                    this.levelSupport =  this.HTML;
+
 
             }
 
