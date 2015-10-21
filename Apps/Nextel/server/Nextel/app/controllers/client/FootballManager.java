@@ -13,8 +13,12 @@ import play.libs.ws.WSResponse;
 import play.mvc.Result;
 import utils.Utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -45,10 +49,23 @@ public class FootballManager extends FootballController {
     }
 
     public static ObjectNode callFootballManger(String path){
+        Set<Map.Entry<String, String[]>> entries = request().queryString().entrySet();
+        StringBuilder queryString = new StringBuilder();
+        for (Map.Entry<String, String[]> entry : entries) {
+            for (String s : entry.getValue()) {
+                queryString.append(entry.getKey()).append("=").append(s).append("&");
+            }
+        }
         StringBuilder url = new StringBuilder();
-        url.append("http://").append(Utils.getFootballManagerHost()).append(request().path());
+        try {
+            url.append("http://").append(Utils.getFootballManagerHost()).append(request().path()).append("?").append(URLEncoder.encode(queryString.toString(), "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         F.Promise<WSResponse> result = WS.url(url.toString()).get();
         ObjectNode response = (ObjectNode)result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
+        url.delete(0, url.length());
+        queryString.delete(0, url.length());
         return response;
     }
 
