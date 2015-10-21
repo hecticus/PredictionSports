@@ -36,15 +36,14 @@ public class Wap extends Loading {
 
         String sUserAgent = request().getHeader("User-Agent");
 
-
         if (sUserAgent.toLowerCase().contains("opera")) {
             return false;
         }
 
-        System.out.println("HD.getLevelSupport() -> " + HD.getLevelSupport());
+        System.out.println("HD.getLevelSupport -> " + HD.getLevelSupport());
 
         if ((HD.getLevelSupport() == null)
-                || (HD.getLevelSupport() > HandsetDetection.HTML4_AJAX)) {
+                || (HD.getLevelSupport() >= HandsetDetection.HTML4_AJAX)) {
             return true;
         }
 
