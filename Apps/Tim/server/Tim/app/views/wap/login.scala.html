@@ -1,6 +1,23 @@
 @(clientForm: Form[models.wap.Client], HD: models.wap.HandsetDetection, step: Integer)
 @import play.i18n._
 
+@msisdnForm = {
+
+    <form  method="post" action="@routes.Wap.getPassword()">
+        <table>
+            <tr>
+                <td><b>+55&nbsp</b></td>
+                <td><input type="text" name="msisdn" size="12" /></td>
+            </tr>
+        </table>
+        <br />
+
+        <input type="submit" value='@Messages.get("BUTTON_NEXT")' />
+    </form>
+
+}
+
+
 @if(HD.getLevelSupport() < models.wap.HandsetDetection.HTML) {
 
     @xhtml(HD){
@@ -14,10 +31,7 @@
                 <h6 style="color:red;">@flash.get("error_msisdn")</h6>
             }
 
-            <form  method="post" action="@routes.Wap.getPassword()">
-                <input type="text" name="msisdn" size="12" /><br /><br/>
-                <input type="submit" value='@Messages.get("BUTTON_NEXT")' />
-            </form>
+            @msisdnForm
 
         } else {
 
@@ -60,10 +74,7 @@
 
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding:5px !important">
-                    <form method="post" action="@routes.Wap.getPassword()">
-                        <input type="text" name="msisdn" size="15" /><br /><br />
-                        <input type="submit" value='@Messages.get("BUTTON_NEXT")' />
-                    </form>
+                    @msisdnForm
                 </div>
 
             } else {
