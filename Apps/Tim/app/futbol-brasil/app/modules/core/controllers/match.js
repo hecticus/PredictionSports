@@ -32,7 +32,7 @@ angular
             };
 
             $scope.getTime = function(_date) {
-                return Moment.date(_date).format('HH:mm');
+                return Moment.dateNoUTC(_date).format('HH:mm');
             };
 
             $scope.pagesBefore = [];
@@ -79,7 +79,6 @@ angular
                 var config = WebManager.getFavoritesConfig($rootScope.isFavoritesFilterActive());
                 config.params.pageSize = _limit;
                 config.params.page = 0;
-
                 $http.get(Domain.match(_item.date), config)
                     .then(function (data) {
                         data = data.data;

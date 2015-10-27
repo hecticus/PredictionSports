@@ -81,7 +81,7 @@ angular
             };
 
             $scope.getTime = function (_date) {
-                return Moment.date(_date).format('HH:mm');
+                return Moment.dateNoUTC(_date).format('HH:mm');
             };
 
 
