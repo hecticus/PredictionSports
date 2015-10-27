@@ -261,7 +261,7 @@ public class Wap extends Loading {
             SimpleDateFormat sDf = new SimpleDateFormat ("yyyyMMdd");
 
             String sDomain = URL_FOOTBALL_MANAGER
-                    + "sportsapi/"
+                    + "footballapi/"
                     + VERSION
                     + "/matches/competition/date/paged/1/" + idCompetition
                     + "/" + sDf.format(dNow)
@@ -270,7 +270,7 @@ public class Wap extends Loading {
                     + "&timezoneName=" + getGMTParam()
                     + getSecuretyTokenParam("&");
 
-            //System.out.println(sDomain);
+            System.out.println(sDomain);
             Promise<WSResponse> wsResponse = WS.url(sDomain).get();
 
             JsonNode jResponse = wsResponse.get(10000).asJson();
@@ -304,7 +304,7 @@ public class Wap extends Loading {
             if (!getAccessControl())
                 return redirect(controllers.routes.Wap.getLogin());
 
-            String sDomain = URL_FOOTBALL_MANAGER + "sportsapi/"+ VERSION + "/matches/mam/next/1"
+            String sDomain = URL_FOOTBALL_MANAGER + "footballapi/"+ VERSION + "/matches/mam/next/1"
                     + "/" + idCompetition
                     + "/" + idMatch
                     + "/" + LANGUAGE
@@ -350,7 +350,7 @@ public class Wap extends Loading {
                 return redirect(controllers.routes.Wap.getLogin());
 
             String sDomain = URL_FOOTBALL_MANAGER
-                    + "sportsapi/"
+                    + "footballapi/"
                     + VERSION + "/players/competition/scorers/1/"
                     + idCompetition + "?pageSize=10&page=0&timezoneName=" + getGMTParam()
                     + getSecuretyTokenParam("&");
@@ -376,8 +376,10 @@ public class Wap extends Loading {
 
         HandsetDetection HD = new HandsetDetection();
         JsonNode jCompetitions = (JsonNode) Cache.get("competitions");
-        String sDomain = URL_FOOTBALL_MANAGER + "sportsapi/" + VERSION + "/competitions/list/1/" + LANGUAGE
+        String sDomain = URL_FOOTBALL_MANAGER + "footballapi/" + VERSION + "/competitions/list/1/" + LANGUAGE
                 + "?timezoneName=" + getGMTParam() + getSecuretyTokenParam("&");
+
+        System.out.println("sDomain -> " + sDomain);
 
         if (jCompetitions == null) {
             Promise<WSResponse> wsResponse = WS.url(sDomain).get();
