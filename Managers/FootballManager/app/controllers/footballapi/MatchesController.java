@@ -388,6 +388,79 @@ public class MatchesController extends HecticusController {
         }
     }
 
+    public static Result getFixturesForCompetitionGroupByDateNoPhase(Integer idApp, Long idCompetition, String timezoneName){
+        try {
+            if(timezoneName.isEmpty()){
+                return badRequest(buildBasicResponse(1, "Es necesario pasar un timezone"));
+            }
+            timezoneName = timezoneName.replaceAll(" ", "").trim();
+            Apps app = Apps.findId(idApp);
+            if(app != null) {
+                TimeZone timeZone = DateAndTime.getTimezoneFromID(timezoneName);
+                if(timeZone == null){
+                    return badRequest(buildBasicResponse(1, "Es necesario pasar un timezone"));
+                }
+                Calendar today = new GregorianCalendar(timeZone);
+                String date = DateAndTime.getMinimumDate(today, timezoneName, "yyyMMddhhmmss");
+                ArrayList<ObjectNode> data = new ArrayList();
+                Competition competition = app.getCompetition(idCompetition);
+                if (competition != null) {
+                    int gamesLimit = Config.getInt("game-match-limit");
+                    List<GameMatch> gameMatches = GameMatch.finder.where().eq("competition", competition).ge("date", date).setMaxRows(gamesLimit).orderBy("date asc").findList();
+                    if (gameMatches != null && !gameMatches.isEmpty()) {
+                        ArrayList<ObjectNode> fixtures = new ArrayList<>();
+                        String pivot = gameMatches.get(0).getDate().substring(0, 8);
+                        Calendar pivotMaximumDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+                        pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd", TimeZone.getTimeZone("UTC")));
+                        Calendar maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
+                        Calendar matchDate = null;
+                        Calendar pivotDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+                        pivotDate.setTime(DateAndTime.getDate(gameMatches.get(0).getDate(), gameMatches.get(0).getDate().length()==8?"yyyyMMdd":"yyyyMMddhhmmss", TimeZone.getTimeZone("UTC")));
+                        SimpleDateFormat tzFormatter = new SimpleDateFormat("yyyyMMdd");
+                        tzFormatter.setTimeZone(timeZone);
+                        for (GameMatch gameMatch : gameMatches) {
+                            matchDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+                            matchDate.setTime(DateAndTime.getDate(gameMatch.getDate(), gameMatch.getDate().length() == 8 ? "yyyyMMdd":"yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")));
+                            if (matchDate.before(maximumDate)) {
+                                fixtures.add(gameMatch.toJsonSimple(timeZone));
+                            } else {
+                                ObjectNode round = Json.newObject();
+                                round.put("date", tzFormatter.format(pivotDate.getTime()));
+                                round.put("matches", Json.toJson(fixtures));
+                                data.add(round);
+                                fixtures.clear();
+                                fixtures.add(gameMatch.toJsonSimple(timeZone));
+                                pivot = gameMatch.getDate().substring(0, 8);
+                                pivotDate.setTime(DateAndTime.getDate(gameMatch.getDate(), gameMatch.getDate().length()==8?"yyyyMMdd":"yyyyMMddhhmmss", TimeZone.getTimeZone("UTC")));
+                                pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd", TimeZone.getTimeZone("UTC")));
+                                maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
+                            }
+                        }
+                        if (!fixtures.isEmpty()) {
+                            ObjectNode round = Json.newObject();
+                            round.put("date", tzFormatter.format(pivotDate.getTime()));
+                            round.put("matches", Json.toJson(fixtures));
+                            data.add(round);
+                            fixtures.clear();
+                        }
+                        gameMatches.clear();
+                    }
+                    ObjectNode competitionJson = competition.toJsonSimple();
+                    competitionJson.put("fixtures", Json.toJson(data));
+                    data.clear();
+                    return ok(hecticusResponse(0, "OK", competitionJson));
+                } else {
+                    return notFound(buildBasicResponse(1, "La competencia " + idCompetition + " no existe"));
+                }
+            } else {
+                return notFound(buildBasicResponse(1, "El app " + idApp + " no existe"));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
+        }
+    }
+
     public static F.Promise<Result> getFixturesDatePagedWrapper(final Integer idApp, final Integer idLanguage, final String date, final Integer pageSize, final Integer page, final String timezoneName) {
         F.Promise<Result> promiseOfObjectNode = F.Promise.promise(
             new F.Function0<Result>() {
