@@ -10,7 +10,7 @@ node_modules/
 #plugins/*/*
 
 ##########Platforms##########
-platforms/
+/platforms/
 
 ##########iOS##########
 platforms/ios/cordova/console.log
