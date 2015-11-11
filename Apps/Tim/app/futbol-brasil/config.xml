@@ -102,12 +102,12 @@
         <false />
     </gap:config-file>
 
-    <feature name="Facebook Connect">
+    <!--<feature name="Facebook Connect">
         <param name="id" value="com.phonegap.plugins.facebookconnect" />
         <param name="url" value="https://github.com/Wizcorp/phonegap-facebook-plugin" />
         <variable name="APP_ID" value="1379325579064871" />
         <variable name="APP_NAME" value="TIM Palpites" />
-    </feature>
+    </feature>-->
 
     <feature name="Custom URL scheme">
         <param name="id" value="nl.x-services.plugins.launchmyapp" />
