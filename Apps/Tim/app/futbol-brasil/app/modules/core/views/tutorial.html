@@ -13,6 +13,9 @@
       <li ng-style="getWidth()">
         <img  class="h-img-tutorial"  src="img/tutorial/{{language}}/3.png" onerror="this.src='img/tutorial/pt/3.png'">
       </li>
+      <li ng-style="getWidth()">
+        <img  class="h-img-tutorial"  src="img/tutorial/{{language}}/4.png" onerror="this.src='img/tutorial/pt/4.png'">
+      </li>
     </ul>
   </div>
 
@@ -22,6 +25,7 @@
     <i class="mdi-toggle-radio-button-off" ng-class="getToggleOnClass(1)"></i>
     <i class="mdi-toggle-radio-button-off" ng-class="getToggleOnClass(2)"></i>
     <i class="mdi-toggle-radio-button-off" ng-class="getToggleOnClass(3)"></i>
+    <i class="mdi-toggle-radio-button-off" ng-class="getToggleOnClass(4)"></i>
   </div>
 
 </div>
@@ -30,7 +34,7 @@
   <buttom class=" mdi-navigation-chevron-left" ng-click="prevPage()"></buttom>
 </div>
 
-<div style="position:absolute; display:block; bottom:50%; right:0; z-index: 25; "  ng-class="getHiddenClass(3)"  >
+<div style="position:absolute; display:block; bottom:50%; right:0; z-index: 25; "  ng-class="getHiddenClass(4)"  >
   <buttom class="mdi-navigation-chevron-right" ng-click="nextPage()"></buttom>
 </div>
 
