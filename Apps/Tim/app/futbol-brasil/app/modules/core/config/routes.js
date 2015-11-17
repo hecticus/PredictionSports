@@ -132,10 +132,7 @@ angular
                 }
             })
             .state('news', {
-                url: '/news/{newsId:int}',
-                params : {
-                  newsId : {value: null, squash: true}
-                },
+                url: '/news',
                 controller:'NewsCtrl  as _this',
                 templateUrl:'modules/core/views/news.html',
                 data:{
@@ -246,6 +243,22 @@ angular
                   section: 'how',
                   state: 'how'
               }
+            })
+
+            .state('news-detail', {
+                url: '/news/{newsId:int}',
+                params : {
+                  newsId : {value: null, squash: true}
+                },
+                controller:'NewsCtrl  as _this',
+                templateUrl:'modules/core/views/news.html',
+                data:{
+                    prev: 'news',
+                    next: 'news',
+                    contentClass: 'content-news',
+                    section: 'notistats',
+                    state: 'news-detail'
+                }
             })
 
             .state('tutorial', {
