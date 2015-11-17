@@ -6,11 +6,14 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
+  <title><?php echo $data->response->title; ?></title>
   <meta charset="UTF-8">
   <meta property="og:title" content="<?php echo $data->response->title; ?>"/>
   <meta property="og:image" content="<?php echo $data->response->resources->mid[0]; ?>"/>
   <meta property="og:site_name" content="Tim Palpites"/>
   <meta property="og:description" content="<?php echo $data->response->summary; ?>"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="http://m.timpalpites.com/" />
 </head>
 <body>
 
