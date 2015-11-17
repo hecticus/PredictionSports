@@ -256,7 +256,7 @@ angular
                     prev: 'news',
                     next: 'news',
                     contentClass: 'content-news',
-                    section: 'notistats',
+                    section: 'news-detail',
                     state: 'news-detail'
                 }
             })
