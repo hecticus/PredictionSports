@@ -1,12 +1,8 @@
 <?php
 	  $get =  file_get_contents('http://tim.sports.hecticus.com/newsapi/v1/news/get/'.$_REQUEST['id'].'?timezoneName=GMT-0500&upstreamChannel=Web&api_password=1234)9|1');
 		$data = (Object)json_decode($get);
-		
-	    if(stripos($_server['HTTP_REFERER'], 'facebook') !== false) {
-      echo 'facebook';
-    } else {
-      echo 'no facebook';
-    }
+	
+    echo strpos('facebook',$_SERVER[HTTP_REFERER])
 ?>
 
 <!DOCTYPE html>
