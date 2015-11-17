@@ -193,7 +193,7 @@ angular
             }
 
             function requiresAuthSection(section){
-                return !(section === 'login' || section === 'remind' || section === 'terms' || section === 'tutorial');
+                return !(section === 'login' || section === 'remind' || section === 'terms' || section === 'tutorial' || section === 'news-detail');
             }
 
             function isBlockedSection(section){
