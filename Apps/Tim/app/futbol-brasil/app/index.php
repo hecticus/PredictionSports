@@ -13,7 +13,7 @@
   <meta property="og:site_name" content="Tim Palpites"/>
   <meta property="og:description" content="<?php echo $data->response->summary; ?>"/>
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="http://m.timpalpites.com/" />
+  <meta property="og:url" content="<?php echo "http://m.timpalpites.com/index.php?id=".$data->response->idNews ?>" />
 </head>
 <body>
 
