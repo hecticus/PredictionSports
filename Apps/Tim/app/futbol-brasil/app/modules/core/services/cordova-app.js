@@ -15,10 +15,10 @@ angular
 
             var currentSection = '';
             var prevSection = '';
-            var utilitySections = ['login','settings', 'terms', 'remind', 'language-selection', 'team-selection'];
+            var utilitySections = ['login','settings', 'terms', 'remind', 'language-selection', 'team-selection', 'news-detail'];
             var settingsSubSections = ['language-selection', 'team-selection'];
             var blockedSections = ['match', 'standings', 'scorers', 'mtm', 'friends'];
-            var settingsSections = ['settings', 'terms', 'tutorial','remind', 'language-selection', 'team-selection'];
+            var settingsSections = ['settings', 'terms', 'tutorial','remind', 'language-selection', 'team-selection', 'news-detail'];
             var onSettingsSection = false;
 
             var strings = {};

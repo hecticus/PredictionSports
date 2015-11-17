@@ -246,15 +246,15 @@ angular
             })
 
             .state('news-detail', {
-                url: '/news/{newsId:int}',
+                url: '/news-detail/{newsId:int}',
                 params : {
                   newsId : {value: null, squash: true}
                 },
-                controller:'NewsCtrl  as _this',
-                templateUrl:'modules/core/views/news.html',
+                controller:'NewsDetailCtrl as _this',
+                templateUrl:'modules/core/views/news-detail.html',
                 data:{
-                    prev: 'news',
-                    next: 'news',
+                    prev: 'prediction',
+                    next: 'prediction',
                     contentClass: 'content-news',
                     section: 'news-detail',
                     state: 'news-detail'

@@ -67,7 +67,7 @@ angular
             }
 
 
-            function goToNews(id) {
+           function goToNews(id) {
                 $state.go('news-detail',{newsId: id});
             }
 
@@ -233,4 +233,4 @@ angular
             });
 
         }
-    ]);
+ ]);
