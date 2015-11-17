@@ -7,7 +7,7 @@
             <div class="col-xs-12"
                  ng-repeat="item in news track by item.idNews"
                  ng-show="hasNews"
-                 on-last-repeat ng-click="goToNews(item.idNews)">
+                 on-last-repeat ng-click="showContentNews(item)">
 
               <div class="col-xs-12" style="border:0; padding:0;" ng-show="$index === 0">
                 <img class="img-responsive"  src="{{item.resources.mid[0]}}" onerror="this.src='img/img-alternative.png'" alt="icon">
