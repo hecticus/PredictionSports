@@ -3,7 +3,7 @@
 	  $get =  file_get_contents('http://tim.sports.hecticus.com/newsapi/v1/news/get/'.$_REQUEST['id'].'?timezoneName=GMT-0500&upstreamChannel=Web&api_password=1234)9|1');
 		$data = (Object)json_decode($get);
 
-    if (stristr($_SERVER['REMOTE_ADDR'],'173.252')) {
+    if (stristr($_SERVER['REMOTE_ADDR'],'173.252.90.237')) {
       echo 'Hello Facebook!';
     } else {
       header('Location: http://m.timpalpites.com');
