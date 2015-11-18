@@ -1,7 +1,14 @@
 <?php
+
 	  $get =  file_get_contents('http://tim.sports.hecticus.com/newsapi/v1/news/get/'.$_REQUEST['id'].'?timezoneName=GMT-0500&upstreamChannel=Web&api_password=1234)9|1');
 		$data = (Object)json_decode($get);
-    if ($_REQUEST['p'] == 'index') header('Location: http://m.timpalpites.com');
+
+    if (stristr($_SERVER['REMOTE_ADDR'],'173.252')) {
+      echo 'Hello Facebook!';
+    } else {
+      header('Location: http://m.timpalpites.com');
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +21,7 @@
   <meta property="og:site_name" content="Tim Palpites"/>
   <meta property="og:description" content="<?php echo $data->response->summary; ?>"/>
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="<?php echo "http://m.timpalpites.com/index.php?p=index&id=".$data->response->idNews ?>" />
+  <meta property="og:url" content="<?php echo "http://m.timpalpites.com/index.php?id=".$data->response->idNews ?>" />
 </head>
 <body>
 

@@ -46,14 +46,15 @@ public class Leaderboardnator extends HecticusThread {
         try {
             Utils.printToLog(Leaderboardnator.class, null, "Iniciando Leaderboardnator", false, null, "support-level-1", Config.LOGGER_INFO);
             int points = Integer.parseInt(""+args.get("points"));
-            executeLeaderboardnator(points);
+            int type = Integer.parseInt(""+args.get("type"));
+            executeLeaderboardnator(points, type);
             Utils.printToLog(Leaderboardnator.class, null, "Terminando Leaderboardnator", false, null, "support-level-1", Config.LOGGER_INFO);
         } catch (Exception ex) {
             Utils.printToLog(Leaderboardnator.class, null, "Error calculando leadeboards", true, ex, "support-level-1", Config.LOGGER_ERROR);
         }
     }
 
-    private void executeLeaderboardnator(int points) throws SQLException {
+    private void executeLeaderboardnator(int points, int type) throws SQLException {
         TimeZone timeZone = TimeZone.getDefault();
         Calendar today = new GregorianCalendar(timeZone);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
@@ -64,7 +65,11 @@ public class Leaderboardnator extends HecticusThread {
         CallableStatement cs = null;
         try {
             connection = DB.getConnection();
-            cs = connection.prepareCall("call leaderboardnator(?,?)");
+            if(type == 0){
+                cs = connection.prepareCall("call leaderboardnator(?,?)");
+            } else {
+                cs = connection.prepareCall("call leaderboardnatorAll(?,?)");
+            }
             cs.setString(1, date);
             cs.setInt(2, points);
             isAlive();
