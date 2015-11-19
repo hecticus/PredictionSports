@@ -132,10 +132,7 @@ angular
                 }
             })
             .state('news', {
-                url: '/news/{newsId:int}',
-                params : {
-                  newsId : {value: null, squash: true}
-                },
+                url: '/news',
                 controller:'NewsCtrl  as _this',
                 templateUrl:'modules/core/views/news.html',
                 data:{
@@ -247,7 +244,6 @@ angular
                   state: 'how'
               }
             })
-
             .state('tutorial', {
                 url: '/tutorial',
                 controller:'TutorialController as tutorial',

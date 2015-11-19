@@ -103,6 +103,7 @@ angular
               if (((getSection() === 'login') && !hasPreviousSubsection())
                   || (getSection() === 'tutorial')
                   || (getSection() === 'dashboard')
+                   || (getSection() === 'news-detail')
                   || ((getSection() === 'settings') &&
                       (!$rootScope.$storage.settings))) {
                 return true;

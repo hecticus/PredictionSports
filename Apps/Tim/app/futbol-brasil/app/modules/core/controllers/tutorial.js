@@ -62,7 +62,7 @@ angular
 
 
             function init(){
-                widthTotal = ($window.innerWidth * 4);
+                widthTotal = ($window.innerWidth * 5);
                 setScroll();
                 $scope.$emit('unload');
             } init();

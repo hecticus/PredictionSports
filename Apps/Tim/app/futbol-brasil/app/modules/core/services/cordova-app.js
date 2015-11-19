@@ -15,10 +15,10 @@ angular
 
             var currentSection = '';
             var prevSection = '';
-            var utilitySections = ['login','settings', 'terms', 'remind', 'language-selection', 'team-selection'];
+            var utilitySections = ['login','settings', 'terms', 'remind', 'language-selection', 'team-selection', 'news-detail'];
             var settingsSubSections = ['language-selection', 'team-selection'];
             var blockedSections = ['match', 'standings', 'scorers', 'mtm', 'friends'];
-            var settingsSections = ['settings', 'terms', 'tutorial','remind', 'language-selection', 'team-selection'];
+            var settingsSections = ['settings', 'terms', 'tutorial','remind', 'language-selection', 'team-selection', 'news-detail'];
             var onSettingsSection = false;
 
             var strings = {};
@@ -193,7 +193,7 @@ angular
             }
 
             function requiresAuthSection(section){
-                return !(section === 'login' || section === 'remind' || section === 'terms' || section === 'tutorial');
+                return !(section === 'login' || section === 'remind' || section === 'terms' || section === 'tutorial' || section === 'news-detail');
             }
 
             function isBlockedSection(section){
