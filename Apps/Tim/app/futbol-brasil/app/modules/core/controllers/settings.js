@@ -122,6 +122,7 @@ angular
                     if($scope.fbObject.fbStatus === 'connected'){
                        FacebookManager.logout(function(){
                           $scope.fbObject.class = 'btn-info';
+                          Client.setFriends([]);
                           getStatus();
                        });
                     } else if($scope.fbObject.fbStatus !== 'connected') {

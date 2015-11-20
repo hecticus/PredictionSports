@@ -134,7 +134,6 @@ angular
 
 
             function loginSuccess(isNewClient){
-                //console.log('onLoginSuccess. Login Success.');
                 Upstream.loginEvent();
                 if(isNewClient){
                     //TODO i18n-alizar
@@ -144,12 +143,9 @@ angular
                         message: strings['SET_USERNAME_MSG'],
                         type: 'success'
                     });
-                    //console.log('new client. going to settings');
                     $state.go('settings',{newClient:true});
                 } else {
-                    //console.log('existing client. going to news');
-                    $state.go('tutorial');
-                    //$state.go('prediction');
+                    $state.go('prediction');
                 }
             }
 

@@ -1,11 +1,4 @@
 {
-    "com.phonegap.plugins.facebookconnect": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/Wizcorp/phonegap-facebook-plugin",
-            "subdir": "."
-        }
-    },
     "org.apache.cordova.statusbar": {
         "source": {
             "type": "registry",
@@ -87,6 +80,13 @@
         "source": {
             "type": "git",
             "url": "https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin",
+            "subdir": "."
+        }
+    },
+    "phonegap-facebook-plugin": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Wizcorp/phonegap-facebook-plugin",
             "subdir": "."
         }
     }

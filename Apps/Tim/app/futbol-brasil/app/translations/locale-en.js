@@ -65,7 +65,8 @@
         "HITS" : "Hits",
         "MY_POINTS" : "My Points",
         "SCORE" : "Score",
-        "GENERAL" : "General"
+        "GENERAL" : "General",
+        "NO-FRIENDS" : "Nenhum dos seus amigos está jogando!"
     },
     "EMPTY_STATES" : {
         "LIVE" : "There are no games for today",
