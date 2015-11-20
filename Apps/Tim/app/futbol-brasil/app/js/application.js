@@ -36,7 +36,7 @@ angular
                 AnalyticsProvider.setPageEvent('$stateChangeSuccess');
 
 
-                $fbProvider.init(320314531485580);
+                $fbProvider.init(1379325579064871);
                 $twtProvider.init().trimText(true);
 
                 ezfbProvider.setInitParams({
