@@ -7,8 +7,8 @@
  */
 angular
     .module('core')
-    .factory('Client', ['$localStorage', '$translate', '$q',
-        function($localStorage, $translate, $q) {
+    .factory('Client', ['$rootScope', '$localStorage', '$translate', '$q',
+        function($rootScope, $localStorage, $translate, $q) {
             var FILE_KEY_STOREDVERSION = "APPSTOREDVERSION";
             var FILE_KEY_CLIENT = "APPDATACLIENT";
             var FILE_KEY_CLIENT_PUSH_ALERTS = "APPDATACLIENTPUSHALERTS";
@@ -167,7 +167,7 @@ angular
 
             function logout(){
                 $localStorage.$reset();
-                console.log("Client data:",client);
+                $localStorage['TRACE'] = true;
                 client = {};
             }
 
@@ -289,6 +289,7 @@ angular
 
             function setHasFavorites(value){
                 client.hasFavorites = value;
+                $rootScope.hasFavorites = value;
                 saveClient();
             }
 

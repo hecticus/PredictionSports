@@ -146,6 +146,7 @@ angular
 
             function persistFavoriteTeams(favoriteTeams){
                 if(favoriteTeams){
+
                     $localStorage[KEY_FAVORITE_TEAMS_LIST] = JSON.stringify(favoriteTeams);
                     favTeams = favoriteTeams.slice();
                     if(favoriteTeams.length > 0){
