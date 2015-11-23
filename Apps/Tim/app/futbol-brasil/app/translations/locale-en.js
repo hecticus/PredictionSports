@@ -249,7 +249,9 @@
        "LOCKED_SECTION_USER_NOT_ELIGIBLE" : {
           "TITLE" : "User not eligible",
           "SUBTITLE": "User not eligible",
-          "MSG": "User not eligible!!!"
+          "MSG": "User not eligible!!!",
+          "CONFIRM" : "Ok",
+          "CANCEL" : "Cancelar"
         },
 
           "SET_BET" : {

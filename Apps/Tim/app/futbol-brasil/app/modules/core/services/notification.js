@@ -135,13 +135,41 @@ angular
                     strings['LOCKED_SECTION_USER_NOT_ELIGIBLE_MSG'] = translation['ALERT.LOCKED_SECTION_USER_NOT_ELIGIBLE.MSG'];
                     strings['LOCKED_SECTION_USER_NOT_ELIGIBLE_SUBTITLE'] = translation['ALERT.LOCKED_SECTION_USER_NOT_ELIGIBLE.SUBTITLE'];
 
-                    showInfoAlert({
+                    /*showInfoAlert({
                         title : strings['LOCKED_SECTION_USER_NOT_ELIGIBLE_TITLE'],
                         subtitle :  strings['LOCKED_SECTION_USER_NOT_ELIGIBLE_SUBTITLE'],
                         message : strings['LOCKED_SECTION_USER_NOT_ELIGIBLE_MSG'],
                         type: 'warning'
-                    });
+                    });*/
+
+
+                    showNotificationDialog(
+                        {
+                            title : strings['LOCKED_SECTION_USER_NOT_ELIGIBLE_TITLE'],
+                            message :  strings['LOCKED_SECTION_USER_NOT_ELIGIBLE_MSG'],
+                            confirm: strings['LOCKED_SECTION_OK'],
+                            cancel: strings['LOCKED_SECTION_CANCEL']
+                        }, registerUserCallback
+                    );
+
+
                 });
+
+
+
+              function registerUserCallback(){
+                  $state.go('remind');
+              }
+
+
+
+
+
+
+
+
+
+
             }
 
             function showInfoAlert(displayInfo){
@@ -174,7 +202,7 @@ angular
                     show: false})
                     .modal('show');
             }
-            
+
             function showFBShareError(){
                 $translate(['ALERT.FB_SHARE.TITLE',
                             'ALERT.FB_SHARE.SUBTITLE',
@@ -183,7 +211,7 @@ angular
                     strings['FB_SHARE_TITLE'] = translation['ALERT.FB_SHARE.TITLE'];
                     strings['FB_SHARE_SUBTITLE'] = translation['ALERT.FB_SHARE.SUBTITLE'];
                     strings['FB_SHARE_MSG'] = translation['ALERT.FB_SHARE.MSG'];
-                    
+
                     showInfoAlert({
                         title : strings['FB_SHARE_TITLE'],
                         subtitle :  strings['FB_SHARE_SUBTITLE'],
@@ -191,19 +219,19 @@ angular
                         type: 'error'
                     });
                 });
-                
+
                 /*var displayInfo = {
                         title: 'FacebookManager. Not connected...',
                         subtitle: 'FacebookManager. Not connected...',
                         message: 'FacebookManager. Not connected...',
                         type: 'success'
                 };
-                
+
                 displayInfo.icon = 'mdi-navigation-check text-success';
                 displayInfo.html = '<p class="text-success">' + displayInfo.subtitle + '</p>';
                 displayInfo.html += '<p class="text-muted">' + displayInfo.message + '</p>';
                 $rootScope.displayInfo = displayInfo;
-                
+
                 $timeout( function() {
                     $('#info-modal').modal({
                         backdrop: true,
@@ -256,7 +284,7 @@ angular
                 showNetworkErrorAlert : showNetworkErrorAlert,
 
                 showLockedSectionNotEligible : showLockedSectionNotEligible,
-                
+
                 showFBShareError: showFBShareError
             };
 
