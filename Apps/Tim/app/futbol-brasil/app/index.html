@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="styles/animate.css">
     <link rel="stylesheet" href="styles/default.css">
     <link rel="stylesheet" href="styles/dl.css">
+    <link rel="stylesheet" href="styles/fontello.css">
     <link rel="stylesheet" href="styles/iconvault-preview.css">
     <link rel="stylesheet" href="styles/index.css">
     <link rel="stylesheet" href="styles/media-orientation.css">
@@ -76,12 +77,10 @@
                     </div>
                     <div class="col-xs-2" style="height:50px; line-height:50px; ">
 
-                      <i class="icon drawer-icon icon-white"
+                      <i
                          ng-class="getFavoritesClass()"
                          ng-hide="(hideMenuFavorites() === true)"
                          ng-click="toggleFavorites()" ></i>
-
-
 
 
                       <i class="mdi-navigation-arrow-forward"
@@ -191,7 +190,7 @@
                 </div>
                 <div class="col-xs-15 option" ui-sref-active="active" >
                     <a ui-sref="mtm" class="footer-section">
-                        <span class="icon-envivo"></span>
+                        <span class="icon-aovivo"></span>
                         <span translate>SECTIONS.NOTISTATS.LIVE</span>
                     </a>
                 </div>
@@ -314,8 +313,6 @@
 <script src="modules/core/controllers/team-selection.js"></script>
 <script src="modules/core/controllers/terms.js"></script>
 <script src="modules/core/controllers/tutorial.js"></script>
-<!-- endinjector -->
-<!-- endbuild -->
 
 </body>
 </html>

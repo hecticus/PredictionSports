@@ -65,7 +65,8 @@
         "HITS" : "Sucessos",
         "MY_POINTS" : "Meus Pontos",
         "SCORE" : "Pontos",
-        "GENERAL" : "General"
+        "GENERAL" : "General",
+        "NO-FRIENDS" : "Nenhum dos seus amigos está jogando!"
     },
     "EMPTY_STATES" : {
         "LIVE" : "Não há jogos para hoje",
@@ -246,9 +247,11 @@
         },
 
        "LOCKED_SECTION_USER_NOT_ELIGIBLE" : {
-          "TITLE" : "Usuário não elegíveis",
-          "SUBTITLE": "Usuário não elegíveis",
-          "MSG": "Usuário não elegíveis, deve ser um cliente TIM Brasil"
+          "TITLE" : "Conta não ativa",
+          "SUBTITLE": "Conta não ativa",
+          "MSG": "Sua conta não está ativa, para ativá-la, assine novamente.",
+          "CONFIRM" : "Assine",
+          "CANCEL" : "Cancelar"
         },
 
         "SET_BET" : {

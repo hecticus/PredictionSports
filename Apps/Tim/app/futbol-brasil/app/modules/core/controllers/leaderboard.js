@@ -121,6 +121,7 @@ angular
                        }
 
                         $scope.$emit('unload');
+
                     }, function (data){
                         $scope.hasLeaderboard = false;
                         $scope.$emit('unload');
@@ -136,14 +137,13 @@ angular
             }
 
             function getFbFriends(){
-                //if(!!$window.facebookConnectPlugin){
-                    FacebookManager.getFriends(function(friends){
-                        $scope.hasFriends = friends && (Client.getFriendsIds().length > 0);
-                    });
-                    config.params.friends = Client.getFriendsIds();
-               /* } else {
-                    console.log('facebookconnectPlugin Object not available. Are you directly on a browser?');
-                }*/
+
+              FacebookManager.getFriends(function(friends){
+                  $scope.hasFriends = friends && (Client.getFriendsIds().length > 0);
+              });
+
+              config.params.friends = Client.getFriendsIds();
+
             }
 
             function getCompetitions(){
@@ -162,9 +162,11 @@ angular
                           var date = Moment.date().format('YYYYMMDD');
                           Competitions.leaderboard.personal.phase.latest(competition.id_competitions,date)
                           .then(function (phases) {
-                              if (phases.last_phase) {
-                                competition.phase = phases.last_phase.id_phases;
-                                if (competition.phase.type != 1) $scope.showTournament();
+                              if (phases) {
+                                if (phases.last_phase) {
+                                  competition.phase = phases.last_phase.id_phases;
+                                  if (competition.phase.type != 1) $scope.showTournament();
+                                }
                               }
                           });
                       });

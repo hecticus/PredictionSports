@@ -65,7 +65,8 @@
         "HITS" : "Hits",
         "MY_POINTS" : "My Points",
         "SCORE" : "Score",
-        "GENERAL" : "General"
+        "GENERAL" : "General",
+        "NO-FRIENDS" : "Nenhum dos seus amigos está jogando!"
     },
     "EMPTY_STATES" : {
         "LIVE" : "There are no games for today",
@@ -248,7 +249,9 @@
        "LOCKED_SECTION_USER_NOT_ELIGIBLE" : {
           "TITLE" : "User not eligible",
           "SUBTITLE": "User not eligible",
-          "MSG": "User not eligible!!!"
+          "MSG": "User not eligible!!!",
+          "CONFIRM" : "Ok",
+          "CANCEL" : "Cancelar"
         },
 
           "SET_BET" : {

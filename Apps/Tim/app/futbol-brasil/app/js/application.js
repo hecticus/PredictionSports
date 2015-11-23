@@ -36,7 +36,7 @@ angular
                 AnalyticsProvider.setPageEvent('$stateChangeSuccess');
 
 
-                $fbProvider.init(320314531485580);
+                $fbProvider.init(1379325579064871);
                 $twtProvider.init().trimText(true);
 
                 ezfbProvider.setInitParams({
@@ -116,18 +116,6 @@ angular
                                 $state.go('login');
                             }
                         }, CordovaApp.errorStartApp);
-                    } else {
-
-                        if (toState.data.state === 'friends') {
-                            FacebookManager.getStatus(function (result) {
-                                if (result) {
-                                    if (result.status !== 'connected') {
-                                        Notification.showQuestionFacebookDialog();
-                                    }
-                                }
-                            });
-                        };
-
                     }
 
                     if((Client.isGuest() || !Client.isActiveClient()) && CordovaApp.isBlockedSection(toState.name)){
@@ -140,6 +128,19 @@ angular
 
                         event.preventDefault();
                         $rootScope.hideLoading();
+                    } else {
+
+                          if (toState.data.state === 'friends') {
+                              FacebookManager.getStatus(function (result) {
+                                  if (result) {
+                                      if (result.status !== 'connected') {
+                                          Notification.showQuestionFacebookDialog();
+                                      }
+                                  }
+                              });
+                          };
+
+
                     }
 
                     $rootScope.isActiveButton = 'active';

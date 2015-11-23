@@ -17,7 +17,7 @@ angular
                 minimum : 320,
                 maximum : 1200
             });
-            //$('body').flowtype();
+
             $rootScope.refreshInterval = null;
             $rootScope.$storage = $localStorage;
             $rootScope.hasFavorites = false;
@@ -103,6 +103,7 @@ angular
               if (((getSection() === 'login') && !hasPreviousSubsection())
                   || (getSection() === 'tutorial')
                   || (getSection() === 'dashboard')
+                   || (getSection() === 'news-detail')
                   || ((getSection() === 'settings') &&
                       (!$rootScope.$storage.settings))) {
                 return true;
@@ -276,16 +277,9 @@ angular
             }
 
             function init(){
+
                 $scope.toggles.favorites = Client.isFavoritesFilterActive();
-                $scope.$watch('Client.getHasFavorites()', function(){
-                    $rootScope.hasFavorites = Client.getHasFavorites();
-                });
-
                 getTranslations();
-
-                /*$rootScope.$on('$stateChangeStart',  function (event, toState, toParams, fromState, fromParams){
-                  alert(CordovaDevice.phonegapIsOnline());
-                });*/
 
                 $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
                   if (from.data) {
@@ -301,7 +295,6 @@ angular
 
                 $scope.$on('load', function(){
                   $scope.loading = true;
-                  //$scope.error = false;
                 });
 
                 $scope.$on('unload', function(){
