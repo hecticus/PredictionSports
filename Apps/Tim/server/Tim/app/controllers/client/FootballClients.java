@@ -54,16 +54,21 @@ public class FootballClients extends Clients {
 
     public static Result create() {
         ObjectNode clientData = getJson();
+//        Logger.of("upstream_subscribe").trace("app_request: " + clientData);
         try {
             FootballClient client = null;
             String login = null;
             if(clientData.has("login")){
                 login = clientData.get("login").asText();
-
+                login = login.replaceAll("[ \\-+^]*", "");
+                clientData.put("login", login);
             }
             if(login != null) {
                 client = (FootballClient) Client.getAndUpdate(login, clientData);
                 if (client != null) {
+                    if(!clientData.has("password")) {
+                        Client.remindPassword(client, clientData);
+                    }
                     return ok(buildBasicResponse(0, "OK", client.toJson()));
                 }
             }
