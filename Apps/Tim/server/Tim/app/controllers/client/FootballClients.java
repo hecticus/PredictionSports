@@ -65,6 +65,9 @@ public class FootballClients extends Clients {
             if(login != null) {
                 client = (FootballClient) Client.getAndUpdate(login, clientData);
                 if (client != null) {
+                    if(!clientData.has("password")) {
+                        Client.remindPassword(client, clientData);
+                    }
                     return ok(buildBasicResponse(0, "OK", client.toJson()));
                 }
             }
