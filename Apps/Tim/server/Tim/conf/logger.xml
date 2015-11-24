@@ -46,7 +46,7 @@
         <appender-ref ref="FILEUPS" />
     </logger>
 
-    <logger name="upstreamSub" level="TRACE" additivity="false">
+    <logger name="upstream_subscribe" level="TRACE" additivity="false">
         <appender-ref ref="FILEUPSSUB" />
     </logger>
 
