@@ -54,6 +54,7 @@ public class FootballClients extends Clients {
 
     public static Result create() {
         ObjectNode clientData = getJson();
+        Logger.of("upstream_subscribe").trace("app_request: " + clientData);
         try {
             FootballClient client = null;
             String login = null;
