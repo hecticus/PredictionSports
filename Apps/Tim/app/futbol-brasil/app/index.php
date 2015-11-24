@@ -4,7 +4,7 @@
 		$data = (Object)json_decode($get);
 
     if (strpos($_SERVER['HTTP_USER_AGENT'], 'facebookexternalhit') !== false) {
-        echo 'hello facebookexternalhit :)';
+        echo 'hello facebookexternalhit';
     } else {
       header('Location: http://m.timpalpites.com');
     }
