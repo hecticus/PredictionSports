@@ -27,8 +27,9 @@ angular
             $scope.item = {};
             $scope.hasFriends = true;
             $scope.hasLeaderboard = true;
-
             $scope.isContentLeader = true;
+
+
 
 
 
@@ -68,7 +69,7 @@ angular
                 var idCompetitions = $scope.item.competitions[ scroll.currentPage.pageX].id_competitions;
                 var phase = $scope.item.competitions[scroll.currentPage.pageX].phase;
                 if (!phase) phase = 0;
-                 getLeaderboardIndex(Domain.leaderboard.phase(idCompetitions, phase));
+                getLeaderboardIndex(Domain.leaderboard.phase(idCompetitions, phase));
             };
 
             $scope.showTournament = function(){
@@ -86,7 +87,7 @@ angular
 
             function getLeaderboardIndex(_url){
 
-                $scope.$emit('load');
+
                 $scope.hasLeaderboard = true;
                 var _page =  scroll.currentPage.pageX;
                 var competition = $scope.item.competitions[_page];
@@ -116,21 +117,21 @@ angular
                          }
 
 
+
                        } else {
+                          competition.leaderboard = false
                           $scope.hasLeaderboard = false;
                        }
 
-                        $scope.$emit('unload');
-
                     }, function (data){
+                        competition.leaderboard = false
                         $scope.hasLeaderboard = false;
-                        $scope.$emit('unload');
-
                         console.log('data.data -> ' + JSON.stringify(data.data));
                         if(data.data.error === 3){
                         } else {
                             Notification.showNetworkErrorAlert();
                         }
+
                     }).finally(function() {
                         $scope.$emit('unload');
                     });
@@ -139,10 +140,11 @@ angular
             function getFbFriends(){
 
               FacebookManager.getFriends(function(friends){
-                  $scope.hasFriends = friends && (Client.getFriendsIds().length > 0);
+                  $scope.hasFriends = friends; //&& (Client.getFriendsIds().length > 0);
               });
 
               config.params.friends = Client.getFriendsIds();
+
 
             }
 
@@ -174,7 +176,7 @@ angular
                 }, function(){
                   Notification.showNetworkErrorAlert();
                 }).finally(function(){
-                  $scope.$emit('unload');
+                  //$scope.$emit('unload');
                 });
             }
 
@@ -191,6 +193,7 @@ angular
 
                 scroll.on('scroll', function () {
                     if (this.currentPage.pageX != _currentPage) {
+                      $scope.$emit('load');
                       $scope.showTournament(this.currentPage.pageX);
                       _currentPage = this.currentPage.pageX;
                     }

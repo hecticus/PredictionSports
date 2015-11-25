@@ -9,9 +9,9 @@
 angular
     .module('core')
     .controller('MainCtrl', ['$rootScope', '$scope', '$state', '$localStorage', '$interval',
-        '$timeout', '$window', '$translate', 'Client', 'CordovaApp','CordovaDevice',
+        '$timeout', '$window', '$translate', 'Client', 'CordovaApp','CordovaDevice', 'FacebookManager',
         function($rootScope, $scope, $state, $localStorage, $interval, $timeout, $window, $translate,
-               Client, CordovaApp, CordovaDevice) {
+               Client, CordovaApp, CordovaDevice, FacebookManager) {
 
             $('body').flowtype({
                 minimum : 320,
@@ -182,6 +182,7 @@ angular
                 switch(action){
                     case 'logout':
                         Client.logout();
+                        FacebookManager.logout();
                         $state.go('login');
                         break;
                     default:
