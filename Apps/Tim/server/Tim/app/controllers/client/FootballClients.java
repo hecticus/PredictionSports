@@ -385,8 +385,12 @@ public class FootballClients extends Clients {
 
                     String dateText = match.get("date").asText();
                     Date date = DateAndTime.getDate(dateText, dateText.length() == 8 ? "yyyyMMdd" : "yyyyMMddhhmmss");
+                    Calendar gameDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+                    gameDate.setTime(date);
+                    gameDate.add(Calendar.HOUR, -1);
                     Date today = new Date(System.currentTimeMillis());
-                    if (date.after(today)) {
+
+                    if (gameDate.getTime().after(today)) {
                         clientBets = client.getBet(idTournament, idPhase, idGameMatch);
                         if (clientBets != null) {
                             clientBets.setClientBet(clientBet);
@@ -1054,10 +1058,15 @@ public class FootballClients extends Clients {
 
                     int points = 0;
                     int correct = 0;
-                    List<LeaderboardGlobal> leaderboardGlobalList = client.getLeaderboardGlobal();
-                    for(LeaderboardGlobal leaderboardGlobal : leaderboardGlobalList){
-                        points += leaderboardGlobal.getScore();
-                        correct += leaderboardGlobal.getCorrectBets();
+                    if(client.getLeaderboardTotal() != null){
+                        points = client.getLeaderboardTotal().getScore();
+                        correct = client.getLeaderboardTotal().getCorrectBets();
+                    } else {
+                        List<LeaderboardGlobal> leaderboardGlobalList = client.getLeaderboardGlobal();
+                        for (LeaderboardGlobal leaderboardGlobal : leaderboardGlobalList) {
+                            points += leaderboardGlobal.getScore();
+                            correct += leaderboardGlobal.getCorrectBets();
+                        }
                     }
                     response.put("points", points);
                     response.put("correct_bets", correct);
