@@ -65,15 +65,15 @@
         "HITS" : "Sucessos",
         "MY_POINTS" : "Meus Pontos",
         "SCORE" : "Pontos",
-        "GENERAL" : "General",
+        "GENERAL" : "Geral",
         "NO-FRIENDS" : "Nenhum dos seus amigos está jogando!"
     },
     "EMPTY_STATES" : {
         "LIVE" : "Não há jogos para hoje",
         "NEWS" : "Não há notícias disponíveis",
         "POINTS" : "Voce não tem informação disponível sobre pontos",
-        "LEADERBOARD" : "Não há informação disponível para esta classificação",
-        "PREDICTIONS" : "Não há informação disponível para este torneio",
+        "LEADERBOARD" : "Não há dados de Classificação disponíveis.",
+        "PREDICTIONS" : "Não há dados de Classificação disponíveis.",
         "MATCH" : "Não há jogos para este dia",
         "SCORERS" : "Não há artilheiros para este torneio",
         "TEAMS" : "Não foi possível obter times",
@@ -176,7 +176,7 @@
        "NETWORK_ERROR" : {
           "TITLE" : "Erro de Rede",
           "SUBTITLE": "Conexão perdida",
-          "MSG": "Não foi possível obter uma resposta do servidor"
+          "MSG": "Não foi possível obter uma resposta do servidor. Tente mais tarde."
         },
 
         "GET_CREDENTIALS" : {
