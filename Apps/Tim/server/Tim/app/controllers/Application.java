@@ -141,6 +141,7 @@ public class Application extends Controller {
     public static Result getAppSettings(Integer width, Integer height, String version, String so){
         try {
             ObjectNode data = Json.newObject();
+            data.put("bet_window", Config.getInt("bet-window"));
             data.put("company_name", Config.getString("company-name"));
             data.put("app_version",Config.getString("app-version"));
             ObjectNode response = Json.newObject();
