@@ -55,7 +55,7 @@ angular
             //TODO convertir en componente
             showAlert: function (message) {
                 var _html = '<div id="alert" class="alert alert-warning alert-dismissible" role="alert">';
-                _html += '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>';
+                _html += '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>';
                 _html += '<span style="color:#ffffff;">' + message + '</span>';
                 _html += '</div>';
 
