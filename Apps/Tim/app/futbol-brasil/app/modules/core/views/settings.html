@@ -145,8 +145,8 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-xs-12">
-                            <button class="btn text-center btn-facebook btn-info"
+                        <div class="col-xs-12" style="text-align:center;">
+                            <button class="btn text-center btn-facebook btn-info btn-lg btn-block"
                                     ng-class="fbObject.class"
                                  ng-click="onFbButtonClick()"
                                  ng-bind="fbObject.fbButtonMsg">
@@ -155,6 +155,22 @@
                     </div>
                 </div>
             </div>
+
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <span class="glyphicon glyphicon-question-sign"></span>
+                  {{ 'SETTINGS.APP' | translate }}</h3>
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <button ui-sref="tutorial" type="button" class="btn btn-success btn-lg btn-block">Tutorial</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
         </div>
     </div>
 </div>

@@ -112,6 +112,7 @@
         "FAVORITE_TEAMS_TITLE": "Minhas Equipes Favoritas",
         "LANGUAGES_TITLE": "Idiomas",
         "SOCIAL_ACCOUNTS_TITLE": "Redes Sociais",
+        "APP": "Aplicação",
         "TOGGLE" : {
             "BETS" : "Palpites",
             "MTM" : "Ao Vivo",
