@@ -9,15 +9,16 @@
 angular
     .module('core')
     .controller('SettingsController', [
-        '$scope', '$rootScope', '$state', '$timeout', '$translate', '$stateParams', 'ClientManager'
+        '$scope', '$rootScope', '$localStorage', '$state', '$timeout', '$translate', '$stateParams', 'ClientManager'
         , 'TeamsManager', 'FacebookManager', 'Settings', 'iScroll', 'i18n', 'Client', 'Notification',
-        function($scope, $rootScope, $state, $timeout, $translate, $stateParams, ClientManager, TeamsManager
+        function($scope, $rootScope, $localStorage, $state, $timeout, $translate, $stateParams, ClientManager, TeamsManager
             , FacebookManager, Settings, iScroll, i18n, Client, Notification) {
 
             var strings = {};
             var scroll = null;
             var removeEventCallback = null;
-
+            var goState = 'tutorial';
+            if ($localStorage['TUTORIAL']) goState = 'prediction';
 
 
             $rootScope.onMain = onMain;
@@ -252,9 +253,9 @@ angular
                  } else {
                     $rootScope.$storage.settings = true;
                     if($stateParams.newClient){
-                      $state.go('tutorial');
+                      $state.go(goState);
                     } else {
-                      $state.go('prediction');
+                      $state.go(goState);
                     }
                  };
             }

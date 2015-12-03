@@ -88,6 +88,36 @@
             "type": "git",
             "url": "https://github.com/Wizcorp/phonegap-facebook-plugin",
             "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {
+            "APP_ID": "1379325579064871",
+            "APP_NAME": "TIM Palpites"
+        }
+    },
+    "com.danielcwilson.plugins.googleanalytics": {
+        "source": {
+            "type": "registry",
+            "id": "com.danielcwilson.plugins.googleanalytics@0.6.1"
+        }
+    },
+    "com.hecticus.cordova.plugins.sharedconfigurations": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/hecticus/cordova-shared-configurations.git",
+            "subdir": "."
+        }
+    },
+    "com.plugin.datepicker": {
+        "source": {
+            "type": "registry",
+            "id": "com.plugin.datepicker"
+        }
+    },
+    "com.synconset.cordovaHTTP": {
+        "source": {
+            "type": "registry",
+            "id": "com.synconset.cordovahttp"
         }
     }
 }
