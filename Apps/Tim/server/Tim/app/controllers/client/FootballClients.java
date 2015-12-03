@@ -309,7 +309,7 @@ public class FootballClients extends Clients {
                     betsMap.put(idGameMatch, betElement);
                     matchesRequest.append("match[]=" + idGameMatch + "&");
                 }
-
+                int betWindow = Config.getInt("bet-window");
                 F.Promise<WSResponse> result = WS.url(matchesRequest.toString()).get();
                 ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
 
@@ -331,7 +331,7 @@ public class FootballClients extends Clients {
                             Date date = DateAndTime.getDate(dateText, dateText.length() == 8 ? "yyyyMMdd" : "yyyyMMddhhmmss");
                             Calendar gameDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
                             gameDate.setTime(date);
-                            gameDate.add(Calendar.HOUR, -1);
+                            gameDate.add(Calendar.MINUTE, -betWindow);
                             Date today = new Date(System.currentTimeMillis());
                             if (gameDate.getTime().after(today)) {
                                 if (clientBetsAsMap.containsKey(idGameMatch)) {
@@ -387,7 +387,7 @@ public class FootballClients extends Clients {
                     Date date = DateAndTime.getDate(dateText, dateText.length() == 8 ? "yyyyMMdd" : "yyyyMMddhhmmss");
                     Calendar gameDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
                     gameDate.setTime(date);
-                    gameDate.add(Calendar.HOUR, -betWindow);
+                    gameDate.add(Calendar.MINUTE, -betWindow);
                     Date today = new Date(System.currentTimeMillis());
 
                     if (gameDate.getTime().after(today)) {
