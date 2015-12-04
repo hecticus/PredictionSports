@@ -132,6 +132,7 @@ angular
             function hideMenu() {
                 if ($('#wrapperM').hasClass('rightShort')) {
                     $rootScope.transitionPage('#wrapperM', 'leftShort');
+                    $scope.$emit('unload');
                 }
             }
 
