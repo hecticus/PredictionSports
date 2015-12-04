@@ -14,6 +14,8 @@ angular
 
             var scroll = null;
             var strings = {};
+            var goState = 'tutorial';
+            if ($localStorage['TUTORIAL']) goState = 'prediction';
             $scope.flash = flash;
 
             $scope.msisdn = '';
@@ -145,7 +147,7 @@ angular
                     });
                     $state.go('settings',{newClient:true});
                 } else {
-                    $state.go('prediction');
+                    $state.go(goState);
                 }
             }
 
