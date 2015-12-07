@@ -93,7 +93,7 @@ angular
                 );
 
                 function registerUserCallback(){
-                    $state.go('remind');
+                    $state.go('login');
                 }
 
             }
@@ -158,7 +158,7 @@ angular
 
 
               function registerUserCallback(){
-                  $state.go('remind');
+                  $state.go('login');
               }
 
 
