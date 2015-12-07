@@ -40,18 +40,13 @@ var argscheck = require('cordova/argscheck'),
  * @param fileSystem
  *            {FileSystem} the filesystem on which this entry resides
  *            (readonly)
- * @param nativeURL
- *            {DOMString} an alternate URL which can be used by native
- *            webview controls, for example media players.
- *            (optional, readonly)
  */
-function Entry(isFile, isDirectory, name, fullPath, fileSystem, nativeURL) {
+function Entry(isFile, isDirectory, name, fullPath, fileSystem) {
     this.isFile = !!isFile;
     this.isDirectory = !!isDirectory;
     this.name = name || '';
     this.fullPath = fullPath || '';
     this.filesystem = fileSystem || null;
-    this.nativeURL = nativeURL || null;
 }
 
 /**
@@ -64,17 +59,15 @@ function Entry(isFile, isDirectory, name, fullPath, fileSystem, nativeURL) {
  */
 Entry.prototype.getMetadata = function(successCallback, errorCallback) {
     argscheck.checkArgs('FF', 'Entry.getMetadata', arguments);
-    var success = successCallback && function(entryMetadata) {
-        var metadata = new Metadata({
-            size: entryMetadata.size,
-            modificationTime: entryMetadata.lastModifiedDate
-        });
+    var success = successCallback && function(lastModified) {
+        var metadata = new Metadata(lastModified);
         successCallback(metadata);
     };
     var fail = errorCallback && function(code) {
         errorCallback(new FileError(code));
     };
-    exec(success, fail, "File", "getFileMetadata", [this.toInternalURL()]);
+
+    exec(success, fail, "File", "getMetadata", [this.fullPath]);
 };
 
 /**
@@ -89,7 +82,7 @@ Entry.prototype.getMetadata = function(successCallback, errorCallback) {
  */
 Entry.prototype.setMetadata = function(successCallback, errorCallback, metadataObject) {
     argscheck.checkArgs('FFO', 'Entry.setMetadata', arguments);
-    exec(successCallback, errorCallback, "File", "setMetadata", [this.toInternalURL(), metadataObject]);
+    exec(successCallback, errorCallback, "File", "setMetadata", [this.fullPath, metadataObject]);
 };
 
 /**
@@ -109,14 +102,15 @@ Entry.prototype.moveTo = function(parent, newName, successCallback, errorCallbac
     var fail = errorCallback && function(code) {
         errorCallback(new FileError(code));
     };
-    var srcURL = this.toInternalURL(),
+    // source path
+    var srcPath = this.fullPath,
         // entry name
         name = newName || this.name,
         success = function(entry) {
             if (entry) {
                 if (successCallback) {
                     // create appropriate Entry object
-                    var result = (entry.isDirectory) ? new (require('./DirectoryEntry'))(entry.name, entry.fullPath, parent.filesystem, entry.nativeURL) : new (require('org.apache.cordova.file.FileEntry'))(entry.name, entry.fullPath, parent.filesystem, entry.nativeURL);
+                    var result = (entry.isDirectory) ? new (require('./DirectoryEntry'))(entry.name, entry.fullPath, entry.filesystem) : new (require('org.apache.cordova.file.FileEntry'))(entry.name, entry.fullPath, entry.filesystem);
                     successCallback(result);
                 }
             }
@@ -127,7 +121,7 @@ Entry.prototype.moveTo = function(parent, newName, successCallback, errorCallbac
         };
 
     // copy
-    exec(success, fail, "File", "moveTo", [srcURL, parent.toInternalURL(), name]);
+    exec(success, fail, "File", "moveTo", [srcPath, parent.fullPath, name]);
 };
 
 /**
@@ -147,7 +141,9 @@ Entry.prototype.copyTo = function(parent, newName, successCallback, errorCallbac
     var fail = errorCallback && function(code) {
         errorCallback(new FileError(code));
     };
-    var srcURL = this.toInternalURL(),
+
+        // source path
+    var srcPath = this.fullPath,
         // entry name
         name = newName || this.name,
         // success callback
@@ -155,7 +151,7 @@ Entry.prototype.copyTo = function(parent, newName, successCallback, errorCallbac
             if (entry) {
                 if (successCallback) {
                     // create appropriate Entry object
-                    var result = (entry.isDirectory) ? new (require('./DirectoryEntry'))(entry.name, entry.fullPath, parent.filesystem, entry.nativeURL) : new (require('org.apache.cordova.file.FileEntry'))(entry.name, entry.fullPath, parent.filesystem, entry.nativeURL);
+                    var result = (entry.isDirectory) ? new (require('./DirectoryEntry'))(entry.name, entry.fullPath, entry.filesystem) : new (require('org.apache.cordova.file.FileEntry'))(entry.name, entry.fullPath, entry.filesystem);
                     successCallback(result);
                 }
             }
@@ -166,42 +162,15 @@ Entry.prototype.copyTo = function(parent, newName, successCallback, errorCallbac
         };
 
     // copy
-    exec(success, fail, "File", "copyTo", [srcURL, parent.toInternalURL(), name]);
-};
-
-/**
- * Return a URL that can be passed across the bridge to identify this entry.
- */
-Entry.prototype.toInternalURL = function() {
-    if (this.filesystem && this.filesystem.__format__) {
-      return this.filesystem.__format__(this.fullPath);
-    }
+    exec(success, fail, "File", "copyTo", [srcPath, parent.fullPath, name]);
 };
 
 /**
  * Return a URL that can be used to identify this entry.
- * Use a URL that can be used to as the src attribute of a <video> or
- * <audio> tag. If that is not possible, construct a cdvfile:// URL.
  */
 Entry.prototype.toURL = function() {
-    if (this.nativeURL) {
-      return this.nativeURL;
-    }
-    // fullPath attribute may contain the full URL in the case that
-    // toInternalURL fails.
-    return this.toInternalURL() || "file://localhost" + this.fullPath;
-};
-
-/**
- * Backwards-compatibility: In v1.0.0 - 1.0.2, .toURL would only return a
- * cdvfile:// URL, and this method was necessary to obtain URLs usable by the
- * webview.
- * See CB-6051, CB-6106, CB-6117, CB-6152, CB-6199, CB-6201, CB-6243, CB-6249,
- * and CB-6300.
- */
-Entry.prototype.toNativeURL = function() {
-    console.log("DEPRECATED: Update your code to use 'toURL'");
-    return this.toURL();
+    // fullPath attribute contains the full URL
+    return this.fullPath;
 };
 
 /**
@@ -212,6 +181,7 @@ Entry.prototype.toNativeURL = function() {
  */
 Entry.prototype.toURI = function(mimeType) {
     console.log("DEPRECATED: Update your code to use 'toURL'");
+    // fullPath attribute contains the full URI
     return this.toURL();
 };
 
@@ -228,7 +198,7 @@ Entry.prototype.remove = function(successCallback, errorCallback) {
     var fail = errorCallback && function(code) {
         errorCallback(new FileError(code));
     };
-    exec(successCallback, fail, "File", "remove", [this.toInternalURL()]);
+    exec(successCallback, fail, "File", "remove", [this.fullPath]);
 };
 
 /**
@@ -242,13 +212,13 @@ Entry.prototype.getParent = function(successCallback, errorCallback) {
     var fs = this.filesystem;
     var win = successCallback && function(result) {
         var DirectoryEntry = require('./DirectoryEntry');
-        var entry = new DirectoryEntry(result.name, result.fullPath, fs, result.nativeURL);
+        var entry = new DirectoryEntry(result.name, result.fullPath, fs);
         successCallback(entry);
     };
     var fail = errorCallback && function(code) {
         errorCallback(new FileError(code));
     };
-    exec(win, fail, "File", "getParent", [this.toInternalURL()]);
+    exec(win, fail, "File", "getParent", [this.fullPath]);
 };
 
 module.exports = Entry;

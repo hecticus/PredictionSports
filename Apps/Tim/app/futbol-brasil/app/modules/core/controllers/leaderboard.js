@@ -123,7 +123,9 @@ angular
                           $scope.hasLeaderboard = false;
                        }
 
+                       $scope.$emit('unload');
                     }, function (data){
+                        $scope.$emit('unload');
                         competition.leaderboard = false
                         $scope.hasLeaderboard = false;
                         console.log('data.data -> ' + JSON.stringify(data.data));
@@ -132,9 +134,8 @@ angular
                             Notification.showNetworkErrorAlert();
                         }
 
-                    }).finally(function() {
-                        $scope.$emit('unload');
                     });
+
             }
 
             function getFbFriends(){
@@ -175,9 +176,10 @@ angular
 
                 }, function(){
                   Notification.showNetworkErrorAlert();
-                }).finally(function(){
-                  //$scope.$emit('unload');
-                });
+                });/*.finally(function(){
+                  $scope.$emit('unload');
+                });*/
+                $scope.$emit('unload');
             }
 
             function setUpIScroll(){
