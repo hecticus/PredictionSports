@@ -6,7 +6,7 @@
             "STANDINGS": "Tabela",
             "NEWS": "Notícias",
             "SCORERS": "Artilharia",
-            "LIVE": "Ao Vivo"
+            "LIVE": "Tempo Real"
         },
         "BETS" : {
             "BETS": "Palpites",
@@ -93,7 +93,7 @@
         "REMIND_LABEL" : "Lembrar / Obter Credenciais",
         "CHANGE_LANGUAGE_LABEL" : "Mudar idioma",
         "TUTORIAL_LABEL" : "Como funciona o serviço?",
-        "TERMS_LABEL" : "Termos & Condições",
+        "TERMS_LABEL" : "Termos e Condições",
         "ENTER_AS_GUEST_LABEL" : "Entrar como convidado",
         "REMIND" : {
             "LABEL" : "Digite o seu número do celular",
@@ -115,7 +115,7 @@
         "APP": "Aplicação",
         "TOGGLE" : {
             "BETS" : "Palpites",
-            "MTM" : "Ao Vivo",
+            "MTM" : "Tempo Real",
             "NEWS" : "Notícias"
         },
         "FACEBOOK" : {
@@ -277,7 +277,7 @@
     "NOT_AVAILABLE": "Não Disponível",
     "LOGOUT" : "Sair",
     "READY" : "Pular tutorial",
-    "NO_MATCH" : "época terminou",
+    "NO_MATCH" : "Encerrado",
     "TITLE_NEXT_MATCH" : "Próximo",
     "MSG_UNAVAILABLE_ORIENTATION" : "A orientação da vista não está disponível"
 

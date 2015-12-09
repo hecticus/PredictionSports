@@ -17,7 +17,7 @@ angular
             var _currentPage = 0;
             var _start = true;
             var _index = 0;
-            var _formatDate = 'MMM Do YY';
+            var _formatDate = 'DD[/]MM[/]YY';
             var hScroll = null;
             var vScrolls = [];
             var width = $window.innerWidth;
