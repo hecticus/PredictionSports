@@ -76,6 +76,7 @@ angular
             function hideMenuFavorites() {
               if ((getSection() === 'login')
                   || (getSection() === 'settings')
+                  || (getSection() === 'settings-login')
                   || (getSection() === 'remind')
                   || (getSection() === 'tutorial')
                   || (getSection() === 'language-selection')
@@ -83,7 +84,6 @@ angular
                   || (getSection() === 'dashboard')
                   || ($('.content-news #wrapper2').hasClass('left'))
                   || ($rootScope.hasFavorites === false)) {
-
                 return true;
               } else {
                 return false;
@@ -91,8 +91,7 @@ angular
             }
 
             function showMenuForward() {
-              if ((getSection() === 'settings')
-                && (!$rootScope.$storage.settings) ) {
+              if ((getSection() === 'settings-login')) {
                 return true;
               } else {
                 return false;
@@ -100,12 +99,11 @@ angular
             }
 
             function hideMenuIcon() {
-              if (((getSection() === 'login') && !hasPreviousSubsection())
+              if ((getSection() === 'login')
                   || (getSection() === 'tutorial')
                   || (getSection() === 'dashboard')
-                   || (getSection() === 'news-detail')
-                  || ((getSection() === 'settings') &&
-                      (!$rootScope.$storage.settings))) {
+                  || (getSection() === 'news-detail')
+                  || (getSection() === 'settings-login')) {
                 return true;
               } else {
                 return false;
