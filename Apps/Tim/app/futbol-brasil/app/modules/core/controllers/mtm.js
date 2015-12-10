@@ -38,7 +38,7 @@ angular
             $scope.competitionId = 0;
             $scope.matchId = 0;
 
-            $scope.date = Moment.date().format('dddd Do YYYY');
+            $scope.date = Moment.date().format('dddd D[,] YYYY');
 
             $scope.getTime = function (_date) {
                 return Moment.dateNoUTC(_date).format('HH:mm');
