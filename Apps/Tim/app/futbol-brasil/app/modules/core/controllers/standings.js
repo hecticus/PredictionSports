@@ -47,9 +47,10 @@ angular
                     },function (data) {
                         $scope.hasPhases = false;
                         if (!data) Notification.showNetworkErrorAlert();
-                    }).finally(function (){
+                    });/*.finally(function (){
                       $scope.$emit('unload');
-                    });
+                    });*/
+                    $scope.$emit('unload');
 
             };
 
@@ -132,13 +133,14 @@ angular
                 Competitions.get().then(function(competitions){
                     $scope.hasCompetitions = true;
                     $scope.item.competitions = competitions;
+                    $scope.$emit('unload');
                 }, function(){
                     $scope.hasCompetitions = false;
                     $scope.item.competitions = [];
                     Notification.showNetworkErrorAlert();
-                }).finally(function () {
-                  $scope.$emit('unload');
+                    $scope.$emit('unload');
                 });
+
             }
 
             function init(){

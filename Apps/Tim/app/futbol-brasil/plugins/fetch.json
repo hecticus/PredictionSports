@@ -23,12 +23,6 @@
             "id": "org.apache.cordova.network-information"
         }
     },
-    "org.apache.cordova.file": {
-        "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.file"
-        }
-    },
     "org.apache.cordova.dialogs": {
         "source": {
             "type": "registry",
@@ -55,20 +49,6 @@
             "subdir": "."
         }
     },
-    "nl.x-services.plugins.launchmyapp": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git",
-            "subdir": "."
-        }
-    },
-    "cordova-plugin-customurlscheme": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git",
-            "subdir": "."
-        }
-    },
     "com.phonegap.plugins.PushPlugin": {
         "source": {
             "type": "git",
@@ -83,10 +63,99 @@
             "subdir": "."
         }
     },
+    "com.danielcwilson.plugins.googleanalytics": {
+        "source": {
+            "type": "registry",
+            "id": "com.danielcwilson.plugins.googleanalytics@0.6.1"
+        }
+    },
+    "com.hecticus.cordova.plugins.sharedconfigurations": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/hecticus/cordova-shared-configurations.git",
+            "subdir": "."
+        }
+    },
+    "com.plugin.datepicker": {
+        "source": {
+            "type": "registry",
+            "id": "com.plugin.datepicker"
+        }
+    },
+    "cordova-plugin-console": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-console"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-device": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-device"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-dialogs"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-network-information": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-network-information"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-splashscreen": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-splashscreen"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-statusbar"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "org.apache.cordova.file": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/apache/cordova-plugin-file",
+            "subdir": ".",
+            "ref": "r0.2.5"
+        }
+    },
+    "cordova-plugin-customurlscheme": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git",
+            "subdir": "."
+        }
+    },
     "phonegap-facebook-plugin": {
         "source": {
             "type": "git",
             "url": "https://github.com/Wizcorp/phonegap-facebook-plugin",
+            "subdir": "."
+        }
+    },
+    "com.synconset.cordovaHTTP": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/wymsee/cordova-HTTP.git",
             "subdir": "."
         }
     }

@@ -115,12 +115,11 @@ angular
                       // needs to be a function or it won't trigger a $watch
                       $scope.search = {};
                     };
-
+                    $scope.$emit('unload');
                 }, function(){
                     $scope.hasTeams = false;
                     $scope.teams = [];
-                }).finally(function(){
-                  $scope.$emit('unload');
+                     $scope.$emit('unload');
                 });
 
             }

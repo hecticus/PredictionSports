@@ -166,8 +166,10 @@ angular
             }
 
             function logout(){
+                var tutorial = $localStorage['TUTORIAL'];
                 $localStorage.$reset();
                 $localStorage['TRACE'] = true;
+                if (tutorial) $localStorage['TUTORIAL'] = true;
                 client = {};
             }
 
