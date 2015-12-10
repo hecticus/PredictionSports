@@ -15,7 +15,7 @@ angular
 
             var currentSection = '';
             var prevSection = '';
-            var utilitySections = ['login','settings', 'terms', 'remind', 'language-selection', 'team-selection', 'news-detail'];
+            var utilitySections = ['login','settings', 'settings-login', 'terms', 'remind', 'language-selection', 'team-selection', 'news-detail'];
             var settingsSubSections = ['language-selection', 'team-selection'];
             var blockedSections = ['match', 'standings', 'scorers', 'mtm', 'friends'];
             var settingsSections = ['settings', 'terms', 'tutorial','remind', 'language-selection', 'team-selection', 'news-detail'];
@@ -90,27 +90,26 @@ angular
             }
 
             function onBackButtonPressed(){
+
+
                 var hasPreviousSubsection = angular.element('.page.back.left:last').hasClass('left');
 
                 if ($('#wrapperM').hasClass('rightShort')) {
                      $rootScope.hideMenu();
                 } else if(currentSection == 'login'){
                     exitApp();
-                } else if(isOnUtilitySection()){
-
+                } else if(isOnUtilitySection()
+                    && ($state.current.data.section != 'settings-login')){
 
                     if(isSettingsSubSection(currentSection)){
                         $state.go($state.current.data.prev);
                         onSettingsSection = false;
                     } else {
-
                         if ($rootScope.previousState === undefined) {
                           $state.go('prediction');
                         } else {
                           $state.go($rootScope.previousState);
                         }
-
-
                     }
 
                 } else if(hasPreviousSubsection){
