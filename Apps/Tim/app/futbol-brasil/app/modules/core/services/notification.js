@@ -7,8 +7,8 @@
  */
 angular
     .module('core')
-    .factory('Notification',['$rootScope', '$state','$translate','$timeout',
-        function($rootScope, $state, $translate, $timeout) {
+    .factory('Notification',['$rootScope', '$state','$translate','$timeout', 'CordovaDevice',
+        function($rootScope, $state, $translate, $timeout, CordovaDevice) {
 
             var strings = {};
 
@@ -241,13 +241,21 @@ angular
             }
 
             function showNetworkErrorAlert(){
+
                 getTranslationsNetError();
-                showInfoAlert({
-                        title: strings['NETWORK_ERROR_TITLE'],
-                        subtitle: strings['NETWORK_ERROR_SUBTITLE'],
-                        message: strings['NETWORK_ERROR_MSG'],
-                    type: 'error'
-                });
+                if (CordovaDevice.isWebPlatform()) {
+                  showInfoAlert({
+                          title: strings['NETWORK_ERROR_TITLE'],
+                          subtitle: strings['NETWORK_ERROR_SUBTITLE'],
+                          message: strings['NETWORK_ERROR_MSG'],
+                      type: 'error'
+                  });
+                } else {
+                  window.plugins.toast.showShortTop(strings['NETWORK_ERROR_MSG'],
+                    function(a){console.log('toast success: ' + a)},
+                    function(b){alert('toast error: ' + b)}
+                  );
+                }
             }
 
             return {
