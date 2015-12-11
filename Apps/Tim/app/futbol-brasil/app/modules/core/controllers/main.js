@@ -31,6 +31,7 @@ angular
             $rootScope.transitionPageBack = transitionPageBack;
             $rootScope.nextPage = nextPage;
             $rootScope.prevPage = prevPage;
+            $rootScope.hideToast = hideToast;
             $rootScope.clickPage = clickPage;
             $rootScope.isPageContentLeft = false;
             $rootScope.hideLoading = hideLoading;
@@ -210,6 +211,12 @@ angular
             function prevPage() {
               $scope.hideMenu();
               $scope.$emit('unload');
+            }
+
+            function hideToast() {
+              if (!CordovaDevice.isWebPlatform()) {
+                window.plugins.toast.hide();
+              }
             }
 
             ////////////// Scope //////////////////////////
