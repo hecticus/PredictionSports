@@ -152,6 +152,12 @@ angular
             });
 
             $rootScope.$on('$stateChangeSuccess',  function (event, toState, toParams, fromState, fromParams) {
+
+                if (fromState.name === '')  {
+                  if (!$localStorage['LOGIN'])
+                    $state.go('settings-login');
+                }
+
                 $templateCache.removeAll();
                 var fromName = fromState.name;
                 var fromSection = fromState.data? fromState.data.section : null;

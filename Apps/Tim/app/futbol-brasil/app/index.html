@@ -66,9 +66,11 @@
             <div class="navbar-header">
                 <header>
                     <div class="col-xs-2 text-left" style="height:50px; line-height:50px; ">
-                        <i id="menuIcon" class="drawer-title" ng-hide="(hideMenuIcon() === true)"
-                          ng-class="getDrawerIcon()"
-                          ng-click="onMenuButtonPressed()"></i>
+                        <i id="menuIcon"
+                            class="drawer-title"
+                            ng-hide="hideMenuIcon()"
+                            ng-class="getDrawerIcon()"
+                            ng-click="onMenuButtonPressed()"></i>
                     </div>
                     <div class="col-xs-8 text-center h-ellipsis-truncate" style="height:50px; line-height:50px; ">
                         <img class="h-logo" src="img/logo.svg" onerror="this.src='img/logo.png'" >
@@ -79,12 +81,11 @@
 
                       <i
                          ng-class="getFavoritesClass()"
-                         ng-hide="(hideMenuFavorites() === true)"
+                         ng-hide="hideMenuFavorites()"
                          ng-click="toggleFavorites()" ></i>
 
-
                       <i class="mdi-navigation-arrow-forward"
-                       ng-show="(showMenuForward() === true)"
+                       ng-show="showMenuForward()"
                        ng-click="onMain()" ></i>
 
                     </div>
@@ -190,7 +191,7 @@
                 </div>
                 <div class="col-xs-15 option" ui-sref-active="active" >
                     <a ui-sref="mtm" class="footer-section">
-                        <span class="icon-aovivo"></span>
+                        <span class="mdi-action-alarm" ></span>
                         <span translate>SECTIONS.NOTISTATS.LIVE</span>
                     </a>
                 </div>

@@ -8,15 +8,23 @@
  */
 angular
     .module('core')
-    .controller('LeaderboardCtrl', ['$http','$rootScope','$scope','$state', '$window',
+    .controller('LeaderboardCtrl', ['$http','$rootScope','$scope','$state', '$window', '$timeout',
         'Client', 'WebManager', 'Domain', 'FacebookManager', 'iScroll', 'Competitions', 'Notification', 'Moment',
-        function($http, $rootScope, $scope, $state, $window, Client, WebManager, Domain
+        function($http, $rootScope, $scope, $state, $window, $timeout, Client, WebManager, Domain
             , FacebookManager, iScroll, Competitions, Notification, Moment) {
 
+            var hideLoading = false;
+            var setLoading = function() {
+              $scope.$emit('load');
+              var setInterval = function () {
+                if (hideLoading) $scope.$emit('unload');
+                else setTimeout(setInterval, 1);
+              };
 
+              setInterval(setInterval, 1);
+            };
 
             var config = WebManager.getFavoritesConfig($rootScope.isFavoritesFilterActive());
-
             var _currentPage = 0;
             var friendsMode = false;
             var active = 'competition';
@@ -28,10 +36,6 @@ angular
             $scope.hasFriends = true;
             $scope.hasLeaderboard = true;
             $scope.isContentLeader = true;
-
-
-
-
 
             function setActive(type) {
                 active = type;
@@ -65,6 +69,7 @@ angular
             };
 
             $scope.showPhase = function(){
+                setLoading();
                 setActive('phase'+ scroll.currentPage.pageX);
                 var idCompetitions = $scope.item.competitions[ scroll.currentPage.pageX].id_competitions;
                 var phase = $scope.item.competitions[scroll.currentPage.pageX].phase;
@@ -73,7 +78,7 @@ angular
             };
 
             $scope.showTournament = function(){
-
+                setLoading();
                 setActive('competition' + scroll.currentPage.pageX);
                 var idCompetition = $scope.item.competitions[scroll.currentPage.pageX].id_competitions;
 
@@ -82,7 +87,7 @@ angular
                 } else {
                   getLeaderboardIndex(Domain.leaderboard.competition(idCompetition));
                 }
-
+                hideLoading = true;
             };
 
             function getLeaderboardIndex(_url){
@@ -105,7 +110,7 @@ angular
                          });
 
                          competition.client = data.response.client;
-                         if (competition.leaderboard.length === 1) {
+                         if (competition.leaderboard.length === 0) {
                             if (competition.leaderboard[0].id_client !== competition.client.id_client) {
                               competition.client.index = competition.client.index + 1;
                               competition.leaderboard.push(competition.client);
@@ -123,11 +128,11 @@ angular
                           $scope.hasLeaderboard = false;
                        }
 
-                       $scope.$emit('unload');
+
                     }, function (data){
-                        $scope.$emit('unload');
                         competition.leaderboard = false
                         $scope.hasLeaderboard = false;
+                        hideLoading = true;
                         console.log('data.data -> ' + JSON.stringify(data.data));
                         if(data.data.error === 3){
                         } else {
@@ -153,10 +158,8 @@ angular
 
                 Competitions.get().then(function(competitions){
 
-
                       var arrTotal = {'id_competitions' : 0, 'name': 'General', 'competiton_type': {'name': 'General','competition_logo':'img/shield-2.png'}};
                       competitions.unshift(arrTotal);
-
 
                       $scope.item.competitions = competitions;
                       widthTotal = ($window.innerWidth * competitions.length);
@@ -176,10 +179,7 @@ angular
 
                 }, function(){
                   Notification.showNetworkErrorAlert();
-                });/*.finally(function(){
-                  $scope.$emit('unload');
-                });*/
-                $scope.$emit('unload');
+                });
             }
 
             function setUpIScroll(){
@@ -195,7 +195,6 @@ angular
 
                 scroll.on('scroll', function () {
                     if (this.currentPage.pageX != _currentPage) {
-                      $scope.$emit('load');
                       $scope.showTournament(this.currentPage.pageX);
                       _currentPage = this.currentPage.pageX;
                     }
@@ -213,7 +212,7 @@ angular
             }
 
             function init(){
-                $scope.$emit('load');
+
                 if($state.current.data.contentClass === 'content-friends'){
                     $scope.isContentLeader = false;
                     friendsMode = true;
@@ -225,8 +224,14 @@ angular
 
                 $scope.$on('onRepeatLast', function(scope, element, attrs) {
                     vScrolls[_currentPage] = iScroll.vertical($scope.vWrapper.getName(_currentPage));
+                    hideLoading = true;
                 });
 
             } init();
+
+
+            setLoading();
+
+
         }
     ]);

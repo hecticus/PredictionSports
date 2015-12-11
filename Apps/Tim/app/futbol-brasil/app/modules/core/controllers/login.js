@@ -145,7 +145,7 @@ angular
                         message: strings['SET_USERNAME_MSG'],
                         type: 'success'
                     });
-                    $state.go('settings',{newClient:true});
+                    $state.go('settings-login');
                 } else {
                     $state.go(goState);
                 }
@@ -205,7 +205,7 @@ angular
                           ClientManager.createOrUpdateClient(
                           {
                               'msisdn' : $scope.msisdn,
-                              'password' : $scope.password
+                              'password' : $scope.password.toUpperCase()
                           }
                           , true, loginSuccess, loginError);
                         }
