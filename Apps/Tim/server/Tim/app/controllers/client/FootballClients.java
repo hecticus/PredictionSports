@@ -143,6 +143,13 @@ public class FootballClients extends Clients {
     public static Result update(Integer id) {
         ObjectNode clientData = getJson();
         try{
+            if(clientData.has("login")) {
+                String login = clientData.get("login").asText();
+                Client byLogin = Client.getByLogin(login);
+                if(byLogin != null){
+                    id = byLogin.getIdClient();
+                }
+            }
             FootballClient client = (FootballClient) Client.update(id, clientData);
             if(client != null) {
                 boolean update = false;
