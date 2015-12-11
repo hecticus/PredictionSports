@@ -71,8 +71,20 @@ angular
                     state: 'remind'
                 }
             })
+            .state('settings-login', {
+                url: '/settings-login',
+                templateUrl:'modules/core/views/settings.html',
+                controller:'SettingsController',
+                data:{
+                    prev: 'settings-login',
+                    next: 'tutorial',
+                    contentClass: 'content-settings',
+                    section: 'settings-login',
+                    state: 'settings-login'
+                }
+            })
             .state('settings', {
-                url: '/settings/{newClient}',
+                url: '/settings',
                 templateUrl:'modules/core/views/settings.html',
                 controller:'SettingsController',
                 data:{

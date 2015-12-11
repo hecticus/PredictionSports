@@ -20,7 +20,6 @@ angular
             var goState = 'tutorial';
             if ($localStorage['TUTORIAL']) goState = 'prediction';
 
-
             $rootScope.onMain = onMain;
             $scope.fbObject = {
                 fbStatus: null,
@@ -51,7 +50,7 @@ angular
                 } else if ($scope.nickname){
                     $scope.isEditing = false;
                     console.log('Saving nickName: ' + $scope.nickname);
-                    ClientManager.createOrUpdateClient({ 'nickname' : $scope.nickname });
+                    ClientManager.createOrUpdateClient({ 'nickname' : $scope.nickname }, function(){ $localStorage['LOGIN'] = true; });
                 } else {
                     console.log('Please input a valid nickName');
                 }
