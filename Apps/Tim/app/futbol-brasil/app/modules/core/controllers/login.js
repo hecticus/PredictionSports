@@ -215,7 +215,7 @@ angular
                           ClientManager.createOrUpdateClient(
                           {
                               'msisdn' : $scope.msisdn,
-                              'password' : $scope.password.toUpperCase()
+                              'password' : $scope.password
                           }
                           , true, loginSuccess, loginError);
                         }
