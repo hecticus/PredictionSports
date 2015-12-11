@@ -13,6 +13,10 @@ angular
         function($rootScope, $state, $window, $timeout, $translate, CordovaDevice, WebManager, ClientManager,
                  PushManager, FacebookManager, Settings, Competitions, App, Update, Upstream, hAnalytics, i18n, News) {
 
+
+
+
+
             var currentSection = '';
             var prevSection = '';
             var utilitySections = ['login','settings', 'settings-login', 'terms', 'remind', 'language-selection', 'team-selection', 'news-detail'];
@@ -349,8 +353,11 @@ angular
 
             }
 
+
+
+
             function init() {
-                bindEvents();
+              bindEvents();
             }
 
             return service;
