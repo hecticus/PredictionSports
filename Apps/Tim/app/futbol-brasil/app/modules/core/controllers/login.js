@@ -157,6 +157,7 @@ angular
                     });
                     $state.go('settings-login');
                 } else {
+                    $localStorage['LOGIN'] = true;
                     $state.go(goState);
                 }
             }

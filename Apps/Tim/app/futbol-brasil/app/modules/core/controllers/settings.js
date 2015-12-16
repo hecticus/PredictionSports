@@ -40,17 +40,17 @@ angular
 
             $scope.isEditing = false;
 
-            $scope.saveNickname = function(){
+            /*$scope.saveNickname = function(){
               $scope.isEditing = true;
-            };
+            };*/
 
             $scope.saveNickname = function(){
                 if(!$scope.isEditing){
                     $scope.isEditing = true;
                 } else if ($scope.nickname){
                     $scope.isEditing = false;
-                    console.log('Saving nickName: ' + $scope.nickname);
-                    ClientManager.createOrUpdateClient({ 'nickname' : $scope.nickname }, function(){ $localStorage['LOGIN'] = true; });
+                    $localStorage['LOGIN'] = true;
+                    ClientManager.createOrUpdateClient({ 'nickname' : $scope.nickname });
                 } else {
                     console.log('Please input a valid nickName');
                 }
