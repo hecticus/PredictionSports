@@ -157,6 +157,7 @@ angular
                     });
                     $state.go('settings-login');
                 } else {
+                    $localStorage['LOGIN'] = true;
                     $state.go(goState);
                 }
             }
@@ -215,7 +216,7 @@ angular
                           ClientManager.createOrUpdateClient(
                           {
                               'msisdn' : $scope.msisdn,
-                              'password' : $scope.password.toUpperCase()
+                              'password' : $scope.password
                           }
                           , true, loginSuccess, loginError);
                         }
