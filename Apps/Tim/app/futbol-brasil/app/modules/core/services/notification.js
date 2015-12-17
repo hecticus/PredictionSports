@@ -158,7 +158,7 @@ angular
 
 
               function registerUserCallback(){
-                  $state.go('login');
+                  $state.go('remind');
               }
 
 
