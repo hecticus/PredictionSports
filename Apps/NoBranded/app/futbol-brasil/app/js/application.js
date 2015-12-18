@@ -6,8 +6,8 @@ angular
 
 angular
     .module(ApplicationConfiguration.applicationModuleName)
-    .config(['$locationProvider', '$httpProvider', '$translateProvider', '$fbProvider', '$twtProvider',
-        function($locationProvider, $httpProvider, $translateProvider, $fbProvider, $twtProvider) {
+    .config(['$locationProvider', '$httpProvider', '$translateProvider', '$fbProvider', '$twtProvider', 'AnalyticsProvider', 'ezfbProvider',
+        function($locationProvider, $httpProvider, $translateProvider, $fbProvider, $twtProvider, AnalyticsProvider, ezfbProvider) {
             $locationProvider.hashPrefix('!');
             $httpProvider.defaults.useXDomain = true;
             $httpProvider.interceptors.push(['$q', '$location', '$injector',
@@ -23,8 +23,27 @@ angular
             ]);
 
             if(!window.cordova) {
-                $fbProvider.init(320314531485580);
+                //console.log('AnalyticsProvider.setAccount -> UA-60801639-2');
+                // Setup your account
+                AnalyticsProvider.setAccount('UA-48149750-11');
+                // Automatic route tracking (default: true)
+                AnalyticsProvider.trackPages(true);
+                // Use display features plugin
+                AnalyticsProvider.useDisplayFeatures(true);
+                // Use analytics.js instead of ga.js
+                AnalyticsProvider.useAnalytics(true);
+                // Change the default page event name. This is useful for ui-router, which fires $stateChangeSuccess instead of $routeChangeSuccess
+                AnalyticsProvider.setPageEvent('$stateChangeSuccess');
+
+
+                $fbProvider.init(1379325579064871);
                 $twtProvider.init().trimText(true);
+
+                ezfbProvider.setInitParams({
+                    /******CAMBIAR POR APPID DE PRODUCCION******/
+                    appId: '1379325579064871'
+                });
+
             }
 
 //            // Translations from Server
@@ -46,10 +65,10 @@ angular
             $translateProvider.usePostCompiling(true);
         }
     ])
-    .run(['$rootScope', '$localStorage', '$state', '$translate', 'CordovaApp', 'ClientManager', 'Client',
-        'Notification', 'Analytics', '$templateCache','FacebookManager', 'WebManager','App','i18n','Upstream', 'News',
-        function($rootScope, $localStorage, $state, $translate, CordovaApp, ClientManager, Client,
-                 Notification, Analytics, $templateCache, FacebookManager, WebManager,App,i18n,Upstream,News) {
+    .run(['$rootScope', '$localStorage', '$state', '$translate',  '$interval', 'CordovaApp', 'ClientManager', 'Client',
+        'Notification', 'hAnalytics', '$templateCache','FacebookManager', 'WebManager','App','i18n','Upstream', 'News', 'Analytics', 'CordovaDevice',
+        function($rootScope, $localStorage, $state, $translate, $interval, CordovaApp, ClientManager, Client,
+                 Notification, hAnalytics, $templateCache, FacebookManager, WebManager,App,i18n,Upstream,News, Analytics, CordovaDevice) {
 
 
             WebManager.loadServerConfigs().then(
@@ -66,7 +85,43 @@ angular
                 CordovaApp.init();
             });
 
+            var delay = 1000;
+            var Timer = $interval(function () {
 
+              if (!CordovaDevice.isWebPlatform()) {
+
+                window.plugins.toast.hide();
+
+                var networkState = navigator.connection.type;
+                var states = {};
+                states[Connection.UNKNOWN]  = false;
+                states[Connection.ETHERNET] = true;
+                states[Connection.WIFI]     = true;
+                states[Connection.CELL_2G]  = false;
+                states[Connection.CELL_3G]  = true;
+                states[Connection.CELL_4G]  = true;
+                states[Connection.CELL]     = false;
+                states[Connection.NONE]     = false;
+
+                if (!states[networkState]) {
+                  delay = 5000;
+                  $translate('ALERT.NETWORK_ERROR.MSG')
+                  .then(function(translate){
+                      window.plugins.toast.show(translate, 'short', 'top',
+                       function(a){console.log('toast success: ' + a)},
+                       function(b){console.log('toast error: ' + b)}
+                     );
+                  });
+                 } else {
+                  delay = 1000;
+                 }
+              }
+
+              Timer;
+
+             }, delay);
+
+            Timer;
 
 
             $rootScope.defaultPage = 'prediction';
@@ -97,25 +152,9 @@ angular
                                 $state.go('login');
                             }
                         }, CordovaApp.errorStartApp);
-                    } else {
-
-                        /*if (toState.data.state === 'friends') {
-
-
-                          if(!!window.facebookConnectPlugin) {
-                              FacebookManager.getStatus(function (result) {
-                                  if (result) {
-                                      if (result.status !== 'connected') {
-                                          Notification.showQuestionFacebookDialog();
-                                      }
-                                  }
-                              });
-                          }
-                        };*/
-
                     }
 
-                    /*if((Client.isGuest() || !Client.isActiveClient()) && CordovaApp.isBlockedSection(toState.name)){
+                    if((Client.isGuest() || !Client.isActiveClient()) && CordovaApp.isBlockedSection(toState.name)){
 
                         if(Client.isGuest()){
                             Notification.showLockedSectionDialog();
@@ -125,7 +164,20 @@ angular
 
                         event.preventDefault();
                         $rootScope.hideLoading();
-                    }*/
+                    } else {
+
+                          if (toState.data.state === 'friends') {
+                              FacebookManager.getStatus(function (result) {
+                                  if (result) {
+                                      if (result.status !== 'connected') {
+                                          Notification.showQuestionFacebookDialog();
+                                      }
+                                  }
+                              });
+                          };
+
+
+                    }
 
                     $rootScope.isActiveButton = 'active';
 
@@ -136,6 +188,12 @@ angular
             });
 
             $rootScope.$on('$stateChangeSuccess',  function (event, toState, toParams, fromState, fromParams) {
+
+                if (fromState.name === '')  {
+                  if (!$localStorage['LOGIN'])
+                    $state.go('settings-login');
+                }
+
                 $templateCache.removeAll();
                 var fromName = fromState.name;
                 var fromSection = fromState.data? fromState.data.section : null;
@@ -161,7 +219,13 @@ angular
                     $rootScope.contentClass = toState.data.contentClass;
                 }
 
-                Analytics.trackView(toState.name);
+                hAnalytics.trackView(toState.name);
+                if(!window.cordova) {
+                  console.log('Analytics.trackPage -> ' + toState.name);
+                  Analytics.trackPage(toState.name);
+                }
+
+
             });
         }
     ]);

@@ -71,8 +71,20 @@ angular
                     state: 'remind'
                 }
             })
+            .state('settings-login', {
+                url: '/settings-login',
+                templateUrl:'modules/core/views/settings.html',
+                controller:'SettingsController',
+                data:{
+                    prev: 'settings-login',
+                    next: 'tutorial',
+                    contentClass: 'content-settings',
+                    section: 'settings-login',
+                    state: 'settings-login'
+                }
+            })
             .state('settings', {
-                url: '/settings/{newClient}',
+                url: '/settings',
                 templateUrl:'modules/core/views/settings.html',
                 controller:'SettingsController',
                 data:{
@@ -132,10 +144,7 @@ angular
                 }
             })
             .state('news', {
-                url: '/news/{newsId:int}',
-                params : {
-                  newsId : {value: null, squash: true}
-                },
+                url: '/news',
                 controller:'NewsCtrl  as _this',
                 templateUrl:'modules/core/views/news.html',
                 data:{
@@ -247,7 +256,6 @@ angular
                   state: 'how'
               }
             })
-
             .state('tutorial', {
                 url: '/tutorial',
                 controller:'TutorialController as tutorial',

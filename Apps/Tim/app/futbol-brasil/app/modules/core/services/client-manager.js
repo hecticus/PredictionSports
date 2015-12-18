@@ -135,7 +135,8 @@ angular
                     if(subscribe){ jData.subscribe = true; }
                 }
 
-                //console.log('jData -> ' + JSON.stringify(jData));
+                //console.log('createOrUpdateClient -> url -> ' + url);
+                //console.log('createOrUpdateClient -> Payload -> ' + JSON.stringify(jData));
 
                 $http({
                     url : url,

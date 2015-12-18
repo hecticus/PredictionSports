@@ -3,7 +3,7 @@ password: $pa1p1t32$
 
 
 Get Android key hash to Facebook
-keytool -exportcert -alias androiddebugkey -keystore "C:\Hecticus\GitHub\PredictionSports\Apps\Tim\app\futbol-brasil\keys\tim-palpites-release-key.keystore" | "C:\OpenSSL-Win32\bin\openssl" sha1 -binary | "C:\OpenSSL-Win32\bin\openssl" base64
+keytool -exportcert -alias tim_palpites -keystore "C:\Hecticus\GitHub\PredictionSports\Apps\Tim\app\futbol-brasil\platforms\android\ant-build\tim-palpites-release-key.keystore" | "C:\OpenSSL-Win32\bin\openssl" sha1 -binary | "C:\OpenSSL-Win32\bin\openssl" base64
 
 
 

@@ -14,10 +14,15 @@ angular
 
             var scroll = null;
             var strings = {};
+            var goState = 'tutorial';
+            if ($localStorage['TUTORIAL']) goState = 'prediction';
             $scope.flash = flash;
 
             $scope.msisdn = '';
             $scope.password = '';
+            $scope.prefix = '+' + Client.prefix;
+            $scope.formController = {"msisdn": {"length" : {"min": 11, "max" : 12}}};
+
 
             //$scope.isWeb = false;
 
@@ -112,8 +117,18 @@ angular
 
 
             function remindSuccess(){
+
+              if (CordovaDevice.isWebPlatform()) {
                 flash.setMessage(strings['LOGIN_REMIND_SUCCESS']);
-                $state.go('login', {'msisdn': $scope.msisdn});
+              } else {
+                window.plugins.toast.show(strings['LOGIN_REMIND_SUCCESS'], 'long', 'top',
+                  function(a){console.log('toast success: ' + a)},
+                  function(b){console.log('toast error: ' + b)}
+                );
+              };
+
+              $state.go('login', {'msisdn': $scope.msisdn});
+
             }
 
             function remindError(){
@@ -131,7 +146,6 @@ angular
 
 
             function loginSuccess(isNewClient){
-                //console.log('onLoginSuccess. Login Success.');
                 Upstream.loginEvent();
                 if(isNewClient){
                     //TODO i18n-alizar
@@ -141,12 +155,10 @@ angular
                         message: strings['SET_USERNAME_MSG'],
                         type: 'success'
                     });
-                    //console.log('new client. going to settings');
-                    $state.go('settings',{newClient:true});
+                    $state.go('settings-login');
                 } else {
-                    //console.log('existing client. going to news');
-                    $state.go('tutorial');
-                    //$state.go('prediction');
+                    $localStorage['LOGIN'] = true;
+                    $state.go(goState);
                 }
             }
 
@@ -172,7 +184,6 @@ angular
             $scope.sendMsisdn = function(){
                 $scope.$emit('load');
                 if($scope.msisdn){
-                    //console.log('sendMsisdn. msisdn: ' + $scope.msisdn);
                     Upstream.clickedSubscriptionPromptEvent();
                     Client.setMsisdn($scope.msisdn,
                         function(){
@@ -182,7 +193,7 @@ angular
                         },
                         function(){
                             //$scope.$emit('unload');
-                            console.log('Error saving MSISDN');
+                            //console.log('Error saving MSISDN');
                         }
                     );
                 } else {
@@ -200,12 +211,16 @@ angular
             $scope.doMsisdnLogin = function(){
                 $scope.$emit('load');
                 if($scope.password && $scope.msisdn){
-                    ClientManager.createOrUpdateClient(
-                        {
-                            'msisdn' : $scope.msisdn,
-                            'password' : $scope.password
+                    Client.setMsisdn($scope.msisdn,
+                        function(){
+                          ClientManager.createOrUpdateClient(
+                          {
+                              'msisdn' : $scope.msisdn,
+                              'password' : $scope.password
+                          }
+                          , true, loginSuccess, loginError);
                         }
-                        , true, loginSuccess, loginError);
+                    );
                     Client.setNoGuest();
                 } else {
                     if(!$scope.msisdn){
@@ -295,8 +310,11 @@ angular
         return {
           setMessage: function(message) {
             queue.push(message);
+
           },
           getMessage: function() {
+
+
             return currentMessage;
           }
         };

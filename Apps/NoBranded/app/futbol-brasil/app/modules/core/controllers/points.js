@@ -41,11 +41,12 @@ angular
                   response.forEach(function(competition){ $scope.getTotalPointsClient += competition.score; });
                   $scope.tournaments = response;
                   $scope.hasScore = $scope.tournaments.length > 0;
+                  $scope.$emit('unload');
               }, function(){
+                  $scope.$emit('unload');
                   Notification.showNetworkErrorAlert();
-              }).finally(function(){
-                $scope.$emit('unload');
               });
+
             }
 
             function setUpIScroll(){
