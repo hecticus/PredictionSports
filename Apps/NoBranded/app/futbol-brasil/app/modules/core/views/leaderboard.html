@@ -48,7 +48,7 @@
 
                           <div class="row">
                             <div class="col-xs-12" >
-                              <table class="table h-table">
+                              <table class="table h-table" ng-hide="!competition.leaderboard">
                                   <thead>
                                   <tr>
                                     <th class="h-header yellow" style="width:20%"  >##</th>
@@ -56,23 +56,39 @@
                                     <th class="h-header yellow" style="width:20%" translate>LEADERBOARD.POINTS</th>
                                   </tr>
                                 </thead>
-                                <tbody >
-                                  <tr ng-repeat="leader in competition.leaderboard"
-                                      ng-class="{'active' : $odd,  'client' : competition.client.id_client == leader.id_client }" on-last-repeat>
-                                    <td  style="width:20%" >
-                                      <span class="text-center-vertical"
-                                            ng-bind="leader.index" ></span>
-                                    </td>
-                                    <td  style="width:60%; text-align:left;" >
-                                      <span class="text-center-vertical"
-                                            ng-bind="leader.client"></span>
-                                    </td>
-                                    <td   style="width:20%">
-                                      <span class="text-center-vertical"
-                                            ng-bind="leader.score"></span>
-                                    </td>
-                                  </tr>
-                                </tbody>
+
+
+                                  <tbody ng-show="(!hasFriends && competition.client.id_client == leader.id_client) || (hasFriends)"
+                                         ng-repeat="leader in competition.leaderboard"
+                                         ng-class="{'active' : $odd,  'client' : competition.client.id_client == leader.id_client }" on-last-repeat>
+
+
+                                    <tr >
+                                      <td  style="width:20%" >
+                                        <span class="text-center-vertical"
+                                              ng-bind="leader.index" ></span>
+                                      </td>
+                                      <td  style="width:60%; text-align:left;" >
+                                        <span class="text-center-vertical"
+                                              ng-bind="leader.client"></span>
+                                      </td>
+                                      <td   style="width:20%">
+                                        <span class="text-center-vertical"
+                                              ng-bind="leader.score"></span>
+                                      </td>
+                                    </tr>
+
+                                    <tr  ng-show="!hasFriends">
+                                      <td  style="width:100%;" colspan="4" >
+                                            <div class="no-content-panel" style="font-size: 1.4em; font-weight: normal;">
+                                              <i class="mdi-social-people-outline"></i>
+                                              <div class="no-content-panel-title" translate>LEADERBOARD.NO-FRIENDS</div>
+                                            </div>
+                                      </td>
+                                    </tr>
+
+                                  </tbody>
+
                               </table>
                             </div>
                           </div>
@@ -95,18 +111,13 @@
 
 
 
-
-
-
-
-
-
                 </li>
             </ul>
         </div>
     </div>
 </div>
-<div class="row" ng-show="friendsMode && !hasFriends">
+
+<div class="row" ng-show="friendsMode">
     <div class="col-xs-12 news">
         <div class="no-content-panel" style="margin-top: 120px !important;">
             <i class="mdi-action-info-outline"></i>

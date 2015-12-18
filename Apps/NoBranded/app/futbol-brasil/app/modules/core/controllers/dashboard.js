@@ -142,8 +142,7 @@ angular
                 .then(function (data) {
                     data = data.data.response;
                     $scope.leagues = data;
-                }).finally(function(){
-                  $scope.$emit('unload');
+                    $scope.$emit('unload');
                 });
             }
 

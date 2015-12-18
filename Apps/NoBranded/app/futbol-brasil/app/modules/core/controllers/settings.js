@@ -9,16 +9,16 @@
 angular
     .module('core')
     .controller('SettingsController', [
-        '$scope', '$rootScope', '$state', '$timeout', '$translate', '$stateParams', 'ClientManager'
+        '$scope', '$rootScope', '$localStorage', '$state', '$timeout', '$translate', '$stateParams', 'ClientManager'
         , 'TeamsManager', 'FacebookManager', 'Settings', 'iScroll', 'i18n', 'Client', 'Notification',
-        function($scope, $rootScope, $state, $timeout, $translate, $stateParams, ClientManager, TeamsManager
+        function($scope, $rootScope, $localStorage, $state, $timeout, $translate, $stateParams, ClientManager, TeamsManager
             , FacebookManager, Settings, iScroll, i18n, Client, Notification) {
 
             var strings = {};
             var scroll = null;
             var removeEventCallback = null;
-
-
+            var goState = 'tutorial';
+            if ($localStorage['TUTORIAL']) goState = 'prediction';
 
             $rootScope.onMain = onMain;
             $scope.fbObject = {
@@ -40,16 +40,16 @@ angular
 
             $scope.isEditing = false;
 
-            $scope.saveNickname = function(){
+            /*$scope.saveNickname = function(){
               $scope.isEditing = true;
-            };
+            };*/
 
             $scope.saveNickname = function(){
                 if(!$scope.isEditing){
                     $scope.isEditing = true;
                 } else if ($scope.nickname){
                     $scope.isEditing = false;
-                    console.log('Saving nickName: ' + $scope.nickname);
+                    $localStorage['LOGIN'] = true;
                     ClientManager.createOrUpdateClient({ 'nickname' : $scope.nickname });
                 } else {
                     console.log('Please input a valid nickName');
@@ -122,6 +122,7 @@ angular
                     if($scope.fbObject.fbStatus === 'connected'){
                        FacebookManager.logout(function(){
                           $scope.fbObject.class = 'btn-info';
+                          Client.setFriends([]);
                           getStatus();
                        });
                     } else if($scope.fbObject.fbStatus !== 'connected') {
@@ -134,7 +135,7 @@ angular
                             };
                             getStatus();
                       });
-                      
+
                     }
                 }
             };
@@ -186,6 +187,7 @@ angular
 
             function getStatus(){
                 //if(!!window.facebookConnectPlugin) {
+                    $scope.setFbButtonMsg();
                     FacebookManager.getStatus(function (result) {
                         if (result) {
                             $scope.fbObject.fbStatus = result.status;
@@ -250,9 +252,9 @@ angular
                  } else {
                     $rootScope.$storage.settings = true;
                     if($stateParams.newClient){
-                      $state.go('tutorial');
+                      $state.go(goState);
                     } else {
-                      $state.go('prediction');
+                      $state.go(goState);
                     }
                  };
             }
