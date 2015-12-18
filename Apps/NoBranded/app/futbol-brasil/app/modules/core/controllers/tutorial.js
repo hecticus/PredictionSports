@@ -12,7 +12,7 @@ angular
         '$scope', '$localStorage', '$state', '$window', 'iScroll', 'Client',
         function($rootScope, $scope, $localStorage, $state, $window, iScroll, Client) {
 
-
+            $localStorage['TUTORIAL'] = true;
             $scope.language = Client.getLanguage().short_name;
             var width = $window.innerWidth;
             var widthTotal = $window.innerWidth;

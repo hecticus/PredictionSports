@@ -6,7 +6,7 @@
             "STANDINGS": "Tabela",
             "NEWS": "Notícias",
             "SCORERS": "Artilharia",
-            "LIVE": "Ao Vivo"
+            "LIVE": "Tempo Real"
         },
         "BETS" : {
             "BETS": "Palpites",
@@ -65,14 +65,15 @@
         "HITS" : "Sucessos",
         "MY_POINTS" : "Meus Pontos",
         "SCORE" : "Pontos",
-        "GENERAL" : "General"
+        "GENERAL" : "Geral",
+        "NO-FRIENDS" : "Nenhum dos seus amigos está jogando!"
     },
     "EMPTY_STATES" : {
         "LIVE" : "Não há jogos para hoje",
         "NEWS" : "Não há notícias disponíveis",
         "POINTS" : "Voce não tem informação disponível sobre pontos",
-        "LEADERBOARD" : "Não há informação disponível para esta classificação",
-        "PREDICTIONS" : "Não há informação disponível para este torneio",
+        "LEADERBOARD" : "Não há dados de Classificação disponíveis.",
+        "PREDICTIONS" : "Não há dados de Classificação disponíveis.",
         "MATCH" : "Não há jogos para este dia",
         "SCORERS" : "Não há artilheiros para este torneio",
         "TEAMS" : "Não foi possível obter times",
@@ -92,7 +93,7 @@
         "REMIND_LABEL" : "Lembrar / Obter Credenciais",
         "CHANGE_LANGUAGE_LABEL" : "Mudar idioma",
         "TUTORIAL_LABEL" : "Como funciona o serviço?",
-        "TERMS_LABEL" : "Termos & Condições",
+        "TERMS_LABEL" : "Termos e Condições",
         "ENTER_AS_GUEST_LABEL" : "Entrar como convidado",
         "REMIND" : {
             "LABEL" : "Digite o seu número do celular",
@@ -111,9 +112,10 @@
         "FAVORITE_TEAMS_TITLE": "Minhas Equipes Favoritas",
         "LANGUAGES_TITLE": "Idiomas",
         "SOCIAL_ACCOUNTS_TITLE": "Redes Sociais",
+        "APP": "Aplicação",
         "TOGGLE" : {
             "BETS" : "Palpites",
-            "MTM" : "Ao Vivo",
+            "MTM" : "Tempo Real",
             "NEWS" : "Notícias"
         },
         "FACEBOOK" : {
@@ -136,7 +138,18 @@
     },
 
     "TERMS" : {
-        "MESSAGE" : "Por favor, leia os Termos e Condições no site http://www.google.com/.  Ao usar o aplicativo o usuário concorda com todos os Termos e Condições."
+        "MESSAGE" : "Por favor, leia os Termos e Condições no site http://www.tim.com.br/.  Ao usar o aplicativo o usuário concorda com todos os Termos e Condições."
+    },
+
+    "FORM-CONTROL": {
+        "MSISDN" : {
+          "REQUIRED" : "É necessário o número de telefone",
+          "MIN-LENGTH" : "O comprimento mínimo necessário é ",
+          "MAX-LENGTH" : "O comprimento máximo necessário é "
+        },
+        "PASSWORD" : {
+          "REQUIRED" : "A senha é necessária"
+        }
     },
 
     "ALERT": {
@@ -164,7 +177,7 @@
        "NETWORK_ERROR" : {
           "TITLE" : "Erro de Rede",
           "SUBTITLE": "Conexão perdida",
-          "MSG": "Não foi possível obter uma resposta do servidor"
+          "MSG": "Não foi possível obter uma resposta do servidor. Tente mais tarde."
         },
 
         "GET_CREDENTIALS" : {
@@ -235,9 +248,11 @@
         },
 
        "LOCKED_SECTION_USER_NOT_ELIGIBLE" : {
-          "TITLE" : "Usuário não elegíveis",
-          "SUBTITLE": "Usuário não elegíveis",
-          "MSG": "Usuário não elegíveis, deve ser um cliente BRAND"
+          "TITLE" : "Conta não ativa",
+          "SUBTITLE": "Conta não ativa",
+          "MSG": "Sua conta não está ativa, para ativá-la, assine novamente.",
+          "CONFIRM" : "Assine",
+          "CANCEL" : "Cancelar"
         },
 
         "SET_BET" : {
@@ -245,7 +260,7 @@
             "SUBTITLE": "Data desatualizado",
             "MSG": "A data de partida está desatualizado"
         },
-        
+
         "FB_SHARE" : {
             "TITLE" : "News Share",
             "SUBTITLE": "Warning",
@@ -262,7 +277,7 @@
     "NOT_AVAILABLE": "Não Disponível",
     "LOGOUT" : "Sair",
     "READY" : "Pular tutorial",
-    "NO_MATCH" : "época terminou",
+    "NO_MATCH" : "Encerrado",
     "TITLE_NEXT_MATCH" : "Próximo",
     "MSG_UNAVAILABLE_ORIENTATION" : "A orientação da vista não está disponível"
 

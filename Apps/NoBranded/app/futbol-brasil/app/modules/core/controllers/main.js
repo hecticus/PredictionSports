@@ -9,15 +9,15 @@
 angular
     .module('core')
     .controller('MainCtrl', ['$rootScope', '$scope', '$state', '$localStorage', '$interval',
-        '$timeout', '$window', '$translate', 'Client', 'CordovaApp','CordovaDevice',
+        '$timeout', '$window', '$translate', 'Client', 'CordovaApp','CordovaDevice', 'FacebookManager',
         function($rootScope, $scope, $state, $localStorage, $interval, $timeout, $window, $translate,
-               Client, CordovaApp, CordovaDevice) {
+               Client, CordovaApp, CordovaDevice, FacebookManager) {
 
             $('body').flowtype({
                 minimum : 320,
                 maximum : 1200
             });
-            //$('body').flowtype();
+
             $rootScope.refreshInterval = null;
             $rootScope.$storage = $localStorage;
             $rootScope.hasFavorites = false;
@@ -31,6 +31,7 @@ angular
             $rootScope.transitionPageBack = transitionPageBack;
             $rootScope.nextPage = nextPage;
             $rootScope.prevPage = prevPage;
+            $rootScope.hideToast = hideToast;
             $rootScope.clickPage = clickPage;
             $rootScope.isPageContentLeft = false;
             $rootScope.hideLoading = hideLoading;
@@ -76,6 +77,7 @@ angular
             function hideMenuFavorites() {
               if ((getSection() === 'login')
                   || (getSection() === 'settings')
+                  || (getSection() === 'settings-login')
                   || (getSection() === 'remind')
                   || (getSection() === 'tutorial')
                   || (getSection() === 'language-selection')
@@ -83,7 +85,6 @@ angular
                   || (getSection() === 'dashboard')
                   || ($('.content-news #wrapper2').hasClass('left'))
                   || ($rootScope.hasFavorites === false)) {
-
                 return true;
               } else {
                 return false;
@@ -91,8 +92,7 @@ angular
             }
 
             function showMenuForward() {
-              if ((getSection() === 'settings')
-                && (!$rootScope.$storage.settings) ) {
+              if ((getSection() === 'settings-login')) {
                 return true;
               } else {
                 return false;
@@ -100,11 +100,11 @@ angular
             }
 
             function hideMenuIcon() {
-              if (((getSection() === 'login') && !hasPreviousSubsection())
+              if ((getSection() === 'login')
                   || (getSection() === 'tutorial')
                   || (getSection() === 'dashboard')
-                  || ((getSection() === 'settings') &&
-                      (!$rootScope.$storage.settings))) {
+                  || (getSection() === 'news-detail')
+                  || (getSection() === 'settings-login')) {
                 return true;
               } else {
                 return false;
@@ -131,6 +131,7 @@ angular
             function hideMenu() {
                 if ($('#wrapperM').hasClass('rightShort')) {
                     $rootScope.transitionPage('#wrapperM', 'leftShort');
+                    $scope.$emit('unload');
                 }
             }
 
@@ -181,6 +182,7 @@ angular
                 switch(action){
                     case 'logout':
                         Client.logout();
+                        FacebookManager.logout();
                         $state.go('login');
                         break;
                     default:
@@ -209,6 +211,12 @@ angular
             function prevPage() {
               $scope.hideMenu();
               $scope.$emit('unload');
+            }
+
+            function hideToast() {
+              if (!CordovaDevice.isWebPlatform()) {
+                window.plugins.toast.hide();
+              }
             }
 
             ////////////// Scope //////////////////////////
@@ -276,16 +284,9 @@ angular
             }
 
             function init(){
+
                 $scope.toggles.favorites = Client.isFavoritesFilterActive();
-                $scope.$watch('Client.getHasFavorites()', function(){
-                    $rootScope.hasFavorites = Client.getHasFavorites();
-                });
-
                 getTranslations();
-
-                /*$rootScope.$on('$stateChangeStart',  function (event, toState, toParams, fromState, fromParams){
-                  alert(CordovaDevice.phonegapIsOnline());
-                });*/
 
                 $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
                   if (from.data) {
@@ -301,7 +302,6 @@ angular
 
                 $scope.$on('load', function(){
                   $scope.loading = true;
-                  //$scope.error = false;
                 });
 
                 $scope.$on('unload', function(){

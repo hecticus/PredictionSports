@@ -65,7 +65,8 @@
         "HITS" : "Hits",
         "MY_POINTS" : "My Points",
         "SCORE" : "Score",
-        "GENERAL" : "General"
+        "GENERAL" : "General",
+        "NO-FRIENDS" : "Nenhum dos seus amigos está jogando!"
     },
     "EMPTY_STATES" : {
         "LIVE" : "There are no games for today",
@@ -111,6 +112,7 @@
         "FAVORITE_TEAMS_TITLE": "My Favorite Teams",
         "LANGUAGES_TITLE": "Languages",
         "SOCIAL_ACCOUNTS_TITLE": "Social Accounts",
+        "APP": "App",
         "TOGGLE" : {
             "BETS" : "Predictions",
             "MTM" : "MTM",
@@ -136,7 +138,18 @@
     },
 
     "TERMS" : {
-        "MESSAGE" : "Please read the Terms & Conditions on the website http://www.google.com/. By using the application the user agrees to all the Terms & Conditions."
+        "MESSAGE" : "Please read the Terms & Conditions on the website http://www.tim.com.br/. By using the application the user agrees to all the Terms & Conditions."
+    },
+
+    "FORM-CONTROL": {
+        "MSISDN" : {
+          "REQUIRED" : "The phone number is required",
+          "MIN-LENGTH" : "The required minimum length is ",
+          "MAX-LENGTH" : "The maximum length required is "
+        },
+        "PASSWORD" : {
+          "REQUIRED" : "The password is required"
+        }
     },
 
     "ALERT": {
@@ -237,7 +250,9 @@
        "LOCKED_SECTION_USER_NOT_ELIGIBLE" : {
           "TITLE" : "User not eligible",
           "SUBTITLE": "User not eligible",
-          "MSG": "User not eligible!!!"
+          "MSG": "User not eligible!!!",
+          "CONFIRM" : "Ok",
+          "CANCEL" : "Cancelar"
         },
 
           "SET_BET" : {
@@ -245,7 +260,7 @@
             "SUBTITLE": "Outdated event",
             "MSG": "The match date is outdated"
           },
-          
+
           "FB_SHARE" : {
             "TITLE" : "News Share",
             "SUBTITLE": "Warning",
