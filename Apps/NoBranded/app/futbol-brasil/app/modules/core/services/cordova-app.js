@@ -13,12 +13,16 @@ angular
         function($rootScope, $state, $window, $timeout, $translate, CordovaDevice, WebManager, ClientManager,
                  PushManager, FacebookManager, Settings, Competitions, App, Update, Upstream, hAnalytics, i18n, News) {
 
+
+
+
+
             var currentSection = '';
             var prevSection = '';
-            var utilitySections = ['login','settings', 'terms', 'remind', 'language-selection', 'team-selection'];
+            var utilitySections = ['login','settings', 'settings-login', 'terms', 'remind', 'language-selection', 'team-selection', 'news-detail'];
             var settingsSubSections = ['language-selection', 'team-selection'];
             var blockedSections = ['match', 'standings', 'scorers', 'mtm', 'friends'];
-            var settingsSections = ['settings', 'terms', 'tutorial','remind', 'language-selection', 'team-selection'];
+            var settingsSections = ['settings', 'terms', 'tutorial','remind', 'language-selection', 'team-selection', 'news-detail'];
             var onSettingsSection = false;
 
             var strings = {};
@@ -90,27 +94,26 @@ angular
             }
 
             function onBackButtonPressed(){
+
+
                 var hasPreviousSubsection = angular.element('.page.back.left:last').hasClass('left');
 
                 if ($('#wrapperM').hasClass('rightShort')) {
                      $rootScope.hideMenu();
                 } else if(currentSection == 'login'){
                     exitApp();
-                } else if(isOnUtilitySection()){
-
+                } else if(isOnUtilitySection()
+                    && ($state.current.data.section != 'settings-login')){
 
                     if(isSettingsSubSection(currentSection)){
                         $state.go($state.current.data.prev);
                         onSettingsSection = false;
                     } else {
-
                         if ($rootScope.previousState === undefined) {
                           $state.go('prediction');
                         } else {
                           $state.go($rootScope.previousState);
                         }
-
-
                     }
 
                 } else if(hasPreviousSubsection){
@@ -193,7 +196,7 @@ angular
             }
 
             function requiresAuthSection(section){
-                return !(section === 'login' || section === 'remind' || section === 'terms' || section === 'tutorial');
+                return !(section === 'login' || section === 'remind' || section === 'terms' || section === 'tutorial' || section === 'news-detail');
             }
 
             function isBlockedSection(section){
@@ -350,8 +353,11 @@ angular
 
             }
 
+
+
+
             function init() {
-                bindEvents();
+              bindEvents();
             }
 
             return service;

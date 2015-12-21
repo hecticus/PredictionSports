@@ -117,8 +117,18 @@ angular
 
 
             function remindSuccess(){
+
+              if (CordovaDevice.isWebPlatform()) {
                 flash.setMessage(strings['LOGIN_REMIND_SUCCESS']);
-                $state.go('login', {'msisdn': $scope.msisdn});
+              } else {
+                window.plugins.toast.show(strings['LOGIN_REMIND_SUCCESS'], 'long', 'top',
+                  function(a){console.log('toast success: ' + a)},
+                  function(b){console.log('toast error: ' + b)}
+                );
+              };
+
+              $state.go('login', {'msisdn': $scope.msisdn});
+
             }
 
             function remindError(){
@@ -147,6 +157,7 @@ angular
                     });
                     $state.go('settings-login');
                 } else {
+                    $localStorage['LOGIN'] = true;
                     $state.go(goState);
                 }
             }
@@ -205,7 +216,7 @@ angular
                           ClientManager.createOrUpdateClient(
                           {
                               'msisdn' : $scope.msisdn,
-                              'password' : $scope.password.toUpperCase()
+                              'password' : $scope.password
                           }
                           , true, loginSuccess, loginError);
                         }
@@ -299,8 +310,11 @@ angular
         return {
           setMessage: function(message) {
             queue.push(message);
+
           },
           getMessage: function() {
+
+
             return currentMessage;
           }
         };

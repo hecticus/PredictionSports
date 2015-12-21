@@ -65,10 +65,10 @@ angular
             $translateProvider.usePostCompiling(true);
         }
     ])
-    .run(['$rootScope', '$localStorage', '$state', '$translate', 'CordovaApp', 'ClientManager', 'Client',
-        'Notification', 'hAnalytics', '$templateCache','FacebookManager', 'WebManager','App','i18n','Upstream', 'News', 'Analytics',
-        function($rootScope, $localStorage, $state, $translate, CordovaApp, ClientManager, Client,
-                 Notification, hAnalytics, $templateCache, FacebookManager, WebManager,App,i18n,Upstream,News, Analytics) {
+    .run(['$rootScope', '$localStorage', '$state', '$translate',  '$interval', 'CordovaApp', 'ClientManager', 'Client',
+        'Notification', 'hAnalytics', '$templateCache','FacebookManager', 'WebManager','App','i18n','Upstream', 'News', 'Analytics', 'CordovaDevice',
+        function($rootScope, $localStorage, $state, $translate, $interval, CordovaApp, ClientManager, Client,
+                 Notification, hAnalytics, $templateCache, FacebookManager, WebManager,App,i18n,Upstream,News, Analytics, CordovaDevice) {
 
 
             WebManager.loadServerConfigs().then(
@@ -85,7 +85,43 @@ angular
                 CordovaApp.init();
             });
 
+            var delay = 1000;
+            var Timer = $interval(function () {
 
+              if (!CordovaDevice.isWebPlatform()) {
+
+                window.plugins.toast.hide();
+
+                var networkState = navigator.connection.type;
+                var states = {};
+                states[Connection.UNKNOWN]  = false;
+                states[Connection.ETHERNET] = true;
+                states[Connection.WIFI]     = true;
+                states[Connection.CELL_2G]  = false;
+                states[Connection.CELL_3G]  = true;
+                states[Connection.CELL_4G]  = true;
+                states[Connection.CELL]     = false;
+                states[Connection.NONE]     = false;
+
+                if (!states[networkState]) {
+                  delay = 5000;
+                  $translate('ALERT.NETWORK_ERROR.MSG')
+                  .then(function(translate){
+                      window.plugins.toast.show(translate, 'short', 'top',
+                       function(a){console.log('toast success: ' + a)},
+                       function(b){console.log('toast error: ' + b)}
+                     );
+                  });
+                 } else {
+                  delay = 1000;
+                 }
+              }
+
+              Timer;
+
+             }, delay);
+
+            Timer;
 
 
             $rootScope.defaultPage = 'prediction';

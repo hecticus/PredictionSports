@@ -81,7 +81,7 @@ angular
             };
 
             $scope.getTime = function (_date) {
-                return Moment.date(_date).format('HH:mm');
+                return Moment.dateNoUTC(_date).format('HH:mm');
             };
 
 
@@ -92,9 +92,13 @@ angular
                     var _jLeagues = $scope.leagues[_iLeague];
                     var _jMatch = _jLeagues.fixtures[_iFixture].matches[_iMatch];
 
-                    var diffHours = Moment.date(_jMatch.date,'YYYYMMDDhhmmss').diff(Moment.date(), 'h');
+                    //var diffHours = Moment.date(_jMatch.date,'YYYYMMDDhhmmss').diff(Moment.date(Moment.date(),'YYYYMMDDhhmmss'), 'h');
+                    var diffMinutes = Moment.date(_jMatch.date,'YYYYMMDDhhmmss').diff(Moment.date(Moment.date(),'YYYYMMDDhhmmss'), 'minutes');
 
-                    if (diffHours > 1) {
+                    //console.log('diffHours -> ' + diffHours);
+                    //console.log('diffMinutes -> ' + diffMinutes);
+
+                    if (diffMinutes >= 15) {
                       if (( _jMatch.id_game_matches != _Match) || (_bet != _mBet)) {
                         $scope.$emit('load');
                         if (_status == 3) {
@@ -247,10 +251,10 @@ angular
                     $scope.scroll = iScroll.vertical('wrapper');
                     widthTotal = ($window.innerWidth * $scope.leagues.length);
                     setUpIScroll();
+                    $scope.$emit('unload');
                 }, function(){
-                  Notification.showNetworkErrorAlert();
-                }).finally(function(){
                   $scope.$emit('unload');
+                  Notification.showNetworkErrorAlert();
                 });
 
             }

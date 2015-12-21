@@ -18,14 +18,14 @@
                                 <legend translate>LOGIN.REMIND.LABEL</legend>
 
 
-                                <div ng-show="form.msisdnInput.$dirty && form.msisdnInput.$invalid">
+                                <!--div ng-show="form.msisdnInput.$dirty && form.msisdnInput.$invalid">
                                   <div class="alert alert-dismissable alert-warning">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
                                     <span ng-show="form.msisdnInput.$error.required">{{'FORM-CONTROL.MSISDN.REQUIRED' | translate }}</span>
                                     <span ng-show="form.msisdnInput.$error.minlength">{{'FORM-CONTROL.MSISDN.MIN-LENGTH' | translate }} {{formController.msisdn.length.min}}</span>
                                     <span ng-show="form.msisdnInput.$error.maxlength">{{'FORM-CONTROL.MSISDN.MAX-LENGTH' | translate }} {{formController.msisdn.length.max}}</span>
                                   </div>
-                                </div>
+                                </div-->
 
                                 <div class="form-group" ng:class="{true:'has-warning', false:''}[form.msisdnInput.$dirty && form.msisdnInput.$invalid]">
                                   <div class="col-xs-9 col-xs-push-1">

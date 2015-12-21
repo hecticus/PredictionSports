@@ -65,7 +65,8 @@
         "HITS" : "Aciertos",
         "MY_POINTS" : "Mis Puntos",
         "SCORE" : "Puntuación",
-        "GENERAL" : "General"
+        "GENERAL" : "General",
+        "NO-FRIENDS" : "Nenhum dos seus amigos está jogando!"
     },
     "EMPTY_STATES" : {
         "LIVE" : "No hay juegos programados para hoy",
@@ -111,6 +112,7 @@
         "FAVORITE_TEAMS_TITLE": "Mis Equipos Favoritos",
         "LANGUAGES_TITLE": "Idiomas",
         "SOCIAL_ACCOUNTS_TITLE": "Redes Sociales",
+        "APP": "Aplicación",
         "TOGGLE" : {
             "BETS" : "Apuestas",
             "MTM" : "En Vivo",
@@ -136,7 +138,19 @@
     },
 
     "TERMS" : {
-        "MESSAGE" : "Por favor, lea los términos y condiciones en el sitio web http://www.google.com/. Mediante el uso de la aplicación, el usuario se obliga a todos los Términos y Condiciones."
+        "MESSAGE" : "Por favor, lea los términos y condiciones en el sitio web http://www.tim.com.br/. Mediante el uso de la aplicación, el usuario se obliga a todos los Términos y Condiciones."
+    },
+
+
+    "FORM-CONTROL": {
+        "MSISDN" : {
+          "REQUIRED" : "The número de teléfono es obligatorio",
+          "MIN-LENGTH" : "La longitud mínima requerida es ",
+          "MAX-LENGTH" : "La longitud máxima requerida es "
+        },
+        "PASSWORD" : {
+          "REQUIRED" : "La contraseña es obligatoria"
+        }
     },
 
     "ALERT": {
@@ -237,7 +251,9 @@
       "LOCKED_SECTION_USER_NOT_ELIGIBLE" : {
           "TITLE" : "User not eligible",
           "SUBTITLE": "User not eligible",
-          "MSG": "Usuario no elegible!"
+          "MSG": "Usuario no elegible!",
+          "CONFIRM" : "Ok",
+          "CANCEL" : "Cancelar"
         },
 
       "SET_BET" : {
@@ -245,7 +261,7 @@
           "SUBTITLE": "Fecha desfasada",
           "MSG": "La fecha del partido está desfasada"
       },
-      
+
       "FB_SHARE" : {
             "TITLE" : "News Share",
             "SUBTITLE": "Warning",

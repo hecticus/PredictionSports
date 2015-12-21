@@ -109,11 +109,13 @@ angular
                     widthTotal = ($window.innerWidth * $scope.leagues.length);
                     setScroll();
                     getScorers();
+                    $scope.$emit('unload');
                 }, function(){
-                  Notification.showNetworkErrorAlert();
-                }).finally(function(){
                   $scope.$emit('unload');
+                  Notification.showNetworkErrorAlert();
                 });
+
+
             } init();
 
         }
