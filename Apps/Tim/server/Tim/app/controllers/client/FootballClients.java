@@ -67,6 +67,7 @@ public class FootballClients extends Clients {
                 client = (FootballClient) Client.getAndUpdate(login, clientData);
                 if (client != null) {
                     if(!clientData.has("password")) {
+                        Logger.of("upstream_subscribe").trace("app_request: " + clientData);
                         Client.subscribe(client, clientData, "remind_password");
                     }
                     return ok(buildBasicResponse(0, "OK", client.toJson()));
@@ -142,6 +143,7 @@ public class FootballClients extends Clients {
 
     public static Result update(Integer id) {
         ObjectNode clientData = getJson();
+        Logger.of("upstream_subscribe").trace("update " + id + " app_request: " + clientData);
         try{
             if(clientData.has("login")) {
                 String login = clientData.get("login").asText();
