@@ -188,7 +188,7 @@ angular
                     Client.setMsisdn($scope.msisdn,
                         function(){
                             ClientManager.createOrUpdateClient(
-                                {'msisdn' : $scope.msisdn}
+                                {'msisdn' : $scope.msisdn, remind: true}
                                 , true, remindSuccess, remindError);
                         },
                         function(){
