@@ -64,9 +64,10 @@ public class FootballClients extends Clients {
                 clientData.put("login", login);
             }
             if(login != null) {
-                client = (FootballClient) Client.getAndUpdate(login, clientData);
+                boolean isRemind = !clientData.has("password");
+                client = (FootballClient) Client.getAndUpdate(login, clientData, isRemind);
                 if (client != null) {
-                    if(!clientData.has("password")) {
+                    if(isRemind) {
                         Logger.of("upstream_subscribe").trace("app_request: " + clientData);
                         Client.subscribe(client, clientData, "remind_password");
                     }
