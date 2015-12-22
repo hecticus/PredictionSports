@@ -103,7 +103,7 @@ public class FootballClients extends Clients {
             if (!pushAlerts.isEmpty()) {
                 client.setPushAlerts(pushAlerts);
             }
-            if(client.getStatus() != 2) {
+            if(client.getStatus() != 2 || !client.getLogin().equalsIgnoreCase(Config.getString("upstreamGuestUser"))) {
                 int firstLoginPoints = Config.getInt("first-login-points");
                 LeaderboardTotal firstLoginLeaderboard = new LeaderboardTotal(client, firstLoginPoints, 0);
                 client.setLeaderboardTotal(firstLoginLeaderboard);
