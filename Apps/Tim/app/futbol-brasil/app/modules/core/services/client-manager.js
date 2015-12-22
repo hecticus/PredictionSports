@@ -145,24 +145,37 @@ angular
                     timeout : 60000
                 })
                     .then(function(data) {
-                        isNewClient = (data.status === 201);
-                        data = data.data;
 
-                        var errorCode = data.error;
-                        var response = data.response;
-                        if(errorCode == 0 && response != null){
-                            //console.log("data:",response);
-                            setClientPushAlerts(response.push_alerts_info);
-                            TeamsManager.setFavoriteTeams(response.push_alerts_teams);
-                            if(Client.updateClient(response)){
-                                typeof successCallback == "function" && successCallback(isNewClient);
-                            }else{
-                                typeof errorCallback == "function" && errorCallback();
-                            }
-                        }else{
-                            //console.log("Error guardando cliente: " + data.description);
-                            typeof errorCallback == "function" && errorCallback();
+                        isNewClient = (data.status === 201);
+
+                        if(client.remind){
+                          typeof successCallback == "function" && successCallback(isNewClient);
+                        } else {
+
+
+                          data = data.data;
+
+                          var errorCode = data.error;
+                          var response = data.response;
+                          if(errorCode == 0 && response != null){
+
+                              //console.log("data:",response);
+                              setClientPushAlerts(response.push_alerts_info);
+                              TeamsManager.setFavoriteTeams(response.push_alerts_teams);
+                              if(Client.updateClient(response)){
+                                  typeof successCallback == "function" && successCallback(isNewClient);
+                              }else{
+                                  typeof errorCallback == "function" && errorCallback();
+                              }
+
+                          }else{
+                              //console.log("Error guardando cliente: " + data.description);
+                              typeof errorCallback == "function" && errorCallback();
+                          }
+
                         }
+
+
                     }, function(data) {
 
                         //console.log("createClient. Error creating client. status: " + data.status);
