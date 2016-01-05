@@ -4,14 +4,16 @@
             <ul>
                 <li ng-style="getWidth()" ng-repeat="competition in item.competitions">
 
-                  <div class="container" style="padding: 0 !important;">
+                  <div class="container">
 
-                    <div class="row h-header green"  style="margin: 0 !important;">
+                    <div class="row lh-header title">
+
                       <div class="col-xs-2" ng-click="prevPage($index)">
                         <span class="mdi-navigation-arrow-back" ng-hide="item.competitions[$index-1].name === undefined"></span>
                       </div>
-                      <div class="col-xs-8 h-ellipsis-truncate">
-                        <img class="h-shield h-tree" ng-src="{{getCompetitionShield(competition.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+
+                      <div class="col-xs-8">
+                        <img class="lh-shield" ng-src="{{getCompetitionShield(competition.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
                         <span ng-hide="$index===0" ng-bind="competition.competiton_type.name" class="caption"></span>
                         <span ng-show="$index===0" class="caption" translate>LEADERBOARD.GENERAL</span>
                       </div>
@@ -19,18 +21,19 @@
                       <div class="col-xs-2" ng-click="nextPage($index)">
                         <span class="mdi-navigation-arrow-forward" ng-hide="item.competitions[$index+1].name === undefined"></span>
                       </div>
+
                     </div>
 
 
-                    <div class="row " style="margin: 0 !important;">
-                      <div class="col-xs-12 h-header red" style="text-align:right;" ng-hide="$index===0">
+                    <div class="row lh-header nav">
+                      <div class="col-xs-12" ng-hide="$index===0">
 
-                        <span class="badge disabled"
+                        <span class="badge lh-badge disabled"
                               ng-class="{'disabled': isActive('competition{{$index}}')}"
                               ng-click="showTournament()"
                               ng-hide="$index===0">{{'LEADERBOARD.TOURNAMENT' | translate}}</span>
 
-                        <span class="badge"
+                        <span class=" badge lh-badge"
                               ng-class="{'disabled': isActive('phase{{$index}}')}"
                               ng-click="showPhase()"
                               ng-hide="$index===0">{{'LEADERBOARD.PHASE' | translate}}</span>
@@ -42,64 +45,64 @@
 
 
                     <div class="row" ng-show="hasLeaderboard">
-                      <div id="{{vWrapper.getName($index)}}" class="wrapper"
-                           style="margin-top:65px !important;">
-                        <div class="scroller" style="position: relative;">
-
-                          <div class="row">
-                            <div class="col-xs-12" >
-                              <table class="table h-table" ng-hide="!competition.leaderboard">
-                                  <thead>
-                                  <tr>
-                                    <th class="h-header yellow" style="width:20%"  >##</th>
-                                    <th class="h-header yellow left" style="width:60%" translate>LEADERBOARD.PLAYER</th>
-                                    <th class="h-header yellow" style="width:20%" translate>LEADERBOARD.POINTS</th>
-                                  </tr>
-                                </thead>
+                      <div id="{{vWrapper.getName($index)}}" class="wrapper" >
+                        <div class="scroller">
 
 
-                                  <tbody ng-show="(!hasFriends && competition.client.id_client == leader.id_client) || (hasFriends)"
-                                         ng-repeat="leader in competition.leaderboard"
-                                         ng-class="{'active' : $odd,  'client' : competition.client.id_client == leader.id_client }" on-last-repeat>
 
 
-                                    <tr >
-                                      <td  style="width:20%" >
-                                        <span class="text-center-vertical"
-                                              ng-bind="leader.index" ></span>
-                                      </td>
-                                      <td  style="width:60%; text-align:left;" >
-                                        <span class="text-center-vertical"
-                                              ng-bind="leader.client"></span>
-                                      </td>
-                                      <td   style="width:20%">
-                                        <span class="text-center-vertical"
-                                              ng-bind="leader.score"></span>
-                                      </td>
+                            
+                                <table  class="table table-striped" ng-hide="!competition.leaderboard">
+
+                                  <thead class="lh-header">
+                                    <tr>
+                                      <th>##</th>
+                                      <th translate>LEADERBOARD.PLAYER</th>
+                                      <th translate>LEADERBOARD.POINTS</th>
                                     </tr>
+                                  </thead>
 
-                                    <tr  ng-show="!hasFriends">
-                                      <td  style="width:100%;" colspan="4" >
-                                            <div class="no-content-panel" style="font-size: 1.4em; font-weight: normal;">
-                                              <i class="mdi-social-people-outline"></i>
-                                              <div class="no-content-panel-title" translate>LEADERBOARD.NO-FRIENDS</div>
-                                            </div>
-                                      </td>
-                                    </tr>
 
-                                  </tbody>
+                                    <tbody >
 
-                              </table>
-                            </div>
-                          </div>
+                                      <tr  ng-show="(!hasFriends && competition.client.id_client == leader.id_client) || (hasFriends)"
+                                           ng-repeat="leader in competition.leaderboard"
+                                           ng-class="{'active' : $odd,  'client' : competition.client.id_client == leader.id_client }" on-last-repeat>
+                                        <td>
+                                          <span 
+                                                ng-bind="leader.index" ></span>
+                                        </td>
+                                        <td >
+                                          <span 
+                                                ng-bind="leader.client"></span>
+                                        </td>
+                                        <td>
+                                          <span
+                                                ng-bind="leader.score"></span>
+                                        </td>
+                                      </tr>
+
+                                      <tr  ng-show="!hasFriends">
+                                        <td  colspan="4" >
+                                              <div class="no-content-panel">
+                                                <i class="mdi-social-people-outline"></i>
+                                                <div class="no-content-panel-title" translate>LEADERBOARD.NO-FRIENDS</div>
+                                              </div>
+                                        </td>
+                                      </tr>
+
+                                    </tbody>
+
+                                </table>
+
 
                         </div>
                       </div>
                     </div>
 
                     <div class="row" ng-hide="hasLeaderboard">
-                      <div class="col-xs-12 news">
-                        <div class="no-content-panel" style="margin-top: 30px !important;">
+                      <div class="col-xs-12">
+                        <div class="no-content-panel">
                           <i class="mdi-action-info-outline"></i>
                           <div class="no-content-panel-title" translate>EMPTY_STATES.LEADERBOARD</div>
                         </div>
@@ -118,8 +121,8 @@
 </div>
 
 <div class="row" ng-show="friendsMode">
-    <div class="col-xs-12 news">
-        <div class="no-content-panel" style="margin-top: 120px !important;">
+    <div class="col-xs-12">
+        <div class="no-content-panel">
             <i class="mdi-action-info-outline"></i>
             <div class="no-content-panel-title" translate>EMPTY_STATES.POINTS</div>
         </div>

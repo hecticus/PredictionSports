@@ -1,0 +1,66 @@
+/* variables */
+
+@h-header-line: 40px;
+@h-header-line-shield: @h-header-line - 10px;
+
+.h-header(~"tim","title") { background: rgb(122,184,0); color: #ffffff; };
+.h-header(~"oil","title") { background: yellow; color: blue; };
+
+.h-header(~"tim","nav") { background: rgb(227,114,34); color: #ffffff; };
+.h-header(~"oil","nav") { background: blue; color: yellow; };
+
+.h-header(~"tim","thead") { background: rgb(254,209,0); color: rgb(0,40,120);};
+.h-header(~"oil","thead") { background: brown; color: blue; };
+
+.fh-header(@brand, @position) {    
+ 	  position:relative;
+ 	  z-index: 10;
+ 	  width: auto;
+    height: @h-header-line !important;
+    line-height: @h-header-line !important;
+    font-size: 1.6em;
+    .h-header(@brand, @position);
+}
+
+.tim.content-leaderboard .lh-header.title { .fh-header(~"tim","title"); }
+.oil.content-leaderboard .lh-header.title { .fh-header(~"oil","title"); }
+
+.tim.content-leaderboard thead.lh-header { .fh-header(~"tim","thead"); }
+.oil.content-leaderboard thead.lh-header { .fh-header(~"oil","thead"); }
+.content-leaderboard tbody { font-size: 1.2em !important; }
+
+.tim.content-leaderboard .lh-header.nav { .fh-header(~"tim","nav"); }
+.oil.content-leaderboard .lh-header.nav { .fh-header(~"oil","nav"); }
+
+.lh-shield { width:@h-header-line-shield; height:@h-header-line-shield;}
+
+.h-badge(~"tim") { background: rgb(44,156,211); }
+.h-badge(~"oil") { background: rgb(200,44,211); }
+
+.fh-badge(@brand) { 
+	.h-badge(@brand);   
+ 	padding: 5px 15px; 
+ 	min-width: 100px;  
+}
+
+.tim.content-leaderboard .lh-badge { .fh-badge(~"tim"); }
+.oil.content-leaderboard .lh-badge { .fh-badge(~"oil"); }
+
+.content-leaderboard .lh-badge.disabled {  
+    opacity: 0.7;
+    filter: alpha(opacity=70); 
+}
+
+.content-leaderboard li {
+  &:first-child .wrapper {top: @h-header-line !important;  }
+  &:first-child .lh-header.nav {  display:none; }
+  .wrapper { top: @h-header-line * 2  !important; }
+}
+
+table * { border:0 !important; text-align:center; }
+ 	
+.tim header { background: rgb(44,156,211); }
+.tim footer  { background: rgb(0,40,120); }
+
+.oil header { background: purple; }
+.oil footer  { background: purple; }

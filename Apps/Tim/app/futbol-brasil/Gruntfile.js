@@ -6,6 +6,9 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
     require('time-grunt')(grunt);
 
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+
     grunt.initConfig({
 
         yeoman: {
@@ -19,6 +22,11 @@ module.exports = function(grunt) {
             bower: {
                 files: ['bower.json'],
                 tasks: ['injector']
+            },
+
+            less: {
+                files: ['<%= yeoman.app %>/styles/less/*.less'],
+                tasks: ['less']
             },
 
             js: {
@@ -61,6 +69,23 @@ module.exports = function(grunt) {
                 ]
             }
         },
+
+        // "less"-task configuration
+        less: {
+            // production config is also available
+            development: {
+                options: {
+                    // Specifies directories to scan for @import directives when parsing. 
+                    // Default value is the directory of the source, which is probably what you want.
+                    paths: ['<%= yeoman.app %>/styles/less/'],
+                },
+                files: {
+                    // compilation.css  :  source.less
+                    '<%= yeoman.app %>/styles/app.css': "<%= yeoman.app %>/styles/less/app.less"
+                }
+            },
+        },
+
 
         connect: {
             options: {
@@ -513,4 +538,5 @@ module.exports = function(grunt) {
         'test',
         'build'
     ]);
+
 };
