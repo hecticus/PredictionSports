@@ -1,7 +1,11 @@
 /* variables */
 
+
+@h-header-footer-height: 50px;
 @h-header-line: 40px;
 @h-header-line-shield: @h-header-line - 10px;
+
+/* body */
 
 .h-header(~"tim","title") { background: rgb(122,184,0); color: #ffffff; };
 .h-header(~"oil","title") { background: yellow; color: blue; };
@@ -12,14 +16,14 @@
 .h-header(~"tim","thead") { background: rgb(254,209,0); color: rgb(0,40,120);};
 .h-header(~"oil","thead") { background: brown; color: blue; };
 
-.fh-header(@brand, @position) {    
+.fh-header(@brand,@position) {    
  	  position:relative;
  	  z-index: 10;
  	  width: auto;
     height: @h-header-line !important;
     line-height: @h-header-line !important;
     font-size: 1.6em;
-    .h-header(@brand, @position);
+    .h-header(@brand,@position);
 }
 
 .tim.content-leaderboard .lh-header.title { .fh-header(~"tim","title"); }
@@ -58,9 +62,106 @@
 }
 
 table * { border:0 !important; text-align:center; }
- 	
+
+header, footer { 
+  position: absolute;  
+  left:0; 
+  right:0; 
+  width:100%;
+  height: @h-header-footer-height; 
+  z-index: 100;  
+  color: #ffffff !important;
+}
+
+
+
+footer { bottom: 0; z-index: 10 !important;  }
+
+footer .option { 
+  height: @h-header-footer-height; 
+  text-align:center; 
+  padding: 5px; 
+}
+
+footer .lh-icon { font-size:2em; display:block; }
+footer .lh-icon.mdi { color:#ffffff !important; }
+
+
 .tim header { background: rgb(44,156,211); }
 .tim footer  { background: rgb(0,40,120); }
 
 .oil header { background: purple; }
 .oil footer  { background: purple; }
+
+.tim footer .option.active { background: rgb(254,209,0);  color: rgb(0,40,120);}
+.oil footer .option.active { background: rgb(105,106,20); color: red;}
+
+
+.fh-menu-option(~"tim",~"main") { font-weight: bold; text-transform:uppercase; border-bottom: solid 1pt rgb(254,209,0); };
+.fh-menu-option(~"oil",~"main") { font-weight: bold; text-transform:uppercase; border-bottom: solid 1pt red; };
+
+.fh-menu-option(~"tim",~"sub") { text-transform:capitalize; border-bottom: solid 1pt rgb(0,40,120); };
+.fh-menu-option(~"oil",~"sub") { text-transform:capitalize; border-bottom: solid 1pt gray; };
+
+
+.fh-content-menu(@brand,@position) {    
+    width:100%; 
+    height: 50px;
+    line-height: 50px; 
+    margin-left: 30px;
+    font-size: 1.8em;   
+    .lh-title { padding: 0; .fh-menu-option(@brand,@position); }
+}
+
+.tim .content-menu.main { .fh-content-menu(~"tim",~"main"); }
+.oil .content-menu.main  { .fh-content-menu(~"oil",~"main"); }
+
+.tim .content-menu.sub  { .fh-content-menu(~"tim",~"sub"); }
+.oil .content-menu.sub  { .fh-content-menu(~"oil",~"sub"); }
+
+
+
+
+.lh-field  { 
+
+  @height: 200px;
+
+  background: rgb(122,184,0) !important;   
+  height: @height;
+
+  .lh-nickname {
+    text-align:center;
+    text-transform: uppercase;
+    color:#ffffff;  
+  }
+
+  .lh-circle-line { 
+    position:absolute; 
+    left:0;
+    right: 0;
+    background: #ffffff; 
+    width: 100%; 
+    height:2px;
+    z-index: 10;
+  }
+
+  .lh-circle {
+    position:absolute;
+    left:0;
+    right: 0;
+    display:block;
+    width:100px;
+    height: 100px;
+    line-height: 25px;
+    border-radius: 50%;
+    text-align:center;
+    font-size:1.8em;
+    margin: 0 auto  !important;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ffffff;
+  }
+
+
+}
+           
