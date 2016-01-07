@@ -6,7 +6,7 @@
 
                   <div class="container">
 
-                    <div class="row lh-header title">
+                    <div class="row lh-header">
 
                       <div class="col-xs-2" ng-click="prevPage($index)">
                         <span class="mdi-navigation-arrow-back" ng-hide="item.competitions[$index-1].name === undefined"></span>
@@ -25,7 +25,7 @@
                     </div>
 
 
-                    <div class="row lh-header nav">
+                    <div class="row lh-header i">
                       <div class="col-xs-12" ng-hide="$index===0">
 
                         <span class="badge lh-badge disabled"
@@ -54,7 +54,7 @@
                             
                                 <table  class="table table-striped" ng-hide="!competition.leaderboard">
 
-                                  <thead class="lh-header">
+                                  <thead class="lh-header ii">
                                     <tr>
                                       <th>##</th>
                                       <th translate>LEADERBOARD.PLAYER</th>
