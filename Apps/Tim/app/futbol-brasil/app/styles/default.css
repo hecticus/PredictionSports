@@ -663,28 +663,6 @@ h6.team-name {
     /*<v2>*/
 
 
-    /*.h-header {
-      position:relative;
-      text-align: center;
-      height:35px !important;
-      line-height: 35px !important;
-      font-weight:normal !important;
-      z-index: 10;
-      font-size: 1.6em;
-      padding-top: 0px !important;
-      padding-bottom: 0px !important;
-    }*/
-
-    /*.h-header.green {
-      background: rgb(122,184,0);
-      color: #ffffff;
-    }*/
-
-    /*.h-header.yellow {
-      background: rgb(254,209,0);
-      color: rgb(0,40,120);
-    }*/
-
     .h-header.blue {
       background: rgb(0,40,120);
       color: #ffffff;
@@ -700,28 +678,28 @@ h6.team-name {
       color: #ffffff;
     }
 
-    .h-list {
+   /* .h-list {
       padding: 0 20px !important;
     }
-
-    .content-prediction
+*/
+   /* .content-prediction
     .h-list {
       padding: 0 5px !important;
-    }
+    }*/
 
 
-    .h-list *[class *= 'col-'] {
+   /* .h-list *[class *= 'col-'] {
       text-align: left;
       min-height:50px;
       line-height: 50px;
       border-bottom: solid 1pt rgb(254,209,0);
       /*font-weight:bold;*/
-    }
+    }*/
 
-    .h-list.news *[class *= 'col-'] {
+   /* .h-list.news *[class *= 'col-'] {
        line-height: 1;
        padding: 15px;
-    }
+    }*/
 
     .content-news .h-headline {
       font-size:1.6em;
@@ -750,9 +728,9 @@ h6.team-name {
     }*/
 
 
-    .h-list *[class *= 'col-']:last-child {
+   /* .h-list *[class *= 'col-']:last-child {
       border: 0 !important;
-    }
+    }*/
 
     .content-news #wrapper,
     .content-news #wrapper2,
@@ -793,15 +771,22 @@ h6.team-name {
       top: 35px;
     }
 
+/*
     .content-prediction .wrapper { top: 70px; }
+    
     tr.h-match { border-bottom: 1.5px rgb(44,156,211) solid !important; }
     tr.h-match:last-child { border: 0 !important; }
-    tr.h-match td { height: auto;} /*vertical-align:middle;*/
+    tr.h-match td { height: auto;}  
     tr.h-match td .h-name-team {display:block; height: auto; }
     tr.h-match td .h-goal-team {height: auto;}
 
-    tr.h-points { border-bottom: 1pt rgb(44,156,211) solid !important; }
+    tr.h-points { h-pointsborder-bottom: 1pt rgb(44,156,211) solid !important; }
     tr.h-points:last-child { border: 0 !important; color: rgb(227,114,34);}
+
+
+*/
+
+
 
     .content-mtm #wrapper2 {
       top: 185px;
@@ -923,23 +908,6 @@ h6.team-name {
       height: auto;
     }
 
-  .status._1 { color: rgb(227,114,34); }     /*Played*/
-  .status._2 { color: rgb(122,184,0);  }     /*Playing*/
-  .status._3 { color: rgb(0,40,120); }       /*Fixture*/
-  .status._4 { color: rgb(227,114,34);  }    /*Cancelled*/
-  .status._5 { color: rgb(254,209,0);  }     /*Postponed*/
-  .status._6 { color: rgb(254,209,0);  }     /*Suspended*/
-
-
-  .status.period { background: rgb(0,40,120);
-                         color: #ffffff;}
-
-  .status.period._9 {background: rgb(122,184,0);
-                          color: #ffffff; }
-
-  .status.period._8 {   background: rgb(254,209,0);
-                           color: rgb(0,40,120); }
-
 
     .h-event{
       border-bottom: solid 1pt  rgb(44,156,211) !important;
@@ -966,41 +934,10 @@ h6.team-name {
         font-weight:bold;
         vertical-align:middle;
     }
-/*
-    .no-content-panel  *[class *= 'mdi-'] {
-      color: #777 !important ;
-    }*/
 
-   /* .content-news #wrapper *[class *= 'mdi-'],
-    .content-news #wrapper2 *[class *= 'mdi-']{
-      font-size:1.2em;
-      font-weight:bold;
-      color: rgb(44,156,211);
-    }*/
-
-/*
-    .content-menu *[class *= 'icon-'] {
-      font-size:2em;
-      vertical-align: middle;
-      color:  rgb(0,40,120);
-    }
-
-    .content-menu *[class *= 'icon-'] {
-      font-size:1.6em;
-    }
-
-    .content-menu .h-title {
-      font-size: 1.8em;
-      font-weight:bold;
-    }*/
-
-    /*.content-sub-menu .h-title {
-      font-size: 1.6em;
-    }*/
-
+    /*
     .h-name-team {
-      font-size:1.4em !important;
-      /*font-weight: bold;*/
+      font-size:1.4em !important;      
       text-align: center;
       width: 100%;
     }
@@ -1008,7 +945,7 @@ h6.team-name {
     .h-goal-team {
       font-size:2em !important;
       text-align: center;
-    }
+    }*/
 
     .content-mtm #wrapper2 .h-goal-team  {
       font-size:3em !important;
@@ -1026,16 +963,7 @@ h6.team-name {
       font-size:1.6em !important;
     }
 
-    .content-standings .h-list .h-headline,
-    .content-prediction .h-list .h-headline,
-    .content-team-selection .h-list .h-headline {
-      font-size:1.5em;
-    }
-
-   /* .h-table tbody tr td {
-        font-size:1.4em;
-    }
-*/
+  
     .h-header.left {
         text-align:left !important;
     }
@@ -1120,22 +1048,6 @@ h6.team-name {
     .content-language-selection #wrapper {
       top: 150px;
     }
-
-  /*
-    .badge {
-      background: rgb(44,156,211);
-      padding: 5px 15px;
-      font-size:
-      1em;
-      color: #ffffff;
-    }
-
-    .badge.disabled {
-       background: rgb(44,156,211);
-       color: #ffffff;
-        opacity: 0.7;
-        filter: alpha(opacity=70);
-    }*/
 
 
     .modal-dialog {font-family: TeutonNormal !important;}

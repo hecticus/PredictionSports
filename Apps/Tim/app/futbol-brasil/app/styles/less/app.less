@@ -61,7 +61,11 @@
   .wrapper { top: @h-header-line * 2  !important; }
 }
 
-table * { border:0 !important; text-align:center; }
+table {
+  padding: 0 !important; 
+  margin: 0 !important;
+  * { border:0 !important; text-align:center; }
+}
 
 header, footer { 
   position: absolute;  
@@ -97,38 +101,21 @@ footer .lh-icon.mdi { color:#ffffff !important; }
 .oil footer .option.active { background: rgb(105,106,20); color: red;}
 
 
-.fh-menu-option(~"tim",~"main") { font-weight: bold; text-transform:uppercase; border-bottom: solid 1pt rgb(254,209,0); };
-.fh-menu-option(~"oil",~"main") { font-weight: bold; text-transform:uppercase; border-bottom: solid 1pt red; };
-
-.fh-menu-option(~"tim",~"sub") { text-transform:capitalize; border-bottom: solid 1pt rgb(0,40,120); };
-.fh-menu-option(~"oil",~"sub") { text-transform:capitalize; border-bottom: solid 1pt gray; };
-
-
-.fh-content-menu(@brand,@position) {    
-    width:100%; 
-    height: 50px;
-    line-height: 50px; 
-    margin-left: 30px;
-    font-size: 1.8em;   
-    .lh-title { padding: 0; .fh-menu-option(@brand,@position); }
-}
-
-.tim .content-menu.main { .fh-content-menu(~"tim",~"main"); }
-.oil .content-menu.main  { .fh-content-menu(~"oil",~"main"); }
-
-.tim .content-menu.sub  { .fh-content-menu(~"tim",~"sub"); }
-.oil .content-menu.sub  { .fh-content-menu(~"oil",~"sub"); }
-
-
 
 
 .lh-field  { 
 
   @height: 200px;
+  @size-circle: @height - 100px;
+  @background-color: rgb(122,184,0) !important;
+  @border-line: 2px;
 
-  background: rgb(122,184,0) !important;   
-  height: @height;
-
+  position: absolute;
+  background: @background-color;   
+  width: 100%;
+  height: @height;  
+  top: @h-header-footer-height;
+  
   .lh-nickname {
     text-align:center;
     text-transform: uppercase;
@@ -137,31 +124,155 @@ footer .lh-icon.mdi { color:#ffffff !important; }
 
   .lh-circle-line { 
     position:absolute; 
-    left:0;
-    right: 0;
     background: #ffffff; 
     width: 100%; 
-    height:2px;
-    z-index: 10;
+    height: @border-line;
+    top: @size-circle + ( @border-line * 2);
   }
 
   .lh-circle {
     position:absolute;
+    font-size: 2em;
+    background: @background-color;
     left:0;
     right: 0;
-    display:block;
-    width:100px;
-    height: 100px;
-    line-height: 25px;
+    width: @size-circle;
+    height: @size-circle;
     border-radius: 50%;
     text-align:center;
-    font-size:1.8em;
     margin: 0 auto  !important;
     border-style: solid;
-    border-width: 2px;
+    border-width: @border-line;
     border-color: #ffffff;
+    color: #ffffff;
+
+    .lh-points {font-size: 1.4em; width:100%; height: (@size-circle / 2); line-height: (@size-circle - 25%); }
+    .lh-name {width:100%; height: (@size-circle / 2); line-height: (@size-circle / 2); }
+
   }
 
-
 }
-           
+
+
+.tim {
+
+  @height: 50px;
+  
+
+
+  .status._1 { color: rgb(227,114,34); }     /*Played*/
+  .status._2 { color: rgb(122,184,0);  }     /*Playing*/
+  .status._3 { color: rgb(0,40,120); }       /*Fixture*/
+  .status._4 { color: rgb(227,114,34);  }    /*Cancelled*/
+  .status._5 { color: rgb(254,209,0);  }     /*Postponed*/
+  .status._6 { color: rgb(254,209,0);  }     /*Suspended*/
+
+  .status.period { background: rgb(0,40,120); color: #ffffff;}
+  .status.period._9 {background: rgb(122,184,0); color: #ffffff; }
+  .status.period._8 {   background: rgb(254,209,0); color: rgb(0,40,120); }
+
+
+  .bg-header() { background: rgb(122,184,0); color: #ffffff; } 
+  .bg-header(~"1") { background: rgb(227,114,34); color: #ffffff;   } 
+  .bg-header(~"2") { background: rgb(254,209,0); color: rgb(0,40,120); } 
+  .bg-header(~"3") { background: rgb(44,156,211); color: #ffffff; } 
+
+  .fh-header(@height-subs:0) {    
+      width: auto;
+      height: @height - @height-subs;
+      line-height: @height - @height-subs;
+      font-size: 1.6em;
+  }
+
+  .border-line() { border-bottom: 1pt rgb(254,209,0) solid; } 
+  .border-line(~"1") {border-bottom: 1pt rgb(0,40,120) solid; } 
+  .border-line(~"2") { border-bottom: 1pt rgb(44,156,211) solid !important } 
+
+  .content-prediction {
+
+    .lh-tournament {
+
+      .lh-header { 
+        .fh-header(15); 
+        .bg-header(~"2"); 
+      }
+
+      .lh-list {  
+
+        background: #ffffff;
+        
+        .lh-list-row { 
+
+          height: @height; 
+          line-height: @height;
+          font-size: 1.4em !important;
+
+          .border-line();
+          .lh-caption {  }
+          .lh-shield { width:   @height - 10px; height:  @height - 5px; }
+          .lh-time { 
+
+            float:right; 
+            color: rgb(122,184,0) !important; 
+
+            *[class *= 'mdi-'] {
+              color: rgb(122,184,0) !important; 
+            }
+
+          }
+
+        } //.lh-list-row
+
+      } //.lh-list
+
+    }
+
+    .lh-page-match {
+      .lh-header { 
+        .fh-header(15); 
+        .bg-header(); 
+      }
+      .lh-header.i { 
+        .fh-header(15); 
+        .bg-header(~"1"); 
+      } 
+      .lh-header.iii { 
+        .fh-header(15); 
+        .bg-header(~"3"); 
+      } 
+
+      .lh-match {
+        .border-line(~"2");
+        &:last-child { border: 0 !important; }
+        td.active {
+          .bg-header(~"2");
+        }
+        .lh-shield { width:40px; height:40px; }
+        .lh-caption { font-size: 1.4em; }
+        .lh-time { font-size: 1.6em;}
+        .lh-goal-team { font-size:2em !important; }
+      } //
+
+    }
+
+    /* Menu */
+    
+    .fh-menu-option(~"main") { font-weight: bold; text-transform:uppercase; .border-line(); };
+    .fh-menu-option(~"sub") { text-transform:capitalize; .border-line(~"1"); };
+    .fh-content-menu(@position) {    
+        width:100%; 
+        height: 50px;
+        line-height: 50px; 
+        margin-left: 30px;
+        font-size: 1.8em;   
+        .lh-title { padding: 0; .fh-menu-option(@position); }
+    }
+
+    .content-menu.main { .fh-content-menu(~"main"); }
+    .content-menu.sub  { .fh-content-menu(~"sub"); }
+
+    /* Menu */
+
+  } //.content-prediction
+
+} //.tim
