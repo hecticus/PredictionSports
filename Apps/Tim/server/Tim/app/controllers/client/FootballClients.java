@@ -103,28 +103,28 @@ public class FootballClients extends Clients {
             if (!pushAlerts.isEmpty()) {
                 client.setPushAlerts(pushAlerts);
             }
-            if(client.getStatus() != 2 || !client.getLogin().equalsIgnoreCase(Config.getString("upstreamGuestUser"))) {
-                int firstLoginPoints = Config.getInt("first-login-points");
-                LeaderboardTotal firstLoginLeaderboard = new LeaderboardTotal(client, firstLoginPoints, 0);
-                client.setLeaderboardTotal(firstLoginLeaderboard);
-                try {
-                    ObjectNode event = Json.newObject();
-                    ObjectNode metadata = Json.newObject();
-                    ArrayList<ObjectNode> pointsList = new ArrayList<>(1);
-                    ObjectNode actualPoints = Json.newObject();
-                    actualPoints.put("type", "experience");
-                    actualPoints.put("value", firstLoginPoints);
-                    pointsList.add(actualPoints);
-                    metadata.put("result", "win");
-                    metadata.put("points", Json.toJson(pointsList));
-                    event.put("event_type", "APP_LAUNCH");
-                    event.put("metadata", metadata);
-                    F.Promise<WSResponse> result = WS.url("http://" + Config.getHost() + "/sportsapi/v2/client/" + client.getIdClient() + "/upstream").post(event);
-                    ObjectNode response = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
-                } catch (Exception e) {
-                    Utils.printToLog(FootballClients.class, "Error manejando clients", "error creando el client con params " + clientData, false, e, "support-level-1", Config.LOGGER_ERROR);
-                }
-            }
+//            if(client.getStatus() != 2 || !client.getLogin().equalsIgnoreCase(Config.getString("upstreamGuestUser"))) {
+//                int firstLoginPoints = Config.getInt("first-login-points");
+//                LeaderboardTotal firstLoginLeaderboard = new LeaderboardTotal(client, firstLoginPoints, 0);
+//                client.setLeaderboardTotal(firstLoginLeaderboard);
+//                try {
+//                    ObjectNode event = Json.newObject();
+//                    ObjectNode metadata = Json.newObject();
+//                    ArrayList<ObjectNode> pointsList = new ArrayList<>(1);
+//                    ObjectNode actualPoints = Json.newObject();
+//                    actualPoints.put("type", "experience");
+//                    actualPoints.put("value", firstLoginPoints);
+//                    pointsList.add(actualPoints);
+//                    metadata.put("result", "win");
+//                    metadata.put("points", Json.toJson(pointsList));
+//                    event.put("event_type", "APP_LAUNCH");
+//                    event.put("metadata", metadata);
+//                    F.Promise<WSResponse> result = WS.url("http://" + Config.getHost() + "/sportsapi/v2/client/" + client.getIdClient() + "/upstream").post(event);
+//                    ObjectNode response = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
+//                } catch (Exception e) {
+//                    Utils.printToLog(FootballClients.class, "Error manejando clients", "error creando el client con params " + clientData, false, e, "support-level-1", Config.LOGGER_ERROR);
+//                }
+//            }
             client.update();
             return created(buildBasicResponse(0, "OK", client.toJson()));
         } catch (Exception ex) {
