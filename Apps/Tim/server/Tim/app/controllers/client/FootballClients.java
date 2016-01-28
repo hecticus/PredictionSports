@@ -110,13 +110,13 @@ public class FootballClients extends Clients {
                 try {
                     ObjectNode event = Json.newObject();
                     ObjectNode metadata = Json.newObject();
-                    ArrayList<ObjectNode> pointsList = new ArrayList<>(1);
-                    ObjectNode actualPoints = Json.newObject();
-                    actualPoints.put("type", "experience");
-                    actualPoints.put("value", firstLoginPoints);
-                    pointsList.add(actualPoints);
-                    metadata.put("result", "win");
-                    metadata.put("points", Json.toJson(pointsList));
+//                    ArrayList<ObjectNode> pointsList = new ArrayList<>(1);
+//                    ObjectNode actualPoints = Json.newObject();
+//                    actualPoints.put("type", "experience");
+//                    actualPoints.put("value", firstLoginPoints);
+//                    pointsList.add(actualPoints);
+//                    metadata.put("result", "win");
+//                    metadata.put("points", Json.toJson(pointsList));
                     event.put("event_type", "APP_LAUNCH");
                     event.put("metadata", metadata);
                     F.Promise<WSResponse> result = WS.url("http://" + Config.getHost() + "/sportsapi/v2/client/" + client.getIdClient() + "/upstream").post(event);
