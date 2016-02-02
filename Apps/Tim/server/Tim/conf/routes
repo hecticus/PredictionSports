@@ -68,7 +68,7 @@ GET            /sportsapi/v1/localimages/:file/:width                           
 #Clients
 POST           /sportsapi/v2/client                                                    controllers.client.FootballClients.create()
 GET            /sportsapi/v2/client/:id                                                controllers.client.FootballClients.get(id : Integer, upstreamChannel : String ?= "Android", pmc : Boolean ?= false)
-PUT            /sportsapi/v2/client/:id                                                controllers.client.FootballClients.update(id : Integer, remind : Boolean?=false)
+PUT            /sportsapi/v2/client/:id                                                controllers.client.FootballClients.update(id : Integer)
 DELETE         /sportsapi/v2/client/:id                                                controllers.client.Clients.delete(id : Integer)
 GET            /sportsapi/v2/client/:id/alerts                                         controllers.client.FootballClients.getPushAlertsForClient(id : Integer)
 POST           /sportsapi/v2/client/:id/bet                                            controllers.client.FootballClients.createBet(id : Integer)

@@ -142,7 +142,7 @@ public class FootballClients extends Clients {
 
     }
 
-    public static Result update(Integer id, Boolean remind) {
+    public static Result update(Integer id) {
         ObjectNode clientData = getJson();
         Logger.of("upstream_subscribe").trace("update " + id + " app_request: " + clientData);
         try{
@@ -217,9 +217,12 @@ public class FootballClients extends Clients {
                     }
                 }
 
-                if(remind) {
-                    Logger.of("upstream_subscribe").trace("app_request: " + clientData);
-                    Client.subscribe(client, clientData, "remind_password_on_update");
+                String[] remind = getFromQueryString("remind");
+                if(remind.length > 0){
+                    if(Boolean.parseBoolean(remind[0])) {
+                        Logger.of("upstream_subscribe").trace("app_request: " + clientData);
+                        Client.subscribe(client, clientData, "remind_password_on_update");
+                    }
                 }
 
                 if(update){
