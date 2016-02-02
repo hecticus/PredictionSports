@@ -104,9 +104,10 @@ angular
                 },
 
                 client: {
-                    create: function () {
+                    create: function (remind) {
                       //console.log('client->create');
-                      return brazil_football_manager_url + 'sportsapi/' + apiVersion + '/clients/create' + getSecurityToken('?');
+                      if (!remind) remind = false;
+                      return brazil_football_manager_url + 'sportsapi/' + apiVersion + '/clients/create' + getSecurityToken('?') + '&remind=' + remind;
                     },
                     update: function () {
                         //console.log('client->update');
