@@ -218,7 +218,7 @@ public class FootballClients extends Clients {
                 }
 
                 String[] remind = getFromQueryString("remind");
-                if(remind.length > 0){
+                if(remind != null && remind.length > 0){
                     if(Boolean.parseBoolean(remind[0])) {
                         Logger.of("upstream_subscribe").trace("app_request: " + clientData);
                         Client.subscribe(client, clientData, "remind_password_on_update");
