@@ -104,15 +104,15 @@ angular
                 },
 
                 client: {
-                    create: function (remind) {
+                    create: function () {
                       //console.log('client->create');
-                      if (!remind) remind = false;
-                      return brazil_football_manager_url + 'sportsapi/' + apiVersion + '/clients/create' + getSecurityToken('?') + '&remind=' + remind;
+                      return brazil_football_manager_url + 'sportsapi/' + apiVersion + '/clients/create' + getSecurityToken('?');
                     },
-                    update: function () {
-                        //console.log('client->update');
+                    update: function (remind) {
+                        //console.log('client->update');}
+                        if (!remind) remind = false;
                         return brazil_football_manager_url + 'sportsapi/'
-                            + apiVersion + '/clients/update/' + getClientId() + getSecurityToken('?');
+                            + apiVersion + '/clients/update/' + getClientId() + getSecurityToken('?')  + '&remind=' + remind;
                     },
                     get: function (clientId, upstreamChannel) {
                           //console.log('client->get');

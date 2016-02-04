@@ -126,10 +126,10 @@ angular
                 var url = '';
 
                 if(Client.getClientId()){
-                    url = Domain.client.update();
+                    url = Domain.client.update(client.remind);
                     jData.add_devices = devices;
                 } else {
-                    url = Domain.client.create(client.remind);
+                    url = Domain.client.create();
                     if (jData.device_id == 3) delete jData.device_id;
                     else jData.devices = devices;
                     if(subscribe){ jData.subscribe = true; }
