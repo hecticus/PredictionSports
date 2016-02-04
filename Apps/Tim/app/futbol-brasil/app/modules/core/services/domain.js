@@ -57,7 +57,9 @@ angular
             }
 
            function getGMT(prefix){
-              return prefix + 'timezoneName=' + moment().format('[GMT]ZZ').replace(/\s/g, '');
+            var tz =  moment().format('[GMT]ZZ').replace(/\s/g, '');
+            tz = encodeURIComponent(tz);
+            return prefix + 'timezoneName=' + tz;
            }
 
             function getLang(){
