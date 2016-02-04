@@ -138,20 +138,6 @@
             "ref": "r0.2.5"
         }
     },
-    "cordova-plugin-customurlscheme": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git",
-            "subdir": "."
-        }
-    },
-    "phonegap-facebook-plugin": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/Wizcorp/phonegap-facebook-plugin",
-            "subdir": "."
-        }
-    },
     "com.synconset.cordovaHTTP": {
         "source": {
             "type": "git",
@@ -163,6 +149,20 @@
         "source": {
             "type": "git",
             "url": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+            "subdir": "."
+        }
+    },
+    "cordova-plugin-customurlscheme": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git",
+            "subdir": "."
+        }
+    },
+    "phonegap-facebook-plugin": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Wizcorp/phonegap-facebook-plugin",
             "subdir": "."
         }
     }

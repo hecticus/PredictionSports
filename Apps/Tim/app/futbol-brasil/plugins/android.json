@@ -35,6 +35,66 @@
                         {
                             "xml": "<feature name=\"Market\"><param name=\"android-package\" value=\"com.xmartlabs.cordova.market.Market\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SocialSharing\"><param name=\"android-package\" value=\"nl.xservices.plugins.SocialSharing\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Toast\"><param name=\"android-package\" value=\"nl.xservices.plugins.Toast\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"WizUtilsPlugin\"><param name=\"android-package\" value=\"jp.wizcorp.phonegap.plugin.wizUtilsPlugin.WizUtilsPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"LaunchMyApp\"><param name=\"android-package\" value=\"nl.xservices.plugins.LaunchMyApp\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"FacebookConnectPlugin\"><param name=\"android-package\" value=\"org.apache.cordova.facebook.ConnectPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<access origin=\"https://m.facebook.com\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<access origin=\"https://graph.facebook.com\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<access origin=\"https://api.facebook.com\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<access origin=\"https://*.fbcdn.net\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<access origin=\"https://*.akamaihd.net\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -48,11 +108,11 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-                            "count": 1
+                            "count": 2
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 1
+                            "count": 2
                         }
                     ],
                     "/manifest": [
@@ -98,6 +158,36 @@
                             "xml": "<service android:name=\"com.plugin.gcm.GCMIntentService\" />",
                             "count": 1
                         }
+                    ],
+                    "/manifest/application/activity": [
+                        {
+                            "xml": "<intent-filter><data android:scheme=\"timfutebol\" /><action android:name=\"android.intent.action.VIEW\" /><category android:name=\"android.intent.category.DEFAULT\" /><category android:name=\"android.intent.category.BROWSABLE\" /></intent-filter>",
+                            "count": 1
+                        }
+                    ],
+                    "application": [
+                        {
+                            "xml": "<meta-data android:name=\"com.facebook.sdk.ApplicationId\" android:value=\"@string/fb_app_id\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<activity android:label=\"@string/fb_app_name\" android:name=\"com.facebook.LoginActivity\" android:theme=\"@android:style/Theme.Translucent.NoTitleBar\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "res/values/facebookconnect.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<string name=\"fb_app_id\">1379325579064871</string>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<string name=\"fb_app_name\">TIM Palpites</string>",
+                            "count": 1
+                        }
                     ]
                 }
             }
@@ -120,6 +210,42 @@
             "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
         },
         "com.xmartlabs.cordova.market": {
+            "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
+        },
+        "jp.wizcorp.phonegap.plugin.wizUtilsPlugin": {
+            "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
+        },
+        "org.apache.cordova.console": {
+            "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
+        },
+        "org.apache.cordova.device": {
+            "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
+        },
+        "org.apache.cordova.dialogs": {
+            "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
+        },
+        "org.apache.cordova.network-information": {
+            "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
+        },
+        "org.apache.cordova.splashscreen": {
+            "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
+        },
+        "org.apache.cordova.statusbar": {
+            "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
+        },
+        "cordova-plugin-customurlscheme": {
+            "URL_SCHEME": "timfutebol",
+            "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
+        },
+        "phonegap-facebook-plugin": {
+            "APP_ID": "1379325579064871",
+            "APP_NAME": "TIM Palpites",
             "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
         }
     },

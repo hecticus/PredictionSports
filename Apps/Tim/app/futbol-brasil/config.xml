@@ -110,7 +110,7 @@
     </feature>
 
     <feature name="Custom URL scheme">
-        <param name="id" value="nl.x-services.plugins.launchmyapp" />
+        <param name="id" value="cordova-plugin-customurlscheme" />
         <param name="url" value="https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git" />
         <variable name="URL_SCHEME" value="timfutebol" />
     </feature-->
