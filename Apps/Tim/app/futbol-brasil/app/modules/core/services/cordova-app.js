@@ -21,7 +21,8 @@ angular
             var prevSection = '';
             var utilitySections = ['login','settings', 'settings-login', 'terms', 'remind', 'language-selection', 'team-selection', 'news-detail'];
             var settingsSubSections = ['language-selection', 'team-selection'];
-            var blockedSections = ['match', 'standings', 'scorers', 'mtm', 'friends'];
+            //var blockedSections = ['match', 'standings', 'scorers', 'mtm', 'friends'];
+            var blockedSections = ['test'];
             var settingsSections = ['settings', 'terms', 'tutorial','remind', 'language-selection', 'team-selection', 'news-detail'];
             var onSettingsSection = false;
 

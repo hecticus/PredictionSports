@@ -1,31 +1,12 @@
-<div class="row h-points" ng-show="hasScore" >
-  <div class="col-xs-12">
-    <h3 ng-bind="getNameClient"
-        style="text-align:center;
-            text-transform: uppercase;
-            color:#ffffff;" ></h3>
-  </div>
-  <div style="position:absolute; top: 150px; background: #ffffff; width: 100%; height:2px;"></div>
-  <div  style="position:absolute;
-              top: 100px;
-              left:0;
-              right: 0;
-              display:block;
-              width:100px;
-              height: 100px;
-              line-height: 25px;
-              background-color: rgb(122,184,0)  !important;
-              border-radius: 50%;
-              text-align:center;
-              color:   rgb(0,40,120);
-              font-size:1.8em;
-              margin: 0 auto  !important;
-              border-style: solid;
-              border-width: 2px;
-              border-color: #ffffff;">
-    <div style="height:35px; position: absolute; top: 0; left: 0; bottom: 0; right: 0; margin: auto; color:#ffffff; ">
-      <span ng-bind="getTotalPointsClient"  style="text-transform: uppercase; font-size:2em !important; display:block;" ></span>
-      <span translate style="font-size: 1em; ">LEADERBOARD.POINTS</span>
+<div class="row lh-field" ng-show="hasScore">
+  <h3 class="lh-nickname" ng-bind="getNameClient"></h3>
+  <div class="lh-circle-line"></div>
+  <div class="lh-circle">
+    <div class="lh-points">
+      <span ng-bind="getTotalPointsClient" ></span>
+    </div>
+    <div translate class="lh-name">
+      LEADERBOARD.POINTS
     </div>
   </div>
 </div>
@@ -37,19 +18,14 @@
 
             <div class="row" >
               <div class="col-xs-12" >
-                <table class="table h-table">
-                  <thead>
-                  <tr >
-                    <th class="h-header yellow" style="text-align:left; width:60%;">
-                      <span translate>LEADERBOARD.TOURNAMENT</span>
-                    </th >
-                    <th class="h-header yellow" style="width:20%;">
-                      <span translate>LEADERBOARD.HITS</span>
-                    </th>
-                    <th class="h-header yellow" style="width:20%;">
-                      <span translate>LEADERBOARD.POINTS</span>
-                    </th>
-                  </tr>
+                <table class="table table-striped">
+                  
+                  <thead  class="lh-header ii">
+                    <tr>
+                      <th translate>LEADERBOARD.TOURNAMENT </th >
+                      <th translate>LEADERBOARD.HITS</th>
+                      <th translate>LEADERBOARD.POINTS</th>
+                    </tr>
                   </thead>
 
                   <tbody >

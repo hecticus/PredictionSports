@@ -36,9 +36,6 @@ footer {
 }
 
 
-
-
-
 .lh-field  { 
 
   @height: 200px;
@@ -90,6 +87,47 @@ footer {
 }
 
 
+.content-news {
+
+  .h-headline {
+    font-size:1.6em;
+    font-weight: bold;
+  }
+    
+  #wrapper2 {
+    .h-headline  {
+      font-size:1.6em;
+    }
+  }
+
+  .h-moment {
+    font-size:1.2em;     
+    color: rgb(44,156,211);
+  }
+
+  .h-body {
+    margin-top: 10px !important;
+    font-size: 1.3em;
+  }
+
+
+  .lh-title {
+      font-size: 2em !important;
+      //color: #ffffff;
+      font-weight:bold;
+      vertical-align: middle;
+  }
+
+}
+
+.lh-logo {
+  width: 40px;
+  vertical-align:middle;
+  margin-right: 5px;
+}
+
+
+     
 .tim {
 
   @height: 50px;
@@ -101,6 +139,12 @@ footer {
     background: rgb(0,40,120);
     .option.active { background: rgb(254,209,0); color: rgb(0,40,120); }
     .lh-icon.mdi { color:#ffffff !important; }
+  }
+
+  .btn {
+    font-size: 16px !important; 
+    background-color: rgb(44,156,211) !important; 
+    color: #FFF !important;
   }
 
   .status._1 { color: rgb(227,114,34); }     /*Played*/
@@ -133,7 +177,12 @@ footer {
   
   .lh-shield { width: @height-img ; height: @height-img; }
 
-  .content-leaderboard {
+  .content-news {
+    #wrapper { top: @height + 10; }     
+  }
+
+
+  .content-leaderboard, .content-points {
 
       .lh-badge { 
         background: rgb(44,156,211);  
@@ -274,6 +323,13 @@ footer {
     .lh-icon.mdi { color:#ffffff !important; }
   }
 
+
+  .btn {
+    font-size: 16px !important; 
+    background-color: rgb(44,156,211) !important; 
+    color: #FFF !important;
+  }
+
   .status._1 { color: yellow; }     /*Played*/
   .status._2 { color: red;  }     /*Playing*/
   .status._3 { color: brown; }       /*Fixture*/
@@ -304,7 +360,11 @@ footer {
   
   .lh-shield { width: @height-img ; height: @height-img; }
 
-  .content-leaderboard {
+  .content-news {
+    #wrapper { top: @height + 10; }     
+  }
+
+  .content-leaderboard, .content-points {
 
       .lh-badge { 
         background: rgb(44,156,211);  
@@ -438,11 +498,18 @@ footer {
   @height-sub: 10px;
   @height-img: @height - 25px;
 
-  header { background: purple; }
+  header { background: #005B83; }
   footer { 
-    background: purple;
-    .option.active { background: gray; color: red; }
+    background: #005B83;
+    .option.active { background: #79B700; color: #ffffff; }
     .lh-icon.mdi { color:#ffffff !important; }
+  }
+
+
+  .btn {
+    font-size: 16px !important; 
+    background-color: #79B700 !important; 
+    color: #ffffff !important;
   }
 
   .status._1 { color: yellow; }     /*Played*/
@@ -457,10 +524,10 @@ footer {
   .status.period._8 { background: white; color: rgb(0,40,120); }
 
 
-  .bg-header() { background: gray; color: #ffffff; } 
-  .bg-header(~"1") { background: red; color: #ffffff;   } 
-  .bg-header(~"2") { background: brown; color: rgb(0,40,120); } 
-  .bg-header(~"3") { background: yellow; color: #ffffff; } 
+  .bg-header() { background: #79B700; color: #ffffff; } 
+  .bg-header(~"1") { background: #00769F; color: #ffffff;   } 
+  .bg-header(~"2") { background: #119CBF; color: #ffffff; } 
+  .bg-header(~"3") { background: #00C5D6; color: #ffffff; } 
 
   .fh-header(@height-subs:0) {    
       width: auto;
@@ -469,13 +536,17 @@ footer {
       font-size: 1.6em;
   }
 
-  .border-line() { border-bottom: 1pt purple solid; } 
-  .border-line(~"1") { border-bottom: 1pt red solid; } 
-  .border-line(~"2") { border-bottom: 1pt gray solid !important; } 
+  .border-line() { border-bottom: 1pt #00769F solid; } 
+  .border-line(~"1") { border-bottom: 1pt #119CBF solid; } 
+  .border-line(~"2") { border-bottom: 1pt #00C5D6 solid !important; } 
   
   .lh-shield { width: @height-img ; height: @height-img; }
 
-  .content-leaderboard {
+  .content-news {
+    #wrapper { top: @height + 10; }     
+  }
+
+  .content-leaderboard, .content-points {
 
       .lh-badge { 
         background: rgb(44,156,211);  

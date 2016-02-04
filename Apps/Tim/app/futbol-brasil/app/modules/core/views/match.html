@@ -4,14 +4,14 @@
             <li ng-style="getWidth()" ng-repeat="page in pages track by page.id" >
                 <div class="container">
 
-                    <div class="row h-header green">
-                        <div class="col-xs-4 text-left" ng-click="prevPage()">
+                    <div class="row lh-header">
+                        <div class="col-xs-2" ng-click="prevPage()">
                             <span ng-bind="pages[$index-1].name" ></span>
                         </div>
                         <div class="col-xs-4">
                             <span ng-bind="page.name" ></span>
                         </div>
-                        <div  class="col-xs-4 text-right" ng-click="nextPage()">
+                        <div  class="col-xs-8" ng-click="nextPage()">
                             <span ng-bind="pages[$index+1].name" ></span>
                         </div>
                     </div>

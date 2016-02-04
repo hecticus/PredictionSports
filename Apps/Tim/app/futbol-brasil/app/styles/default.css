@@ -693,14 +693,14 @@ h6.team-name {
       min-height:50px;
       line-height: 50px;
       border-bottom: solid 1pt rgb(254,209,0);
-      /*font-weight:bold;*/
+      /*font-weight:bold;*
     }*/
 
    /* .h-list.news *[class *= 'col-'] {
        line-height: 1;
        padding: 15px;
     }*/
-
+/*
     .content-news .h-headline {
       font-size:1.6em;
       font-weight: bold;
@@ -712,7 +712,7 @@ h6.team-name {
 
     .content-news .h-moment {
       font-size:1.2em;
-      /*font-weight:bold;*/
+      font-weight:bold;
       color: rgb(44,156,211);
     }
 
@@ -720,7 +720,7 @@ h6.team-name {
       margin-top: 10px !important;
       font-size: 1.3em;
     }
-
+*/
     /*@media(max-width: 720px) {
       .content-standings .h-headline {font-weight:bold;}
       .content-news .h-headline {font-weight:bold;}
@@ -732,8 +732,8 @@ h6.team-name {
       border: 0 !important;
     }*/
 
-    .content-news #wrapper,
-    .content-news #wrapper2,
+    /*.content-news #wrapper,
+    .content-news #wrapper2,*/
     .content-standings #wrapper,
     .content-standings #wrapper2,
     .content-standings #wrapper3{
@@ -796,7 +796,7 @@ h6.team-name {
 
 
 
-    .h-logo {
+    /*.h-logo {
       height: auto;
     }
 
@@ -814,7 +814,7 @@ h6.team-name {
       width: 55px;
       vertical-align:middle;
       margin-right: 5px;
-    }
+    }*/
 
     .content-mtm #wrapper2,
     .content-mtm #wrapper2 .scroller,
@@ -918,13 +918,7 @@ h6.team-name {
     }
 
 
-    header .h-title {
-      font-size: 2em !important;
-      color: #ffffff;
-      font-weight:bold;
-      vertical-align: middle;
-    }
-
+  
     header *[class *= 'glyphicon'],
     header *[class *= 'icon-material'],
     header *[class *= 'mdi-'],
@@ -1098,9 +1092,9 @@ h6.team-name {
     color:  rgb(0,40,120) !important;
   }
 
-  .btn {
+  /*.btn {
     font-size: 16px !important;
-  }
+  }*/
 
 
   .content-dashboard #wrapper {

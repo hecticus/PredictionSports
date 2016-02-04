@@ -14,14 +14,14 @@
               </div>
 
               <div class="col-xs-12" style="border:0; padding:0;" ng-show="$index === 0">
-                <br />
-                <span class="h-headline h-ellipsis" style="font-weight:normal !important;">{{item.title}}</span>
-                <br />
+             
+                <h2 class="h-headline h-ellipsis" style="font-weight:normal !important;">{{item.title}}</h2>
+                
                 <i class="mdi-device-access-time"></i>
                 <span class="h-moment">{{fromNow(item.publicationDate)}}</span>
               </div>
 
-
+              <br /> 
 
               <div class="col-xs-4" style="border:0; padding:0;" ng-show="$index !== 0">
                 <img class="img-thumbnail" style="width:85%; height: auto; min-height:70px;" src="{{item.resources.mid[0]}}" onerror="this.src='img/logo-120x120.png'" alt="icon">
@@ -29,7 +29,7 @@
 
               <div class="col-xs-8" style="border:0; padding:0;" ng-show="$index !== 0">
                 <span class="h-headline h-ellipsis" style="font-weight:normal !important;">{{item.title}}</span>
-                <br />
+                
                 <i class="mdi-device-access-time"></i>
                 <span class="h-moment">{{fromNow(item.publicationDate)}}</span>
               </div>
@@ -82,7 +82,7 @@
 </div>
 
 <div style="position: absolute; z-index: 120; top:0; right:20px; height:50px; line-height:50px;" ng-click="share(contentNews)" ng-show="isPageContentLeft">
-  <i class="mdi-social-share" style="vertical-align: middle; color:#ffffff; "></i>
+  <i class="mdi-social-share" style=" font-size:2em !important;  vertical-align: middle; color:#ffffff; "></i>
 </div>
 
 <div class="no-content-panel h-horizontal" ng-hide="hasNews">
