@@ -261,8 +261,6 @@ footer {
 } //.tim
 
 
-
-
 .oil {
 
   @height: 50px;
@@ -432,3 +430,174 @@ footer {
   /* Menu */
 
 } //.oil
+
+
+.movistar {
+
+  @height: 50px;
+  @height-sub: 10px;
+  @height-img: @height - 25px;
+
+  header { background: purple; }
+  footer { 
+    background: purple;
+    .option.active { background: gray; color: red; }
+    .lh-icon.mdi { color:#ffffff !important; }
+  }
+
+  .status._1 { color: yellow; }     /*Played*/
+  .status._2 { color: red;  }     /*Playing*/
+  .status._3 { color: brown; }       /*Fixture*/
+  .status._4 { color: blue;  }    /*Cancelled*/
+  .status._5 { color: gray;  }     /*Postponed*/
+  .status._6 { color: green;  }     /*Suspended*/
+
+  .status.period { background: red; color: #ffffff; }
+  .status.period._9 { background: gray; color: #ffffff; }
+  .status.period._8 { background: white; color: rgb(0,40,120); }
+
+
+  .bg-header() { background: gray; color: #ffffff; } 
+  .bg-header(~"1") { background: red; color: #ffffff;   } 
+  .bg-header(~"2") { background: brown; color: rgb(0,40,120); } 
+  .bg-header(~"3") { background: yellow; color: #ffffff; } 
+
+  .fh-header(@height-subs:0) {    
+      width: auto;
+      height: @height - @height-subs;
+      line-height: @height - @height-subs;
+      font-size: 1.6em;
+  }
+
+  .border-line() { border-bottom: 1pt purple solid; } 
+  .border-line(~"1") { border-bottom: 1pt red solid; } 
+  .border-line(~"2") { border-bottom: 1pt gray solid !important; } 
+  
+  .lh-shield { width: @height-img ; height: @height-img; }
+
+  .content-leaderboard {
+
+      .lh-badge { 
+        background: rgb(44,156,211);  
+        padding: 5px 15px; 
+        min-width: 100px;          
+      }
+
+      .lh-badge.disabled {  
+        opacity: 0.7;
+        filter: alpha(opacity=70); 
+      }
+
+      li {
+        &:first-child .wrapper {top: @height - @height-sub !important;  }
+        &:first-child .lh-header.i { display:none; }
+        .wrapper { top: (@height - @height-sub) * 2  !important; }
+      }
+
+     .lh-header { 
+        .fh-header(@height-sub); 
+        .bg-header(); 
+      }
+
+      .lh-header.i { 
+        .fh-header(@height-sub); 
+        .bg-header(~"1"); 
+      } 
+
+      .lh-header.ii { 
+        .fh-header(@height-sub); 
+        .bg-header(~"2"); 
+      } 
+
+  } //.content-leaderboard
+
+  .content-prediction {
+
+   
+
+    .lh-tournament {
+
+      .lh-header { 
+        .fh-header(@height-sub); 
+        .bg-header(~"2"); 
+      }
+
+      .lh-list {  
+
+        background: #ffffff;
+        
+        .lh-list-row { 
+
+          height: @height; 
+          line-height: @height;
+          font-size: 1.4em !important;
+
+          .border-line();
+          .lh-caption {}          
+          .lh-time { 
+
+            float:right; 
+            color: rgb(122,184,0) !important; 
+
+            *[class *= 'mdi-'] {
+              color: rgb(122,184,0) !important; 
+            }
+
+          }
+
+        } //.lh-list-row
+
+      } //.lh-list
+
+    } //.lh-tournament
+
+    .lh-page-match {
+      .lh-header { 
+        .fh-header(@height-sub); 
+        .bg-header(); 
+      }
+      .lh-header.i { 
+        .fh-header(@height-sub); 
+        .bg-header(~"1"); 
+      } 
+      .lh-header.iii { 
+        .fh-header(@height-sub); 
+        .bg-header(~"3"); 
+      } 
+
+      .lh-match {
+        .border-line(~"2");
+        &:last-child { border: 0 !important; }
+        td.active {
+          .bg-header(~"2");
+        }
+        .lh-shield { width:40px; height:40px; }
+        .lh-caption { font-size: 1.4em; }
+        .lh-time { font-size: 1.6em;}
+        .lh-goal-team { font-size:2em !important; }
+      } //.lh-match
+
+    } //.lh-page-match
+
+  } //.content-prediction
+
+
+  /* Menu */
+  
+  .fh-menu-option(~"main") { font-weight: bold; text-transform:uppercase; .border-line(); };
+  .fh-menu-option(~"sub") { text-transform:capitalize; .border-line(~"1"); };
+  .fh-content-menu(@position) {    
+      width:100%; 
+      height: 50px;
+      line-height: 50px; 
+      margin-left: 30px;
+      font-size: 1.8em;   
+      .lh-title { padding: 0; .fh-menu-option(@position); }
+  }
+
+  .content-menu.main { .fh-content-menu(~"main"); }
+  .content-menu.sub  { .fh-content-menu(~"sub"); }
+
+  /* Menu */
+
+} //.movistar

@@ -1,23 +1,27 @@
 #!/usr/bin/env node
 'use strict';
 
+var root_res = 'res/movistar/';
+//root_res = 'res/tim';
+
 var filestocopy = [{
-    "res/android/drawable/notification_icon.png": 
+    root_res + "android/drawable/notification_icon.png": 
     "platforms/android/res/drawable/notification_icon.png"
 },{
-    "res/android/drawable-hdpi/notification_icon.png": 
+    root_res + "android/drawable-hdpi/notification_icon.png": 
     "platforms/android/res/drawable-hdpi/notification_icon.png"
 },{
-    "res/android/drawable-ldpi/notification_icon.png": 
+    root_res + "android/drawable-ldpi/notification_icon.png": 
     "platforms/android/res/drawable-ldpi/notification_icon.png"
 },{
-    "res/android/drawable-mdpi/notification_icon.png": 
+    root_res + "android/drawable-mdpi/notification_icon.png": 
     "platforms/android/res/drawable-mdpi/notification_icon.png"
 },{
-    "res/android/drawable-xhdpi/notification_icon.png": 
+    root_res + "android/drawable-xhdpi/notification_icon.png": 
     "platforms/android/res/drawable-xhdpi/notification_icon.png"
 }];
- 
+
+
 var fs = require('fs');
 var path = require('path');
 console.log('### androidResourcesCpy'); 
