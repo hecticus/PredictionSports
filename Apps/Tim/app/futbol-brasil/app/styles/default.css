@@ -32,7 +32,7 @@ body,ul,li { padding: 0 !important; margin: 0 !important; border: 0 !important; 
     bottom: 50px;
     left: 0;
     width: 100%;
-    background:#ffffff;
+    background:#ffffff;    
 }
 
 
@@ -736,7 +736,7 @@ h6.team-name {
     .content-news #wrapper2,*/
     .content-standings #wrapper,
     .content-standings #wrapper2,
-    .content-standings #wrapper3{
+    .content-standings #wrapper3 {
       top: 50px;
     }
 
@@ -761,6 +761,7 @@ h6.team-name {
     #wrapper3.page {
       left: 100%;
       z-index: 1;
+      width: 100% !important;
     }
 
     .content-points #wrapper {
@@ -835,15 +836,9 @@ h6.team-name {
     .content-standings #wrapper3 .scroller .container div {
         padding: 0 !important;
         margin: 0 !important;
+        width: 100% !important;
     }
 
-    .panel-danger > .panel-heading,
-    .panel-warning  > .panel-heading,
-    .panel-primary  > .panel-heading,
-    .panel-success  > .panel-heading,
-    .panel-info > .panel-heading {
-      background  : rgb(44,156,211);
-    }
 
     .btn-primary:not(.btn-link):not(.btn-flat),
     .btn-success:not(.btn-link):not(.btn-flat) {

@@ -1,0 +1,156 @@
+<div id="wrapper" class="settings-wrapper">
+    <div class="scroller" style="background-color: transparent; position: absolute;">
+        <div class="col-xs-12">
+
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="mdi-action-account-circle"></span>
+                        <span translate>SETTINGS.NICKNAME_TITLE</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="control-label sr-only"
+                               for="inputDefault" translate>SETTINGS.NICKNAME_TITLE</label>
+                        <div class="input-group">
+
+                            <input type="text" class="form-control" id="inputDefault"
+                                   ng-disabled="!isEditing" ng-model="nickname"
+                                   placeholder="{{ 'SETTINGS.NICKNAME_PLACEHOLDER' | translate}}"
+                                   maxlength="16">
+
+                            <span class="input-group-btn">
+                                <button type="button" ng-click="saveNickname()"
+                                        ng-class="{' btn btn-primary' : !isEditing, ' btn btn-success' : isEditing}">
+                                    <i ng-class="{' mdi-content-save' : isEditing, ' mdi-content-create' : !isEditing}"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="mdi-action-stars"></span>
+                        {{'SETTINGS.FAVORITE_TEAMS_TITLE' | translate}}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-4 text-center" ng-repeat="team in favoriteTeams">
+
+                            <i class="btn btn-fab btn-raised text-center"
+                               ng-class="getTeamClasses(team, $index)"
+                               ng-click="teamSelected(team)"
+                               style="width:40px; height:40px; padding: 10px;"
+                               ng-show="isEmptySlot(team)"></i>
+
+                            <img class="h-shield"
+                               ng-src="{{team.team_logo}}"
+                               ng-click="teamSelected(team)"
+                               onerror="this.src='img/shield-1.png'"
+                               ng-hide="isEmptySlot(team)">
+
+                            <i class="btn btn-delete-item btn-raised mdi-content-clear"
+                               ng-click="removeTeam(team)"
+                               ng-show="!isEmptySlot(team)"></i>
+
+                            <div class="team-name text-muted"
+                                ng-click="teamSelected(team)"
+                                ng-bind="getTeamName(team)"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="mdi-social-notifications-on"></span>
+                        {{ 'SETTINGS.PUSH_TITLE' | translate }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <div class="togglebutton">
+                                    <label>
+                                        <input type="checkbox" ng-checked="toggles.bets"
+                                               ng-model="toggles.bets" ng-click="toggleBets()">
+                                        <div class="toggle"></div>
+                                    </label>
+                                    <span class="h-name-push" translate>SETTINGS.TOGGLE.BETS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <div class="togglebutton">
+                                    <label>
+                                        <input type="checkbox" ng-checked="toggles.news"
+                                               ng-click="toggleNews()">
+                                        <div class="toggle"></div>
+                                    </label>
+                                    <span class="h-name-push" translate>SETTINGS.TOGGLE.NEWS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <div class="togglebutton">
+                                    <label>
+                                        <input type="checkbox" ng-checked="toggles.mtm"
+                                               ng-click="toggleMtm()">
+                                        <div class="toggle"></div>
+                                    </label>
+                                    <span class="h-name-push" translate>SETTINGS.TOGGLE.MTM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="mdi-social-people"></span>
+                        {{ 'SETTINGS.SOCIAL_ACCOUNTS_TITLE' | translate }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12" style="text-align:center;">
+                            <button class="btn text-center btn-facebook btn-info btn-lg btn-block"
+                                    ng-class="fbObject.class"
+                                 ng-click="onFbButtonClick()"
+                                 ng-bind="fbObject.fbButtonMsg">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <span class="glyphicon glyphicon-question-sign"></span>
+                  {{ 'SETTINGS.APP' | translate }}</h3>
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <button ui-sref="tutorial" type="button" class="btn btn-success btn-lg btn-block">Tutorial</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </div>
+    </div>
+</div>

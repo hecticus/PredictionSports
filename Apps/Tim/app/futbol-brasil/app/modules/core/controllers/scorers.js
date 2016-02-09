@@ -31,7 +31,7 @@ angular
             $rootScope.$storage.scorers = false;
 
             $scope.vWrapper = {
-                name:'wrapperV',
+                name:'wrapperVV',
                 getName : function(_index) {
                     return this.name + _index;
                 }

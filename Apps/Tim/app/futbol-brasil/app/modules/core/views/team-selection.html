@@ -1,12 +1,12 @@
 <div id="wrapper" class="page">
   <div class="scroller">
-    <div class="container">
-      <div class="row h-list"  >
-        <div class="col-xs-12 h-ellipsis-truncate"
+    <div class="container lh-tournament">
+      <div class="row lh-list"  >
+        <div class="col-xs-12 lh-list-row"
              ng-repeat="league in leagues track by league.id_competitions"
              ng-click="showContentTeams(league)" >
-          <img class="h-shield" ng-src="{{getCompetitionShield(league.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
-          <span class="h-headline">{{league.competiton_type.name}}</span>
+          <img class="lh-shield" ng-src="{{getCompetitionShield(league.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+          <span class="lh-caption">{{league.competiton_type.name}}</span>
         </div>
       </div>
 

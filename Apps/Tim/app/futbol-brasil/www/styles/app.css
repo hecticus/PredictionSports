@@ -1,0 +1,736 @@
+/* variables */
+table {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+table * {
+  border: 0 !important;
+  text-align: center;
+}
+header,
+footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 50px;
+  z-index: 100;
+  color: #ffffff !important;
+}
+footer {
+  bottom: 0;
+  z-index: 10 !important;
+}
+footer .option {
+  height: 50px;
+  text-align: center;
+  padding: 5px;
+}
+footer .lh-icon {
+  font-size: 2em;
+  display: block;
+}
+.lh-field {
+  position: absolute;
+  background: #7ab800 !important;
+  width: 100%;
+  height: 200px;
+  top: 50px;
+}
+.lh-field .lh-nickname {
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+.lh-field .lh-circle-line {
+  position: absolute;
+  background: #ffffff;
+  width: 100%;
+  height: 2px;
+  top: 104px;
+}
+.lh-field .lh-circle {
+  position: absolute;
+  font-size: 2em;
+  background: #7ab800 !important;
+  left: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  text-align: center;
+  margin: 0 auto  !important;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff;
+  color: #ffffff;
+}
+.lh-field .lh-circle .lh-points {
+  font-size: 1.4em;
+  width: 100%;
+  height: 50px;
+  line-height: 75px;
+}
+.lh-field .lh-circle .lh-name {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+}
+.content-news .h-headline {
+  font-size: 1.6em;
+  font-weight: bold;
+}
+.content-news #wrapper2 .h-headline {
+  font-size: 1.6em;
+}
+.content-news .h-moment {
+  font-size: 1.2em;
+  color: #2c9cd3;
+}
+.content-news .h-body {
+  margin-top: 10px !important;
+  font-size: 1.3em;
+}
+.content-news .lh-title {
+  font-size: 2em !important;
+  font-weight: bold;
+  vertical-align: middle;
+}
+.lh-logo {
+  width: 40px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.tim {
+  /*Played*/
+  /*Playing*/
+  /*Fixture*/
+  /*Cancelled*/
+  /*Postponed*/
+  /*Suspended*/
+  /* Menu */
+  /* Menu */
+}
+.tim header {
+  background: #2c9cd3;
+}
+.tim footer {
+  background: #002878;
+}
+.tim footer .option.active {
+  background: #fed100;
+  color: #002878;
+}
+.tim footer .lh-icon.mdi {
+  color: #ffffff !important;
+}
+.tim .btn {
+  font-size: 16px !important;
+  background-color: #2c9cd3 !important;
+  color: #FFF !important;
+}
+.tim .status._1 {
+  color: #e37222;
+}
+.tim .status._2 {
+  color: #7ab800;
+}
+.tim .status._3 {
+  color: #002878;
+}
+.tim .status._4 {
+  color: #e37222;
+}
+.tim .status._5 {
+  color: #fed100;
+}
+.tim .status._6 {
+  color: #fed100;
+}
+.tim .status.period {
+  background: #002878;
+  color: #ffffff;
+}
+.tim .status.period._9 {
+  background: #7ab800;
+  color: #ffffff;
+}
+.tim .status.period._8 {
+  background: #fed100;
+  color: #002878;
+}
+.tim .lh-shield {
+  width: 25px;
+  height: 25px;
+}
+.tim .content-news #wrapper {
+  top: 60px;
+}
+.tim .content-leaderboard .lh-badge,
+.tim .content-points .lh-badge {
+  background: #2c9cd3;
+  padding: 5px 15px;
+  min-width: 100px;
+}
+.tim .content-leaderboard .lh-badge.disabled,
+.tim .content-points .lh-badge.disabled {
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+}
+.tim .content-leaderboard li:first-child .wrapper,
+.tim .content-points li:first-child .wrapper {
+  top: 40px !important;
+}
+.tim .content-leaderboard li:first-child .lh-header.i,
+.tim .content-points li:first-child .lh-header.i {
+  display: none;
+}
+.tim .content-leaderboard li .wrapper,
+.tim .content-points li .wrapper {
+  top: 80px !important;
+}
+.tim .content-leaderboard .lh-header,
+.tim .content-points .lh-header {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: #7ab800;
+  color: #ffffff;
+}
+.tim .content-leaderboard .lh-header.i,
+.tim .content-points .lh-header.i {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: #e37222;
+  color: #ffffff;
+}
+.tim .content-leaderboard .lh-header.ii,
+.tim .content-points .lh-header.ii {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: #fed100;
+  color: #002878;
+}
+.tim .content-prediction .lh-tournament .lh-header {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: #fed100;
+  color: #002878;
+}
+.tim .content-prediction .lh-tournament .lh-list {
+  background: #ffffff;
+}
+.tim .content-prediction .lh-tournament .lh-list .lh-list-row {
+  height: 50px;
+  line-height: 50px;
+  font-size: 1.4em !important;
+  border-bottom: 1pt #fed100 solid;
+}
+.tim .content-prediction .lh-tournament .lh-list .lh-list-row .lh-time {
+  float: right;
+  color: #7ab800 !important;
+}
+.tim .content-prediction .lh-tournament .lh-list .lh-list-row .lh-time *[class*='mdi-'] {
+  color: #7ab800 !important;
+}
+.tim .content-prediction .lh-page-match .lh-header {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: #7ab800;
+  color: #ffffff;
+}
+.tim .content-prediction .lh-page-match .lh-header.i {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: #e37222;
+  color: #ffffff;
+}
+.tim .content-prediction .lh-page-match .lh-header.iii {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: #2c9cd3;
+  color: #ffffff;
+}
+.tim .content-prediction .lh-page-match .lh-match {
+  border-bottom: 1pt #2c9cd3 solid !important;
+}
+.tim .content-prediction .lh-page-match .lh-match:last-child {
+  border: 0 !important;
+}
+.tim .content-prediction .lh-page-match .lh-match td.active {
+  background: #fed100;
+  color: #002878;
+}
+.tim .content-prediction .lh-page-match .lh-match .lh-shield {
+  width: 40px;
+  height: 40px;
+}
+.tim .content-prediction .lh-page-match .lh-match .lh-caption {
+  font-size: 1.4em;
+}
+.tim .content-prediction .lh-page-match .lh-match .lh-time {
+  font-size: 1.6em;
+}
+.tim .content-prediction .lh-page-match .lh-match .lh-goal-team {
+  font-size: 2em !important;
+}
+.tim .content-menu.main {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 30px;
+  font-size: 1.8em;
+}
+.tim .content-menu.main .lh-title {
+  padding: 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 1pt #fed100 solid;
+}
+.tim .content-menu.sub {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 30px;
+  font-size: 1.8em;
+}
+.tim .content-menu.sub .lh-title {
+  padding: 0;
+  text-transform: capitalize;
+  border-bottom: 1pt #002878 solid;
+}
+.oil {
+  /*Played*/
+  /*Playing*/
+  /*Fixture*/
+  /*Cancelled*/
+  /*Postponed*/
+  /*Suspended*/
+  /* Menu */
+  /* Menu */
+}
+.oil header {
+  background: purple;
+}
+.oil footer {
+  background: purple;
+}
+.oil footer .option.active {
+  background: gray;
+  color: red;
+}
+.oil footer .lh-icon.mdi {
+  color: #ffffff !important;
+}
+.oil .btn {
+  font-size: 16px !important;
+  background-color: #2c9cd3 !important;
+  color: #FFF !important;
+}
+.oil .status._1 {
+  color: yellow;
+}
+.oil .status._2 {
+  color: red;
+}
+.oil .status._3 {
+  color: brown;
+}
+.oil .status._4 {
+  color: blue;
+}
+.oil .status._5 {
+  color: gray;
+}
+.oil .status._6 {
+  color: green;
+}
+.oil .status.period {
+  background: red;
+  color: #ffffff;
+}
+.oil .status.period._9 {
+  background: gray;
+  color: #ffffff;
+}
+.oil .status.period._8 {
+  background: white;
+  color: #002878;
+}
+.oil .lh-shield {
+  width: 25px;
+  height: 25px;
+}
+.oil .content-news #wrapper {
+  top: 60px;
+}
+.oil .content-leaderboard .lh-badge,
+.oil .content-points .lh-badge {
+  background: #2c9cd3;
+  padding: 5px 15px;
+  min-width: 100px;
+}
+.oil .content-leaderboard .lh-badge.disabled,
+.oil .content-points .lh-badge.disabled {
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+}
+.oil .content-leaderboard li:first-child .wrapper,
+.oil .content-points li:first-child .wrapper {
+  top: 40px !important;
+}
+.oil .content-leaderboard li:first-child .lh-header.i,
+.oil .content-points li:first-child .lh-header.i {
+  display: none;
+}
+.oil .content-leaderboard li .wrapper,
+.oil .content-points li .wrapper {
+  top: 80px !important;
+}
+.oil .content-leaderboard .lh-header,
+.oil .content-points .lh-header {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: gray;
+  color: #ffffff;
+}
+.oil .content-leaderboard .lh-header.i,
+.oil .content-points .lh-header.i {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: red;
+  color: #ffffff;
+}
+.oil .content-leaderboard .lh-header.ii,
+.oil .content-points .lh-header.ii {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: brown;
+  color: #002878;
+}
+.oil .content-prediction .lh-tournament .lh-header {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: brown;
+  color: #002878;
+}
+.oil .content-prediction .lh-tournament .lh-list {
+  background: #ffffff;
+}
+.oil .content-prediction .lh-tournament .lh-list .lh-list-row {
+  height: 50px;
+  line-height: 50px;
+  font-size: 1.4em !important;
+  border-bottom: 1pt purple solid;
+}
+.oil .content-prediction .lh-tournament .lh-list .lh-list-row .lh-time {
+  float: right;
+  color: #7ab800 !important;
+}
+.oil .content-prediction .lh-tournament .lh-list .lh-list-row .lh-time *[class*='mdi-'] {
+  color: #7ab800 !important;
+}
+.oil .content-prediction .lh-page-match .lh-header {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: gray;
+  color: #ffffff;
+}
+.oil .content-prediction .lh-page-match .lh-header.i {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: red;
+  color: #ffffff;
+}
+.oil .content-prediction .lh-page-match .lh-header.iii {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: yellow;
+  color: #ffffff;
+}
+.oil .content-prediction .lh-page-match .lh-match {
+  border-bottom: 1pt gray solid !important;
+}
+.oil .content-prediction .lh-page-match .lh-match:last-child {
+  border: 0 !important;
+}
+.oil .content-prediction .lh-page-match .lh-match td.active {
+  background: brown;
+  color: #002878;
+}
+.oil .content-prediction .lh-page-match .lh-match .lh-shield {
+  width: 40px;
+  height: 40px;
+}
+.oil .content-prediction .lh-page-match .lh-match .lh-caption {
+  font-size: 1.4em;
+}
+.oil .content-prediction .lh-page-match .lh-match .lh-time {
+  font-size: 1.6em;
+}
+.oil .content-prediction .lh-page-match .lh-match .lh-goal-team {
+  font-size: 2em !important;
+}
+.oil .content-menu.main {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 30px;
+  font-size: 1.8em;
+}
+.oil .content-menu.main .lh-title {
+  padding: 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 1pt purple solid;
+}
+.oil .content-menu.sub {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 30px;
+  font-size: 1.8em;
+}
+.oil .content-menu.sub .lh-title {
+  padding: 0;
+  text-transform: capitalize;
+  border-bottom: 1pt red solid;
+}
+.movistar {
+  /*Played*/
+  /*Playing*/
+  /*Fixture*/
+  /*Cancelled*/
+  /*Postponed*/
+  /*Suspended*/
+  /* Menu */
+  /* Menu */
+}
+.movistar header {
+  background: #005B83;
+}
+.movistar footer {
+  background: #005B83;
+}
+.movistar footer .option.active {
+  background: #79B700;
+  color: #ffffff;
+}
+.movistar footer .lh-icon.mdi {
+  color: #ffffff !important;
+}
+.movistar .btn {
+  font-size: 16px !important;
+  background-color: #79B700 !important;
+  color: #ffffff !important;
+}
+.movistar .status._1 {
+  color: yellow;
+}
+.movistar .status._2 {
+  color: red;
+}
+.movistar .status._3 {
+  color: brown;
+}
+.movistar .status._4 {
+  color: blue;
+}
+.movistar .status._5 {
+  color: gray;
+}
+.movistar .status._6 {
+  color: green;
+}
+.movistar .status.period {
+  background: red;
+  color: #ffffff;
+}
+.movistar .status.period._9 {
+  background: gray;
+  color: #ffffff;
+}
+.movistar .status.period._8 {
+  background: white;
+  color: #002878;
+}
+.movistar .lh-shield {
+  width: 25px;
+  height: 25px;
+}
+.movistar .content-news #wrapper {
+  top: 60px;
+}
+.movistar .content-leaderboard .lh-badge,
+.movistar .content-points .lh-badge {
+  background: #2c9cd3;
+  padding: 5px 15px;
+  min-width: 100px;
+}
+.movistar .content-leaderboard .lh-badge.disabled,
+.movistar .content-points .lh-badge.disabled {
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+}
+.movistar .content-leaderboard li:first-child .wrapper,
+.movistar .content-points li:first-child .wrapper {
+  top: 40px !important;
+}
+.movistar .content-leaderboard li:first-child .lh-header.i,
+.movistar .content-points li:first-child .lh-header.i {
+  display: none;
+}
+.movistar .content-leaderboard li .wrapper,
+.movistar .content-points li .wrapper {
+  top: 80px !important;
+}
+.movistar .content-leaderboard .lh-header,
+.movistar .content-points .lh-header {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: #79B700;
+  color: #ffffff;
+}
+.movistar .content-leaderboard .lh-header.i,
+.movistar .content-points .lh-header.i {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: #00769F;
+  color: #ffffff;
+}
+.movistar .content-leaderboard .lh-header.ii,
+.movistar .content-points .lh-header.ii {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: #119CBF;
+  color: #ffffff;
+}
+.movistar .content-prediction .lh-tournament .lh-header {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: #119CBF;
+  color: #ffffff;
+}
+.movistar .content-prediction .lh-tournament .lh-list {
+  background: #ffffff;
+}
+.movistar .content-prediction .lh-tournament .lh-list .lh-list-row {
+  height: 50px;
+  line-height: 50px;
+  font-size: 1.4em !important;
+  border-bottom: 1pt #00769F solid;
+}
+.movistar .content-prediction .lh-tournament .lh-list .lh-list-row .lh-time {
+  float: right;
+  color: #7ab800 !important;
+}
+.movistar .content-prediction .lh-tournament .lh-list .lh-list-row .lh-time *[class*='mdi-'] {
+  color: #7ab800 !important;
+}
+.movistar .content-prediction .lh-page-match .lh-header {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: #79B700;
+  color: #ffffff;
+}
+.movistar .content-prediction .lh-page-match .lh-header.i {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: #00769F;
+  color: #ffffff;
+}
+.movistar .content-prediction .lh-page-match .lh-header.iii {
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.6em;
+  background: #00C5D6;
+  color: #ffffff;
+}
+.movistar .content-prediction .lh-page-match .lh-match {
+  border-bottom: 1pt #00C5D6 solid !important;
+}
+.movistar .content-prediction .lh-page-match .lh-match:last-child {
+  border: 0 !important;
+}
+.movistar .content-prediction .lh-page-match .lh-match td.active {
+  background: #119CBF;
+  color: #ffffff;
+}
+.movistar .content-prediction .lh-page-match .lh-match .lh-shield {
+  width: 40px;
+  height: 40px;
+}
+.movistar .content-prediction .lh-page-match .lh-match .lh-caption {
+  font-size: 1.4em;
+}
+.movistar .content-prediction .lh-page-match .lh-match .lh-time {
+  font-size: 1.6em;
+}
+.movistar .content-prediction .lh-page-match .lh-match .lh-goal-team {
+  font-size: 2em !important;
+}
+.movistar .content-menu.main {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 30px;
+  font-size: 1.8em;
+}
+.movistar .content-menu.main .lh-title {
+  padding: 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 1pt #00769F solid;
+}
+.movistar .content-menu.sub {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 30px;
+  font-size: 1.8em;
+}
+.movistar .content-menu.sub .lh-title {
+  padding: 0;
+  text-transform: capitalize;
+  border-bottom: 1pt #119CBF solid;
+}

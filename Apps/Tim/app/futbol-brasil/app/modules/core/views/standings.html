@@ -2,15 +2,16 @@
 
     <div id="wrapper" class="page">
       <div class="scroller">
-        <div class="container">
+        <div class="container  lh-tournament">
 
-          <div class="row h-list" ng-show="hasCompetitions" >
-            <div class="col-xs-12 h-ellipsis-truncate"
+          <div class="row lh-list" ng-show="hasCompetitions" >
+
+            <div class="col-xs-12 lh-list-row"
                  ng-repeat="competition in item.competitions"
                  ng-click="showContentPhases(competition)"
                  data-news="{{ competition.id_competitions }}" on-last-repeat>
-              <img class="h-shield" ng-src="{{getCompetitionShield(competition.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
-              <span class="h-headline ">{{competition.competiton_type.name}}</span>
+              <img class="lh-shield" ng-src="{{getCompetitionShield(competition.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+              <span class="lh-caption">{{competition.competiton_type.name}}</span>
             </div>
 
           </div>
@@ -34,21 +35,21 @@
 
     <div id="wrapper2" class="page wrapper">
       <div class="scroller">
-        <div class="container">
+        <div class="container lh-page-match">
 
           <div class="row">
-            <div class="col-xs-12 h-header green h-ellipsis-truncate">
-              <img class="h-shield h-tree" ng-src="{{getCompetitionShield(item.competition.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
-              <span class="h-headline" ng-bind="item.competition.competiton_type.name"></span>
+            <div class="col-xs-12 lh-header i">
+              <img class="lh-shield" ng-src="{{getCompetitionShield(item.competition.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+              <span  ng-bind="item.competition.competiton_type.name"></span>
             </div>
           </div>
 
-          <div class="row h-list" ng-show="hasPhases">
-            <div class="col-xs-12 h-ellipsis-truncate" ng-repeat="phase in item.phases"
+          <div class="row lh-list" ng-show="hasPhases">
+            <div class="col-xs-12 lh-list-row " ng-repeat="phase in item.phases"
                  ng-click="showContentRanking(item.competition.id_competitions
                         , phase.id_phases)">
-              <i class="mdi-action-bookmark h-headline"></i>
-              <span class="h-headline" ng-bind="phase.global_name"></span>
+              <i class="mdi-action-bookmark lh-bullet"></i>
+              <span class="lh-title" ng-bind="phase.global_name"></span>
             </div>
           </div>
 
@@ -70,12 +71,12 @@
 
     <div id="wrapper3" class="page wrapper">
       <div class="scroller">
-        <div class="container">
+        <div class="container lh-page-table">
 
           <div class="row">
-            <div class="col-xs-12 h-header red h-ellipsis-truncate">
-              <img class="h-shield h-tree" ng-src="{{getCompetitionShield(item.competition.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
-              <span class="h-headline" ng-bind="item.competition.competiton_type.name"></span>
+            <div class="col-xs-12 lh-header ii">
+              <img class="lh-shield" ng-src="{{getCompetitionShield(item.competition.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+              <span ng-bind="item.competition.competiton_type.name"></span>
               <span>-</span>
               <span ng-bind="item.phase.global_name"></span>
             </div>
@@ -87,42 +88,69 @@
                 <div class="row" ng-repeat="rankings in item.ranking">
                   <div class="col-xs-12"
                        ng-repeat="ranking in rankings.ranking">
+
                     <table class="table">
-                      <thead>
+                      <thead class="lh-header i">
                       <tr>
-                        <th colspan="8" class="h-header light-blue">
+                        <th colspan="8" >
                           <span>{{fromNow(ranking.date)}}</span>
                         </th>
                       </tr>
                       </thead>
-                      <tbody>
-                      <tr class="h-match">
-                        <td class="col-xs-4" style="width: 33% !important; vertical-align:middle;">
+                      <tbody class="lh-page-match">
+                      <tr class="lh-match">
+
+                        <td class="col-xs-4" >
                           <figure>
-                            <img class="h-shield" ng-src="{{ranking.homeTeam.team_logo}}" onerror="this.src='img/shield-1.png'">
+                            <img class="lh-shield" ng-src="{{ranking.homeTeam.team_logo}}" onerror="this.src='img/shield-1.png'">
                             <figcaption>
-                              <span ng-bind="ranking.homeTeam.name" class="h-name-team"></span>
+                              <span ng-bind="ranking.homeTeam.name" class="lh-caption"></span>
                             </figcaption>
                           </figure>
                         </td>
-                        <td class="col-xs-4" style="width: 33% !important; vertical-align:middle;">
-                            <span ng-bind="ranking.home_team_goals" class="h-goal-team"></span>
+
+                        <td class="col-xs-4"  >
+
+                          <br />
+
+                          <div style="background:none;">
+                            <span class="lh-goal-team" ng-bind="ranking.home_team_goals" ></span>
+                            <span class="lh-goal-team" >-</span>
+                            <span class="lh-goal-team" ng-bind="ranking.away_team_goals" ></span>
+                          </div>
+
+                          <br />
+
+                          <span class="status _{{ranking.status.id_status}}">
+                            {{ match.status.name | translate}}
+                          </span>
+
+
+
+
+
+
+
+
+                            <!--span ng-bind="ranking.home_team_goals" class="h-goal-team"></span>
                             <span class="h-goal-team">-</span>
                             <span ng-bind="ranking.away_team_goals" class="h-goal-team"></span>
                             <br />
                             <span class="status _{{ranking.status.id_status}}" >
                               {{ranking.status.name | translate}}
-                            </span>
+                            </span-->
 
                         </td>
-                        <td class="col-xs-4" style="width: 33% !important; vertical-align:middle;">
+
+                        <td class="col-xs-4" >
                           <figure>
-                            <img class="h-shield" ng-src="{{ranking.awayTeam.team_logo}}" onerror="this.src='img/shield-2.png'">
+                            <img class="lh-shield" ng-src="{{ranking.awayTeam.team_logo}}" onerror="this.src='img/shield-2.png'">
                             <figcaption>
-                              <span ng-bind="ranking.awayTeam.name" class="h-name-team"></span>
+                              <span ng-bind="ranking.awayTeam.name" class="lh-caption"></span>
                             </figcaption>
                           </figure>
                         </td>
+
                       </tr>
 
                       </tbody>
@@ -142,37 +170,37 @@
               <div ng-if="!item.isTree">
                 <div class="row" ng-repeat="rankings in item.ranking">
                   <div class="col-xs-12">
-                    <table class="table h-table">
-                      <thead>
-                      <tr>
-                        <th colspan="8" class="h-header green">
-                          <span ng-bind="rankings.group_name"></span>
-                        </th>
-                      </tr>
-                      <tr>
-                        <th class="h-header light-blue"></th>
-                        <th class="h-header light-blue" style="text-align: left;" translate>
-                          STANDINGS.TEAM
-                        </th>
-                        <th class="h-header light-blue" translate>
-                          STANDINGS.TABLE.POINTS
-                        </th>
-                        <th class="h-header light-blue" translate>
-                          STANDINGS.TABLE.MATCHES
-                        </th>
-                        <th class="h-header light-blue" translate>
-                          STANDINGS.TABLE.MATCHES_WON
-                        </th>
-                        <th class="h-header light-blue" translate>
-                          STANDINGS.TABLE.MATCHES_DRAWN
-                        </th>
-                        <th class="h-header light-blue" translate>
-                          STANDINGS.TABLE.MATCHES_LOST
-                        </th>
-                        <th class="h-header light-blue" translate>
-                          STANDINGS.TABLE.GOALS_FOR
-                        </th>
-                      </tr>
+                    <table class="table lh-table">
+                      <thead >
+                        <tr class="lh-header iii">
+                          <th colspan="8" >
+                            <span ng-bind="rankings.group_name"></span>
+                          </th>
+                        </tr >
+                        <tr class="lh-header i">
+                          <th ></th>
+                          <th  style="text-align: left;" translate>
+                            STANDINGS.TEAM
+                          </th>
+                          <th  translate>
+                            STANDINGS.TABLE.POINTS
+                          </th>
+                          <th  translate>
+                            STANDINGS.TABLE.MATCHES
+                          </th>
+                          <th  translate>
+                            STANDINGS.TABLE.MATCHES_WON
+                          </th>
+                          <th  translate>
+                            STANDINGS.TABLE.MATCHES_DRAWN
+                          </th>
+                          <th  translate>
+                            STANDINGS.TABLE.MATCHES_LOST
+                          </th>
+                          <th  translate>
+                            STANDINGS.TABLE.GOALS_FOR
+                          </th>
+                        </tr>
                       </thead>
                       <tbody>
 
@@ -183,7 +211,7 @@
                                 class="text-center-vertical" style="font-weight:bold;"></span>
                         </td>
                         <td class="text-left" >
-                          <img class="h-shield h-tree" ng-src="{{ranking.team.team_logo}}" onerror="this.src='img/shield-1.png'">
+                          <img class="lh-shield" ng-src="{{ranking.team.team_logo}}" onerror="this.src='img/shield-1.png'">
                           <span ng-bind="ranking.team.short_name"
                                 class="text-center-vertical"></span>
                         </td>

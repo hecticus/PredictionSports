@@ -1,0 +1,67 @@
+<div class="row lh-field" ng-show="hasScore">
+  <h3 class="lh-nickname" ng-bind="getNameClient"></h3>
+  <div class="lh-circle-line"></div>
+  <div class="lh-circle">
+    <div class="lh-points">
+      <span ng-bind="getTotalPointsClient" ></span>
+    </div>
+    <div translate class="lh-name">
+      LEADERBOARD.POINTS
+    </div>
+  </div>
+</div>
+
+<div class="row" ng-show="hasScore">
+    <div id="wrapper" class="page wrapper">
+        <div class="scroller" >
+          <div class="container">
+
+            <div class="row" >
+              <div class="col-xs-12" >
+                <table class="table table-striped">
+                  
+                  <thead  class="lh-header ii">
+                    <tr>
+                      <th translate>LEADERBOARD.TOURNAMENT </th >
+                      <th translate>LEADERBOARD.HITS</th>
+                      <th translate>LEADERBOARD.POINTS</th>
+                    </tr>
+                  </thead>
+
+                  <tbody >
+
+                  <tr  ng-repeat="tournament in tournaments track by tournament.id_tournament" ng-class="{'active' : $odd}">
+
+                    <td class="h-ellipsis-truncate" style="text-align: left; width:60%;" >
+                      <img class="h-shield  h-tree" ng-src="{{getCompetitionShield(tournament.logo)}}" onerror="this.src='img/shield-1.png'">
+                      <span ng-bind="tournament.name" ></span>
+                    </td>
+
+                    <td style="text-center-vertical; width:20%;">
+                      <span ng-bind="tournament.hits"></span>
+                    </td>
+
+                    <td style="text-center-vertical; width:20%;">
+                      <span ng-bind="tournament.score"></span>
+                    </td>
+
+                  </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+    </div>
+</div>
+<div class="row" ng-hide="hasScore">
+    <div class="col-xs-12 news">
+        <div class="no-content-panel" >
+            <i class="mdi-action-info-outline"></i>
+            <div class="no-content-panel-title" translate>EMPTY_STATES.POINTS</div>
+        </div>
+    </div>
+</div>

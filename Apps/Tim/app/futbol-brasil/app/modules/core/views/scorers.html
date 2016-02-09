@@ -4,12 +4,12 @@
             <li ng-style="getWidth()" ng-repeat="league in leagues" >
                 <div class="container">
 
-                  <div class="row h-header green">
+                  <div class="row lh-header">
                     <div class="col-xs-2" ng-click="prevPage($index)">
                       <span class="mdi-navigation-arrow-back" ng-hide="leagues[$index-1].name === undefined"></span>
                     </div>
-                    <div class="col-xs-8 h-ellipsis-truncate">
-                      <img class="h-shield h-tree" ng-src="{{getCompetitionShield(league.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+                    <div class="col-xs-8">
+                      <img class="lh-shield" ng-src="{{getCompetitionShield(league.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
                       <span ng-bind="league.competiton_type.name" class="caption"></span>
                     </div>
                     <div class="col-xs-2" ng-click="nextPage($index)">
@@ -23,24 +23,24 @@
                                 <div class="container">
                                   <div class="row" >
                                     <div class="col-xs-12" >
-                                        <table  ng-show="league.scorers" class="table h-table">
-                                            <thead>
-                                            <tr>
-                                                <th class="h-header yellow" translate style="text-align: left;">SCORERS.PLAYER_NAME_LABEL</th>
-                                                <th class="h-header yellow" translate style="text-align: left;">SCORERS.TEAM_LABEL</th>
-                                                <th class="h-header yellow" translate>SCORERS.GOALS_LABEL</th>
-                                            </tr>
+                                        <table class="table table-striped"  ng-show="league.scorers" >
+                                            <thead class="lh-header ii">
+                                                <tr>
+                                                    <th translate style="text-align: left;">SCORERS.PLAYER_NAME_LABEL</th>
+                                                    <th translate style="text-align: left;">SCORERS.TEAM_LABEL</th>
+                                                    <th translate>SCORERS.GOALS_LABEL</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
 
                                             <tr ng-repeat="scorer in league.scorers"
                                                 ng-class="{'active' : $odd}" on-last-repeat>
-                                                <td class="text-left">
+                                                <td style="text-align: left;">
 
                                                     <span class="text-center-vertical"
                                                           ng-bind="scorer.name" ></span>
                                                 </td>
-                                                <td class="text-left">
+                                                <td style="text-align: left;">
 
                                                     <span class="text-center-vertical"
                                                           ng-bind="scorer.team.short_name"></span>

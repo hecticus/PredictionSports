@@ -1,0 +1,674 @@
+/* variables */
+
+
+@h-header-footer-height: 50px;
+
+table {
+  padding: 0 !important; 
+  margin: 0 !important;
+  * { border:0 !important; text-align:center; }
+}
+
+header, footer { 
+  position: absolute;  
+  left:0; 
+  right:0; 
+  width:100%;
+  height: @h-header-footer-height; 
+  z-index: 100;  
+  color: #ffffff !important;
+}
+
+
+footer {
+
+  bottom: 0; 
+  z-index: 10 !important;  
+
+  .option { 
+    height: @h-header-footer-height; 
+    text-align:center; 
+    padding: 5px; 
+  }
+
+  .lh-icon { font-size:2em; display:block; }
+  
+}
+
+
+.lh-field  { 
+
+  @height: 200px;
+  @size-circle: @height - 100px;
+  @background-color: rgb(122,184,0) !important;
+  @border-line: 2px;
+
+  position: absolute;
+  background: @background-color;   
+  width: 100%;
+  height: @height;  
+  top: @h-header-footer-height;
+  
+  .lh-nickname {
+    text-align:center;
+    text-transform: uppercase;
+    color:#ffffff;  
+  }
+
+  .lh-circle-line { 
+    position:absolute; 
+    background: #ffffff; 
+    width: 100%; 
+    height: @border-line;
+    top: @size-circle + ( @border-line * 2);
+  }
+
+  .lh-circle {
+    position:absolute;
+    font-size: 2em;
+    background: @background-color;
+    left:0;
+    right: 0;
+    width: @size-circle;
+    height: @size-circle;
+    border-radius: 50%;
+    text-align:center;
+    margin: 0 auto  !important;
+    border-style: solid;
+    border-width: @border-line;
+    border-color: #ffffff;
+    color: #ffffff;
+
+    .lh-points {font-size: 1.4em; width:100%; height: (@size-circle / 2); line-height: (@size-circle - 25%); }
+    .lh-name {width:100%; height: (@size-circle / 2); line-height: (@size-circle / 2); }
+
+  }
+
+}
+
+
+.content-news {
+
+  .h-headline {
+    font-size:1.6em;
+    font-weight: bold;
+  }
+    
+  #wrapper2 {
+    .h-headline  {
+      font-size:1.6em;
+    }
+  }
+
+  .h-moment {
+    font-size:1.2em;     
+    color: rgb(44,156,211);
+  }
+
+  .h-body {
+    margin-top: 10px !important;
+    font-size: 1.3em;
+  }
+
+
+  .lh-title {
+      font-size: 2em !important;
+      //color: #ffffff;
+      font-weight:bold;
+      vertical-align: middle;
+  }
+
+}
+
+.lh-logo {
+  width: 40px;
+  vertical-align:middle;
+  margin-right: 5px;
+}
+
+
+     
+.tim {
+
+  @height: 50px;
+  @height-sub: 10px;
+  @height-img: @height - 25px;
+
+  header { background: rgb(44,156,211); }
+  footer { 
+    background: rgb(0,40,120);
+    .option.active { background: rgb(254,209,0); color: rgb(0,40,120); }
+    .lh-icon.mdi { color:#ffffff !important; }
+  }
+
+  .btn {
+    font-size: 16px !important; 
+    background-color: rgb(44,156,211) !important; 
+    color: #FFF !important;
+  }
+
+  .status._1 { color: rgb(227,114,34); }     /*Played*/
+  .status._2 { color: rgb(122,184,0);  }     /*Playing*/
+  .status._3 { color: rgb(0,40,120); }       /*Fixture*/
+  .status._4 { color: rgb(227,114,34);  }    /*Cancelled*/
+  .status._5 { color: rgb(254,209,0);  }     /*Postponed*/
+  .status._6 { color: rgb(254,209,0);  }     /*Suspended*/
+
+  .status.period { background: rgb(0,40,120); color: #ffffff;}
+  .status.period._9 {background: rgb(122,184,0); color: #ffffff; }
+  .status.period._8 {   background: rgb(254,209,0); color: rgb(0,40,120); }
+
+
+  .bg-header() { background: rgb(122,184,0); color: #ffffff; } 
+  .bg-header(~"1") { background: rgb(227,114,34); color: #ffffff;   } 
+  .bg-header(~"2") { background: rgb(254,209,0); color: rgb(0,40,120); } 
+  .bg-header(~"3") { background: rgb(44,156,211); color: #ffffff; } 
+
+  .fh-header(@height-subs:0) {    
+      width: auto;
+      height: @height - @height-subs;
+      line-height: @height - @height-subs;
+      font-size: 1.6em;
+  }
+
+  .border-line() { border-bottom: 1pt rgb(254,209,0) solid; } 
+  .border-line(~"1") { border-bottom: 1pt rgb(0,40,120) solid; } 
+  .border-line(~"2") { border-bottom: 1pt rgb(44,156,211) solid !important; } 
+  
+  .lh-shield { width: @height-img ; height: @height-img; }
+
+  .content-news {
+    #wrapper { top: @height + 10; }     
+  }
+
+
+  .content-leaderboard, .content-points {
+
+      .lh-badge { 
+        background: rgb(44,156,211);  
+        padding: 5px 15px; 
+        min-width: 100px;          
+      }
+
+      .lh-badge.disabled {  
+        opacity: 0.7;
+        filter: alpha(opacity=70); 
+      }
+
+      li {
+        &:first-child .wrapper {top: @height - @height-sub !important;  }
+        &:first-child .lh-header.i { display:none; }
+        .wrapper { top: (@height - @height-sub) * 2  !important; }
+      }
+
+     .lh-header { 
+        .fh-header(@height-sub); 
+        .bg-header(); 
+      }
+
+      .lh-header.i { 
+        .fh-header(@height-sub); 
+        .bg-header(~"1"); 
+      } 
+
+      .lh-header.ii { 
+        .fh-header(@height-sub); 
+        .bg-header(~"2"); 
+      } 
+
+  } //.content-leaderboard
+
+  .content-prediction {
+
+   
+
+    .lh-tournament {
+
+      .lh-header { 
+        .fh-header(@height-sub); 
+        .bg-header(~"2"); 
+      }
+
+      .lh-list {  
+
+        background: #ffffff;
+        
+        .lh-list-row { 
+
+          height: @height; 
+          line-height: @height;
+          font-size: 1.4em !important;
+
+          .border-line();
+          .lh-caption {}          
+          .lh-time { 
+
+            float:right; 
+            color: rgb(122,184,0) !important; 
+
+            *[class *= 'mdi-'] {
+              color: rgb(122,184,0) !important; 
+            }
+
+          }
+
+        } //.lh-list-row
+
+      } //.lh-list
+
+    } //.lh-tournament
+
+    .lh-page-match {
+      .lh-header { 
+        .fh-header(@height-sub); 
+        .bg-header(); 
+      }
+      .lh-header.i { 
+        .fh-header(@height-sub); 
+        .bg-header(~"1"); 
+      } 
+      .lh-header.iii { 
+        .fh-header(@height-sub); 
+        .bg-header(~"3"); 
+      } 
+
+      .lh-match {
+        .border-line(~"2");
+        &:last-child { border: 0 !important; }
+        td.active {
+          .bg-header(~"2");
+        }
+        .lh-shield { width:40px; height:40px; }
+        .lh-caption { font-size: 1.4em; }
+        .lh-time { font-size: 1.6em;}
+        .lh-goal-team { font-size:2em !important; }
+      } //.lh-match
+
+    } //.lh-page-match
+
+  } //.content-prediction
+
+
+  /* Menu */
+  
+  .fh-menu-option(~"main") { font-weight: bold; text-transform:uppercase; .border-line(); };
+  .fh-menu-option(~"sub") { text-transform:capitalize; .border-line(~"1"); };
+  .fh-content-menu(@position) {    
+      width:100%; 
+      height: 50px;
+      line-height: 50px; 
+      margin-left: 30px;
+      font-size: 1.8em;   
+      .lh-title { padding: 0; .fh-menu-option(@position); }
+  }
+
+  .content-menu.main { .fh-content-menu(~"main"); }
+  .content-menu.sub  { .fh-content-menu(~"sub"); }
+
+  /* Menu */
+
+} //.tim
+
+
+.oil {
+
+  @height: 50px;
+  @height-sub: 10px;
+  @height-img: @height - 25px;
+
+  header { background: purple; }
+  footer { 
+    background: purple;
+    .option.active { background: gray; color: red; }
+    .lh-icon.mdi { color:#ffffff !important; }
+  }
+
+
+  .btn {
+    font-size: 16px !important; 
+    background-color: rgb(44,156,211) !important; 
+    color: #FFF !important;
+  }
+
+  .status._1 { color: yellow; }     /*Played*/
+  .status._2 { color: red;  }     /*Playing*/
+  .status._3 { color: brown; }       /*Fixture*/
+  .status._4 { color: blue;  }    /*Cancelled*/
+  .status._5 { color: gray;  }     /*Postponed*/
+  .status._6 { color: green;  }     /*Suspended*/
+
+  .status.period { background: red; color: #ffffff; }
+  .status.period._9 { background: gray; color: #ffffff; }
+  .status.period._8 { background: white; color: rgb(0,40,120); }
+
+
+  .bg-header() { background: gray; color: #ffffff; } 
+  .bg-header(~"1") { background: red; color: #ffffff;   } 
+  .bg-header(~"2") { background: brown; color: rgb(0,40,120); } 
+  .bg-header(~"3") { background: yellow; color: #ffffff; } 
+
+  .fh-header(@height-subs:0) {    
+      width: auto;
+      height: @height - @height-subs;
+      line-height: @height - @height-subs;
+      font-size: 1.6em;
+  }
+
+  .border-line() { border-bottom: 1pt purple solid; } 
+  .border-line(~"1") { border-bottom: 1pt red solid; } 
+  .border-line(~"2") { border-bottom: 1pt gray solid !important; } 
+  
+  .lh-shield { width: @height-img ; height: @height-img; }
+
+  .content-news {
+    #wrapper { top: @height + 10; }     
+  }
+
+  .content-leaderboard, .content-points {
+
+      .lh-badge { 
+        background: rgb(44,156,211);  
+        padding: 5px 15px; 
+        min-width: 100px;          
+      }
+
+      .lh-badge.disabled {  
+        opacity: 0.7;
+        filter: alpha(opacity=70); 
+      }
+
+      li {
+        &:first-child .wrapper {top: @height - @height-sub !important;  }
+        &:first-child .lh-header.i { display:none; }
+        .wrapper { top: (@height - @height-sub) * 2  !important; }
+      }
+
+     .lh-header { 
+        .fh-header(@height-sub); 
+        .bg-header(); 
+      }
+
+      .lh-header.i { 
+        .fh-header(@height-sub); 
+        .bg-header(~"1"); 
+      } 
+
+      .lh-header.ii { 
+        .fh-header(@height-sub); 
+        .bg-header(~"2"); 
+      } 
+
+  } //.content-leaderboard
+
+  .content-prediction {
+
+   
+
+    .lh-tournament {
+
+      .lh-header { 
+        .fh-header(@height-sub); 
+        .bg-header(~"2"); 
+      }
+
+      .lh-list {  
+
+        background: #ffffff;
+        
+        .lh-list-row { 
+
+          height: @height; 
+          line-height: @height;
+          font-size: 1.4em !important;
+
+          .border-line();
+          .lh-caption {}          
+          .lh-time { 
+
+            float:right; 
+            color: rgb(122,184,0) !important; 
+
+            *[class *= 'mdi-'] {
+              color: rgb(122,184,0) !important; 
+            }
+
+          }
+
+        } //.lh-list-row
+
+      } //.lh-list
+
+    } //.lh-tournament
+
+    .lh-page-match {
+      .lh-header { 
+        .fh-header(@height-sub); 
+        .bg-header(); 
+      }
+      .lh-header.i { 
+        .fh-header(@height-sub); 
+        .bg-header(~"1"); 
+      } 
+      .lh-header.iii { 
+        .fh-header(@height-sub); 
+        .bg-header(~"3"); 
+      } 
+
+      .lh-match {
+        .border-line(~"2");
+        &:last-child { border: 0 !important; }
+        td.active {
+          .bg-header(~"2");
+        }
+        .lh-shield { width:40px; height:40px; }
+        .lh-caption { font-size: 1.4em; }
+        .lh-time { font-size: 1.6em;}
+        .lh-goal-team { font-size:2em !important; }
+      } //.lh-match
+
+    } //.lh-page-match
+
+  } //.content-prediction
+
+
+  /* Menu */
+  
+  .fh-menu-option(~"main") { font-weight: bold; text-transform:uppercase; .border-line(); };
+  .fh-menu-option(~"sub") { text-transform:capitalize; .border-line(~"1"); };
+  .fh-content-menu(@position) {    
+      width:100%; 
+      height: 50px;
+      line-height: 50px; 
+      margin-left: 30px;
+      font-size: 1.8em;   
+      .lh-title { padding: 0; .fh-menu-option(@position); }
+  }
+
+  .content-menu.main { .fh-content-menu(~"main"); }
+  .content-menu.sub  { .fh-content-menu(~"sub"); }
+
+  /* Menu */
+
+} //.oil
+
+
+.movistar {
+
+  @height: 50px;
+  @height-sub: 10px;
+  @height-img: @height - 25px;
+
+  header { background: #005B83; }
+  footer { 
+    background: #005B83;
+    .option.active { background: #79B700; color: #ffffff; }
+    .lh-icon.mdi { color:#ffffff !important; }
+  }
+
+
+  .btn {
+    font-size: 16px !important; 
+    background-color: #79B700 !important; 
+    color: #ffffff !important;
+  }
+
+  .status._1 { color: yellow; }     /*Played*/
+  .status._2 { color: red;  }     /*Playing*/
+  .status._3 { color: brown; }       /*Fixture*/
+  .status._4 { color: blue;  }    /*Cancelled*/
+  .status._5 { color: gray;  }     /*Postponed*/
+  .status._6 { color: green;  }     /*Suspended*/
+
+  .status.period { background: red; color: #ffffff; }
+  .status.period._9 { background: gray; color: #ffffff; }
+  .status.period._8 { background: white; color: rgb(0,40,120); }
+
+
+  .bg-header() { background: #79B700; color: #ffffff; } 
+  .bg-header(~"1") { background: #00769F; color: #ffffff;   } 
+  .bg-header(~"2") { background: #119CBF; color: #ffffff; } 
+  .bg-header(~"3") { background: #00C5D6; color: #ffffff; } 
+
+  .fh-header(@height-subs:0) {    
+      width: auto;
+      height: @height - @height-subs;
+      line-height: @height - @height-subs;
+      font-size: 1.6em;
+  }
+
+  .border-line() { border-bottom: 1pt #00769F solid; } 
+  .border-line(~"1") { border-bottom: 1pt #119CBF solid; } 
+  .border-line(~"2") { border-bottom: 1pt #00C5D6 solid !important; } 
+  
+  .lh-shield { width: @height-img ; height: @height-img; }
+
+  .content-news {
+    #wrapper { top: @height + 10; }     
+  }
+
+  .content-leaderboard, .content-points {
+
+      .lh-badge { 
+        background: rgb(44,156,211);  
+        padding: 5px 15px; 
+        min-width: 100px;          
+      }
+
+      .lh-badge.disabled {  
+        opacity: 0.7;
+        filter: alpha(opacity=70); 
+      }
+
+      li {
+        &:first-child .wrapper {top: @height - @height-sub !important;  }
+        &:first-child .lh-header.i { display:none; }
+        .wrapper { top: (@height - @height-sub) * 2  !important; }
+      }
+
+     .lh-header { 
+        .fh-header(@height-sub); 
+        .bg-header(); 
+      }
+
+      .lh-header.i { 
+        .fh-header(@height-sub); 
+        .bg-header(~"1"); 
+      } 
+
+      .lh-header.ii { 
+        .fh-header(@height-sub); 
+        .bg-header(~"2"); 
+      } 
+
+  } //.content-leaderboard
+
+  .content-prediction {
+
+   
+
+    .lh-tournament {
+
+      .lh-header { 
+        .fh-header(@height-sub); 
+        .bg-header(~"2"); 
+      }
+
+      .lh-list {  
+
+        background: #ffffff;
+        
+        .lh-list-row { 
+
+          height: @height; 
+          line-height: @height;
+          font-size: 1.4em !important;
+
+          .border-line();
+          .lh-caption {}          
+          .lh-time { 
+
+            float:right; 
+            color: rgb(122,184,0) !important; 
+
+            *[class *= 'mdi-'] {
+              color: rgb(122,184,0) !important; 
+            }
+
+          }
+
+        } //.lh-list-row
+
+      } //.lh-list
+
+    } //.lh-tournament
+
+    .lh-page-match {
+      .lh-header { 
+        .fh-header(@height-sub); 
+        .bg-header(); 
+      }
+      .lh-header.i { 
+        .fh-header(@height-sub); 
+        .bg-header(~"1"); 
+      } 
+      .lh-header.iii { 
+        .fh-header(@height-sub); 
+        .bg-header(~"3"); 
+      } 
+
+      .lh-match {
+        .border-line(~"2");
+        &:last-child { border: 0 !important; }
+        td.active {
+          .bg-header(~"2");
+        }
+        .lh-shield { width:40px; height:40px; }
+        .lh-caption { font-size: 1.4em; }
+        .lh-time { font-size: 1.6em;}
+        .lh-goal-team { font-size:2em !important; }
+      } //.lh-match
+
+    } //.lh-page-match
+
+  } //.content-prediction
+
+
+  /* Menu */
+  
+  .fh-menu-option(~"main") { font-weight: bold; text-transform:uppercase; .border-line(); };
+  .fh-menu-option(~"sub") { text-transform:capitalize; .border-line(~"1"); };
+  .fh-content-menu(@position) {    
+      width:100%; 
+      height: 50px;
+      line-height: 50px; 
+      margin-left: 30px;
+      font-size: 1.8em;   
+      .lh-title { padding: 0; .fh-menu-option(@position); }
+  }
+
+  .content-menu.main { .fh-content-menu(~"main"); }
+  .content-menu.sub  { .fh-content-menu(~"sub"); }
+
+  /* Menu */
+
+} //.movistar
