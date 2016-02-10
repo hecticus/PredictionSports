@@ -2,16 +2,16 @@
     <div id="scroller" ng-style="getTotalWidth()">
         <ul>
             <li ng-style="getWidth()" ng-repeat="page in pages track by page.id" >
-                <div class="container">
+                <div class="container lh-page-match">
 
                     <div class="row lh-header">
-                        <div class="col-xs-2" ng-click="prevPage()">
+                        <div class="col-xs-4" ng-click="prevPage()">
                             <span ng-bind="pages[$index-1].name" ></span>
                         </div>
                         <div class="col-xs-4">
                             <span ng-bind="page.name" ></span>
                         </div>
-                        <div  class="col-xs-8" ng-click="nextPage()">
+                        <div  class="col-xs-4" ng-click="nextPage()">
                             <span ng-bind="pages[$index+1].name" ></span>
                         </div>
                     </div>
@@ -19,29 +19,29 @@
                     <div class="row" ng-hide="page.matches.empty">
                         <div id="{{wrapper.getName($index)}}" class="wrapper" >
                             <div class="scroller" >
-                                <div class="container">
+                                <div class="container lh-page-match">
 
 
                                   <div class="row" >
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                                        <table class="table" ng-repeat="league in page.matches.leagues" on-last-repeat>
-                                            <thead>
+                                        <table class="table table-striped" ng-repeat="league in page.matches.leagues" on-last-repeat>
+                                            <thead class="lh-header i">
                                             <tr>
-                                                <th colspan="3" class="h-header light-blue">
-                                                    <img class="h-shield h-tree" ng-src="{{getCompetitionShield(league.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+                                                <th colspan="3" >
+                                                    <img class="lh-shield" ng-src="{{getCompetitionShield(league.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
                                                     <span ng-bind="league.competiton_type.name"></span>
                                                 </th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr ng-repeat="match in league.fixtures"
-                                                data-match="{{ match.id_game_matches }}"  class="h-match">
+                                                data-match="{{ match.id_game_matches }}"  class="lh-match">
                                                 <td  class="col-xs-4"
                                                     ng-class="{winner: match.home_team_goals >= match.away_team_goals}">
 
                                                   <figure>
-                                                    <img class="h-shield" ng-src="{{match.homeTeam.team_logo}}" onerror="this.src='img/shield-1.png'">
-                                                    <figcaption><span ng-bind="match.homeTeam.short_name" class="h-name-team"></span></figcaption>
+                                                    <img class="lh-shield" ng-src="{{match.homeTeam.team_logo}}" onerror="this.src='img/shield-1.png'">
+                                                    <figcaption><span ng-bind="match.homeTeam.short_name" class="lh-caption"></span></figcaption>
                                                   </figure>
 
 
@@ -49,7 +49,24 @@
                                                 </td>
                                                 <td  class="col-xs-4">
 
-                                                    <span ng-bind="match.home_team_goals" class="h-goal-team"  ng-if="match.id_status != 3"></span>
+
+                                                    <div style="background:none;" ng-if="match.id_status != 3">
+                                                        <span class="lh-goal-team" ng-bind="match.home_team_goals" ></span>
+                                                        <span class="lh-goal-team" >-</span>
+                                                        <span class="lh-goal-team" ng-bind="match.away_team_goals" ></span>
+                                                    </div>
+
+                                                    <br />
+                                                    <span ng-bind="getTime(match.date)" class="lh-time"></span>
+                                                    <br/>
+
+                                                    <span class="status _{{match.id_status}}">
+                                                    {{ match.status | translate}}
+                                                    </span>
+
+
+
+                                                    <!--span ng-bind="match.home_team_goals" class="h-goal-team"  ng-if="match.id_status != 3"></span>
                                                     <span  class="h-goal-team" ng-if="match.id_status != 3">-</span>
                                                     <span ng-bind="match.away_team_goals" class="h-goal-team"  ng-if="match.id_status != 3"></span>
 
@@ -58,15 +75,15 @@
                                                     <br />
                                                     <span class="status _{{match.id_status}}">
                                                         {{ match.status | translate}}
-                                                    </span>
+                                                    </span-->
 
                                                 </td>
                                                 <td  class="col-xs-4">
 
                                                   <figure>
-                                                    <img class="h-shield" ng-src="{{match.awayTeam.team_logo}}" onerror="this.src='img/shield-2.png'">
+                                                    <img class="lh-shield" ng-src="{{match.awayTeam.team_logo}}" onerror="this.src='img/shield-2.png'">
                                                     <figcaption>
-                                                      <span ng-bind="match.awayTeam.short_name" class="h-name-team"></span>
+                                                      <span ng-bind="match.awayTeam.short_name" class="lh-caption"></span>
                                                     </figcaption>
                                                   </figure>
 

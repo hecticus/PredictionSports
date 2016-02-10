@@ -86,7 +86,7 @@ footer {
 
 }
 
-
+/*
 .content-news {
 
   .h-headline {
@@ -118,7 +118,7 @@ footer {
       vertical-align: middle;
   }
 
-}
+}*/
 
 .lh-logo {
   width: 40px;
@@ -196,7 +196,8 @@ footer {
   }
 
 
-  .content-leaderboard, .content-points {
+  .content-leaderboard, 
+  .content-points {
 
       .lh-badge { 
         background: rgb(44,156,211);  
@@ -232,25 +233,7 @@ footer {
 
   } //.content-leaderboard
 
-  .content-mtm {
-
-       .lh-header { 
-          .fh-header(@height-sub); 
-          .bg-header(); 
-        }
-
-        .lh-header.i { 
-          .fh-header(@height-sub); 
-          .bg-header(~"1"); 
-        } 
-
-        .lh-header.ii { 
-          .fh-header(@height-sub); 
-          .bg-header(~"2"); 
-        } 
-    }
-
-
+  
   .content-standings, 
   .content-prediction {
 
@@ -352,13 +335,24 @@ footer {
 
   @height: 50px;
   @height-sub: 10px;
+  @height-board: 150px;
   @height-img: @height - 25px;
+  @bgform: rgb(44,156,211) !important;
 
   header { background: #005B83; }
   footer { 
     background: #005B83;
-    .option.active { background: #79B700; color: #ffffff; }
+    .option.active { background: #79B700; color: #FFFFFF; }
     .lh-icon.mdi { color:#ffffff !important; }
+  }
+
+  .lh-scoreboard  {    
+    position: absolute;
+    z-index: 4;
+    top:  - (@height + 100);
+    width: 100%;
+    height:  @height-board;
+    background: #FFFFFF;
   }
 
 
@@ -460,27 +454,15 @@ footer {
   }
 
 
-  .content-mtm {
-
-     .lh-header { 
-        .fh-header(@height-sub); 
-        .bg-header(); 
-      }
-
-      .lh-header.i { 
-        .fh-header(@height-sub); 
-        .bg-header(~"1"); 
-      } 
-
-      .lh-header.ii { 
-        .fh-header(@height-sub); 
-        .bg-header(~"2"); 
-      } 
-  }
-
+  .content-mtm,
   .content-standings,
   .content-team-selection,
+  .content-match,
   .content-prediction {   
+
+    #wrapper2 {
+        top: ((@height * 4) - @height-sub);
+    }
 
     .lh-tournament {
 
@@ -533,22 +515,19 @@ footer {
       } 
     } //.lh-table
 
-    .lh-page-match {
+    *,.lh-page-match {
 
       .lh-header { 
         .fh-header(@height-sub); 
         .bg-header(); 
-        width: 100%;
       }
       .lh-header.i { 
         .fh-header(@height-sub); 
         .bg-header(~"1"); 
-        width: 100%;
       } 
       .lh-header.iii { 
         .fh-header(@height-sub); 
         .bg-header(~"3"); 
-        width: 100%;
       } 
     
       .lh-list {

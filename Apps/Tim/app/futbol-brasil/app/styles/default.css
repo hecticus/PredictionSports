@@ -270,24 +270,7 @@ body.content-mtm .row-back {
     border-bottom: solid 1pt #000000 !important;
 }
 
-.row-scoreboard {
-    position: absolute;
-    z-index: 4;
-    top: -100px;
-    left:0;
-    right:0;
-    width: 100%;
-    height: 100px;
-    background-color: #FFFFFF;
-    color: #000000;
-    padding: 0 !important;
-    margin:0 !important;
-    border: 0;
-    color: rgb(0,40,120);
-}
-.row-scoreboard figure {
-  margin-top : 10px;
-}
+
 
 
 .wrapper,
