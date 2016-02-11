@@ -17,7 +17,8 @@ angular
             var strings = {};
             var scroll = null;
             var removeEventCallback = null;
-            var goState = 'tutorial';
+            //var goState = 'tutorial';
+            var goState = 'prediction';
             if ($localStorage['TUTORIAL']) goState = 'prediction';
 
             $rootScope.onMain = onMain;

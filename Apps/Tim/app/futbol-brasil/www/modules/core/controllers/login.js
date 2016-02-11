@@ -14,7 +14,8 @@ angular
 
             var scroll = null;
             var strings = {};
-            var goState = 'tutorial';
+            //var goState = 'tutorial';
+            var goState = 'prediction';
             if ($localStorage['TUTORIAL']) goState = 'prediction';
             $scope.flash = flash;
 

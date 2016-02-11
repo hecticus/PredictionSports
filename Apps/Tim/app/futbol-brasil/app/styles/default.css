@@ -270,7 +270,26 @@ body.content-mtm .row-back {
     border-bottom: solid 1pt #000000 !important;
 }
 
+/*
+.row-scoreboard {
+    position: absolute;
+    z-index: 4;
+    top: -100px;
+    left:0;
+    right:0;
+    width: 100%;
+    height: 100px;
+    background-color: #FFFFFF;
+    color: #000000;
+    padding: 0 !important;
+    margin:0 !important;
+    border: 0;
+    color: rgb(0,40,120);
+}
 
+.row-scoreboard figure {
+  margin-top : 10px;
+}*/
 
 
 .wrapper,
@@ -281,17 +300,6 @@ body.content-mtm .row-back {
     margin: 0 !important;
     background-color: #ffffff;
 }
-
-
-.status {
-    color:#000000;
-    font-weight: bold;
-    font-size:1.4em;
-
- }
-
-
-
 
 
 
@@ -771,12 +779,12 @@ h6.team-name {
 */
 
 
-
+/*
     .content-mtm #wrapper2 {
-      top: 185px;
-      bottom: 50px;
+      top: 220px;     
       z-index: 10;
-    }
+
+    }*/
 
 
 
@@ -807,10 +815,11 @@ h6.team-name {
         padding: 0 !important;
         margin: 0 !important;
     }
-
+    
+    /*
     .content-mtm .row-header {
       top: -135px;
-    }
+    }*/
 
 
     .content-standings #wrapper3,
@@ -919,9 +928,9 @@ h6.team-name {
       text-align: center;
     }*/
 
-    .content-mtm #wrapper2 .h-goal-team  {
+   /* .content-mtm #wrapper2 .h-goal-team  {
       font-size:3em !important;
-    }
+    }*/
 
     .h-time {
       font-size:1.6em !important;
@@ -1059,11 +1068,11 @@ h6.team-name {
     width: 20px;
     height: auto;
   }
-
+/*
   .row-scoreboard img.h-shield {
       width: 60px;
       height: auto;
-  }
+  }*/
 
 
   .list-group-item-heading {

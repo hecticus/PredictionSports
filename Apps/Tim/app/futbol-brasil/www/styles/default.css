@@ -32,7 +32,7 @@ body,ul,li { padding: 0 !important; margin: 0 !important; border: 0 !important; 
     bottom: 50px;
     left: 0;
     width: 100%;
-    background:#ffffff;
+    background:#ffffff;    
 }
 
 
@@ -270,6 +270,7 @@ body.content-mtm .row-back {
     border-bottom: solid 1pt #000000 !important;
 }
 
+/*
 .row-scoreboard {
     position: absolute;
     z-index: 4;
@@ -285,9 +286,10 @@ body.content-mtm .row-back {
     border: 0;
     color: rgb(0,40,120);
 }
+
 .row-scoreboard figure {
   margin-top : 10px;
-}
+}*/
 
 
 .wrapper,
@@ -298,17 +300,6 @@ body.content-mtm .row-back {
     margin: 0 !important;
     background-color: #ffffff;
 }
-
-
-.status {
-    color:#000000;
-    font-weight: bold;
-    font-size:1.4em;
-
- }
-
-
-
 
 
 
@@ -736,7 +727,7 @@ h6.team-name {
     .content-news #wrapper2,*/
     .content-standings #wrapper,
     .content-standings #wrapper2,
-    .content-standings #wrapper3{
+    .content-standings #wrapper3 {
       top: 50px;
     }
 
@@ -761,6 +752,7 @@ h6.team-name {
     #wrapper3.page {
       left: 100%;
       z-index: 1;
+      width: 100% !important;
     }
 
     .content-points #wrapper {
@@ -787,12 +779,12 @@ h6.team-name {
 */
 
 
-
+/*
     .content-mtm #wrapper2 {
-      top: 185px;
-      bottom: 50px;
+      top: 220px;     
       z-index: 10;
-    }
+
+    }*/
 
 
 
@@ -823,10 +815,11 @@ h6.team-name {
         padding: 0 !important;
         margin: 0 !important;
     }
-
+    
+    /*
     .content-mtm .row-header {
       top: -135px;
-    }
+    }*/
 
 
     .content-standings #wrapper3,
@@ -835,15 +828,9 @@ h6.team-name {
     .content-standings #wrapper3 .scroller .container div {
         padding: 0 !important;
         margin: 0 !important;
+        width: 100% !important;
     }
 
-    .panel-danger > .panel-heading,
-    .panel-warning  > .panel-heading,
-    .panel-primary  > .panel-heading,
-    .panel-success  > .panel-heading,
-    .panel-info > .panel-heading {
-      background  : rgb(44,156,211);
-    }
 
     .btn-primary:not(.btn-link):not(.btn-flat),
     .btn-success:not(.btn-link):not(.btn-flat) {
@@ -941,9 +928,9 @@ h6.team-name {
       text-align: center;
     }*/
 
-    .content-mtm #wrapper2 .h-goal-team  {
+   /* .content-mtm #wrapper2 .h-goal-team  {
       font-size:3em !important;
-    }
+    }*/
 
     .h-time {
       font-size:1.6em !important;
@@ -1081,11 +1068,11 @@ h6.team-name {
     width: 20px;
     height: auto;
   }
-
+/*
   .row-scoreboard img.h-shield {
       width: 60px;
       height: auto;
-  }
+  }*/
 
 
   .list-group-item-heading {

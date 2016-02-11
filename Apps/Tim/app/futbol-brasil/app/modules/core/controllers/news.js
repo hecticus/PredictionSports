@@ -14,6 +14,8 @@ angular
                  iScroll, SocialAppsManager, News, CordovaDevice, Notification) {
 
 
+        
+
             //Indicador de primera y ultima posicion en cache
             var _news = {
                 first : 0,

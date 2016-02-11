@@ -17,6 +17,9 @@ header, footer {
   height: @h-header-footer-height; 
   z-index: 100;  
   color: #ffffff !important;
+  .lh-title {
+    font-size: 1.6em;
+  }
 }
 
 
@@ -28,10 +31,14 @@ footer {
   .option { 
     height: @h-header-footer-height; 
     text-align:center; 
-    padding: 5px; 
   }
 
-  .lh-icon { font-size:2em; display:block; }
+  .lh-icon { 
+    font-size:1.6em; 
+    display:block; 
+    margin-top: 5px;
+    word-wrap: break-word; 
+  }
   
 }
 
@@ -86,46 +93,11 @@ footer {
 
 }
 
-/*
-.content-news {
-
-  .h-headline {
-    font-size:1.6em;
-    font-weight: bold;
-  }
-    
-  #wrapper2 {
-    .h-headline  {
-      font-size:1.6em;
-    }
-  }
-
-  .h-moment {
-    font-size:1.2em;     
-    color: rgb(44,156,211);
-  }
-
-  .h-body {
-    margin-top: 10px !important;
-    font-size: 1.3em;
-  }
-
-
-  .lh-title {
-      font-size: 2em !important;
-      //color: #ffffff;
-      font-weight:bold;
-      vertical-align: middle;
-  }
-
-}*/
-
 .lh-logo {
   width: 40px;
   vertical-align:middle;
   margin-right: 5px;
 }
-
 
      
 .tim {
@@ -197,6 +169,7 @@ footer {
 
 
   .content-leaderboard, 
+  .content-friends,
   .content-points {
 
       .lh-badge { 
@@ -335,7 +308,7 @@ footer {
 
   @height: 50px;
   @height-sub: 10px;
-  @height-board: 150px;
+  @height-board: 175px;
   @height-img: @height - 25px;
   @bgform: rgb(44,156,211) !important;
 
@@ -346,13 +319,23 @@ footer {
     .lh-icon.mdi { color:#ffffff !important; }
   }
 
-  .lh-scoreboard  {    
+  .lh-scoreboard  {
+
     position: absolute;
     z-index: 4;
-    top:  - (@height + 100);
+    top:  -@height-board;
     width: 100%;
     height:  @height-board;
     background: #FFFFFF;
+
+    .row.lh-score { 
+      padding: 25px; 
+      .lh-shield {width:  @height; height:  @height;}
+      .lh-goal-team { font-size: 4em; }
+      .lh-name-team { font-size: 1.8em; }
+    }
+    
+    
   }
 
 
@@ -373,17 +356,16 @@ footer {
     }
   } //new 
 
-  .status._1 { color: yellow; }     /*Played*/
-  .status._2 { color: red;  }     /*Playing*/
-  .status._3 { color: brown; }       /*Fixture*/
-  .status._4 { color: blue;  }    /*Cancelled*/
-  .status._5 { color: gray;  }     /*Postponed*/
-  .status._6 { color: green;  }     /*Suspended*/
+  .status._1 { color: #EB008B; }  /*Played*/
+  .status._2 { color: #228836; }  /*Playing*/
+  .status._3 { color: #00769F; }    /*Fixture*/
+  .status._4 { color: #EB008B;  }    /*Cancelled*/
+  .status._5 { color: #FDB613;  }    /*Postponed*/
+  .status._6 { color: #FDB613;  }   /*Suspended*/
 
-  .status.period { background: red; color: #ffffff; }
-  .status.period._9 { background: gray; color: #ffffff; }
-  .status.period._8 { background: white; color: rgb(0,40,120); }
-
+  .status.period { background: #00769F; color: #9D32B5; }
+  .status.period._9 { background: #119CBF; color: #FDB613; }
+  .status.period._8 { background: #00C5D6; color: #EB008B; }
 
   .bg-header() { background: #79B700; color: #ffffff; } 
   .bg-header(~"1") { background: #00769F; color: #ffffff;   } 
@@ -394,7 +376,7 @@ footer {
       width: auto;
       height: @height - @height-subs;
       line-height: @height - @height-subs;
-      font-size: 1.6em;
+      font-size: 1.8em;
       text-align: center;
   }
 
@@ -408,7 +390,8 @@ footer {
     #wrapper { top: @height + 10; }     
   }
 
-  .content-leaderboard, 
+  .content-leaderboard,
+  .content-friends, 
   .content-points,
   .content-scorers {
 
@@ -454,15 +437,16 @@ footer {
   }
 
 
+  .content-mtm #wrapper2 {
+    top: @height-board + @height;     
+    z-index: 1;
+  }
+
   .content-mtm,
   .content-standings,
   .content-team-selection,
   .content-match,
   .content-prediction {   
-
-    #wrapper2 {
-        top: ((@height * 4) - @height-sub);
-    }
 
     .lh-tournament {
 

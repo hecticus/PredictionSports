@@ -33,10 +33,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"WizUtilsPlugin\"><param name=\"android-package\" value=\"jp.wizcorp.phonegap.plugin.wizUtilsPlugin.WizUtilsPlugin\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
                             "count": 1
                         },
@@ -210,9 +206,6 @@
             "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
         },
         "cordova-plugin-x-socialsharing": {
-            "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
-        },
-        "jp.wizcorp.phonegap.plugin.wizUtilsPlugin": {
             "PACKAGE_NAME": "com.upstreamsystems.timpalpites"
         },
         "org.apache.cordova.console": {
