@@ -60,8 +60,8 @@ angular
                 suffix: '.js'
             });
 
-            $translateProvider.preferredLanguage('pt');
-            $translateProvider.use('pt');
+            $translateProvider.preferredLanguage('es');
+            $translateProvider.use('es');
             $translateProvider.usePostCompiling(true);
         }
     ])
@@ -78,7 +78,8 @@ angular
                 App.setBuildVersion(data.build_version);
                 App.setServerVersion(data.server_version);
                 App.setUpdateInfo(data.version);
-
+                console.log(JSON.stringify(data.default_language));
+                data.default_language = {"id_language":300,"name":"Spanish","short_name":"es","active":true}
                 i18n.init(data.default_language);
                 News.setMaxNews(data.max_news);
                 Upstream.setUp(data).then(Upstream.appLaunchEvent);

@@ -279,6 +279,7 @@
     "READY" : "Pular tutorial",
     "NO_MATCH" : "Encerrado",
     "TITLE_NEXT_MATCH" : "Próximo",
-    "MSG_UNAVAILABLE_ORIENTATION" : "A orientação da vista não está disponível"
+    "MSG_UNAVAILABLE_ORIENTATION" : "A orientação da vista não está disponível",
+    "CLOSE" : "FECHAR"
 
 }

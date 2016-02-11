@@ -281,5 +281,6 @@
     "READY" : "Saltar tutorial",
     "NO_MATCH" : "Temporada finalizada",
     "TITLE_NEXT_MATCH" : "Próximo Juego",
-    "MSG_UNAVAILABLE_ORIENTATION" : "La vista de esta orientación no está disponible"
+    "MSG_UNAVAILABLE_ORIENTATION" : "La vista de esta orientación no está disponible",
+    "CLOSE" : "CERRAR"
 }
