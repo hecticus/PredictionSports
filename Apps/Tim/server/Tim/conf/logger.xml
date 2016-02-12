@@ -20,6 +20,13 @@
         </encoder>
     </appender>
 
+    <appender name="FILEPUSH" class="ch.qos.logback.core.FileAppender">
+        <file>/var/log/timsports/push.log</file>
+        <encoder>
+            <pattern>%date - [%level] - %message%n%xException</pattern>
+        </encoder>
+    </appender>
+
     <appender name="FILESECURED" class="ch.qos.logback.core.FileAppender">
         <file>/var/log/timsports/secured.log</file>
         <encoder>
@@ -48,6 +55,10 @@
 
     <logger name="upstream_subscribe" level="TRACE" additivity="false">
         <appender-ref ref="FILEUPSSUB" />
+    </logger>
+
+    <logger name="push" level="TRACE" additivity="false">
+        <appender-ref ref="FILEPUSH" />
     </logger>
 
     <!-- Off these ones as they are annoying, and anyway we manage configuration ourself -->

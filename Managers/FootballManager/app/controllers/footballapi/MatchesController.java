@@ -2,6 +2,7 @@ package controllers.footballapi;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import comparators.CompetitionsNextMatch;
 import comparators.CompetitionsSortComparator;
 import controllers.HecticusController;
 import models.Apps;
@@ -39,7 +40,7 @@ public class MatchesController extends HecticusController {
             String todaysDate = simpleDateFormat.format(today.getTime());
             return getFinishedByDate(idCompetition, todaysDate);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
             return badRequest(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
@@ -153,7 +154,7 @@ public class MatchesController extends HecticusController {
                 return notFound(buildBasicResponse(4, "La aplicacion  " + idApp + " no existe"));
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
@@ -213,7 +214,7 @@ public class MatchesController extends HecticusController {
                 return notFound(buildBasicResponse(4, "La aplicacion  " + idApp + " no existe"));
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
@@ -298,7 +299,7 @@ public class MatchesController extends HecticusController {
                 return notFound(buildBasicResponse(1, "El app " + idApp + " no existe"));
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
@@ -383,7 +384,7 @@ public class MatchesController extends HecticusController {
                 return notFound(buildBasicResponse(1, "El app " + idApp + " no existe"));
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
@@ -456,7 +457,7 @@ public class MatchesController extends HecticusController {
                 return notFound(buildBasicResponse(1, "El app " + idApp + " no existe"));
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
@@ -637,7 +638,7 @@ public class MatchesController extends HecticusController {
             matchesIDs.clear();
             return ok(response);
         }catch (Exception ex){
-            ex.printStackTrace();
+            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
             return badRequest(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
@@ -656,7 +657,7 @@ public class MatchesController extends HecticusController {
                 return notFound(buildBasicResponse(1, "El app " + idApp + " no existe"));
             }
         }catch (Exception ex){
-            ex.printStackTrace();
+            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
@@ -671,8 +672,6 @@ public class MatchesController extends HecticusController {
                 if(!timezoneName.isEmpty()){
                     timeZone = DateAndTime.getTimezoneFromID(timezoneName);
                 }
-                ArrayList data = new ArrayList();
-                ArrayList responseData = new ArrayList();
                 List<Team> teams = null;
                 Language requestLanguage = null;
                 if(idLanguage > 0) {
@@ -702,6 +701,9 @@ public class MatchesController extends HecticusController {
                 for (Competition competition : competitionsByApp) {
                     competitions.add(ids ? competition.getIdCompetitions() : (competition.toJsonNoPhases(requestLanguage, app.getLanguage(), closestMatch, timeZone)));
                 }
+                if(!ids && closestMatch){
+                    Collections.sort(competitions, new CompetitionsNextMatch());
+                }
                 response = hecticusResponse(0, "ok", ids ? "ids" : "competitions", competitions);
                 competitions.clear();
                 return ok(response);
@@ -710,7 +712,7 @@ public class MatchesController extends HecticusController {
                 return notFound(response);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
@@ -768,7 +770,7 @@ public class MatchesController extends HecticusController {
                 return notFound(buildBasicResponse(1, "El app " + idApp + " no existe"));
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
@@ -813,7 +815,7 @@ public class MatchesController extends HecticusController {
                 return notFound(response);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
@@ -854,7 +856,7 @@ public class MatchesController extends HecticusController {
                 return notFound(response);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
@@ -902,7 +904,7 @@ public class MatchesController extends HecticusController {
                 return notFound(response);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
@@ -968,7 +970,7 @@ public class MatchesController extends HecticusController {
                 return notFound(buildBasicResponse(4, "La aplicacion  " + idApp + " no existe"));
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
@@ -1061,7 +1063,7 @@ public class MatchesController extends HecticusController {
                 return notFound(response);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }

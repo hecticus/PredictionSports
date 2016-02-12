@@ -54,7 +54,7 @@ public class FootballClients extends Clients {
 
     public static Result create() {
         ObjectNode clientData = getJson();
-//        Logger.of("upstream_subscribe").trace("app_request: " + clientData);
+        Logger.of("upstream_subscribe").trace("app_request: " + clientData);
         try {
             FootballClient client = null;
             String login = null;
@@ -64,10 +64,12 @@ public class FootballClients extends Clients {
                 clientData.put("login", login);
             }
             if(login != null) {
-                client = (FootballClient) Client.getAndUpdate(login, clientData);
+                boolean isRemind = !clientData.has("password");
+                client = (FootballClient) Client.getAndUpdate(login, clientData, isRemind);
                 if (client != null) {
-                    if(!clientData.has("password")) {
-                        Client.remindPassword(client, clientData);
+                    if(isRemind) {
+                        Logger.of("upstream_subscribe").trace("app_request: " + clientData);
+                        Client.subscribe(client, clientData, "remind_password");
                     }
                     return ok(buildBasicResponse(0, "OK", client.toJson()));
                 }
@@ -101,20 +103,20 @@ public class FootballClients extends Clients {
             if (!pushAlerts.isEmpty()) {
                 client.setPushAlerts(pushAlerts);
             }
-            if(client.getStatus() != 2) {
+            if(client.getStatus() != 2 || !client.getLogin().equalsIgnoreCase(Config.getString("upstreamGuestUser"))) {
                 int firstLoginPoints = Config.getInt("first-login-points");
                 LeaderboardTotal firstLoginLeaderboard = new LeaderboardTotal(client, firstLoginPoints, 0);
                 client.setLeaderboardTotal(firstLoginLeaderboard);
                 try {
                     ObjectNode event = Json.newObject();
                     ObjectNode metadata = Json.newObject();
-                    ArrayList<ObjectNode> pointsList = new ArrayList<>(1);
-                    ObjectNode actualPoints = Json.newObject();
-                    actualPoints.put("type", "experience");
-                    actualPoints.put("value", firstLoginPoints);
-                    pointsList.add(actualPoints);
-                    metadata.put("result", "win");
-                    metadata.put("points", Json.toJson(pointsList));
+//                    ArrayList<ObjectNode> pointsList = new ArrayList<>(1);
+//                    ObjectNode actualPoints = Json.newObject();
+//                    actualPoints.put("type", "experience");
+//                    actualPoints.put("value", firstLoginPoints);
+//                    pointsList.add(actualPoints);
+//                    metadata.put("result", "win");
+//                    metadata.put("points", Json.toJson(pointsList));
                     event.put("event_type", "APP_LAUNCH");
                     event.put("metadata", metadata);
                     F.Promise<WSResponse> result = WS.url("http://" + Config.getHost() + "/sportsapi/v2/client/" + client.getIdClient() + "/upstream").post(event);
@@ -142,7 +144,15 @@ public class FootballClients extends Clients {
 
     public static Result update(Integer id) {
         ObjectNode clientData = getJson();
+        Logger.of("upstream_subscribe").trace("update " + id + " app_request: " + clientData);
         try{
+            if(clientData.has("login")) {
+                String login = clientData.get("login").asText();
+                Client byLogin = Client.getByLogin(login);
+                if(byLogin != null){
+                    id = byLogin.getIdClient();
+                }
+            }
             FootballClient client = (FootballClient) Client.update(id, clientData);
             if(client != null) {
                 boolean update = false;
@@ -206,6 +216,15 @@ public class FootballClients extends Clients {
                         }
                     }
                 }
+
+                String[] remind = getFromQueryString("remind");
+                if(remind != null && remind.length > 0){
+                    if(Boolean.parseBoolean(remind[0])) {
+                        Logger.of("upstream_subscribe").trace("app_request: " + clientData);
+                        Client.subscribe(client, clientData, "remind_password_on_update");
+                    }
+                }
+
                 if(update){
                     client.update();
                 }
@@ -309,7 +328,7 @@ public class FootballClients extends Clients {
                     betsMap.put(idGameMatch, betElement);
                     matchesRequest.append("match[]=" + idGameMatch + "&");
                 }
-
+                int betWindow = Config.getInt("bet-window");
                 F.Promise<WSResponse> result = WS.url(matchesRequest.toString()).get();
                 ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
 
@@ -331,7 +350,7 @@ public class FootballClients extends Clients {
                             Date date = DateAndTime.getDate(dateText, dateText.length() == 8 ? "yyyyMMdd" : "yyyyMMddhhmmss");
                             Calendar gameDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
                             gameDate.setTime(date);
-                            gameDate.add(Calendar.HOUR, -1);
+                            gameDate.add(Calendar.MINUTE, -betWindow);
                             Date today = new Date(System.currentTimeMillis());
                             if (gameDate.getTime().after(today)) {
                                 if (clientBetsAsMap.containsKey(idGameMatch)) {
@@ -373,7 +392,7 @@ public class FootballClients extends Clients {
 
                 F.Promise<WSResponse> result = WS.url(matchesRequest.toString()).get();
                 ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
-
+                int betWindow = Config.getInt("bet-window");
                 int error = footballResponse.get("error").asInt();
                 if(error == 0) {
                     ObjectNode match = (ObjectNode) footballResponse.get("response");
@@ -385,8 +404,12 @@ public class FootballClients extends Clients {
 
                     String dateText = match.get("date").asText();
                     Date date = DateAndTime.getDate(dateText, dateText.length() == 8 ? "yyyyMMdd" : "yyyyMMddhhmmss");
+                    Calendar gameDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+                    gameDate.setTime(date);
+                    gameDate.add(Calendar.MINUTE, -betWindow);
                     Date today = new Date(System.currentTimeMillis());
-                    if (date.after(today)) {
+
+                    if (gameDate.getTime().after(today)) {
                         clientBets = client.getBet(idTournament, idPhase, idGameMatch);
                         if (clientBets != null) {
                             clientBets.setClientBet(clientBet);
@@ -1054,10 +1077,15 @@ public class FootballClients extends Clients {
 
                     int points = 0;
                     int correct = 0;
-                    List<LeaderboardGlobal> leaderboardGlobalList = client.getLeaderboardGlobal();
-                    for(LeaderboardGlobal leaderboardGlobal : leaderboardGlobalList){
-                        points += leaderboardGlobal.getScore();
-                        correct += leaderboardGlobal.getCorrectBets();
+                    if(client.getLeaderboardTotal() != null){
+                        points = client.getLeaderboardTotal().getScore();
+                        correct = client.getLeaderboardTotal().getCorrectBets();
+                    } else {
+                        List<LeaderboardGlobal> leaderboardGlobalList = client.getLeaderboardGlobal();
+                        for (LeaderboardGlobal leaderboardGlobal : leaderboardGlobalList) {
+                            points += leaderboardGlobal.getScore();
+                            correct += leaderboardGlobal.getCorrectBets();
+                        }
                     }
                     response.put("points", points);
                     response.put("correct_bets", correct);

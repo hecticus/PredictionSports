@@ -10,6 +10,7 @@ import models.basic.Action;
 import models.basic.Country;
 import models.basic.Language;
 import models.basic.Timezone;
+import play.Logger;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WS;
@@ -104,9 +105,8 @@ public class PushGenerator extends HecticusThread {
 
     private void sendEventToPmc(ObjectNode event) {
         try {
-            // System.out.println("event = [" + event + "]");
-            Utils.printToLog(PushGenerator.class, "Accion Push Clientes ", "Clientes a los cuales se le estan generando las alertas  " + event + " Verificacion de log", true, null, "support-level-1", Config.LOGGER_ERROR);
-
+//            System.out.println("event = [" + event + "]");
+            Logger.of("push").trace(event.toString());
             F.Promise<WSResponse> result = WS.url("http://" + Config.getPMCHost() + "/events/v1/insert").post(event);
             ObjectNode response = (ObjectNode)result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
         } catch (Exception e){
