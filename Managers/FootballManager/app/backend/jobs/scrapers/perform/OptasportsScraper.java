@@ -165,6 +165,7 @@ public class OptasportsScraper extends HecticusThread {
         //es necesario un filtro por region????
         try {
             String lastStoredDate = null;
+            String name = null;            
             //get avaible leagues
             String url = "http://api.core.optasports.com/soccer/get_seasons?authorized=yes&username=" + optaUserName + "&authkey=" + optaAuthKey + "&lang=" + language.getShortName();
             String xmlRespose = sendRequest(url, "");
