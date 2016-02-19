@@ -183,6 +183,9 @@ public class OptasportsScraper extends HecticusThread {
                             areaIdName = xPath.compile("@area_name").evaluate(currentCompetition),
                             formatName = xPath.compile("@format").evaluate(currentCompetition),
                             competitionLastUpdated = xPath.compile("@last_updated").evaluate(currentCompetition);
+
+                    // Parche Name Brazil
+                    if(areaId == "35"){ competitionName = "Brasileirão – " + competitionName;}
                     CompetitionType category = new CompetitionType(competitionName, Long.parseLong(competitionsExternalId));
                     category.validate(language);
                     //seasons
@@ -195,8 +198,10 @@ public class OptasportsScraper extends HecticusThread {
                                 currentSeasonStartDate = xPath.compile("@start_date").evaluate(currentSeason),
                                 currentSeasonEndDate = xPath.compile("@end_date").evaluate(currentSeason),
                                 currentSeasonLastUptdated = xPath.compile("@last_updated").evaluate(currentSeason);
-                        //String name = category.getName() + " " + currentSeasonName + " (" + areaIdName + ")" ;
-                        String name = category.getName() + " " + currentSeasonName;
+
+                        // Parche Name Brazil
+                        if(areaId == "35"){ name = "Brasileirão – " + currentSeasonName;}else{ name = category.getName() + " " + currentSeasonName;}
+                        // System.out.println(" -----  NOMBRE  :" + name);
                         Competition c = new Competition(name, Long.parseLong(currentSeasonId), app, category);
                         c.validate(language);
 
