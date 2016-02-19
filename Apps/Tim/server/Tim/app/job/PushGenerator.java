@@ -153,8 +153,8 @@ public class PushGenerator extends HecticusThread {
                 if(data.has("news")){
                     Iterator<JsonNode> news = data.get("news").elements();
                     clientsForEvent = getClientsForEvent(null, false);
-                    System.out.println("clientsForEvent new = [" + clientsForEvent + "]");
-                    Utils.printToLog(PushGenerator.class, "Accion clientsForEvent new ", "Clientes a los cuales se le estan generando las alertas new " + clientsForEvent + " Verificacion de log", true, null, "support-level-1", Config.LOGGER_ERROR);
+//                    System.out.println("clientsForEvent new = [" + clientsForEvent + "]");
+//                    Utils.printToLog(PushGenerator.class, "Accion clientsForEvent new ", "Clientes a los cuales se le estan generando las alertas new " + clientsForEvent + " Verificacion de log", true, null, "support-level-1", Config.LOGGER_ERROR);
 
                     if(clientsForEvent != null && !clientsForEvent.isEmpty() && news.hasNext()) {
                         for(int i : clientsForEvent.keySet()) {
