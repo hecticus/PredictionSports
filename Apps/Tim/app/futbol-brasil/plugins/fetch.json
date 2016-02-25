@@ -165,5 +165,12 @@
             "url": "https://github.com/Wizcorp/phonegap-facebook-plugin",
             "subdir": "."
         }
+    },
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/apache/cordova-plugin-whitelist.git",
+            "subdir": "."
+        }
     }
 }
