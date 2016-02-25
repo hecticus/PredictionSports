@@ -165,6 +165,8 @@ public class OptasportsScraper extends HecticusThread {
         //es necesario un filtro por region????
         try {
             String lastStoredDate = null;
+            String name = null;
+            // Utils.printToLog(OptasportsScraper.class, null, "Invocar http://api.core.optasports.com/soccer/get_seasons ", false, null, "support-level-1", Config.LOGGER_INFO);
             //get avaible leagues
             String url = "http://api.core.optasports.com/soccer/get_seasons?authorized=yes&username=" + optaUserName + "&authkey=" + optaAuthKey + "&lang=" + language.getShortName();
             String xmlRespose = sendRequest(url, "");
@@ -172,10 +174,12 @@ public class OptasportsScraper extends HecticusThread {
             XPath xPath =  XPathFactory.newInstance().newXPath();
             NodeList competitions = (NodeList) xPath.compile("gsmrs/competition").evaluate(source, XPathConstants.NODESET);
             boolean processCompetition = false;
+            // Utils.printToLog(OptasportsScraper.class, null, "Procesar info del http://api.core.optasports.com/soccer/get_seasons ", false, null, "support-level-1", Config.LOGGER_INFO);
             for (int i = 0;isAlive() && i < competitions.getLength(); i++) {
                 Node currentCompetition = competitions.item(i);
                 try{
                     //get data from current comp
+                    // Utils.printToLog(OptasportsScraper.class, null, "Iterando con data obtenida del API ", false, null, "support-level-1", Config.LOGGER_INFO);
                     String competitionName = xPath.compile("@name").evaluate(currentCompetition),
                         competitionsExternalId =  xPath.compile("@competition_id").evaluate(currentCompetition),
                             areaId = xPath.compile("@area_id").evaluate(currentCompetition),
@@ -185,6 +189,7 @@ public class OptasportsScraper extends HecticusThread {
 
                     CompetitionType category = new CompetitionType(competitionName, Long.parseLong(competitionsExternalId));
                     category.validate(language);
+
                     //seasons
                     NodeList competitionSeasons = (NodeList) xPath.compile("season").evaluate(currentCompetition, XPathConstants.NODESET);
                     for (int j = 0;isAlive() && j < competitionSeasons.getLength(); j++){

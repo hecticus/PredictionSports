@@ -57,7 +57,9 @@ angular
             }
 
            function getGMT(prefix){
-              return prefix + 'timezoneName=' + moment().format('[GMT]ZZ').replace(/\s/g, '');
+            var tz =  moment().format('[GMT]ZZ').replace(/\s/g, '');
+            tz = encodeURIComponent(tz);
+            return prefix + 'timezoneName=' + tz;
            }
 
             function getLang(){
@@ -108,10 +110,11 @@ angular
                       //console.log('client->create');
                       return brazil_football_manager_url + 'sportsapi/' + apiVersion + '/clients/create' + getSecurityToken('?');
                     },
-                    update: function () {
-                        //console.log('client->update');
+                    update: function (remind) {
+                        //console.log('client->update');}
+                        if (!remind) remind = false;
                         return brazil_football_manager_url + 'sportsapi/'
-                            + apiVersion + '/clients/update/' + getClientId() + getSecurityToken('?');
+                            + apiVersion + '/clients/update/' + getClientId() + getSecurityToken('?')  + '&remind=' + remind;
                     },
                     get: function (clientId, upstreamChannel) {
                           //console.log('client->get');

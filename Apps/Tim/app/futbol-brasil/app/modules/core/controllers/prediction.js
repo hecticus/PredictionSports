@@ -98,6 +98,19 @@ angular
                     //console.log('diffHours -> ' + diffHours);
                     //console.log('diffMinutes -> ' + diffMinutes);
 
+                    /*var a = moment(_jMatch.date,'YYYYMMDDHHmmss');
+                    var b = Moment.date(_jMatch.date,'YYYYMMDDhhmmss');
+                    
+                    var diffMinutes = a.diff(moment(), 'minutes');
+                    if (Moment.GMT() > 0) var diffMinutes = b.diff(moment(), 'minutes');*/
+
+                    /*console.warn(a.format('YYYYMMDDHHmmss'));
+                    console.warn(b.format('YYYYMMDDHHmmss'));
+                    console.warn(app.format('YYYYMMDDHHmmss'));*/
+                    console.log('diffMinutes -> ' + diffMinutes);
+
+
+
                     if (diffMinutes >= 15) {
                       if (( _jMatch.id_game_matches != _Match) || (_bet != _mBet)) {
                         $scope.$emit('load');

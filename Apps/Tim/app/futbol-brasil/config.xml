@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.upstreamsystems.timpalpites" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://cordova.apache.org/ns/1.0">
+<widget id="com.upstreamsystems.timpalpites" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://cordova.apache.org/ns/1.0">
     <name>TIM Palpites</name>
     <description>
       TIM Palpites App.
@@ -38,7 +38,9 @@
     <preference name="target-device" value="universal" />
     <preference name="prerendered-icon" value="true" />
 
-    <preference name="android-minSdkVersion" value="10" />
+
+    <!--preference name="android-minSdkVersion" value="14" />
+    <preference name="android-targetSdkVersion" value="22" /-->
     <preference name="android-installLocation" value="auto" />
     <preference name="AllowInlineMediaPlayback" value="false" />
     <preference name="BackupWebStorage" value="local" />
@@ -63,6 +65,7 @@
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
     <preference name="load-url-timeout" value="100000" />
+
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
     </feature>
@@ -110,7 +113,7 @@
     </feature>
 
     <feature name="Custom URL scheme">
-        <param name="id" value="nl.x-services.plugins.launchmyapp" />
+        <param name="id" value="cordova-plugin-customurlscheme" />
         <param name="url" value="https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git" />
         <variable name="URL_SCHEME" value="timfutebol" />
     </feature-->

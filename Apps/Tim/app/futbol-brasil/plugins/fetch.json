@@ -138,6 +138,20 @@
             "ref": "r0.2.5"
         }
     },
+    "com.synconset.cordovaHTTP": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/wymsee/cordova-HTTP.git",
+            "subdir": "."
+        }
+    },
+    "cordova-plugin-x-toast": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+            "subdir": "."
+        }
+    },
     "cordova-plugin-customurlscheme": {
         "source": {
             "type": "git",
@@ -152,17 +166,10 @@
             "subdir": "."
         }
     },
-    "com.synconset.cordovaHTTP": {
+    "cordova-plugin-whitelist": {
         "source": {
             "type": "git",
-            "url": "https://github.com/wymsee/cordova-HTTP.git",
-            "subdir": "."
-        }
-    },
-    "cordova-plugin-x-toast": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+            "url": "https://github.com/apache/cordova-plugin-whitelist.git",
             "subdir": "."
         }
     }

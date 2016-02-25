@@ -121,7 +121,6 @@ public class PushGenerator extends HecticusThread {
         try {
             F.Promise<WSResponse> result = WS.url("http://" + Utils.getFootballManagerHost() + "/footballapi/v1/pushable/get/" + Config.getInt("football-manager-id-app")).get();
             ObjectNode response = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
-
             int error = response.get("error").asInt();
             if(error == 0) {
                 data = response.get("response");
@@ -135,6 +134,7 @@ public class PushGenerator extends HecticusThread {
                                 Iterator<JsonNode> events = next.get("events").elements();
                                 if (events.hasNext()) {
                                     clientsForEvent = getClientsForEvent(match, true);
+                                   // System.out.println("clientsForEvent min = [" + clientsForEvent + "]");
                                     if(clientsForEvent != null && !clientsForEvent.isEmpty()) {
                                         for(int i : clientsForEvent.keySet()) {
                                             isAlive();
@@ -149,9 +149,13 @@ public class PushGenerator extends HecticusThread {
                         }
                     }
                 }
+
                 if(data.has("news")){
                     Iterator<JsonNode> news = data.get("news").elements();
                     clientsForEvent = getClientsForEvent(null, false);
+//                    System.out.println("clientsForEvent new = [" + clientsForEvent + "]");
+//                    Utils.printToLog(PushGenerator.class, "Accion clientsForEvent new ", "Clientes a los cuales se le estan generando las alertas new " + clientsForEvent + " Verificacion de log", true, null, "support-level-1", Config.LOGGER_ERROR);
+
                     if(clientsForEvent != null && !clientsForEvent.isEmpty() && news.hasNext()) {
                         for(int i : clientsForEvent.keySet()) {
                             isAlive();
@@ -291,6 +295,7 @@ public class PushGenerator extends HecticusThread {
 
     private Map<Integer, ArrayList<Integer>> getClientsForEvent(JsonNode event, boolean minToMin) throws Exception {
         Map<Integer, ArrayList<Integer>> clients = null;
+
         if(event != null) {
             if(minToMin) {
                 int home = event.get("home_team").get("id_teams").asInt();
