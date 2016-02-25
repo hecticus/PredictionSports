@@ -167,7 +167,7 @@ public class OptasportsScraper extends HecticusThread {
             String lastStoredDate = null;
             String name = null;
             // Utils.printToLog(OptasportsScraper.class, null, "Invocar http://api.core.optasports.com/soccer/get_seasons ", false, null, "support-level-1", Config.LOGGER_INFO);
-            //get available leagues
+            //get avaible leagues
             String url = "http://api.core.optasports.com/soccer/get_seasons?authorized=yes&username=" + optaUserName + "&authkey=" + optaAuthKey + "&lang=" + language.getShortName();
             String xmlRespose = sendRequest(url, "");
             InputSource source = new InputSource(new StringReader(xmlRespose));
@@ -200,9 +200,9 @@ public class OptasportsScraper extends HecticusThread {
                                 currentSeasonStartDate = xPath.compile("@start_date").evaluate(currentSeason),
                                 currentSeasonEndDate = xPath.compile("@end_date").evaluate(currentSeason),
                                 currentSeasonLastUptdated = xPath.compile("@last_updated").evaluate(currentSeason);
+                        //String name = category.getName() + " " + currentSeasonName + " (" + areaIdName + ")" ;
 
-                        name = category.getName() + " " + currentSeasonName;
-                        // System.out.println(" -----  NOMBRE  :" + name);
+                        String name = category.getName() + " " + currentSeasonName;
                         Competition c = new Competition(name, Long.parseLong(currentSeasonId), app, category);
                         c.validate(language);
 
