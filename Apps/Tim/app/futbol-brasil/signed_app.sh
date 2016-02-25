@@ -1,5 +1,3 @@
-#echo "Generamos nuestro fichero de firmas (keystore)."
-#keytool -genkey -v -keystore TimPalpites.keystore -alias TimPalpites -keyalg RSA -keysize 2048 -validity 10000
 
 echo "Firmamos la aplicación con nuestra clave privada. Para ello utilizamos jarsigner."
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore keys/TimPalpites.keystore platforms/android/ant-build/CordovaApp-debug.apk TimPalpites
