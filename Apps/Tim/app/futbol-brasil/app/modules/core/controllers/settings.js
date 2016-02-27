@@ -3,16 +3,18 @@
 /**
  * @ngdoc object
  * @name core.Controllers.SettingsController
- * @description SettingsController
+ * @description SettingsCowentroller
  * @requires ng.$scope
 */
 angular
     .module('core')
     .controller('SettingsController', [
         '$scope', '$rootScope', '$localStorage', '$state', '$timeout', '$translate', '$stateParams', 'ClientManager'
-        , 'TeamsManager', 'FacebookManager', 'Settings', 'iScroll', 'i18n', 'Client', 'Notification',
+        , 'TeamsManager', 'FacebookManager', 'Settings', 'iScroll', 'i18n', 'Client', 'Notification', 'CordovaDevice',
         function($scope, $rootScope, $localStorage, $state, $timeout, $translate, $stateParams, ClientManager, TeamsManager
-            , FacebookManager, Settings, iScroll, i18n, Client, Notification) {
+            , FacebookManager, Settings, iScroll, i18n, Client, Notification, CordovaDevice) {
+
+
 
             var strings = {};
             var scroll = null;
@@ -30,6 +32,7 @@ angular
             $scope.lang = {};
             $scope.nickname = '';
 
+            $scope.isWebPlatform = CordovaDevice.isWebPlatform();
             $scope.favoriteTeams = [{isEmpty : true}, {isEmpty : true}, {isEmpty : true}];
 
             $scope.toggles = {
