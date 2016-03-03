@@ -25,7 +25,7 @@ angular
             if(!window.cordova) {
                 //console.log('AnalyticsProvider.setAccount -> UA-60801639-2');
                 // Setup your account
-                AnalyticsProvider.setAccount('UA-48149750-11');
+                AnalyticsProvider.setAccount('UA-48149750-12');
                 // Automatic route tracking (default: true)
                 AnalyticsProvider.trackPages(true);
                 // Use display features plugin
