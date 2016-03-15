@@ -86,12 +86,34 @@ angular
                 var device = {};
                 var isNewClient = true;
                 var lang = getLanguage();
+                var log = {};
+                log.upstreamChannel =  CordovaDevice.getUpstreamChannel();
 
+                if ((!window.cordova) || (CordovaDevice.isWebPlatform())) { 
+                    log.ua =  navigator.userAgent;
+                    log.platform =  navigator.platform;
+                    log.onLine  =  navigator.onLine;
+                    log.appCodeName = navigator.appCodeName;
+                    log.appName = navigator.appName;
+                    log.language = navigator.language;                
+                } else {
+                    log.cordova = device.cordova
+                    log.model = device.model
+                    log.platform = device.platform
+                    log.uuid = device.uuid
+                    log.version = device.version
+                    log.manufacturer = device.manufacturer
+                    log.isVirtual = device.isVirtual
+                    log.serial = device.serial
+                    alert(JSON.stringify(log));
+                }
+        
                 var jData = {
                     country : 3,
                     language: lang? lang.id_language : 405,
                     device_id : CordovaDevice.getDeviceId(),
-                    upstreamChannel : CordovaDevice.getUpstreamChannel()
+                    upstreamChannel : CordovaDevice.getUpstreamChannel(),
+                    log: log
                 };
 
                 var facebook_id = FacebookManager.getUserId();
@@ -111,6 +133,7 @@ angular
                 if(client.msisdn){
                     //jData.login = client.msisdn;
                     jData.login = Client.getMsisdn();
+                    jData.log.msisdn = Client.getMsisdn();
                 }
 
                 if(client.password){
