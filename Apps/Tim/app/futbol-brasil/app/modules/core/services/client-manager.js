@@ -8,9 +8,9 @@
 angular
     .module('core')
     .factory('ClientManager',['$http', '$translate', '$q', '$localStorage',  'CordovaDevice', 'WebManager', 'FacebookManager',
-        'TeamsManager', 'Client', 'Domain', 'i18n', 'Settings', 'App',
+        'TeamsManager', 'Client', 'Domain', 'i18n', 'Settings', 'App', '$window', 
         function($http, $translate, $q, $localStorage, CordovaDevice, WebManager, FacebookManager,
-                 TeamsManager, Client, Domain, i18n, Settings, App) {
+                 TeamsManager, Client, Domain, i18n, Settings, App, $window) {
 
             var arrMsisdnTestClient = ['40766666611','40766666612', '40766666613',
             '40766666614', '40766666615', '40766666616',
@@ -87,7 +87,9 @@ angular
                 var isNewClient = true;
                 var lang = getLanguage();
                 var log = {};
+
                 log.upstreamChannel =  CordovaDevice.getUpstreamChannel();
+                log.msisdn = Client.getMsisdn();
 
                 if ((!window.cordova) || (CordovaDevice.isWebPlatform())) { 
                     log.ua =  navigator.userAgent;
@@ -97,15 +99,14 @@ angular
                     log.appName = navigator.appName;
                     log.language = navigator.language;                
                 } else {
-                    log.cordova = device.cordova
-                    log.model = device.model
-                    log.platform = device.platform
-                    log.uuid = device.uuid
-                    log.version = device.version
-                    log.manufacturer = device.manufacturer
-                    log.isVirtual = device.isVirtual
-                    log.serial = device.serial
-                    alert(JSON.stringify(log));
+                    log.cordova = $window.device.cordova;
+                    log.model = $window.device.model;
+                    log.platform = $window.device.platform;
+                    log.uuid = $window.device.uuid;
+                    log.version = $window.device.version;
+                    log.manufacturer = $window.device.manufacturer;
+                    log.isVirtual = $window.device.isVirtual;
+                    log.serial = $window.device.serial;
                 }
         
                 var jData = {
@@ -132,8 +133,7 @@ angular
 
                 if(client.msisdn){
                     //jData.login = client.msisdn;
-                    jData.login = Client.getMsisdn();
-                    jData.log.msisdn = Client.getMsisdn();
+                    jData.login = Client.getMsisdn();                  
                 }
 
                 if(client.password){
@@ -158,8 +158,8 @@ angular
                     if(subscribe){ jData.subscribe = true; }
                 }
 
-                //console.log('createOrUpdateClient -> url -> ' + url);
-                //console.log('createOrUpdateClient -> Payload -> ' + JSON.stringify(jData));
+                console.log('createOrUpdateClient -> url -> ' + url);
+                console.log('createOrUpdateClient -> Payload -> ' + JSON.stringify(jData));
 
                 $http({
                     url : url,
