@@ -32,7 +32,6 @@ public class LoginTracks extends HecticusModel{
     @Column
     private String remote_ip;
 
-
     public static Model.Finder<Integer, LoginTracks> finder = new Model.Finder<>(Integer.class, LoginTracks.class);
 
     public LoginTracks(Client client) {
