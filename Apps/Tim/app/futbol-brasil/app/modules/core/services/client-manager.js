@@ -8,9 +8,9 @@
 angular
     .module('core')
     .factory('ClientManager',['$http', '$translate', '$q', '$localStorage',  'CordovaDevice', 'WebManager', 'FacebookManager',
-        'TeamsManager', 'Client', 'Domain', 'i18n', 'Settings', 'App',
+        'TeamsManager', 'Client', 'Domain', 'i18n', 'Settings', 'App', '$window', 
         function($http, $translate, $q, $localStorage, CordovaDevice, WebManager, FacebookManager,
-                 TeamsManager, Client, Domain, i18n, Settings, App) {
+                 TeamsManager, Client, Domain, i18n, Settings, App, $window) {
 
             var arrMsisdnTestClient = ['40766666611','40766666612', '40766666613',
             '40766666614', '40766666615', '40766666616',
@@ -86,12 +86,35 @@ angular
                 var device = {};
                 var isNewClient = true;
                 var lang = getLanguage();
+                var log = {};
 
+                log.upstreamChannel =  CordovaDevice.getUpstreamChannel();
+                log.msisdn = Client.getMsisdn();
+
+                if ((!window.cordova) || (CordovaDevice.isWebPlatform())) { 
+                    log.ua =  navigator.userAgent;
+                    log.platform =  navigator.platform;
+                    log.onLine  =  navigator.onLine;
+                    log.appCodeName = navigator.appCodeName;
+                    log.appName = navigator.appName;
+                    log.language = navigator.language;                
+                } else {
+                    log.cordova = $window.device.cordova;
+                    log.model = $window.device.model;
+                    log.platform = $window.device.platform;
+                    log.uuid = $window.device.uuid;
+                    log.version = $window.device.version;
+                    log.manufacturer = $window.device.manufacturer;
+                    log.isVirtual = $window.device.isVirtual;
+                    log.serial = $window.device.serial;
+                }
+        
                 var jData = {
                     country : 3,
                     language: lang? lang.id_language : 405,
                     device_id : CordovaDevice.getDeviceId(),
-                    upstreamChannel : CordovaDevice.getUpstreamChannel()
+                    upstreamChannel : CordovaDevice.getUpstreamChannel(),
+                    log: log
                 };
 
                 var facebook_id = FacebookManager.getUserId();
@@ -110,7 +133,7 @@ angular
 
                 if(client.msisdn){
                     //jData.login = client.msisdn;
-                    jData.login = Client.getMsisdn();
+                    jData.login = Client.getMsisdn();                  
                 }
 
                 if(client.password){
@@ -135,8 +158,8 @@ angular
                     if(subscribe){ jData.subscribe = true; }
                 }
 
-                //console.log('createOrUpdateClient -> url -> ' + url);
-                //console.log('createOrUpdateClient -> Payload -> ' + JSON.stringify(jData));
+                console.log('createOrUpdateClient -> url -> ' + url);
+                console.log('createOrUpdateClient -> Payload -> ' + JSON.stringify(jData));
 
                 $http({
                     url : url,
