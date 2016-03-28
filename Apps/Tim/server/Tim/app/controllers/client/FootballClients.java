@@ -59,13 +59,7 @@ public class FootballClients extends Clients{
     public static Result create() {
         ObjectNode clientData = getJson();
         Logger.of("upstream_subscribe").trace("app_request: " + clientData);
-        //Get IP address of client device to store to database.
-        String remote_ip;
-        if (request().getHeader("X-Forwarded-For") != null) {
-            remote_ip = request().getHeader("X-Forwarded-For");
-        } else {
-            remote_ip = request().remoteAddress();
-        }
+        String remote_ip = request().remoteAddress();
         clientData.put("remote_ip", remote_ip);
 
         try {
@@ -80,7 +74,7 @@ public class FootballClients extends Clients{
                 boolean isRemind = !clientData.has("password");
 
                 //Con esta linea no funciona.
-                Client.client = (FootballClient) Client.getAndUpdate(login, clientData, isRemind);
+                client = (FootballClient) Client.getAndUpdate(login, clientData, isRemind);
 
                 //Con esta si.
                 //client = (FootballClient) Client.getAndUpdate(login, clientData);
