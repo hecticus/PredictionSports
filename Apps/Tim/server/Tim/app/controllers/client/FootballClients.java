@@ -22,6 +22,7 @@ import models.leaderboard.LeaderboardGlobal;
 import models.leaderboard.LeaderboardTotal;
 import models.pushalerts.ClientHasPushAlerts;
 import models.pushalerts.PushAlerts;
+import models.tracks.LoginTracks;
 import org.apache.commons.codec.binary.Base64;
 import play.Logger;
 import play.libs.F;
@@ -36,7 +37,7 @@ import play.mvc.Security;
 import utils.DateAndTime;
 import utils.Utils;
 
-import java.io.File;
+import java.io.*;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -44,17 +45,23 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.*;
 
 
 /**
  * Created by plesse on 9/30/14.
  */
 @Security.Authenticated(Secured.class)
-public class FootballClients extends Clients {
+public class FootballClients extends Clients{
 
     public static Result create() {
         ObjectNode clientData = getJson();
         Logger.of("upstream_subscribe").trace("app_request: " + clientData);
+        String remote_ip = request().remoteAddress();
+        clientData.put("remote_ip", remote_ip);
+
         try {
             FootballClient client = null;
             String login = null;
@@ -63,9 +70,11 @@ public class FootballClients extends Clients {
                 login = login.replaceAll("[ \\-+^]*", "");
                 clientData.put("login", login);
             }
-            if(login != null) {
+            if(login != null) { //cuando es un invitado
                 boolean isRemind = !clientData.has("password");
-                client = (FootballClient) Client.getAndUpdate(login, clientData, isRemind);
+                //client = (FootballClient) Client.getAndUpdate(login, clientData, isRemind);
+                // //Con esta linea no me funciona
+                client = (FootballClient) Client.getAndUpdate(login, clientData);
                 if (client != null) {
                     if(isRemind) {
                         Logger.of("upstream_subscribe").trace("app_request: " + clientData);
@@ -125,6 +134,9 @@ public class FootballClients extends Clients {
                     Utils.printToLog(FootballClients.class, "Error manejando clients", "error creando el client con params " + clientData, false, e, "support-level-1", Config.LOGGER_ERROR);
                 }
             }
+            //Creación de la instancia login_tracks
+            LoginTracks track = new LoginTracks(client.toJson().toString(),baseClient,remote_ip);
+            track.save();
             client.update();
             return created(buildBasicResponse(0, "OK", client.toJson()));
         } catch (Exception ex) {
@@ -141,6 +153,16 @@ public class FootballClients extends Clients {
         }
 
     }
+
+    /**
+     * index Created by Leonel on 9/30/14.
+     * Get IP Address of remote client
+     */
+    public static Result remoteIp() {
+        String remote = request().remoteAddress();
+        return ok(remote);
+    }
+
 
     public static Result update(Integer id) {
         ObjectNode clientData = getJson();
@@ -434,7 +456,6 @@ public class FootballClients extends Clients {
         }
     }
 
-
     public static Result getBets(Integer id) {
         try {
             String[] timezoneNames = getFromQueryString("timezoneName");
@@ -537,7 +558,6 @@ public class FootballClients extends Clients {
             return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
         }
     }
-
 
     public static Result getBetsForDate(Integer id, String date) {
         try {
@@ -722,7 +742,6 @@ public class FootballClients extends Clients {
             return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
         }
     }
-
 
     public static class FixturesComparator implements Comparator<ObjectNode> {
         @Override
