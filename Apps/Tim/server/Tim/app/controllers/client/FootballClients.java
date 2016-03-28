@@ -80,7 +80,7 @@ public class FootballClients extends Clients{
                 boolean isRemind = !clientData.has("password");
 
                 //Con esta linea no funciona.
-                Client.client = (FootballClient) Client.getAndUpdate(login, clientData, isRemind);
+                client = (FootballClient) Client.getAndUpdate(login, clientData, isRemind);
 
                 //Con esta si.
                 //client = (FootballClient) Client.getAndUpdate(login, clientData);
