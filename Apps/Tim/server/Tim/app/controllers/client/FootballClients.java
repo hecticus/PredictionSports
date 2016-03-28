@@ -72,9 +72,13 @@ public class FootballClients extends Clients{
             }
             if(login != null) { //cuando es un invitado
                 boolean isRemind = !clientData.has("password");
-                //client = (FootballClient) Client.getAndUpdate(login, clientData, isRemind);
-                // //Con esta linea no me funciona
-                client = (FootballClient) Client.getAndUpdate(login, clientData);
+
+                //Con esta linea no funciona.
+                client = (FootballClient) Client.getAndUpdate(login, clientData, isRemind);
+
+                //Con esta si.
+                //client = (FootballClient) Client.getAndUpdate(login, clientData);
+
                 if (client != null) {
                     if(isRemind) {
                         Logger.of("upstream_subscribe").trace("app_request: " + clientData);
