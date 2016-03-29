@@ -85,7 +85,7 @@ angular
                 CordovaApp.init();
             });
 
-            var delay = 1000;
+            /*var delay = 1000;
             var Timer = $interval(function () {
 
               if (!CordovaDevice.isWebPlatform()) {
@@ -121,7 +121,7 @@ angular
 
              }, delay);
 
-            Timer;
+            Timer;*/
 
 
             $rootScope.defaultPage = 'prediction';
