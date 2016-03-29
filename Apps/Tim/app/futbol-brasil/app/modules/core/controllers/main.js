@@ -74,7 +74,8 @@ angular
                 return angular.element('.page.back.left:last').hasClass('left');
             }
 
-            function hideMenuFavorites() {
+            function hideMenuFavorites() {             
+
               if ((getSection() === 'login')
                   || (getSection() === 'settings')
                   || (getSection() === 'settings-login')
@@ -83,6 +84,7 @@ angular
                   || (getSection() === 'language-selection')
                   || (getSection() === 'team-selection')
                   || (getSection() === 'dashboard')
+                  || ($state.current.name === 'news')
                   || ($('.content-news #wrapper2').hasClass('left'))
                   || ($rootScope.hasFavorites === false)) {
                 return true;
