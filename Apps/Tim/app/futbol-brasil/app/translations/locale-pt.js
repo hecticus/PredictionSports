@@ -277,7 +277,7 @@
     "NOT_AVAILABLE": "Não Disponível",
     "LOGOUT" : "Sair",
     "READY" : "Pular tutorial",
-    "NO_MATCH" : "Encerrado",
+    "NO_MATCH" : "Não iniciado",
     "TITLE_NEXT_MATCH" : "Próximo",
     "MSG_UNAVAILABLE_ORIENTATION" : "A orientação da vista não está disponível"
 
