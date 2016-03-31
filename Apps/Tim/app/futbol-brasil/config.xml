@@ -30,7 +30,7 @@
         <icon density="port-hdpi" src="res/android/drawable-hdpi/icon.png" />
         <icon density="xhdpi" src="res/android/drawable-xhdpi/icon.png" />
         <icon density="port-xhdpi" src="res/android/drawable-xhdpi/icon.png" />
-        <hook type="after_prepare" src="hooks/custom_task/androidResourcesCpy.js" />
+        <hook src="hooks/custom_task/androidResourcesCpy.js" type="after_prepare" />
     </platform>
     <platform name="ios">
         <framework src="SystemConfiguration.framework" />
@@ -40,9 +40,6 @@
     <preference name="target-device" value="universal" />
     <preference name="prerendered-icon" value="true" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
-
-    <!--preference name="android-minSdkVersion" value="14" />
-    <preference name="android-targetSdkVersion" value="22" /-->
     <preference name="android-installLocation" value="auto" />
     <preference name="AllowInlineMediaPlayback" value="false" />
     <preference name="BackupWebStorage" value="local" />
@@ -67,7 +64,6 @@
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
     <preference name="load-url-timeout" value="100000" />
-
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
     </feature>
@@ -92,7 +88,7 @@
         <icon height="114" src="res/ios/icons/icon@2x.png" width="114" />
         <icon height="72" src="res/ios/icons/icon-72.png" width="72" />
         <icon height="144" src="res/ios/icons/icon-72@2x.png" width="144" />
-        <hook type="after_build" src="hooks/custom_task/urlSchemeMod.js" />
+        <hook src="hooks/custom_task/urlSchemeMod.js" type="after_build" />
     </platform>
     <feature name="SplashScreen">
         <param name="ios-package" value="SplashScreen" />
@@ -106,17 +102,5 @@
     <gap:config-file parent="UIViewControllerBasedStatusBarAppearance" platform="ios">
         <false />
     </gap:config-file>
-
-    <!--feature name="Facebook Connect">
-        <param name="id" value="com.phonegap.plugins.facebookconnect" />
-        <param name="url" value="https://github.com/Wizcorp/phonegap-facebook-plugin" />
-        <variable name="APP_ID" value="1379325579064871" />
-        <variable name="APP_NAME" value="TIM Palpites" />
-    </feature>
-
-    <feature name="Custom URL scheme">
-        <param name="id" value="cordova-plugin-customurlscheme" />
-        <param name="url" value="https://github.com/EddyVerbruggen/LaunchMyApp-PhoneGap-Plugin.git" />
-        <variable name="URL_SCHEME" value="timfutebol" />
-    </feature-->
+    
 </widget>
