@@ -90,6 +90,9 @@ public class FootballClients extends Clients{
                     if(isRemind) {
                         Logger.of("upstream_subscribe").trace("app_request: " + clientData);
                         Client.subscribe(client, clientData, "remind_password");
+
+                        //Para Registrar los login de los clientes ya existentes.
+                        LoginTracks track = new LoginTracks(client.toJson().toString(),client,remote_ip);
                     }
 
                     //Para Registrar los login de los clientes ya existentes.
