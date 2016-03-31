@@ -80,7 +80,7 @@ public class FootballClients extends Clients{
             if(login != null) { //cuando es un invitado
                 boolean isRemind = !clientData.has("password");
 
-                //Con esta linea no funciona. Aqui esta fallando para el nuevo JSON
+                //Con esta linea no funciona.
                 client = (FootballClient) Client.getAndUpdate(login, clientData, isRemind);
                 //Con esta si.
                 //client = (FootballClient) Client.getAndUpdate(login, clientData);
@@ -90,9 +90,6 @@ public class FootballClients extends Clients{
                     if(isRemind) {
                         Logger.of("upstream_subscribe").trace("app_request: " + clientData);
                         Client.subscribe(client, clientData, "remind_password");
-
-                        //Para Registrar los login de los clientes ya existentes.
-                        LoginTracks track = new LoginTracks(client.toJson().toString(),client,remote_ip);
                     }
 
                     //Para Registrar los login de los clientes ya existentes.
