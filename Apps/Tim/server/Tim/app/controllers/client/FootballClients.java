@@ -59,6 +59,7 @@ public class FootballClients extends Clients{
     public static Result create() {
         ObjectNode clientData = getJson();
         Logger.of("upstream_subscribe").trace("app_request: " + clientData);
+
         //Get IP address of client device to store to database.
         String remote_ip;
         if (request().getHeader("X-Forwarded-For") != null) {
@@ -79,17 +80,21 @@ public class FootballClients extends Clients{
             if(login != null) { //cuando es un invitado
                 boolean isRemind = !clientData.has("password");
 
-                //Con esta linea no funciona.
+                //Con esta linea no funciona. Aqui esta fallando para el nuevo JSON
                 client = (FootballClient) Client.getAndUpdate(login, clientData, isRemind);
-
                 //Con esta si.
                 //client = (FootballClient) Client.getAndUpdate(login, clientData);
 
                 if (client != null) {
+
                     if(isRemind) {
                         Logger.of("upstream_subscribe").trace("app_request: " + clientData);
                         Client.subscribe(client, clientData, "remind_password");
                     }
+
+                    //Para Registrar los login de los clientes ya existentes.
+                    LoginTracks track =  new LoginTracks(client.toJson().toString(), client, remote_ip, 2);
+                    track.save();
                     return ok(buildBasicResponse(0, "OK", client.toJson()));
                 }
             }
@@ -145,7 +150,7 @@ public class FootballClients extends Clients{
                 }
             }
             //Creación de la instancia login_tracks
-            LoginTracks track = new LoginTracks(client.toJson().toString(),baseClient,remote_ip);
+            LoginTracks track = new LoginTracks(client.toJson().toString(), baseClient, remote_ip, 1);
             track.save();
             client.update();
             return created(buildBasicResponse(0, "OK", client.toJson()));
@@ -163,16 +168,6 @@ public class FootballClients extends Clients{
         }
 
     }
-
-    /**
-     * index Created by Leonel on 9/30/14.
-     * Get IP Address of remote client
-     */
-    public static Result remoteIp() {
-        String remote = request().remoteAddress();
-        return ok(remote);
-    }
-
 
     public static Result update(Integer id) {
         ObjectNode clientData = getJson();

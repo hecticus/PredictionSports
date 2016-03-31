@@ -32,6 +32,10 @@ public class LoginTracks extends HecticusModel{
     @Column
     private String remote_ip;
 
+    //New type column. 1:Tipo de login para usuarios guest 2:Tipo de login para usuarios registrados
+    @Column
+    private int type;
+
 
     public static Model.Finder<Integer, LoginTracks> finder = new Model.Finder<>(Integer.class, LoginTracks.class);
 
@@ -39,10 +43,11 @@ public class LoginTracks extends HecticusModel{
         this.client = client;
     }
 
-    public LoginTracks(String log, Client client, String remote_ip) {
+    public LoginTracks(String log, Client client, String remote_ip, int type) {
         this.log = log;
         this.client = client;
         this.remote_ip = remote_ip;
+        this.type = type;
     }
 
     public LoginTracks(Integer idLoginTracks, Client client, String log) {
@@ -51,18 +56,9 @@ public class LoginTracks extends HecticusModel{
         this.log = log;
     }
 
-    public String getRemote_ip() {
-        return remote_ip;
-    }
-
-    public void setRemote_ip(String remote_ip) {
-        this.remote_ip = remote_ip;
-    }
-
     public Integer getIdLoginTracks() {
         return idLoginTracks;
     }
-
     public void setIdLoginTracks(Integer idLoginTracks) {
         this.idLoginTracks = idLoginTracks;
     }
@@ -70,7 +66,6 @@ public class LoginTracks extends HecticusModel{
     public Client getClient() {
         return client;
     }
-
     public void setClient(Client client) {
         this.client = client;
     }
@@ -78,10 +73,22 @@ public class LoginTracks extends HecticusModel{
     public String getLog() {
         return log;
     }
-
-
     public void setLog(String log) {
         this.log = log;
+    }
+
+    public String getRemote_ip() {
+        return remote_ip;
+    }
+    public void setRemote_ip(String remote_ip) {
+        this.remote_ip = remote_ip;
+    }
+
+    public int getType() {
+        return type;
+    }
+    public void setType(int type) {
+        this.type = type;
     }
 
     public static Model.Finder<Integer, LoginTracks> getFinder() {
@@ -95,6 +102,8 @@ public class LoginTracks extends HecticusModel{
         response.put("id_client", client.toJsonWithoutRelations());
         response.put("log", log);
         response.put("remote_ip", remote_ip);
+        response.put("type", type);
+        System.out.println("response: : " + response);
         return response;
     }
 
