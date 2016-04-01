@@ -93,7 +93,7 @@ public class FootballClients extends Clients{
                     }
 
                     //Para Registrar los login de los clientes ya existentes.
-                    LoginTracks track =  new LoginTracks(client.toJson().toString(), client, remote_ip, 2);
+                    LoginTracks track =  new LoginTracks(client.toJson().toString(), client, remote_ip, 2, 1);
                     track.save();
                     return ok(buildBasicResponse(0, "OK", client.toJson()));
                 }
