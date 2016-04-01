@@ -118,6 +118,7 @@ public class LoginTracks extends HecticusModel{
             trimmed_log.put("devices", LimitedDevices.toString());
             String final_log = trimmed_log.toString().replace("\\","").replace("\"[{","[{").replace("}]\"","}]");
 
+            //The modified JSON final_log is the one to be saved. The JSON returned to the front-end is unaffected.
             this.log = final_log;
 
         } catch (IOException e) {
