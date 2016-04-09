@@ -82,10 +82,11 @@ angular
                  }*/
                 console.log("LLEGO INFO PUSH");
                 console.log(JSON.stringify(e));
-                if(e["extra_params"] != null && e["extra_params"] != ""){
-                    //TODO executePushInit no esta implementado
-                    //executePushInit(e["extra_params"]);
-                }
+                        if (e.is_news) {
+                          $state.go('news',{newsId:e.id_news});
+                        } else if (e.id_game_match) {
+                          $state.go('mtm',{matchId:e.id_game_match});
+                        }
             }
 
             function init(){
@@ -111,8 +112,9 @@ angular
                     } else if(CordovaDevice.isIosPlatform()){
                         console.log('PushManager. isIOS');
                         pushNotification.register(
-                            function(){
-                                tokenHandler();
+                            function(token){
+                                 
+                                tokenHandler(token);
                             }, function(){
                                 errorPushHandler();
                             },
