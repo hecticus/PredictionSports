@@ -127,41 +127,46 @@ public class PerformNews extends HecticusThread {
         while(isAlive() && elements.hasNext()){
             try {
                 next = elements.next();
-                title = next.get("headline").asText();
-                summary = next.get("teaser").asText();
-                category = next.get("categories").toString();
-                keyword = next.get("keywords").toString();
-                author = "";//next.get("author").asText();
-                story = cleanBody(next.get("body").asText());
-                publishedTime = next.get("publishedTime").asLong();
-                publishedDate = new Date(publishedTime);
-                lastUpdateTime = next.get("lastUpdateTime").asLong();
-                source = next.get("externalUrl").asText();
-                if (source.equalsIgnoreCase("null")) source = "";
-                id = next.get("id").asText();
-                toInsert = News.finder.where().eq("externalId", id).findUnique();
-                if (toInsert == null) {
-                    toInsert = new News(title, summary, category, keyword, author, story, sf.format(publishedDate), source, lastUpdateTime, id, app, finalLanguage);
-                    if(next.has("links")) {
-                        processMedia(next.get("links").elements(), toInsert, resolutions);
-                    }
-                    toInsert.save();
-                } else {
-                    if (lastUpdateTime > toInsert.getUpdatedDate()) {
-                        toInsert.setTitle(title);
-                        toInsert.setSummary(summary);
-                        toInsert.setCategories(category);
-                        toInsert.setKeyword(keyword);
-                        toInsert.setAuthor(author);
-                        toInsert.setNewsBody(story);
-                        toInsert.setPublicationDate(sf.format(publishedDate));
-                        toInsert.setSource(source);
-                        toInsert.setUpdatedDate(lastUpdateTime);
-                        if(next.has("links")) {
+                if(next.get("headline").asText().indexOf("V%C3%8DDEO") == -1) {
+
+                    title = next.get("headline").asText();
+
+                    summary = next.get("teaser").asText();
+                    category = next.get("categories").toString();
+                    keyword = next.get("keywords").toString();
+                    author = "";//next.get("author").asText();
+                    story = cleanBody(next.get("body").asText());
+                    publishedTime = next.get("publishedTime").asLong();
+                    publishedDate = new Date(publishedTime);
+                    lastUpdateTime = next.get("lastUpdateTime").asLong();
+                    source = next.get("externalUrl").asText();
+                    if (source.equalsIgnoreCase("null")) source = "";
+                    id = next.get("id").asText();
+                    toInsert = News.finder.where().eq("externalId", id).findUnique();
+                    if (toInsert == null) {
+                        toInsert = new News(title, summary, category, keyword, author, story, sf.format(publishedDate), source, lastUpdateTime, id, app, finalLanguage);
+                        if (next.has("links")) {
                             processMedia(next.get("links").elements(), toInsert, resolutions);
                         }
-                        toInsert.update();
+                        toInsert.save();
+                    } else {
+                        if (lastUpdateTime > toInsert.getUpdatedDate()) {
+                            toInsert.setTitle(title);
+                            toInsert.setSummary(summary);
+                            toInsert.setCategories(category);
+                            toInsert.setKeyword(keyword);
+                            toInsert.setAuthor(author);
+                            toInsert.setNewsBody(story);
+                            toInsert.setPublicationDate(sf.format(publishedDate));
+                            toInsert.setSource(source);
+                            toInsert.setUpdatedDate(lastUpdateTime);
+                            if (next.has("links")) {
+                                processMedia(next.get("links").elements(), toInsert, resolutions);
+                            }
+                            toInsert.update();
+                        }
                     }
+
                 }
             } catch (Exception ex){
                 Utils.printToLog(PerformNews.class,
