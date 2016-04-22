@@ -127,7 +127,7 @@ public class PerformNews extends HecticusThread {
         while(isAlive() && elements.hasNext()){
             try {
                 next = elements.next();
-                if(next.get("w").asText().indexOf("VÍDEO") == -1) {
+                if(next.get("headline").asText().indexOf("VÍDEO") == -1) {
 
                     title = next.get("headline").asText();
 
