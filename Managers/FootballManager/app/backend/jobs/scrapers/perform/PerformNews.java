@@ -127,6 +127,8 @@ public class PerformNews extends HecticusThread {
         while(isAlive() && elements.hasNext()){
             try {
                 next = elements.next();
+                if(next.get("headline").asText().indexOf("VÍDEO") == -1) {
+
                 title = next.get("headline").asText();
                 summary = next.get("teaser").asText();
                 category = next.get("categories").toString();
@@ -163,6 +165,7 @@ public class PerformNews extends HecticusThread {
                         toInsert.update();
                     }
                 }
+            }
             } catch (Exception ex){
                 Utils.printToLog(PerformNews.class,
                         "Error en el PerformNews",
