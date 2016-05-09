@@ -35,7 +35,7 @@ GET            /assets/*file                                                    
 POST           /sportsapi/v1/clients/create                                            controllers.client.FootballClients.create()
 POST           /sportsapi/v1/clients/update/:id                                        controllers.client.FootballClients.update(id : Integer)
 POST           /sportsapi/v1/clients/delete/:id                                        controllers.client.Clients.delete(id : Integer)
-GET            /sportsapi/v1/clients/get/:id/:upstreamChannel                          controllers.client.FootballClients.get(id : Integer, upstreamChannel : String, pmc : Boolean?=false)
+GET            /sportsapi/v1/clients/get/:id/:upstreamChannel                              controllers.client.FootballClients.get(id : Integer, upstreamChannel : String, pmc : Boolean?=false)
 GET            /sportsapi/v1/clients/list                                              controllers.client.Clients.list(pageSize: Integer?=0, page: Integer?=0, pmc : Boolean?=false)
 GET            /sportsapi/v1/clients/alerts/:id                                        controllers.client.FootballClients.getPushAlertsForClient(id : Integer)
 GET            /sportsapi/v1/clients/bets/get/:id/:idCompetition                       controllers.client.FootballClients.getBetsForCompetition(id : Integer, idCompetition : Integer)
@@ -78,7 +78,7 @@ GET            /sportsapi/v2/client/:id/bets/:idCompetition                     
 GET            /sportsapi/v2/client/:id/leaderboard/global/:idTournament               controllers.client.FootballClients.getLeaderboardForClient(id : Integer, idTournament : Integer, idPhase : Integer?=0)
 GET            /sportsapi/v2/client/:id/leaderboard/personal/tournament                controllers.client.FootballClients.getPersonalLeaderboardForClient(id: Integer, idTournament: Integer?=0, idPhase: Integer?=0, global : Boolean?=true)
 GET            /sportsapi/v2/client/:id/leaderboard/personal/phase                     controllers.client.FootballClients.getPersonalLeaderboardForClient(id: Integer, idTournament: Integer?=0, idPhase: Integer?=0, global : Boolean?=false)
-POST           /sportsapi/v2/client/:id/upstream                                       controllers.Upstream.sendClientEvent(id : Integer)
+POST           /sportsapi/v2/client/:id/upstream                                           controllers.Upstream.sendClientEvent(id : Integer)
 GET            /sportsapi/v2/clients                                                   controllers.client.Clients.list(pageSize: Integer?=0, page: Integer?=0, pmc : Boolean?=false)
 
 GET            /sportsapi/v2/locale.json                                               controllers.client.FootballClients.getLocale(lang : String)

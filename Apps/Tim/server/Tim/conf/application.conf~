@@ -57,7 +57,7 @@ hecticusvars.ip = "10.0.3.2"
 
 #default database: football_brazil
 db.default.driver=com.mysql.jdbc.Driver
-db.default.url="jdbc:mysql://"${?hecticusvars.ip}":3306/tim_sports_natha?characterEncoding=UTF-8"
+db.default.url="jdbc:mysql://"${?hecticusvars.ip}":3306/tim_sports_Naty?characterEncoding=UTF-8"
 db.default.user=${?hecticusvars.login}
 db.default.password=${?hecticusvars.password}
 db.default.partitionCount=2

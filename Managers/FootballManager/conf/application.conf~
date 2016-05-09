@@ -8,11 +8,11 @@
 # This must be changed for production, but we recommend not changing it in this file.
 #
 # See http://www.playframework.com/documentation/latest/ApplicationSecret for more details.
-application.secret="e:XMOe>lKru8q_jckyPplm79y9Ex/35qDjcBRvD[yIj>X9:quGJEm<H01^8cp/Xg"
+application.secret="dN=4Iq/iGXRF5PU4Grb2KTHDeePHMlB6l;;Ze?Rb2=yU<v7wo2EJZlJODd`5GfWu"
 
 # The application languages
 # ~~~~~
-application.langs="en,es,pt"
+application.langs="en"
 
 # Global object class
 # ~~~~~
@@ -45,46 +45,40 @@ application.langs="en,es,pt"
 # db.default.jndiName=DefaultDS
 
 #PRODUCTION
-#hecticusvars.login = play
-#hecticusvars.password = "YRGFnGED3bGG5ARBWH"
-#hecticusvars.ip = "int.bd.hecticus.com"
+#hecticusvars_footballmanager.login = play
+#hecticusvars_footballmanager.password = "YRGFnGED3bGG5ARBWH"
+#hecticusvars_footballmanager.ip = "int.bd.hecticus.com"
 
-#DEVELOP
-hecticusvars.login = admin
-hecticusvars.password = "h3ct1cus*"
-hecticusvars.ip = "10.0.3.2"
+#DEVELOPER
+hecticusvars_footballmanager.login = admin
+hecticusvars_footballmanager.password = "h3ct1cus*"
+hecticusvars_footballmanager.ip = "10.0.3.2"
 
-
-#default database: football_brazil
+#default database: football_manager
 db.default.driver=com.mysql.jdbc.Driver
-db.default.url="jdbc:mysql://"${?hecticusvars.ip}":3306/tim_sports_natha?characterEncoding=UTF-8"
-db.default.user=${?hecticusvars.login}
-db.default.password=${?hecticusvars.password}
-db.default.partitionCount=2
-db.default.maxConnectionsPerPartition=10
-db.default.minConnectionsPerPartition=2
-db.default.acquireIncrement=2
+db.default.url="jdbc:mysql://"${?hecticusvars_footballmanager.ip}":3306/football_manager_palenge?characterEncoding=UTF-8"
+db.default.user=${?hecticusvars_footballmanager.login}
+db.default.password=${?hecticusvars_footballmanager.password}
+db.default.partitionCount=5
+db.default.maxConnectionsPerPartition=5
+db.default.minConnectionsPerPartition=1
+db.default.acquireIncrement=1
 #por defecto 5 minutes
 db.default.idleConnectionTestPeriod=10 minutes
 #Por defecto 1 segundo
 db.default.connectionTimeout=2 seconds
 
-#db.default.logStatements=true
-
-
 # Evolutions
 # ~~~~~
 # You can disable evolutions if needed
-#evolutionplugin=enable
 evolutionplugin=disabled
- 
- 
+
 # Ebean configuration
 # ~~~~~
 # You can declare as many Ebean servers as you want.
 # By convention, the default server is named `default`
 #
- ebean.default="models.*"
+ebean.default="models.*"
 
 # Logger
 # ~~~~~
@@ -108,5 +102,4 @@ include "play-authenticate/smtp.conf"
 
 # And play authenticate
 include "play-authenticate/mine.conf"
-
 
