@@ -699,7 +699,10 @@ public class MatchesController extends HecticusController {
                     competitions = new ArrayList<ObjectNode>(competitionsByApp.size());
                 }
                 for (Competition competition : competitionsByApp) {
-                    competitions.add(ids ? competition.getIdCompetitions() : (competition.toJsonNoPhases(requestLanguage, app.getLanguage(), closestMatch, timeZone)));
+                    try{
+                    ObjectNode tmp = competition.toJsonNoPhases(requestLanguage, app.getLanguage(), closestMatch, timeZone);
+                    competitions.add(ids ? competition.getIdCompetitions() : tmp);}
+                    catch(NullPointerException e) {        }
                 }
                 if(!ids && closestMatch){
                     Collections.sort(competitions, new CompetitionsNextMatch());

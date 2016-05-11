@@ -112,7 +112,7 @@ public class FootballClients extends Clients{
             if (!pushAlerts.isEmpty()) {
                 client.setPushAlerts(pushAlerts);
             }
-            if(client.getStatus() != 2 || !client.getLogin().equalsIgnoreCase(Config.getString("upstreamGuestUser"))) {
+            if(client.getStatus() != 2 || !(client.getLogin() != null? client.getLogin().equalsIgnoreCase(Config.getString("upstreamGuestUser")): false)) {
                 int firstLoginPoints = Config.getInt("first-login-points");
                 LeaderboardTotal firstLoginLeaderboard = new LeaderboardTotal(client, firstLoginPoints, 0);
                 client.setLeaderboardTotal(firstLoginLeaderboard);
@@ -135,8 +135,28 @@ public class FootballClients extends Clients{
                 }
             }
             //Creación de la instancia login_tracks
-            LoginTracks track = new LoginTracks(client.toJson().toString(),baseClient,remote_ip);
-            track.save();
+            //LoginTracks track = new LoginTracks(client.toJson().toString(),baseClient,remote_ip);
+            //track.save();
+
+            if(client.getLogin() == null){
+                if(client.getLogin() == null){
+                    client.setLogin(Config.getString("upstreamGuestUser"));
+                }
+                if(client.getPassword() == null){
+                    client.setPassword(Config.getString("upstreamGuestPassword"));
+                }
+                if(client.getUserId() == null){
+                    client.setUserId(Config.getString("upstreamUserID"));
+                }
+                client.setStatus(2);
+            }
+
+            /*if(client.getLogin() == null) {
+                client.setLogin("guest");//gin = ::
+                client.setPassword("guest");//gin = ::
+                client.setNickname("guest");//gin = ::
+                client.setUserId("1");//gin = ::
+            }*/
             client.update();
             return created(buildBasicResponse(0, "OK", client.toJson()));
         } catch (Exception ex) {
