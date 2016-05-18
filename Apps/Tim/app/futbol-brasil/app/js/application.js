@@ -60,8 +60,10 @@ angular
                 suffix: '.js'
             });
 
-            $translateProvider.preferredLanguage('pt');
-            $translateProvider.use('pt');
+            //cambiado el locale / laengiaje de pt a es
+
+            $translateProvider.preferredLanguage('es');
+            $translateProvider.use('es');
             $translateProvider.usePostCompiling(true);
         }
     ])

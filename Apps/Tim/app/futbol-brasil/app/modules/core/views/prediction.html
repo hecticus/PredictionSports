@@ -1,4 +1,4 @@
-<div class="row h-points" ng-show="hasCompetition">
+<div class="row h-points" ng-show="hasCompetition" id="estadio">
   <div class="col-xs-12">
     <h3 ng-bind="getNameClient"
         style="text-align:center;
@@ -16,7 +16,7 @@
               width:100px;
               height: 100px;
               line-height: 25px;
-              background-color: rgb(122,184,0)  !important;
+              background-color: rgba(227,30,48,0.5)  !important;
               border-radius: 50%;
               text-align:center;
               color:   rgb(0,40,120);
@@ -27,8 +27,8 @@
               border-color: #ffffff;">
 
     <div style="height:35px; position: absolute; top: 0; left: 0; bottom: 0; right: 0; margin: auto; color:#ffffff; ">
-      <span ng-bind="points"  style="text-transform: uppercase; font-size:1.4em !important; display:block;" ></span>
-      <span translate style="font-size: 1em; ">LEADERBOARD.POINTS</span>
+      <span ng-bind="points"  style="text-transform: uppercase; font-size:1.4em !important; display:block; margin-top: 5px" ></span>
+      <!-- <span translate style="font-size: 1em; ">LEADERBOARD.POINTS</span> -->
     </div>
 
   </div>
@@ -57,9 +57,9 @@
              ng-click="showContentPrediction($index)" >
 
           <img class="h-shield" ng-src="{{getCompetitionShield(league.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
-          <span class="h-headline">{{league.competiton_type.name}}</span>
+          <span class="h-headline" style="color: #000; font-size: 1em">{{league.competiton_type.name}}</span>
 
-          <div style="float:right; color: rgb(122,184,0) !important; ">
+          <div style="float:right; color: rgb(0,118,207) !important; ">
             <span class="h-headline" ng-bind="getEndOfTime(league.match.date)" style="font-size:1.2em; text-transform: capitalize; "></span>
             <i class=" mdi-navigation-chevron-right" style="font-size:1.4em; vertical-align:middle;"></i>
           </div>

@@ -265,7 +265,7 @@
       "FB_SHARE" : {
             "TITLE" : "News Share",
             "SUBTITLE": "Warning",
-            "MSG": "In order to share news you have to be logged in with facebook"
+            "MSG": "Para compartir noticias, debe estar conectado con Facebook"
         }
 
     },

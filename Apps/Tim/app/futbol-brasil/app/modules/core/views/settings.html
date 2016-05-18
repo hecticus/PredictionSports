@@ -1,11 +1,18 @@
 <div id="wrapper" class="settings-wrapper">
     <div class="scroller" style="background-color: transparent; position: absolute;">
         <div class="col-xs-12">
+            <div>
+                <h2 class="screen-tittle">
+                <span translate>SECTIONS.SETTINGS</span></h2>
+            </div>
             <div class="panel panel-danger">
+
                 <div class="panel-heading">
+                <hr>
                     <h3 class="panel-title">
                         <span class="mdi-action-account-circle"></span>
                         <span translate>SETTINGS.NICKNAME_TITLE</span></h3>
+                <hr>
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
@@ -13,7 +20,7 @@
                                for="inputDefault" translate>SETTINGS.NICKNAME_TITLE</label>
                         <div class="input-group">
 
-                            <input type="text" class="form-control" id="inputDefault"
+                            <input type="text" class="form-control username-form" id="inputDefault"
                                    ng-disabled="!isEditing" ng-model="nickname"
                                    placeholder="{{ 'SETTINGS.NICKNAME_PLACEHOLDER' | translate}}"
                                    maxlength="16">
@@ -30,11 +37,15 @@
             </div>
 
             <div class="panel panel-warning">
+                
                 <div class="panel-heading">
+                <hr>
                     <h3 class="panel-title">
                         <span class="mdi-action-stars"></span>
                         {{'SETTINGS.FAVORITE_TEAMS_TITLE' | translate}}</h3>
+                <hr>
                 </div>
+                
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-4 text-center" ng-repeat="team in favoriteTeams">
@@ -51,7 +62,7 @@
                                onerror="this.src='img/shield-1.png'"
                                ng-hide="isEmptySlot(team)">
 
-                            <i class="btn btn-delete-item btn-raised mdi-content-clear"
+                            <i class="btn btn-delete-item mdi-content-clear"
                                ng-click="removeTeam(team)"
                                ng-show="!isEmptySlot(team)"></i>
 
@@ -65,10 +76,13 @@
             </div>
 
             <div ng-hide="isWebPlatform" class="panel panel-primary">
+                
                 <div class="panel-heading">
+                <hr>
                     <h3 class="panel-title">
                         <span class="mdi-social-notifications-on"></span>
                         {{ 'SETTINGS.PUSH_TITLE' | translate }}</h3>
+                <hr>
                 </div>
                 <div class="panel-body">
                     <div class="form-horizontal">
@@ -114,7 +128,8 @@
                 </div>
             </div>
 
-            <!--div class="panel panel-success">
+            <!-- 
+            div class="panel panel-success">
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         <span class="mdi-action-language"></span>
@@ -135,13 +150,16 @@
                         </div>
                     </div>
                 </div>
-            </div--->
+            </div>
+            -->
 
             <div class="panel panel-info">
                 <div class="panel-heading">
+                <hr>
                     <h3 class="panel-title">
                         <span class="mdi-social-people"></span>
                         {{ 'SETTINGS.SOCIAL_ACCOUNTS_TITLE' | translate }}</h3>
+                <hr>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -158,9 +176,11 @@
 
             <div class="panel panel-info">
               <div class="panel-heading">
+              <hr>
                 <h3 class="panel-title">
                   <span class="glyphicon glyphicon-question-sign"></span>
                   {{ 'SETTINGS.APP' | translate }}</h3>
+              <hr>
               </div>
               <div class="panel-body">
                 <div class="row">
@@ -170,7 +190,6 @@
                 </div>
               </div>
             </div>
-
         </div>
     </div>
 </div>
