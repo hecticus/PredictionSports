@@ -12,7 +12,8 @@ angular
 
             var football_manager_url = 'http://tim.sports.hecticus.com/';
             var brazil_football_manager_url = 'http://tim.sports.hecticus.com/';
-            var appId = '1';
+            //cambiado appid para ir de tim a plusports
+            var appId = '3';
             var apiVersion = 'v1';
             var provisionalLang = null;
 
@@ -68,7 +69,8 @@ angular
                 } else if(Client.getLanguage()){
                     return Client.getLanguage().id_language;
                 } else {
-                    return 405;
+                    //antes estaba 405 (portigues) ahora es 300 (español)
+                    return 300;
                 }
             }
 

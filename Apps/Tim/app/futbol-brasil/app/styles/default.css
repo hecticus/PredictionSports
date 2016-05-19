@@ -547,7 +547,7 @@ body.content-mtm .row-back {
 
 /*Audel INICIO*/
 .username-form {
-  width: 260px !important;
+  margin-right: 26px !important;
   border-style: solid !important;
   height: 35px !important;
   padding-left: 10px !important;
