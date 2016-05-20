@@ -10,8 +10,10 @@ angular
     .factory('Domain', ['$localStorage', 'App','Client','CordovaDevice',
         function($localStorage, App, Client,CordovaDevice){
 
-            var football_manager_url = 'http://tim.sports.hecticus.com/';
-            var brazil_football_manager_url = 'http://tim.sports.hecticus.com/';
+            var football_manager_url = 'http://plussports.hecticus.com/';
+            var brazil_football_manager_url = 'http://plussports.hecticus.com/';
+            // var football_manager_url = 'http://10.0.3.108:9010/';
+            // var brazil_football_manager_url = 'http://10.0.3.108:9010/';
             //cambiado appid para ir de tim a plusports
             var appId = '3';
             var apiVersion = 'v1';

@@ -13,7 +13,7 @@ angular
             var FILE_KEY_CLIENT = "APPDATACLIENT";
             var FILE_KEY_CLIENT_PUSH_ALERTS = "APPDATACLIENTPUSHALERTS";
             var FILE_KEY_CLIENT_DATASAFE = "APPDATACLIENTDATASAFE";
-            var prefix = '55';
+            var prefix = '507';
 
 
             var localStorage = $localStorage;

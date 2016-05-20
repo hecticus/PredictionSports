@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.upstreamsystems.timpalpites" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://cordova.apache.org/ns/1.0">
+<widget id="com.hecticus.massports" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://cordova.apache.org/ns/1.0">
     <name>TIM Palpites</name>
     <description>
       TIM Palpites App.
@@ -68,7 +68,7 @@
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
     </feature>
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="5000" />
+    <preference name="SplashScreenDelay" value="10000" />
     <platform name="ios">
         <splash height="480" src="res/ios/splash/Default~iphone.png" width="320" />
         <splash height="960" src="res/ios/splash/Default@2x~iphone.png" width="640" />

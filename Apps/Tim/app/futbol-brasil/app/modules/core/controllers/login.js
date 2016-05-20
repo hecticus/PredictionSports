@@ -21,7 +21,7 @@ angular
             $scope.msisdn = '';
             $scope.password = '';
             $scope.prefix = '+' + Client.prefix;
-            $scope.formController = {"msisdn": {"length" : {"min": 11, "max" : 12}}};
+            $scope.formController = {"msisdn": {"length" : {"min": 8, "max" : 9}}};
 
 
             //$scope.isWeb = false;
