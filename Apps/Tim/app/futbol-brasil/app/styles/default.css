@@ -1112,6 +1112,7 @@ h6.team-name {
 
     .btn-facebook.btn-info {
       background  : rgb(59,89,152) !important;
+      padding: 8px 1px;
     }
 
     .btn-facebook.btn-warning {

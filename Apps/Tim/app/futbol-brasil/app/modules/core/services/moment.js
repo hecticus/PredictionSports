@@ -17,7 +17,8 @@ angular
                     return oLang.short_name.toLowerCase();
                 } else {
                     //console.log('defaultLanguage: undefined. Returning "pt"');
-                    return 'pt';
+                    //return 'pt';
+                    return 'es'
                 }
             }
 

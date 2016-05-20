@@ -17,7 +17,7 @@ angular
             //cambiado appid para ir de tim a plusports
             var appId = '3';
             var apiVersion = 'v1';
-            var provisionalLang = null;
+            var provisionalLang = 'es';
 
 
             function getAppender(index) {

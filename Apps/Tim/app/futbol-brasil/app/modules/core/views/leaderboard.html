@@ -11,7 +11,7 @@
                         <span class="mdi-navigation-arrow-back" ng-hide="item.competitions[$index-1].name === undefined"></span>
                       </div>
                       <div class="col-xs-8 h-ellipsis-truncate">
-                        <img class="h-shield h-tree" ng-src="{{getCompetitionShield(competition.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+                        <!-- <img class="h-shield h-tree" ng-src="{{getCompetitionShield(competition.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'"> -->
                         <span ng-hide="$index===0" ng-bind="competition.competiton_type.name" class="caption"></span>
                         <span ng-show="$index===0" class="caption" translate>LEADERBOARD.GENERAL</span>
                       </div>
