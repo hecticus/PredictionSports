@@ -13,6 +13,8 @@ keytool -exportcert -alias tim_palpites -keystore "C:\Hecticus\GitHub\Prediction
 Sign your app with your private key using jarsigner:
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore tim-palpites-release-key.keystore MainActivity-release-unsigned.apk tim_palpites
 
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore plus-sports-release.keystore <Unsigned APK file> plus_sports
+
 Verify that your APK is signed. For example:
 jarsigner -verify -verbose -certs MainActivity-release-unsigned.apk
 
