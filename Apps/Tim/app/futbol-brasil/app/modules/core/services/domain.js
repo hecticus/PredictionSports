@@ -15,7 +15,7 @@ angular
             // var football_manager_url = 'http://10.0.3.108:9010/';
             // var brazil_football_manager_url = 'http://10.0.3.108:9010/';
             //cambiado appid para ir de tim a plusports
-            var appId = '3';
+            var appId = '1';
             var apiVersion = 'v1';
             var provisionalLang = 'es';
 

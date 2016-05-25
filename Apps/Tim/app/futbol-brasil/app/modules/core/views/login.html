@@ -7,7 +7,7 @@
 
             <div class="col-xs-12">
 
-                <div class="well text-center">
+                <div class="well text-center panel">
                     
                     <div>
                         <h2 class="screen-tittle">
@@ -69,11 +69,25 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-xs-12">
+                                <div class="col-xs-12 ">
                                     <button type="submit" class="btn btn-block btn-orange touch-enable" ng-disabled="form.$invalid">
                                         <div class="row">
-                                            <div class="col-xs-10">
+                                            <div class="col-xs-12">
                                                 <span translate>LOGIN.LOGIN_LABEL</span>
+                                            </div>
+                                            <!-- <div class="col-xs-2 text-right">
+                                                <span><i class="mdi-navigation-chevron-right"></i></span>
+                                            </div> -->
+                                        </div>
+                                    </button>
+                                </div>                                
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 ">
+                                    <button ui-sref="remind" class="btn btn-block btn-orange touch-enable">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <span translate>LOGIN.REMIND_LABEL</span>
                                             </div>
                                             <!-- <div class="col-xs-2 text-right">
                                                 <span><i class="mdi-navigation-chevron-right"></i></span>
@@ -87,14 +101,14 @@
                     </form>
 
                     <div class="list-group">
-                        <a ui-sref="remind" class="list-group-item list-item">
+                        <!-- <a ui-sref="remind" class="list-group-item list-item">
                             <div class="col-xs-10 col-xs-push-1">
                                 <span class="h-login-button" translate>LOGIN.REMIND_LABEL</span>
                             </div>
-                            <!-- <div class="col-xs-2 text-right">
+                            <div class="col-xs-2 text-right">
                                 <span><i class="mdi-navigation-chevron-right"></i></span>
-                            </div> -->
-                        </a>
+                            </div>
+                        </a> -->
                         <!--div class="full-separator"></div>
                         <a ui-sref="language-selection" class="list-group-item list-item">
                             <div class="col-xs-10">
@@ -112,7 +126,29 @@
                             <div class="col-xs-2 text-right">
                                 <span><i class="mdi-navigation-chevron-right"></i></span>
                             </div>
-                        </a-->
+                        </a-->                        
+                    </div>
+
+                    <form name="msisdnForm" ng-submit="enterAsGuest()" class="form-horizontal">
+                        <fieldset>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button type="submit" class="btn btn-block btn-orange touch-enable">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <span translate>LOGIN.ENTER_AS_GUEST_LABEL</span>
+                                            </div>
+                                            <!-- <div class="col-xs-2 text-right">
+                                                <span><i class="mdi-navigation-chevron-right"></i></span>
+                                            </div> -->
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div class="list-group">
+                        <!-- the below div was placed in the div above guest button -->
                         <div class="full-separator"></div>
                         <a ui-sref="terms" class="list-group-item list-item">
                           <div class="col-xs-10 col-xs-push-1">
@@ -123,25 +159,6 @@
                           </div> -->
                         </a>
                     </div>
-
-                    <form name="msisdnForm" ng-submit="enterAsGuest()" class="form-horizontal">
-                        <fieldset>
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <button type="submit" class="btn btn-block btn-orange touch-enable">
-                                        <div class="row">
-                                            <div class="col-xs-10">
-                                                <span translate>LOGIN.ENTER_AS_GUEST_LABEL</span>
-                                            </div>
-                                            <div class="col-xs-2 text-right">
-                                                <span><i class="mdi-navigation-chevron-right"></i></span>
-                                            </div>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
                 </div>
             </div>
         </div>

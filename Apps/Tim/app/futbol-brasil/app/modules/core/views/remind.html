@@ -3,7 +3,7 @@
         <div>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="well">
+                    <div class="well panel">
                         <h3 translate>LOGIN.REMIND.HERO.TITLE</h3>
                         <h5 translate>LOGIN.REMIND.HERO.MESSAGE</h5>
                         <h6 class="text-muted" translate>LOGIN.REMIND.HERO.SMALL_PRINT</h6>
@@ -12,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="well text-center">
+                    <div class="well text-center panel">
                         <form name="form" ng-submit="sendMsisdn()" class="form-horizontal" novalidate>
                             <fieldset>
                                 <legend translate>LOGIN.REMIND.LABEL</legend>
@@ -44,12 +44,12 @@
                                     <div class="col-xs-12">
                                         <button type="submit" class="btn btn-block btn-orange touch-enable" ng-disabled="form.$invalid">
                                             <div class="row">
-                                                <div class="col-xs-10">
+                                                <div class="col-xs-12">
                                                     <span translate>LOGIN.REMIND_LABEL</span>
                                                 </div>
-                                                <div class="col-xs-2 text-right">
+                                                <!-- <div class="col-xs-2 text-right">
                                                     <span><i class="mdi-navigation-chevron-right"></i></span>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </button>
                                     </div>
@@ -60,12 +60,12 @@
 
                         <div class="list-group">
                             <a ui-sref="terms" class="list-group-item list-item">
-                                <div class="col-xs-10">
+                                <div class="col-xs-12">
                                     <span class="h-login-button" translate>LOGIN.TERMS_LABEL</span>
                                 </div>
-                                <div class="col-xs-2 text-right">
+                                <!-- <div class="col-xs-2 text-right">
                                     <span><i class="mdi-navigation-chevron-right"></i></span>
-                                </div>
+                                </div> -->
                             </a>
                         </div>
                     </div>

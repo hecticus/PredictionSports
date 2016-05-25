@@ -9,14 +9,14 @@
             "LIVE": "En Vivo"
         },
         "BETS" : {
-            "BETS": "Apuestas",
+            "BETS": "POLLA DEL FÚTBOL",
             "PREDICTIONS" : "Predicciones",
-            "LEADERBOARDS" : "Leaderboards",
+            "LEADERBOARDS" : "Rankings",
             "FRIENDS" : "Amigos",
-            "POINTS" : "Puntos"
+            "POINTS" : "Mis Puntos"
         },
         "SETTINGS": "Configuraciones",
-        "LOGIN" : "Login",
+        "LOGIN" : "¿Ya estás suscrito? Ingresa tu número",
         "REMIND" : "Recordar / Obtener Credenciales",
         "LANGUAGE-SELECTION" : "Selección de Idioma",
         "TEAM-SELECTION" : "Selección de Equipo",
@@ -71,9 +71,9 @@
     "EMPTY_STATES" : {
         "LIVE" : "No hay juegos programados para hoy",
         "NEWS" : "No hay noticias disponibles",
-        "POINTS" : "Usted no tiene información de puntos disponible",
-        "LEADERBOARD" : "No hay juegos disponibles",
-        "PREDICTIONS" : "No hay juegos disponibles",
+        "POINTS" : "Todavía no has hecho predicciones o no se han jugado los partidos.",
+        "LEADERBOARD" : "Todavía no has hecho predicciones o no se han jugado los partidos.",
+        "PREDICTIONS" : "Todavía no has hecho predicciones o no se han jugado los partidos.",
         "MATCH" : "No hay juegos programados para este día",
         "SCORERS" : "No hay goleadores para este torneo",
         "TEAMS" : "No se pudieron obtener los equipos",
@@ -87,10 +87,10 @@
     "LOGIN" : {
         "PASSWORD_LABEL" : "Contraseña",
         "PASSWORD_HELPER" : "Ingrese el código recibido por SMS.",
-        "MSISDN_HOLDER" : "# Numero",
+        "MSISDN_HOLDER" : "# 12345678",
         "MSISDN_LABEL" : "Número de teléfono",
         "LOGIN_LABEL" : "Login",
-        "REMIND_LABEL" : "Recordar / Obtener Credenciales",
+        "REMIND_LABEL" : "Obtener Contraseña",
         "CHANGE_LANGUAGE_LABEL" : "Cambiar Idioma",
         "TUTORIAL_LABEL" : "¿Como funciona?",
         "TERMS_LABEL" : "Términos y Condiciones",
@@ -98,9 +98,9 @@
         "REMIND" : {
             "LABEL" : "Introduzca su número de teléfono móvil",
             "HERO" : {
-                "TITLE" : "¿Olvidó su Usuario y Contraseña?",
-                "MESSAGE" : "Para obtener sus credenciales por favor escriba su NÚMERO DE TELÉFONO y presione 'Recordar / Obtener Credenciales'",
-                "SMALL_PRINT" : "*El servicio está disponible solo para suscriptores de la operadora especificada"
+                "TITLE" : "¿Olvidó su clave o no se ha suscrito?",
+                "MESSAGE" : "Para obtener su clave por favor ingrese su número de teléfono y presione Recordar/Obtener Clave",
+                "SMALL_PRINT" : "*El servicio está disponible sólo para suscriptores de +Móvil"
             },
             "SUCCESS" : "Recordatorio exitoso."
         }
@@ -138,7 +138,7 @@
     },
 
     "TERMS" : {
-        "MESSAGE" : "Por favor, lea los términos y condiciones en el sitio web http://www.tim.com.br/. Mediante el uso de la aplicación, el usuario se obliga a todos los Términos y Condiciones."
+        "MESSAGE" : "Por favor, lea los términos y condiciones en el sitio web hhttp://www.masmovil.com.pa/. Mediante el uso de la aplicación, el usuario se obliga a todos los Términos y Condiciones."
     },
 
 
@@ -242,8 +242,8 @@
       },
 
       "LOCKED_SECTION" : {
-        "TITLE" : "Sección bloqueada",
-        "MSG": "Esta sección está bloqueado para los usuarios invitados. ¿Le gustaría registrarse para desbloquear esta sección?",
+        "TITLE" : "Zona Premium",
+        "MSG": "Esta sección está bloqueada para usuarios +Móvil que se han suscrito a +Sports. ?Le gustaría suscribirse a +Sports par desbloquear esta sección? Aceptar no le generará costos en este momento.",
         "CONFIRM" : "Ok",
         "CANCEL" : "Cancelar"
       },
