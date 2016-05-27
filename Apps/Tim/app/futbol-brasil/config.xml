@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.hecticus.massports" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://cordova.apache.org/ns/1.0">
+<widget id="com.hecticus.massports" version="1.0.5" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://cordova.apache.org/ns/1.0">
     <name>+Sports</name>
     <description>
-      TIM Palpites App.
+      +Sports App.
 	  </description>
     <author email="contact@hecticus.com" href="http://www.hecticus.com">
 		Hecticus Software Inc
@@ -11,6 +11,7 @@
     <allow-navigation href="*" />
     <allow-intent href="*" />
     <access origin="*" />
+    <preference name="fullscreen" value="false" />
     <platform name="android">
         <splash src="res/android/drawable/screen.png" />
         <splash density="ldpi" src="res/android/drawable-ldpi/screen.png" />
@@ -36,7 +37,6 @@
         <framework src="SystemConfiguration.framework" />
     </platform>
     <preference name="orientation" value="portrait" />
-    <preference name="fullscreen" value="true" />
     <preference name="target-device" value="universal" />
     <preference name="prerendered-icon" value="true" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
@@ -69,6 +69,7 @@
     </feature>
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="10000" />
+    <splash src="res/screen.png" />
     <platform name="ios">
         <splash height="480" src="res/ios/splash/Default~iphone.png" width="320" />
         <splash height="960" src="res/ios/splash/Default@2x~iphone.png" width="640" />

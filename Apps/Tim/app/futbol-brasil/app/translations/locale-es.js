@@ -9,7 +9,7 @@
             "LIVE": "En Vivo"
         },
         "BETS" : {
-            "BETS": "POLLA DEL FÚTBOL",
+            "BETS": "PREDICCIONES",
             "PREDICTIONS" : "Predicciones",
             "LEADERBOARDS" : "Rankings",
             "FRIENDS" : "Amigos",
@@ -266,6 +266,12 @@
             "TITLE" : "News Share",
             "SUBTITLE": "Warning",
             "MSG": "Para compartir noticias, debe estar conectado con Facebook"
+        },
+
+      "MAX_BETS_REACHED" : {
+            "TITLE" : "Limite Alcanzado",
+            "SUBTITLE": "Para usuarios invitados",
+            "MSG": "Usted ha alcanzado el maximo de apuestas permitidas a usuarios invitados."
         }
 
     },
