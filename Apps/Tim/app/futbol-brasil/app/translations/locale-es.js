@@ -271,7 +271,7 @@
       "MAX_BETS_REACHED" : {
             "TITLE" : "Limite Alcanzado",
             "SUBTITLE": "Para usuarios invitados",
-            "MSG": "Usted ha alcanzado el maximo de apuestas permitidas a usuarios invitados."
+            "MSG": "Usted ha alcanzado el maximo de apuestas permitidas a usuarios invitados. ¿Le gustaría suscribirse para desbloquear esta sección?"
         }
 
     },

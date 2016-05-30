@@ -588,6 +588,11 @@ hr {
   color: #000000;
 }
 
+.letogglecolor{
+  color: #e31e30 !important; 
+  background-color: #e31e30 !important;
+}
+
 /*Audel FIN*/
 
 /*Drawer*/
