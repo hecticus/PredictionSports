@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SBT: org.fusesource.leveldbjni:leveldbjni-linux64:1.5:jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../../bin/act/repository/org.fusesource.leveldbjni/leveldbjni-linux64/1.5/jars/leveldbjni-linux64.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,8 +1,0 @@
-[debug] Copy resource mappings: 
-[debug] 	(/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/JobCore/conf/application.conf,/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/JobCore/target/scala-2.10/classes/application.conf)
-[debug] 	(/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/JobCore/conf/evolutions,/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/JobCore/target/scala-2.10/classes/evolutions)
-[debug] 	(/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/JobCore/conf/JobCore.routes,/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/JobCore/target/scala-2.10/classes/JobCore.routes)
-[debug] 	(/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/JobCore/conf/messages.en,/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/JobCore/target/scala-2.10/classes/messages.en)
-[debug] 	(/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/JobCore/conf/messages.es,/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/JobCore/target/scala-2.10/classes/messages.es)
-[debug] 	(/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/JobCore/conf/evolutions/default,/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/JobCore/target/scala-2.10/classes/evolutions/default)
-[debug] 	(/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/JobCore/conf/evolutions/default/1.sql,/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/JobCore/target/scala-2.10/classes/evolutions/default/1.sql)

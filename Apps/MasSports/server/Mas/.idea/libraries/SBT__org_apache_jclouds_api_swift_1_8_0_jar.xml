@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="SBT: org.apache.jclouds.api:swift:1.8.0:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.jclouds.api/swift/jars/swift-1.8.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.jclouds.api/swift/srcs/swift-1.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

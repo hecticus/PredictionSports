@@ -1,9 +1,0 @@
-[debug] Copy resource mappings: 
-[debug] 	(/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/conf/application.conf,/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/target/scala-2.10/classes/application.conf)
-[debug] 	(/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/conf/evolutions,/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/target/scala-2.10/classes/evolutions)
-[debug] 	(/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/conf/messages.en,/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/target/scala-2.10/classes/messages.en)
-[debug] 	(/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/conf/messages.es,/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/target/scala-2.10/classes/messages.es)
-[debug] 	(/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/conf/messages.pt,/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/target/scala-2.10/classes/messages.pt)
-[debug] 	(/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/conf/UpstreamAPIConnector.routes,/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/target/scala-2.10/classes/UpstreamAPIConnector.routes)
-[debug] 	(/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/conf/evolutions/default,/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/target/scala-2.10/classes/evolutions/default)
-[debug] 	(/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/conf/evolutions/default/1.sql,/Users/palenge/Hecticus/TIM_Naty/TimPanama/modules/UpstreamAPIConnector/target/scala-2.10/classes/evolutions/default/1.sql)
