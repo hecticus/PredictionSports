@@ -1,0 +1,96 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Map static resources from the /public folder to the /assets URL path
+GET           /assets/*file                                       controllers.Assets.versioned(path="/public", file: Asset)
+
+#Upstream
+
+POST          /api/v1/client/:id/upstream                         controllers.Upstream.sendClientEvent(id : Integer)
+POST          /api/v1/clients/upstream/resetpass                  controllers.Upstream.resetUpstreamPass()
+
+##FAKE UPSTREAM URL
+POST          /api/v1/clients/upstream/game/user/subscribe        controllers.Upstream.upstreamFakeCreate()
+POST          /api/v1/clients/upstream/game/user/login            controllers.Upstream.upstreamFakeLogin()
+POST          /api/v1/clients/upstream/game/user/status           controllers.Upstream.upstreamFakeStatus()
+POST          /api/v1/clients/upstream/game/user/password         controllers.Upstream.upstreamFakeResetPass()
+POST          /api/v1/clients/upstream/game/user/event            controllers.Upstream.upstreamFakeEventSend()
+
+#Clients
+
+##V1
+POST          /api/v1/clients/create                              controllers.client.Clients.create()
+POST          /api/v1/clients/update/:id                          controllers.client.Clients.update(id : Integer)
+POST          /api/v1/clients/delete/:id                          controllers.client.Clients.delete(id : Integer)
+GET           /api/v1/clients/get/:id/:upstreamChannel            controllers.client.Clients.get(id : Integer, upstreamChannel : String, pmc : Boolean?=false)
+GET           /api/v1/clients/list                                controllers.client.Clients.list(pageSize: Integer?=0, page: Integer?=0, pmc : Boolean?=false)
+
+###Clients PMC
+GET           /api/v1/clients/pmc/get/:id                         controllers.client.Clients.get(id : Integer, upstreamChannel : String?="Android", pmc : Boolean?=true)
+GET           /api/v1/clients/pmc/list/:page/:pageSize            controllers.client.Clients.list(pageSize: Integer, page: Integer, pmc : Boolean?=true)
+POST          /api/v1/clients/pmc/clean                           controllers.client.Clients.cleanDevices()
+
+##V2
+POST          /api/v2/client                                      controllers.client.Clients.create()
+GET           /api/v2/client/:id                                  controllers.client.Clients.get(id : Integer, upstreamChannel : String ?= "Android", pmc : Boolean ?= false)
+PUT           /api/v2/client/:id                                  controllers.client.Clients.update(id : Integer)
+DELETE        /api/v2/client/:id                                  controllers.client.Clients.delete(id : Integer)
+
+#CountriesView
+# CountriesView list (look at the default values for pagination parameters)
+GET             /countries/list                                                                 controllers.CountriesView.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET             /countries/lsort                                                                controllers.CountriesView.lsort()
+# Add CountriesView
+GET             /countries/blank                                                                controllers.CountriesView.blank()
+POST            /countries                                                                      controllers.CountriesView.submit()
+# Edit existing CountriesView
+GET             /countries/sort/:ids                                                            controllers.CountriesView.sort(ids:String)
+GET             /countries/:id                                                                  controllers.CountriesView.edit(id:Integer)
+POST            /countries/:id                                                                  controllers.CountriesView.update(id:Integer)
+# Delete a CountriesView
+POST            /countries/:id/delete                                                           controllers.CountriesView.delete(id:Integer)
+
+#LanguagesView
+# LanguagesView list (look at the default values for pagination parameters)
+GET             /languages/list                                                                 controllers.LanguagesView.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET             /languages/lsort                                                                controllers.LanguagesView.lsort()
+# Add LanguagesView
+GET             /languages/blank                                                                controllers.LanguagesView.blank()
+POST            /languages                                                                      controllers.LanguagesView.submit()
+# Edit existing LanguagesView
+GET             /languages/sort/:ids                                                            controllers.LanguagesView.sort(ids:String)
+GET             /languages/:id                                                                  controllers.LanguagesView.edit(id:Integer)
+POST            /languages/:id                                                                  controllers.LanguagesView.update(id:Integer)
+# Delete a LanguagesView
+POST            /languages/:id/delete                                                           controllers.LanguagesView.delete(id:Integer)
+
+#TimezonesView
+# TimezonesView list (look at the default values for pagination parameters)
+GET             /timezones/list                                                                 controllers.TimezonesView.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET             /timezones/lsort                                                                controllers.TimezonesView.lsort()
+# Add TimezonesView
+GET             /timezones/blank                                                                controllers.TimezonesView.blank()
+POST            /timezones                                                                      controllers.TimezonesView.submit()
+# Edit existing TimezonesView
+GET             /timezones/sort/:ids                                                            controllers.TimezonesView.sort(ids:String)
+GET             /timezones/:id                                                                  controllers.TimezonesView.edit(id:Integer)
+POST            /timezones/:id                                                                  controllers.TimezonesView.update(id:Integer)
+# Delete a TimezonesView
+POST            /timezones/:id/delete                                                           controllers.TimezonesView.delete(id:Integer)
+
+#DevicesView
+# DevicesView list (look at the default values for pagination parameters)
+GET             /devices/list                                                                 controllers.DevicesView.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET             /devices/lsort                                                                controllers.DevicesView.lsort()
+# Add DevicesView
+GET             /devices/blank                                                                controllers.DevicesView.blank()
+POST            /devices                                                                      controllers.DevicesView.submit()
+# Edit existing DevicesView
+GET             /devices/sort/:ids                                                            controllers.DevicesView.sort(ids:String)
+GET             /devices/:id                                                                  controllers.DevicesView.edit(id:Integer)
+POST            /devices/:id                                                                  controllers.DevicesView.update(id:Integer)
+# Delete a DevicesView
+POST            /devices/:id/delete                                                           controllers.DevicesView.delete(id:Integer)
+
+

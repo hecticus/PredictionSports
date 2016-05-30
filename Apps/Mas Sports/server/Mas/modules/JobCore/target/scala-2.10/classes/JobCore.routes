@@ -1,0 +1,57 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+#GET         /                       controllers.Application.index()
+
+# Map static resources from the /public folder to the /assets URL path
+GET        /assets/*file        controllers.Assets.at(path="/public", file)
+
+GET        /alive               controllers.Instances.alive()
+
+GET        /check/*name         controllers.Instances.checkFile(name: String)
+
+#InstancesView
+# InstancesView list (look at the default values for pagination parameters)
+GET         /instances/list                        controllers.InstancesView.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET         /instances/lsort                       controllers.InstancesView.lsort()
+# Add InstancesView
+GET         /instances/blank                       controllers.InstancesView.blank()
+POST        /instances                             controllers.InstancesView.submit()
+# Edit existing InstancesView
+GET         /instances/sort/:ids                   controllers.InstancesView.sort(ids:String)
+GET         /instances/:id                         controllers.InstancesView.edit(id:Integer)
+POST        /instances/:id                         controllers.InstancesView.update(id:Integer)
+# Delete a InstancesView
+POST        /instances/:id/delete                  controllers.InstancesView.delete(id:Integer)
+
+#JobsView
+# JobsView list (look at the default values for pagination parameters)
+GET             /jobs/list                                                                      controllers.JobsView.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET             /jobs/lsort                                                                     controllers.JobsView.lsort()
+# Add JobsView
+GET             /jobs/blank                                                                     controllers.JobsView.blank()
+POST            /jobs                                                                           controllers.JobsView.submit()
+# Edit existing JobsView
+GET             /jobs/sort/:ids                                                                 controllers.JobsView.sort(ids:String)
+GET             /jobs/:id                                                                       controllers.JobsView.edit(id:Long)
+POST            /jobs/:id                                                                       controllers.JobsView.update(id:Long)
+# Delete a JobsView
+POST            /jobs/:id/delete                                                                controllers.JobsView.delete(id:Long)
+
+#ConfigsView
+# ConfigsView list (look at the default values for pagination parameters)
+GET             /configurations/list                                                            controllers.ConfigsView.list(p:Int ?= 0, s ?= "configKey", o ?= "asc", f ?= "")
+GET             /configurations/lsort                                                           controllers.ConfigsView.lsort()
+# Add ConfigsView
+GET             /configurations/blank                                                           controllers.ConfigsView.blank()
+POST            /configurations                                                                 controllers.ConfigsView.submit()
+# Edit existing ConfigsView
+GET             /configurations/sort/:ids                                                       controllers.ConfigsView.sort(ids:String)
+GET             /configurations/:id                                                             controllers.ConfigsView.edit(id:Long)
+POST            /configurations/:id                                                             controllers.ConfigsView.update(id:Long)
+# Delete a ConfigsView
+POST            /configurations/:id/delete                                                      controllers.ConfigsView.delete(id:Long)
+
+

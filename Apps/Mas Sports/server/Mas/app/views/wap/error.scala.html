@@ -1,0 +1,19 @@
+@(HD: models.wap.HandsetDetection, message: String, viewMenu: Boolean)
+
+@if(HD.getLevelSupport() < models.wap.HandsetDetection.HTML) {
+
+    @xhtml(HD){
+        <h3>@message</h3>
+    }
+
+} else {
+
+    @html4(viewMenu,"error", HD){
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                <h3 style="padding: 15px !important;">@message</h3>
+            </div>
+        </div>
+    }
+
+}
