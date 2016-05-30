@@ -173,11 +173,13 @@ angular
 
               $scope.$emit('unload');
               $scope.pages = [
-                {id: 1, name: Moment.date().subtract(2, 'days').format(_formatDate), date:Moment.date().subtract(2, 'days').format('YYYYMMDD')},
-                {id: 2, name: Moment.date().subtract(1, 'days').calendar(), date:Moment.date().subtract(1, 'days').format('YYYYMMDD')},
-                {id: 3, name: Moment.date().calendar(), date:Moment.date().format('YYYYMMDD')},
-                {id: 4, name: Moment.date().add(1, 'days').calendar(), date:Moment.date().add(1, 'days').format('YYYYMMDD')},
-                {id: 5, name: Moment.date().add(2, 'days').format(_formatDate), date:Moment.date().add(2, 'days').format('YYYYMMDD')}
+                //{id: 1, name: Moment.date().subtract(2, 'days').format(_formatDate), date:Moment.date().subtract(2, 'days').format('YYYYMMDD')},
+                //{id: 2, name: Moment.date().subtract(1, 'days').calendar(), date:Moment.date().subtract(1, 'days').format('YYYYMMDD')},
+                {id: 1, name: Moment.date().calendar(), date:Moment.date().format('YYYYMMDD')},
+                {id: 2, name: Moment.date().add(1, 'days').calendar(), date:Moment.date().add(1, 'days').format('YYYYMMDD')},
+                {id: 3, name: Moment.date().add(2, 'days').format(_formatDate), date:Moment.date().add(2, 'days').format('YYYYMMDD')},
+                {id: 4, name: Moment.date().add(3, 'days').format(_formatDate), date:Moment.date().add(3, 'days').format('YYYYMMDD')},
+                {id: 5, name: Moment.date().add(4, 'days').format(_formatDate), date:Moment.date().add(4, 'days').format('YYYYMMDD')}
               ];
 
 

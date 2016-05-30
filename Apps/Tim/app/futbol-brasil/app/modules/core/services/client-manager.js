@@ -108,10 +108,11 @@ angular
                     log.isVirtual = $window.device.isVirtual;
                     log.serial = $window.device.serial;
                 }
-        
+                
+                //antes id_language era 405 para portugues ahora es 300 para español
                 var jData = {
                     country : 3,
-                    language: lang? lang.id_language : 405,
+                    language: lang? lang.id_language : 300,
                     device_id : CordovaDevice.getDeviceId(),
                     upstreamChannel : CordovaDevice.getUpstreamChannel(),
                     log: log

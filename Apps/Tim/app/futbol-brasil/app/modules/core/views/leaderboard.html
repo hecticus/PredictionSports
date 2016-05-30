@@ -11,7 +11,7 @@
                         <span class="mdi-navigation-arrow-back" ng-hide="item.competitions[$index-1].name === undefined"></span>
                       </div>
                       <div class="col-xs-8 h-ellipsis-truncate">
-                        <img class="h-shield h-tree" ng-src="{{getCompetitionShield(competition.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+                        <!-- <img class="h-shield h-tree" ng-src="{{getCompetitionShield(competition.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'"> -->
                         <span ng-hide="$index===0" ng-bind="competition.competiton_type.name" class="caption"></span>
                         <span ng-show="$index===0" class="caption" translate>LEADERBOARD.GENERAL</span>
                       </div>
@@ -51,9 +51,9 @@
                               <table class="table h-table" ng-hide="!competition.leaderboard">
                                   <thead>
                                   <tr>
-                                    <th class="h-header yellow" style="width:20%"  >##</th>
-                                    <th class="h-header yellow left" style="width:60%" translate>LEADERBOARD.PLAYER</th>
-                                    <th class="h-header yellow" style="width:20%" translate>LEADERBOARD.POINTS</th>
+                                    <th class="h-header subh-general" style="width:20%"  >##</th>
+                                    <th class="h-header subh-general left" style="width:60%" translate>LEADERBOARD.PLAYER</th>
+                                    <th class="h-header subh-general" style="width:20%" translate>LEADERBOARD.POINTS</th>
                                   </tr>
                                 </thead>
 

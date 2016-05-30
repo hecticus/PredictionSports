@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="pt">
+<html lang="es">
 <head>
     <meta charset="utf-8">
-    <title>TIM Palpites</title>
+    <title>+Sports</title>
 
     <meta name="description" content="">
     <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes.
@@ -75,7 +75,7 @@
                     </div>
                     <div class="col-xs-8 text-center h-ellipsis-truncate" style="height:50px; line-height:50px; ">
                         <img class="h-logo" src="img/logo.svg" onerror="this.src='img/logo.png'" >
-                        <span class="h-title" ng-cloak ng-bind="sectionTranslation">
+                        <!-- <span class="h-title" ng-cloak ng-bind="sectionTranslation"> -->
                         </span>
                     </div>
                     <div class="col-xs-2" style="height:50px; line-height:50px; ">
@@ -126,7 +126,10 @@
         {{'SECTIONS.BETS.POINTS' | translate}}
       </menu-sub-item>
 
-      <menu-item section="news" icon="icon-noticias">
+      <!-- <menu-item section="news" icon="icon-noticias">
+          {{'SECTIONS.NOTISTATS' | translate}}
+      </menu-item> -->
+      <menu-item section="match" icon="icon-noticias">
           {{'SECTIONS.NOTISTATS' | translate}}
       </menu-item>
       <menu-sub-item section="match" >
@@ -135,9 +138,9 @@
       <menu-sub-item section="standings" >
           {{'SECTIONS.NOTISTATS.STANDINGS' | translate}}
       </menu-sub-item>
-      <menu-sub-item section="news" >
+      <!-- <menu-sub-item section="news" >
           {{'SECTIONS.NOTISTATS.NEWS' | translate}}
-      </menu-sub-item>
+      </menu-sub-item> -->
       <menu-sub-item section="scorers">
           {{'SECTIONS.NOTISTATS.SCORERS' | translate}}
       </menu-sub-item>
@@ -166,31 +169,31 @@
         <footer class="footer" ng-hide="isOnUtilitySection()">
             <div data-section="notistats" class="row notistats"
                  ng-class="{active: getSection() === 'notistats', hide: getSection() !== 'notistats'}">
-                <div class="col-xs-15 option" ui-sref-active="active">
+                <div class="col-xs-3 option" ui-sref-active="active">
                     <a ui-sref="match" class="footer-section">
                         <span class="icon-balon"></span>
                         <span translate>SECTIONS.NOTISTATS.MATCHES</span>
                     </a>
                 </div>
-                <div class="col-xs-15 option" ui-sref-active="active">
+                <div class="col-xs-3 option" ui-sref-active="active">
                     <a ui-sref="standings" class="footer-section">
                         <span class="icon-tabela"></span>
                         <span translate>SECTIONS.NOTISTATS.STANDINGS</span>
                     </a>
                 </div>
-                <div class="col-xs-15 option" ui-sref-active="active" >
+                <!-- <div class="col-xs-15 option" ui-sref-active="active" >
                     <a ui-sref="news" class="footer-section">
                         <span class="icon-noticias"></span>
                         <span translate>SECTIONS.NOTISTATS.NEWS</span>
                     </a>
-                </div>
-                <div class="col-xs-15 option" ui-sref-active="active" >
+                </div> -->
+                <div class="col-xs-3 option" ui-sref-active="active" >
                     <a ui-sref="scorers" class="footer-section">
                         <span class="icon-artilharia"></span>
                         <span translate>SECTIONS.NOTISTATS.SCORERS</span>
                     </a>
                 </div>
-                <div class="col-xs-15 option" ui-sref-active="active" >
+                <div class="col-xs-3 option" ui-sref-active="active" >
                     <a ui-sref="mtm" class="footer-section">
                         <span class="mdi-action-alarm" ></span>
                         <span translate>SECTIONS.NOTISTATS.LIVE</span>

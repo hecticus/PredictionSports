@@ -5,7 +5,12 @@ row:not(input):not(textarea) {
 
 * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
 html { -ms-touch-action: none; font-family: Helvetica; }
-body,ul,li { padding: 0 !important; margin: 0 !important; border: 0 !important; width: 100%; height: 100%; color:#002878; background:#ffffff !important; font-size: 62.5% important;}
+body,ul,li { padding: 0 !important; margin: 0 !important; 
+  border: 0 !important; 
+  width: 100%; height: 100%; 
+  color:#002878; 
+  background:#ffffff !important; 
+  font-size: 62.5% important;}
 
 
 .footer-section{color: #FFFFFF !important; text-decoration: none  !important; }
@@ -40,6 +45,7 @@ body,ul,li { padding: 0 !important; margin: 0 !important; border: 0 !important; 
     background:#ffffff;
 }
 
+/*Cambiado por audel para probar new colors*/
 header, footer {
     position: absolute;
     z-index: 100;
@@ -48,21 +54,27 @@ header, footer {
     width: 100%;
     height: 50px;
     /*line-height: 50px;*/
-    background: rgb(0,40,120);
+    /*background: rgb(0,40,120);*/
+    background: : rgb(255,255,255);
     padding: 0 !important;
     margin:0 !important;
     border: 0;
 }
 
+/*cambiado por audel para nuevo color de header*/
 header {
-    background: rgb(44,156,211);
+    /*background: rgb(44,156,211);*/
+    background: rgb(255,255,255);
 }
 
+/*cambiado por audel*/
 footer {
     /*line-height: 25px;*/
+    /*color:#5086c6;*/
     color:#002878;
     bottom: 0;
-    background: rgb(0,40,120);
+    /*background: rgb(0,40,120);*/
+    background: #e31e30;
     z-index: 10;
 }
 
@@ -96,12 +108,15 @@ footer .glyphicon-class {
     word-wrap: break-word;
 }
 
+/*cambiado por audel para nuevos colores de diseño*/
 footer .option.active {
-    background-color: rgb(254,209,0);
+    /*background-color: rgb(254,209,0);*/
+    background-color: #ffcc3c;
 }
 
 footer .option.active span {
-  color:#002878 !important;
+  /*color:#002878 !important;*/
+  color: #e31e30 !important;
 }
 
 header .section {
@@ -111,7 +126,8 @@ header .section {
 
 header .section.active {
     text-shadow: -1px 1px 1px rgba(0,0,0,0.5);
-    color: #FFDE00;
+    /*color: #FFDE00;*/
+    color: #DC143C;
 }
 
 footer .section {
@@ -247,7 +263,7 @@ body.content-scorers .competition.active{
 }
 
 
-
+/*Audel deberia cambiar esto*/
 div.header {
     position: absolute;
     z-index: 4;
@@ -473,14 +489,31 @@ body.content-mtm .row-back {
 
 /*menu*/
 
+/*cambiado por audel*/
 .content-menu,
-.content-sub-menu {background:#ffffff; height: 50px; line-height:50px; color:#134985; margin-left: 32px;}
-.content-menu div.col-xs-8,
-.content-sub-menu div.col-xs-8{border-bottom: solid 1pt #ffca00; padding-left:0 !important;}
-.content-menu span:last-child {text-transform:uppercase;}
+.content-sub-menu {
+  background:#ffffff; 
+  height: 50px; 
+  line-height:50px; 
+  /*color:#134985; */
+  color: #000000;
+  margin-left: 32px;}
 
+.content-menu div.col-xs-8,
+.content-sub-menu div.col-xs-8{
+  /*border-bottom: solid 1pt #ffca00;*/
+  border-bottom: solid 1pt #000000;
+  padding-left:0 !important;
+}
+
+.content-menu span:last-child {
+  text-transform:uppercase;
+}
+
+/*also cahnged by audel*/
 .content-sub-menu div.col-xs-8 {
-  border-bottom: solid 1pt #134985;
+  /*border-bottom: solid 1pt #134985;*/
+  border-bottom: solid 1pt #000000;
   padding-left:0 !important;
 }
 
@@ -501,7 +534,6 @@ body.content-mtm .row-back {
 }
 
 .btn-delete-item {
-    background-color: #f44336 !important;
     border-radius: 100%;
     padding: 6px;
     width: 24px;
@@ -512,6 +544,56 @@ body.content-mtm .row-back {
     top: -12px;
     right: 16px;
 }
+
+/*Audel INICIO*/
+.username-form {
+  margin-right: 26px !important;
+  border-style: solid !important;
+  height: 35px !important;
+  padding-left: 10px !important;
+}
+
+.btn.btn-fab {
+  box-shadow: none !important;
+  margin-bottom: 10px !important;
+}
+
+.panel {
+  box-shadow: none !important;
+  border-bottom: 1px rgba(0, 0, 0, 0.12)
+}
+
+.panel-title {
+  text-align: left !important;
+  padding-left: 10px !important;
+}
+
+hr {
+  margin-bottom: 5px !important;
+  margin-top: 5px !important;
+}
+
+.screen-tittle{
+  text-align: center;
+  font-size: 18px;
+  color: #000000;
+}
+
+.subh-general{
+  background: #e31e30;
+  color: #ffffff;
+}
+
+.now-black{
+  color: #000000;
+}
+
+.letogglecolor{
+  color: #e31e30 !important; 
+  background-color: #e31e30 !important;
+}
+
+/*Audel FIN*/
 
 /*Drawer*/
 .mdi-navigation-more-vert,
@@ -558,13 +640,19 @@ body.content-mtm .row-back {
     to   { -webkit-transform: scale( 1 ) rotate( 360deg ); transform: scale( 1 ) rotate( 360deg ); }
 }
 
+/*cambiado por audel*/
 .btn-orange {
-    background-color: rgb(44,156,211) !important;
+    background-color: #e31e30 !important;
     color: #FFF !important;
+    border-radius: 25px;
+    width: 70%;
+    padding: 8px;
 }
 
+/*agregado color negro por audel*/
 .text-center-vertical{
     vertical-align: middle;
+    color: #000000;
 }
 
 .navbar{
@@ -756,15 +844,20 @@ body.content-mtm .row-back {
     background-color: #2196F3 !important;
 }
 
+/*tambien cambiado por audel*/
 .list-item {
     padding: 12px !important;
+    /*color: #3F78FC !important;*/
+    color: #000000 !important;
+    font-size: 0.5em;
 }
 
+/*cambiado por audel*/
 .full-separator {
     /*margin-top: 10px;*/
     /*margin-bottom: 10px;*/
     width: 100%;
-    border-bottom: 1px solid #555;
+    border-bottom: 1px solid #FFFFFF;
 }
 
 /*
@@ -803,28 +896,39 @@ h6.team-name {
       padding-bottom: 0px !important;
     }
 
+    /*cambiado por audel: estilo del header de perdicciones (ya no es verde)*/
     .h-header.green {
-      background: rgb(122,184,0);
+      /*background: rgb(122,184,0);*/
+      background: #000000;
       color: #ffffff;
     }
 
+      /*cambiado por audel*/
     .h-header.yellow {
-      background: rgb(254,209,0);
+      /*background: rgb(0,116,207);*/
+      /*color: rgb(255,255,255);*/
+      background: #ffcc3c;
       color: rgb(0,40,120);
     }
 
+    /*cambiado por audel*/
     .h-header.blue {
       background: rgb(0,40,120);
       color: #ffffff;
     }
 
+    /*cambiado por audel: header de cada item de las predicciones*/
     .h-header.light-blue {
-      background: rgb(44,156,211);
-      color: #ffffff;
+      /*background: rgb(44,156,211);*/
+      /*color: #ffffff;*/
+      background: #ffcc3c;
+      color: #e31e30;
     }
 
+    /*cambiado por audel: header secundario en predicciones*/
     .h-header.red {
-      background: rgb(227,114,34);
+      /*background: rgb(227,114,34);*/
+      background: #e31e30;
       color: #ffffff;
     }
 
@@ -842,7 +946,8 @@ h6.team-name {
       text-align: left;
       min-height:50px;
       line-height: 50px;
-      border-bottom: solid 1pt rgb(254,209,0);
+      /*border-bottom: solid 1pt rgb(254,209,0);*/
+      border-bottom: solid 1pt rgb(0,0,0);
       /*font-weight:bold;*/
     }
 
@@ -852,7 +957,7 @@ h6.team-name {
     }
 
     .content-news .h-headline {
-      font-size:1.6em;
+      font-size:1.2em;
       font-weight: bold;
     }
     .content-news #wrapper2 .h-headline  {
@@ -953,8 +1058,10 @@ h6.team-name {
       margin-top: 10px;
     }
 
+    /*cambiado por audel: logo que va en el appbar o toolbar*/
     header .h-logo {
-      width: 55px;
+      /*width: 55px;*/
+      width: 215px;
       vertical-align:middle;
       margin-right: 5px;
     }
@@ -980,25 +1087,38 @@ h6.team-name {
         margin: 0 !important;
     }
 
+      /*cambiado por audel*/
     .panel-danger > .panel-heading,
     .panel-warning  > .panel-heading,
     .panel-primary  > .panel-heading,
     .panel-success  > .panel-heading,
     .panel-info > .panel-heading {
-      background  : rgb(44,156,211);
+      /*background  : rgb(44,156,211);*/
+      background: rgb(255,255,255);
+      color: rgb(205,24,47);
+      text-align: center;
     }
 
+      /*cambiado por audel*/
     .btn-primary:not(.btn-link):not(.btn-flat),
     .btn-success:not(.btn-link):not(.btn-flat) {
-      background  : rgb(44,156,211);
+      /*background  : rgb(44,156,211);*/
+      background: rgb(245,245,245);
+      border-style: solid;
+      border-width: 1px;
+      border-color: #CD182F;
+      color: #CD102F;
     }
 
     .btn-facebook {
       background  : #dc3847 !important;
+      border-radius: 25px;
+      width: 70%;
     }
 
     .btn-facebook.btn-info {
       background  : rgb(59,89,152) !important;
+      padding: 8px 1px;
     }
 
     .btn-facebook.btn-warning {
@@ -1007,6 +1127,7 @@ h6.team-name {
 
     .btn-facebook.btn-success {
        background  : rgb(227,114,34) !important;
+       border-radius: 25px;
     }
 
     .h-ellipsis {
@@ -1077,14 +1198,16 @@ h6.team-name {
           border-bottom: 0 !important;
     }
 
-
+    /*cambiado por audel*/
     header .h-title {
       font-size: 2em !important;
-      color: #ffffff;
+      color: #0073CF;
+      /*color: #ffffff;*/
       font-weight:bold;
       vertical-align: middle;
     }
 
+    /*cambiado por audel iconos del appbar o toolbar*/
     header *[class *= 'glyphicon'],
     header *[class *= 'icon-material'],
     header *[class *= 'mdi-'],
@@ -1092,7 +1215,8 @@ h6.team-name {
     .content-news *[class *= 'mdi-'],
     .no-content-panel  *[class *= 'mdi-'] {
         font-size:2em;
-        color: #ffffff;
+        color: #000000;
+        /*color: #ffffff;*/
         font-weight:bold;
         vertical-align:middle;
     }
@@ -1108,11 +1232,13 @@ h6.team-name {
       color: rgb(44,156,211);
     }
 
+    /*cambiado por audel: iconos del menu lateral (navigation drawer)*/
     .content-menu *[class *= 'mdi-'],
     .content-menu *[class *= 'icon-'] {
       font-size:2em;
       vertical-align: middle;
-      color:  rgb(0,40,120);
+      /*color:  rgb(0,40,120);*/
+      color: #CD172E;
     }
 
     .content-menu *[class *= 'icon-'] {
@@ -1170,8 +1296,12 @@ h6.team-name {
         text-align:left !important;
     }
 
+    /*cambiado por audel*/
     .control-label {
-      font-size:1.6em;
+      font-size:1.0em;
+      color: #CD172E !important;
+      text-align: left !important;
+      margin-left: 50px;
     }
 
     .h-login-button {
@@ -1236,6 +1366,8 @@ h6.team-name {
     .content-team-selection .form-horizontal,
     .content-team-selection .form-group {
       margin: 0 !important;
+      color: #3F78FC !important;
+      /*margin-left: 80px*/
     }
 
     .content-team-selection #wrapperL {
@@ -1251,16 +1383,18 @@ h6.team-name {
       top: 150px;
     }
 
+    /*cambiado por audel*/
     .badge {
-      background: rgb(44,156,211);
+      /*background: rgb(44,156,211);*/
+      background: #FFCC3C;
       padding: 5px 15px;
       font-size:
       1em;
-      color: #ffffff;
+      /*color: #ffffff;*/
     }
 
     .badge.disabled {
-       background: rgb(44,156,211);
+       /*background: rgb(44,156,211);*/
        color: #ffffff;
         opacity: 0.7;
         filter: alpha(opacity=70);
@@ -1317,6 +1451,7 @@ h6.team-name {
 
   .btn {
     font-size: 16px !important;
+    margin: 0 auto;
   }
 
 
@@ -1342,9 +1477,12 @@ h6.team-name {
       padding: 5px;
    }
 
-  .h-points  {
-    background: rgb(122,184,0) !important;
-    height: 225px;
+  #estadio {
+    /*background: rgb(122,184,0) !important;*/
+    height: 225px; 
+    /*width: 100%;*/
+    background-size: contain;
+    background-image: url("../img/back-pts.png") ;
   }
   .content-dashboard  tr.h-match {border-bottom: 1.5px #ffffff solid !important;}
 

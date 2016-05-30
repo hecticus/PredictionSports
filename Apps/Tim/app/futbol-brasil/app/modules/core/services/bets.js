@@ -37,8 +37,9 @@ angular
                  */
                 create: function(bets, successCallback, errorCallback) {
                     $http.post(Domain.bets.create(), bets)
-                    .success(function() {
-                            typeof successCallback === 'function' && successCallback();
+                    .success(function(data) {
+                            $rootScope.$storage.betresult = JSON.stringify(data.response);
+                            typeof successCallback === 'function' && successCallback(data);
                     })
                     .error(function() {
                             typeof errorCallback === 'function' && errorCallback();

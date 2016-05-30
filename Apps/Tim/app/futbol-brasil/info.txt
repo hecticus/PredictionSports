@@ -22,7 +22,7 @@ Config.xml file:
         <framework src="SystemConfiguration.framework" />
     </platform>
     <preference name="orientation" value="portrait" />
-    <preference name="fullscreen" value="true" />
+    <preference name="fullscreen" value="false" />
     <preference name="target-device" value="universal" />
     <preference name="prerendered-icon" value="true" />
     <preference name="android-minSdkVersion" value="10" />

@@ -41,7 +41,8 @@ angular
 
                 ezfbProvider.setInitParams({
                     /******CAMBIAR POR APPID DE PRODUCCION******/
-                    appId: '1379325579064871'
+                    //appId: '1379325579064871'
+                    appId: '1747880928832180'
                 });
 
             }
@@ -60,8 +61,10 @@ angular
                 suffix: '.js'
             });
 
-            $translateProvider.preferredLanguage('pt');
-            $translateProvider.use('pt');
+            //cambiado el locale / laengiaje de pt a es
+
+            $translateProvider.preferredLanguage('es');
+            $translateProvider.use('es');
             $translateProvider.usePostCompiling(true);
         }
     ])

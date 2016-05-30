@@ -50,6 +50,8 @@ angular
             }
 
             function getPlatform(){
+                //console.log("audel log " + typeof device);
+                //console.log("audel log " + device.platform);
                 if(typeof device !== "undefined"){
                     return device.platform;
                 } else {
@@ -75,6 +77,9 @@ angular
 
             function isWebPlatform(){
                 return getPlatform() === 'Web';
+                // console.log("android platform result is " + isAndroidPlatform());
+                // console.log("ios platform result is " + isIosPlatform());
+                // return !isIosPlatform() || !isAndroidPlatform();
             }
 
             function getUpstreamChannel(){

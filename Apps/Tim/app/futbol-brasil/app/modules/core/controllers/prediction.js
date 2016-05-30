@@ -49,6 +49,17 @@ angular
                   strings['NO_MATCH'] = translation['NO_MATCH'];
               });
 
+              $translate(['ALERT.MAX_BETS_REACHED.TITLE',
+                          'ALERT.MAX_BETS_REACHED.SUBTITLE',
+                          'ALERT.MAX_BETS_REACHED.MSG',
+                          'NO_MATCH'])
+              .then(function(translation){
+                  strings['SET_MAX_BETS_TITLE'] = translation['ALERT.MAX_BETS_REACHED.TITLE'];
+                  strings['SET_MAX_BETS_SUBTITLE'] = translation['ALERT.MAX_BETS_REACHED.SUBTITLE'];
+                  strings['SET_MAX_BETS_MSG'] = translation['ALERT.MAX_BETS_REACHED.MSG'];
+                  strings['NO_MATCH'] = translation['NO_MATCH'];
+              });
+
             };
 
             $scope.vWrapper = {
@@ -136,7 +147,21 @@ angular
                             }
                         };
 
-                        Bets.create(_jBet,function() {
+                        Bets.create(_jBet, function(data) {
+                            console.log("Data apuesta: " + JSON.stringify(data));
+                            if (data.error == 1) { 
+
+                                console.log("El cliente ha llegado al maximo de apuestas");
+                                _jMatch.bet.client_bet = false;
+                                Notification.showInfoAlert({
+                                  title: strings['SET_MAX_BETS_TITLE'],
+                                  subtitle: strings['SET_MAX_BETS_SUBTITLE'],
+                                  message: strings['SET_MAX_BETS_MSG'],
+                                  type: 'warning'
+                              });
+
+
+                            }
                             $scope.$emit('unload');
                         }, function () {
                             $scope.$emit('unload');
@@ -147,6 +172,7 @@ angular
                         _mBet = _bet;
                       }
                     } else {
+                        //Enviar notificacion de no puede apostar en este match.
                       Notification.showInfoAlert({
                           title: strings['SET_BET_TITLE'],
                           subtitle: strings['SET_BET_SUBTITLE'],
@@ -189,6 +215,7 @@ angular
                 if (!league.fixtures) {
                     $scope.$emit('load');
                     Bets.get(league.id_competitions, function(data){
+                        console.log("Data competicion: " + JSON.stringify(data) );
                         if (data.error == 0) {
                             data = data.response;
 

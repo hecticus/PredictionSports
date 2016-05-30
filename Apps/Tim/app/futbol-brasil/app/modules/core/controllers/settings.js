@@ -32,7 +32,9 @@ angular
             $scope.lang = {};
             $scope.nickname = '';
 
-            $scope.isWebPlatform = CordovaDevice.isWebPlatform();
+            //$scope.isWebPlatform = CordovaDevice.isWebPlatform();
+            $scope.isWebPlatform = !CordovaDevice.isAndroidPlatform() && !CordovaDevice.isIosPlatform();
+            console.log(" webplatform result is " + $scope.isWebPlatform);
             $scope.favoriteTeams = [{isEmpty : true}, {isEmpty : true}, {isEmpty : true}];
 
             $scope.toggles = {

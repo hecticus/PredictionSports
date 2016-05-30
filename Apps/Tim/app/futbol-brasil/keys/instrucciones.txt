@@ -1,6 +1,9 @@
 keytool -genkey -v -keystore tim-palpites-release-key.keystore -alias tim_palpites -keyalg RSA -keysize 2048 -validity 10000
 password: $pa1p1t32$
 
+keytool -genkey -v -keystore plus-sports-release.keystore -alias plus_sports -keyalg RSA -keysize 2048 -validity 10000
+password: $plussports64$
+
 
 Get Android key hash to Facebook
 keytool -exportcert -alias tim_palpites -keystore "C:\Hecticus\GitHub\PredictionSports\Apps\Tim\app\futbol-brasil\platforms\android\ant-build\tim-palpites-release-key.keystore" | "C:\OpenSSL-Win32\bin\openssl" sha1 -binary | "C:\OpenSSL-Win32\bin\openssl" base64
@@ -10,9 +13,65 @@ keytool -exportcert -alias tim_palpites -keystore "C:\Hecticus\GitHub\Prediction
 Sign your app with your private key using jarsigner:
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore tim-palpites-release-key.keystore MainActivity-release-unsigned.apk tim_palpites
 
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore plus-sports-release.keystore <Unsigned APK file> plus_sports
+password: $plussports64$
+
 Verify that your APK is signed. For example:
 jarsigner -verify -verbose -certs MainActivity-release-unsigned.apk
 
 
 Align the final APK package using zipalign.
 zipalign -v 4 MainActivity-release-unsigned.apk Tim_Palpites_1_0_4.apk
+
+
+##############info plus sports key###############
+Generating 2,048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 10,000 days
+	for: CN=yes, OU=mobile-dev, O=Hecticus, L=Caracas, ST=Distrito Capital, C=VE
+Enter key password for <plus_sports>
+	(RETURN if same as keystore password):  
+Re-enter new password: 
+New certificate (self-signed):
+[
+[
+  Version: V3
+  Subject: CN=yes, OU=mobile-dev, O=Hecticus, L=Caracas, ST=Distrito Capital, C=VE
+  Signature Algorithm: SHA256withRSA, OID = 1.2.840.113549.1.1.11
+
+  Key:  Sun RSA public key, 2048 bits
+  modulus: 17196179833844114572896833388406816768671354429892295015547523753191328451105160819310530459602865840079815639382825065209492520983800521342655889608626178136577454444625069192250398066171471032789152719098671120600141277518387335224813299884238462375396424433328047003296158501409869632336960754348400611553732560514781284275783496646064687946436424181577500342401426890216596849986738535247662495805847313552320548548874803378243679423830551445327508176011476047471918560636616585726791580553578999161102701051926810523389067817089384089414249852129666527992919345652184407410317536595160565616552383043268829651291
+  public exponent: 65537
+  Validity: [From: Fri May 20 13:33:11 VET 2016,
+               To: Tue Oct 06 13:33:11 VET 2043]
+  Issuer: CN=yes, OU=mobile-dev, O=Hecticus, L=Caracas, ST=Distrito Capital, C=VE
+  SerialNumber: [    01b12b09]
+
+Certificate Extensions: 1
+[1]: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: CD 2A EA 1A A1 7A 62 06   0E 24 88 A6 50 E3 68 8E  .*...zb..$..P.h.
+0010: FC D1 2F 2B                                        ../+
+]
+]
+
+]
+  Algorithm: [SHA256withRSA]
+  Signature:
+0000: 5E BE 54 41 7B 08 7E 21   9C 4B 54 8F 16 07 BA 3A  ^.TA...!.KT....:
+0010: B2 19 98 88 6A 9A 75 84   1E 00 DD 05 87 B1 BD D4  ....j.u.........
+0020: 26 07 73 C9 12 15 41 2D   C8 61 9A 94 D0 19 7C CA  &.s...A-.a......
+0030: 2E C0 39 E0 FE 17 46 B3   9A 26 F1 97 DF 15 1C C7  ..9...F..&......
+0040: 25 84 74 0D 46 1B C3 61   EF 90 66 BF 68 C3 F7 7C  %.t.F..a..f.h...
+0050: 7D FC 12 4B 69 FD CA F4   C4 D2 AD E0 40 FE 2D AF  ...Ki.......@.-.
+0060: EA F7 29 D1 6E 79 10 49   BA DD F3 76 48 27 80 95  ..).ny.I...vH'..
+0070: 3C 0A CE 90 BC B4 64 5A   89 5A 8E 98 67 4D 4E 0B  <.....dZ.Z..gMN.
+0080: BA C5 09 9F C8 DC CC 95   EF 0B 9E 6B D9 A4 4D A0  ...........k..M.
+0090: 9E 7D 70 E7 1A B6 10 CE   AA 0E BE A8 42 2F 72 3D  ..p.........B/r=
+00A0: 26 75 AD 76 B5 91 04 B4   80 E8 18 6F 5E 3C 2B 1C  &u.v.......o^<+.
+00B0: 1A 08 DA F2 D7 EC D2 88   F1 62 07 CB DC A1 58 5C  .........b....X\
+00C0: 31 8A 1D 50 5E A9 CC ED   EA 9F 1F 9D F4 FB 48 74  1..P^.........Ht
+00D0: E4 C4 23 0F 56 89 E0 B4   CC 67 09 15 7F 68 A5 12  ..#.V....g...h..
+00E0: B5 67 D8 59 DA 69 60 DF   5E 35 57 58 21 C2 DD 67  .g.Y.i`.^5WX!..g
+00F0: E3 6A E2 42 D6 46 7D 57   60 25 5C 0C B6 B8 25 EC  .j.B.F.W`%\...%.
+
+]
