@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="SBT: org.apache.jclouds.provider:rackspace-cloudblockstorage-us:1.8.0:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.jclouds.provider/rackspace-cloudblockstorage-us/bundles/rackspace-cloudblockstorage-us-1.8.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.jclouds.provider/rackspace-cloudblockstorage-us/srcs/rackspace-cloudblockstorage-us-1.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

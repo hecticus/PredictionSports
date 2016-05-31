@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Play2ExcludedModulesSettings">
+    <option name="INFO">
+      <map>
+        <entry key="TimPanama">
+          <value>
+            <ProjectSettingsEntry>
+              <option name="playDistrPath" value="$USER_HOME$/.ivy2/cache/com.typesafe.play/play_2.10/jars/play_2.10-2.3.4.jar" />
+            </ProjectSettingsEntry>
+          </value>
+        </entry>
+        <entry key="jobCore">
+          <value>
+            <ProjectSettingsEntry>
+              <option name="version" value="2.3.4" />
+              <option name="sourceDir" value="$PROJECT_DIR$/../../../../../JobCore/conf" />
+              <option name="confDir" value="$PROJECT_DIR$/../../../../../JobCore/app" />
+              <option name="templateImports">
+                <list>
+                  <option value="play.api.templates.PlayMagic._" />
+                  <option value="models._" />
+                  <option value="controllers._" />
+                  <option value="java.lang._" />
+                  <option value="java.util._" />
+                  <option value="scala.collection.JavaConversions._" />
+                  <option value="scala.collection.JavaConverters._" />
+                  <option value="play.api.i18n._" />
+                  <option value="play.core.j.PlayMagicForJava._" />
+                  <option value="play.mvc._" />
+                  <option value="play.data._" />
+                  <option value="play.api.data.Field" />
+                  <option value="play.mvc.Http.Context.Implicit._" />
+                  <option value="views.xml._" />
+                </list>
+              </option>
+              <option name="routesImports">
+                <list>
+                  <option value="controllers.Assets.Asset" />
+                  <option value="play.libs.F" />
+                </list>
+              </option>
+              <option name="uri" value="$PROJECT_DIR$/../../../Mas%20Sports/server/Mas/modules/JobCore" />
+            </ProjectSettingsEntry>
+          </value>
+        </entry>
+        <entry key="root">
+          <value>
+            <ProjectSettingsEntry>
+              <option name="version" value="2.3.4" />
+              <option name="sourceDir" value="$PROJECT_DIR$/conf" />
+              <option name="confDir" value="$PROJECT_DIR$/app" />
+              <option name="templateImports">
+                <list>
+                  <option value="play.api.templates.PlayMagic._" />
+                  <option value="models._" />
+                  <option value="controllers._" />
+                  <option value="java.lang._" />
+                  <option value="java.util._" />
+                  <option value="scala.collection.JavaConversions._" />
+                  <option value="scala.collection.JavaConverters._" />
+                  <option value="play.api.i18n._" />
+                  <option value="play.core.j.PlayMagicForJava._" />
+                  <option value="play.mvc._" />
+                  <option value="play.data._" />
+                  <option value="play.api.data.Field" />
+                  <option value="play.mvc.Http.Context.Implicit._" />
+                  <option value="views.xml._" />
+                </list>
+              </option>
+              <option name="routesImports">
+                <list>
+                  <option value="controllers.Assets.Asset" />
+                  <option value="play.libs.F" />
+                </list>
+              </option>
+              <option name="uri" value="$PROJECT_DIR$/../../../Mas%20Sports/server/Mas" />
+            </ProjectSettingsEntry>
+          </value>
+        </entry>
+        <entry key="upstreamAPIConnector">
+          <value>
+            <ProjectSettingsEntry>
+              <option name="version" value="2.3.4" />
+              <option name="sourceDir" value="$PROJECT_DIR$/../../../../../TIM_Naty/UpstreamAPIConnector/conf" />
+              <option name="confDir" value="$PROJECT_DIR$/../../../../../TIM_Naty/UpstreamAPIConnector/app" />
+              <option name="templateImports">
+                <list>
+                  <option value="play.api.templates.PlayMagic._" />
+                  <option value="models._" />
+                  <option value="controllers._" />
+                  <option value="java.lang._" />
+                  <option value="java.util._" />
+                  <option value="scala.collection.JavaConversions._" />
+                  <option value="scala.collection.JavaConverters._" />
+                  <option value="play.api.i18n._" />
+                  <option value="play.core.j.PlayMagicForJava._" />
+                  <option value="play.mvc._" />
+                  <option value="play.data._" />
+                  <option value="play.api.data.Field" />
+                  <option value="play.mvc.Http.Context.Implicit._" />
+                  <option value="views.xml._" />
+                </list>
+              </option>
+              <option name="routesImports">
+                <list>
+                  <option value="controllers.Assets.Asset" />
+                  <option value="play.libs.F" />
+                </list>
+              </option>
+              <option name="uri" value="$PROJECT_DIR$/../../../Mas%20Sports/server/Mas/modules/UpstreamAPIConnector" />
+            </ProjectSettingsEntry>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

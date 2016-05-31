@@ -1,0 +1,90 @@
+@(HD: models.wap.HandsetDetection)(jResponse: com.fasterxml.jackson.databind.JsonNode)(idCompetition: Integer)(nameCompetition: String)(idMatch: Integer)
+@import play.i18n._
+
+@refresh = {
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align:center; background:rgb(122,184,0); color:#ffffff;" >
+            <!--a href='@routes.Wap.mtm(idCompetition,idMatch,jResponse.get("actions").get(0).get("events").get(0).get("id_game_match_events").asInt())'>@Messages.get("MTM_REFRESH_LINK")</a-->
+            <a href='@routes.Wap.mtm(idCompetition,idMatch,0)'>@Messages.get("MTM_REFRESH_LINK")</a>
+        </div>
+    </div>
+}
+
+@if(HD.getLevelSupport() < models.wap.HandsetDetection.HTML) {
+} else {
+
+    @html4(true,"mtm", HD){
+
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                <table style="width: 100% !important;">
+                    <thead>
+
+                        <tr>
+                            <th colspan="2" >
+                                <span></span>
+                            </th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+
+                        <tr style="width: 100% !important; text-align:center;" >
+                            <td style="width: 50% !important;" >
+                                <h5>@jResponse.get("home_team").get("name").asText()</h5>
+                                <h3>@jResponse.get("home_team_goals").asText()</h3>
+                            </td>
+                            <td style="width: 50% !important;">
+                                <h5>@jResponse.get("away_team").get("name").asText()</h5>
+                                <h3>@jResponse.get("away_team_goals").asText()</h3>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        @refresh
+
+        @for(action <- jResponse.get("actions").iterator()) {
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+
+                    <table style="width: 100% !important;">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class='status @{action.get("period").get("short_name").asText()}'>
+                                    <span>@action.get("period").get("short_name").asText()</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @for(event <- action.get("events").iterator()) {
+                                <tr  style="width: 100% !important; height-min:25px  !important;" >
+                                    <td style="width: 20% !important; padding:5px 0;" >
+                                        <span style="font-weight:bold;">@event.get("action_minute").asText()'</span>
+                                    </td>
+                                    <td style="width: 80% !important; padding:5px 0; text-align:left;">
+                                        <span style="font-weight:bold;">@event.get("player_a").asText()</span>
+                                        <span> de @event.get("teams").asText(), @event.get("action").get("description").asText() </span>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        }
+
+        @refresh
+
+
+    }
+
+}

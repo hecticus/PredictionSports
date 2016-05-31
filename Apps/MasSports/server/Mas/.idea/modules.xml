@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jobCore.iml" filepath="$PROJECT_DIR$/.idea/modules/jobCore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jobCore-build.iml" filepath="$PROJECT_DIR$/.idea/modules/jobCore-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/root.iml" filepath="$PROJECT_DIR$/.idea/modules/root.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/root-build.iml" filepath="$PROJECT_DIR$/.idea/modules/root-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/upstreamAPIConnector.iml" filepath="$PROJECT_DIR$/.idea/modules/upstreamAPIConnector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/upstreamAPIConnector-build.iml" filepath="$PROJECT_DIR$/.idea/modules/upstreamAPIConnector-build.iml" />
+    </modules>
+  </component>
+</project>

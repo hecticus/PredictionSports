@@ -1,0 +1,55 @@
+@(bMenu: Boolean, sRoute: String, HD: models.wap.HandsetDetection)(content: Html)
+@import play.i18n._
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//PT"
+        "http://www.w3.org/TR/html4/loose.dtd">
+@menu(sRoute: String) = {
+    <div class="row">
+        <div class='col-xs-6 col-sm-6 col-md-3 col-lg-3 h-menu @("h-active".when(sRoute == "matches"))'>
+            <a href='@routes.Wap.competitions("matches")'>@Messages.get("MATCH_LABEL")</a>
+        </div>
+        <div class='col-xs-6 col-sm-6 col-md-3 col-lg-3 h-menu @("h-active".when(sRoute == "scorers"))'>
+            <a href='@routes.Wap.competitions("scorers")'>@Messages.get("SCORERS_LABEL")</a>
+        </div>
+        <div class='col-xs-6 col-sm-6 col-md-3 col-lg-3 h-menu @("h-active".when(sRoute == "news"))'>
+            <a href="@routes.Wap.index()">@Messages.get("NEWS_LABEL")</a>
+        </div>
+        <div class='col-xs-6 col-sm-6 col-md-3 col-lg-3 h-menu @("h-active".when(sRoute == "mtm"))'>
+            <a href='@routes.Wap.competitions("mtm")'>@Messages.get("MTM_LABEL")</a>
+        </div>
+    </div>
+}
+
+<html>
+    <head>
+        <title>@Messages.get("APP_TITLE")</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="stylesheet" type="text/css" href='@routes.Assets.at("stylesheets/wap/main.css")'>
+        <link rel="stylesheet" type="text/css" href='@routes.Assets.at("stylesheets/bootstrap.min.css")'>
+        <script src='@routes.Assets.at("js/jquery-2.1.3.min.js")'></script>
+        <script src='@routes.Assets.at("js/bootstrap.min.js")'></script>
+        @ga()
+    </head>
+    <body>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;" >
+                    <img  src='@HD.getBanner().get("url").asText()' style='position:relative; width:@HD.getBanner().get("width").asText()px; height:@HD.getBanner().get("height").asText()px;' />
+                </div>
+            </div>
+
+            <!--div class="header" style="text-align:center;">@Messages.get("APP_TITLE")</div-->
+            @if(bMenu) {
+                @menu(sRoute)
+            }
+            @content
+            @if(bMenu) {
+            @menu(sRoute)
+            }
+            <!--div class="header" style="text-align:center;">@Messages.get("APP_TITLE")</div-->
+
+        </div>
+
+    </body>
+</html>
