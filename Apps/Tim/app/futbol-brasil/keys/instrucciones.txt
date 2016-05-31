@@ -75,3 +75,67 @@ KeyIdentifier [
 00F0: E3 6A E2 42 D6 46 7D 57   60 25 5C 0C B6 B8 25 EC  .j.B.F.W`%\...%.
 
 ]
+
+##################################################################################
+info plus sports for Facebook
+##################################################################################
+
+audel$ keytool -genkey -v -keystore plussports-facebook.keystore -alias plussports-fb -keyalg RSA -keysize 2048 -validity 10000
+
+keystone: plussports-facebook.keystore
+alias plussports-fb
+
+password: plussports
+
+keytool -exportcert -alias plussports-fb -keystore ./keys/plussports-facebook.keystore.keystore | openssl sha1 -binary | openssl base64
+wS+bpZEtkjOR1g5ROpOvZqumBYg=
+
+################################################
+
+
+Is CN=Audel Dugarte, OU=dev, O=Hecticus, L=Caracas, ST=Distrito Capital, C=VE correct?
+  [no]:  yes
+[
+  Version: V3
+  Subject: CN=Audel Dugarte, OU=dev, O=Hecticus, L=Caracas, ST=Distrito Capital, C=VE
+  Signature Algorithm: SHA256withRSA, OID = 1.2.840.113549.1.1.11
+
+  Key:  Sun RSA public key, 2048 bits
+  modulus: 21610933921771390775714325270736258539952610147173999526685556860750572777286119182265672597889329256746943797564010136480098541347508446481377384574389611778710560065018079066126363541063209366522216207455016279505969596760686311090937726971723189644717443027020021549938142576899091778874665501655204289237548478131262442059763469902949561716814064308693971997568945072654305199330708231414199871268808326116558403238189767971641104885687754206744584550347990420807099346847578851704618652338306611689085103163704496999347513534960511649705728184212992229753611926815350592995314988034877165210455106896767093514891
+  public exponent: 65537
+  Validity: [From: Mon May 30 17:23:02 VET 2016,
+               To: Fri Oct 16 17:23:02 VET 2043]
+  Issuer: CN=Audel Dugarte, OU=dev, O=Hecticus, L=Caracas, ST=Distrito Capital, C=VE
+  SerialNumber: [    29bc87c9]
+
+Certificate Extensions: 1
+[1]: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: EF 27 5F 90 47 17 D5 9D   EF D5 63 63 80 C3 DC D3  .'_.G.....cc....
+0010: 60 0C BA 5B                                        `..[
+]
+]
+
+]
+  Algorithm: [SHA256withRSA]
+  Signature:
+0000: 0E F3 DF 56 9A F2 A5 F3   12 E1 49 9D C2 7A 93 1B  ...V......I..z..
+0010: 30 35 E6 2C 83 46 6B 1A   E6 0B 0E A9 F4 B6 00 8E  05.,.Fk.........
+0020: F0 EF 6D E0 0C 3F 0B B6   E6 0B BC 26 C5 E7 89 C7  ..m..?.....&....
+0030: AC F4 6F AA CF F9 48 3E   19 A6 5C 99 D0 64 B6 99  ..o...H>..\..d..
+0040: 24 2A 6D 59 BD BD 56 CA   70 20 FA 04 56 B5 0F D9  $*mY..V.p ..V...
+0050: 2F 53 0D D9 BF A7 D3 1C   85 87 89 05 33 52 AB F7  /S..........3R..
+0060: C5 67 D8 BF 4D DC 14 34   E9 1C 4B 90 27 7F 2F F3  .g..M..4..K.'./.
+0070: 10 A5 A7 90 0A 6F 8D F8   0F D5 AB 86 B7 23 76 61  .....o.......#va
+0080: 71 E8 6A A3 F9 82 79 02   49 92 1D FA 59 68 AE CD  q.j...y.I...Yh..
+0090: BC 30 4D 73 EB F6 38 54   4B 25 9A 6B 7B 6C EE CC  .0Ms..8TK%.k.l..
+00A0: C5 38 BA F6 B5 F7 CA 55   1A 79 32 B5 CD 7B EE 57  .8.....U.y2....W
+00B0: 8C 10 F3 2B E4 7F 6B E5   F1 E8 4E F1 93 27 2C E8  ...+..k...N..',.
+00C0: E8 C2 C9 F9 30 A1 30 11   C3 13 E0 10 66 31 3D 7C  ....0.0.....f1=.
+00D0: 06 E8 F3 9F D8 D0 D9 AE   15 DB A0 87 A0 FE 36 E5  ..............6.
+00E0: FE F8 CD 85 C1 94 36 12   02 5C 6C BD 28 6A 67 78  ......6..\l.(jgx
+00F0: 0B 15 EB 0C 29 57 C7 A4   3D AF 64 25 4E F9 AC BA  ....)W..=.d%N...
+
+]
+

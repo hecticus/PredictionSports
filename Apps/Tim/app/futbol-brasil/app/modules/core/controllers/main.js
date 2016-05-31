@@ -119,9 +119,9 @@ angular
 
             function showMenu() {
                 if (!CordovaApp.isOnUtilitySection() && $('#wrapperM').hasClass('leftShort')) {
-                    $window.addEventListener('touchmove', function(){
-                        $window.removeEventListener('touchmove');
-                    });
+                    // $window.addEventListener('touchmove', function(){
+                    //     $window.removeEventListener('touchmove');
+                    // });
                     $rootScope.menuScroll.scrollTo(0,0,0);
                     $rootScope.transitionPage('#wrapperM', 'rightShort');
                 } else {

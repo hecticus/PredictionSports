@@ -92,7 +92,7 @@ angular
 
             function getLeaderboardIndex(_url){
 
-
+                //console.log('entering getLeaderboard');
                 $scope.hasLeaderboard = true;
                 var _page =  scroll.currentPage.pageX;
                 var competition = $scope.item.competitions[_page];
@@ -101,7 +101,7 @@ angular
                 $http.get(_url, config)
                     .then(function (data) {
                        if(data.data.error === 0){
-
+                        //console.log('data.data -> ' + JSON.stringify(data.data));
                          $scope.hasLeaderboard = true;
                          data = data.data;
                          competition.leaderboard = data.response.leaderboard;
@@ -133,7 +133,7 @@ angular
                         competition.leaderboard = false
                         $scope.hasLeaderboard = false;
                         hideLoading = true;
-                        console.log('data.data -> ' + JSON.stringify(data.data));
+                        //console.log('data.data -> ' + JSON.stringify(data.data));
                         if(data.data.error === 3){
                         } else {
                             Notification.showNetworkErrorAlert();
@@ -158,6 +158,8 @@ angular
 
                 Competitions.get().then(function(competitions){
 
+                  //console.log("received competitions " + JSON.stringify(competitions));
+
                       var arrTotal = {'id_competitions' : 0, 'name': 'General', 'competiton_type': {'name': 'General','competition_logo':'img/shield-2.png'}};
                       competitions.unshift(arrTotal);
 
@@ -176,6 +178,9 @@ angular
                               }
                           });
                       });
+
+                    getLeaderboardIndex(Domain.leaderboard.total());
+
 
                 }, function(){
                   Notification.showNetworkErrorAlert();
@@ -221,17 +226,17 @@ angular
 
                 getCompetitions();
                 setUpIScroll();
-
+                
                 $scope.$on('onRepeatLast', function(scope, element, attrs) {
                     vScrolls[_currentPage] = iScroll.vertical($scope.vWrapper.getName(_currentPage));
                     hideLoading = true;
                 });
+            } 
 
-            } init();
+            init();
 
 
-            setLoading();
-
+            //setLoading();
 
         }
     ]);

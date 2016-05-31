@@ -66,7 +66,7 @@
         "MY_POINTS" : "Mis Puntos",
         "SCORE" : "Puntuación",
         "GENERAL" : "General",
-        "NO-FRIENDS" : "Nenhum dos seus amigos está jogando!"
+        "NO-FRIENDS" : "Ninguno de sus amigos esta jugando!"
     },
     "EMPTY_STATES" : {
         "LIVE" : "No hay juegos programados para hoy",
@@ -243,7 +243,7 @@
 
       "LOCKED_SECTION" : {
         "TITLE" : "Zona Premium",
-        "MSG": "Esta sección está bloqueada para usuarios +Móvil que se han suscrito a +Sports. ?Le gustaría suscribirse a +Sports par desbloquear esta sección? Aceptar no le generará costos en este momento.",
+        "MSG": "Esta sección es solo para usuarios +Móvil que se han suscrito a +Sports. ¿Le gustaría suscribirse para desbloquear esta sección?",
         "CONFIRM" : "Ok",
         "CANCEL" : "Cancelar"
       },
