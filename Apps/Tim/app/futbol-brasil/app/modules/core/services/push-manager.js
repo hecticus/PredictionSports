@@ -125,12 +125,7 @@ angular
                             }
                         );
                     } else if(CordovaDevice.isWebPlatform()){
-                        ClientManager.updateRegistrationId("APA91bGUo-" +
-                            "_CbLa7jbiwHDkUZkUjGHBuAcVMnuGLl-" +
-                            "afFqmw_O2Gukymxf6UPPR-R8-EguAq4F4xD2Ls8Om-" +
-                            "8gCU4xkK_ht55x-5YroQdprfAUkn0xG-" +
-                            "G4QLj7FM4YsZEs668YF3dgZrK-" +
-                            "K6TgzWJXL9eM7y2LcXQHHueiGeQWXdtolAhOgh1oQ");
+                        ClientManager.updateRegistrationId("AUDEL ES LOCO");
                     }
                 } catch(err) {
                     console.log("PushManager. init. Error. " + err);

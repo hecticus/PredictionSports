@@ -125,6 +125,29 @@ angular
                 }
             }
 
+            //added by audel
+            function showRemindedUserDialog(msisdn){
+
+                $translate(['LOGIN.REMIND.MSG_TITLE',
+                              'LOGIN.REMIND.MSG_SUCCESS',
+                              'LOGIN.REMIND.MSG_CONFIRM',
+                              'LOGIN.REMIND.MSG_SUBTITLE'])
+                    .then(function(translation){
+                      showNotificationDialog(
+                            {
+                                title : translation['LOGIN.REMIND.MSG_TITLE'],
+                                message :  translation['LOGIN.REMIND.MSG_SUCCESS'],
+                                confirm: translation['LOGIN.REMIND.MSG_CONFIRM'],
+                                cancel: translation['ALERT.FACEBOOK.CANCEL']
+                            }, predictionsUserCallback
+                            );
+                    });
+
+                  function predictionsUserCallback(){
+                    $state.go('login', {'msisdn': msisdn});
+                  }
+            }
+
 
             function showLockedSectionNotEligible(){
                 $translate(['ALERT.LOCKED_SECTION_USER_NOT_ELIGIBLE.TITLE',
@@ -293,7 +316,10 @@ angular
 
                 showLockedSectionNotEligible : showLockedSectionNotEligible,
 
-                showFBShareError: showFBShareError
+                showFBShareError: showFBShareError,
+
+                /*added by audel*/
+                showRemindedUserDialog: showRemindedUserDialog
             };
 
 

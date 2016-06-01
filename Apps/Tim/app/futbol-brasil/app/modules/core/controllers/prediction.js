@@ -153,12 +153,16 @@ angular
 
                                 console.log("El cliente ha llegado al maximo de apuestas");
                                 _jMatch.bet.client_bet = false;
-                                Notification.showInfoAlert({
-                                  title: strings['SET_MAX_BETS_TITLE'],
-                                  subtitle: strings['SET_MAX_BETS_SUBTITLE'],
-                                  message: strings['SET_MAX_BETS_MSG'],
-                                  type: 'warning'
-                              });
+
+                              //   Notification.showInfoAlert({
+                              //     title: strings['SET_MAX_BETS_TITLE'],
+                              //     subtitle: strings['SET_MAX_BETS_SUBTITLE'],
+                              //     message: strings['SET_MAX_BETS_MSG'],
+                              //     type: 'warning'
+                              // });
+
+                              //colocar otra notificacion
+                              Notification.showLockedSectionDialog();
 
 
                             }

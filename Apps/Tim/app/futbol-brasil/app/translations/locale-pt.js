@@ -97,6 +97,9 @@
         "ENTER_AS_GUEST_LABEL" : "Entrar como convidado",
         "REMIND" : {
             "LABEL" : "Digite o seu número do celular",
+            "MSG_TITLE":"Exito",
+            "MSG_CONFIRM": "OK",
+            "MSG_SUCCESS": "Pronto recibirá un mensaje de texto con su clave para ingresar como usuario suscrito a +Sports.",
             "HERO" : {
                 "TITLE" : "Esqueceu o seu nome de usuário e senha?",
                 "MESSAGE" : "Para obter as suas credenciais, por favor digite seu número de celular e clique em 'Lembrar / Obter Credenciais'",

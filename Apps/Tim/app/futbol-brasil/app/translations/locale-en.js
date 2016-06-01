@@ -97,6 +97,9 @@
         "ENTER_AS_GUEST_LABEL" : "Enter as Guest",
         "REMIND" : {
             "LABEL" : "Enter your mobile number",
+            "MSG_TITLE":"Exito",
+            "MSG_CONFIRM": "OK",
+            "MSG_SUCCESS": "Pronto recibirá un mensaje de texto con su clave para ingresar como usuario suscrito a +Sports.",
             "HERO" : {
                 "TITLE" : "Forgot your Username and password?",
                 "MESSAGE" : "To get your credentials please type your MOBILE NUMBER and press 'Remind / Get Credentials'",

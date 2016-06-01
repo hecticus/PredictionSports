@@ -89,7 +89,7 @@
         "PASSWORD_HELPER" : "Ingrese el código recibido por SMS.",
         "MSISDN_HOLDER" : "# 12345678",
         "MSISDN_LABEL" : "Número de teléfono",
-        "LOGIN_LABEL" : "Login",
+        "LOGIN_LABEL" : "Acceder",
         "REMIND_LABEL" : "Obtener Contraseña",
         "CHANGE_LANGUAGE_LABEL" : "Cambiar Idioma",
         "TUTORIAL_LABEL" : "¿Como funciona?",
@@ -97,6 +97,10 @@
         "ENTER_AS_GUEST_LABEL" : "Entrar como Invitado",
         "REMIND" : {
             "LABEL" : "Introduzca su número de teléfono móvil",
+            "MSG_TITLE":"Exito",
+            "MSG_CONFIRM": "OK",
+            "MSG_SUBTITLE": "CONTRASEÑA",
+            "MSG_SUCCESS": "Pronto recibira un mensaje de texto con su clave para ingresar como usuario suscrito a +Sports.",
             "HERO" : {
                 "TITLE" : "¿Olvidó su clave o no se ha suscrito?",
                 "MESSAGE" : "Para obtener su clave por favor ingrese su número de teléfono y presione Recordar/Obtener Clave",
@@ -114,7 +118,7 @@
         "SOCIAL_ACCOUNTS_TITLE": "Redes Sociales",
         "APP": "Aplicación",
         "TOGGLE" : {
-            "BETS" : "Apuestas",
+            "BETS" : "Predicciones",
             "MTM" : "En Vivo",
             "NEWS" : "Noticias"
         },

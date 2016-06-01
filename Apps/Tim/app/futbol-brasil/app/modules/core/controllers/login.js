@@ -127,7 +127,9 @@ angular
                 );
               };
 
-              $state.go('login', {'msisdn': $scope.msisdn});
+              //commented, by audel instead of going directly to login it should show a notification
+              //$state.go('login', {'msisdn': $scope.msisdn});
+              Notification.showRemindedUserDialog($scope.msisdn);
 
             }
 
