@@ -116,6 +116,7 @@ angular
 
 
             $scope.onFbButtonClick = function(){
+                console.log("audel fb log: onFbButtonclick");
 
                 if(Client.isGuest() || !Client.isActiveClient()){
                     Notification.showLockedSectionDialog();
@@ -147,6 +148,7 @@ angular
 
 
             $scope.setFbButtonMsg = function(){
+                console.log("audel fb log: setFBButtonMsg");
                 $translate(['SETTINGS.FACEBOOK.CONNECT', 'SETTINGS.FACEBOOK.CONNECTED'])
                     .then(function(translations){
                         if($scope.fbObject.fbStatus === 'connected'){
@@ -192,6 +194,7 @@ angular
 
             function getStatus(){
                 //if(!!window.facebookConnectPlugin) {
+                    console.log("audel fb log: entered getStatus");
                     $scope.setFbButtonMsg();
                     FacebookManager.getStatus(function (result) {
                         if (result) {
