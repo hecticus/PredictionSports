@@ -49,13 +49,14 @@ angular
                 }
             }
 
+            //changed by Leonel, Fer and aAUdel
             function getPlatform(){
                 //console.log("audel log " + typeof device);
                 //console.log("audel log " + device.platform);
                 if(typeof device !== "undefined"){
                     return device.platform;
                 } else {
-                    return "Web";
+                    return "Web"; //  #[ ==== ]#
                 }
             }
 
@@ -75,6 +76,7 @@ angular
                 }
             }
 
+            //changed by Leonel, Fer and Audel
             function isWebPlatform(){
                 return getPlatform() === 'Web';
                 // console.log("android platform result is " + isAndroidPlatform());
