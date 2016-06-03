@@ -4,4 +4,4 @@ cordova -d plugin add https://github.com/Wizcorp/phonegap-facebook-plugin --vari
 cordova -d plugin add https://github.com/Wizcorp/phonegap-facebook-plugin --variable APP_ID="1379325579064871" --variable APP_NAME="TIM Palpites"
 
 
-cordova -d plugin add https://github.com/Wizcorp/phonegap-facebook-plugin --variable APP_ID="1038496712552" --variable APP_NAME="masdeportes"
+cordova -d plugin add https://github.com/Wizcorp/phonegap-facebook-plugin --variable APP_ID="1747880928832180" --variable APP_NAME=“+ Sports”
