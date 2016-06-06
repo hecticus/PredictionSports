@@ -44,7 +44,7 @@ POST           /sportsapi/v1/clients/delete/:id                                 
 
 
 GET            /sportsapi/v1/clients/get/:id/:upstreamChannel                              controllers.client.FootballClients.get(id : Integer, upstreamChannel : String, pmc : Boolean?=false)
-GET            /sportsapi/v1/clients/list                                              controllers.client.Clients.list(pageSize: Integer?=0, page: Integer?=0, pmc : Boolean?=false)
+#GET            /sportsapi/v1/clients/list                                              controllers.client.Clients.list(pageSize: Integer?=0, page: Integer?=0, pmc : Boolean?=false)
 GET            /sportsapi/v1/clients/alerts/:id                                        controllers.client.FootballClients.getPushAlertsForClient(id : Integer)
 GET            /sportsapi/v1/clients/bets/get/:id/:idCompetition                       controllers.client.FootballClients.getBetsForCompetition(id : Integer, idCompetition : Integer)
 GET            /sportsapi/v1/clients/bets/get/date/:id/:date                           controllers.client.FootballClients.getBetsForDate(id : Integer, date : String)

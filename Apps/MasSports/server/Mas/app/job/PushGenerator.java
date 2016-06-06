@@ -67,7 +67,7 @@ public class PushGenerator extends HecticusThread {
     @Override
     public void process(Map args) {
         try {
-            pmcIdApp = Config.getInt("pmc-id-app");
+            pmcIdApp = Config.getInt("pmc-id-app"); // Id de la aplicacion en la base de datos PMC ver wiki de PMC
             idActionPhaseFinished = Integer.parseInt(""+args.get("id_action"));
             defaultLanguage = Integer.parseInt(""+args.get("default_language"));
             defaultCountry = Integer.parseInt(""+args.get("default_country"));
