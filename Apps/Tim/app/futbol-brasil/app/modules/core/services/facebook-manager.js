@@ -270,6 +270,9 @@ angular
                     if(CordovaDevice.isWebPlatform()){
                         pluginType = 'ezfb';
                         plugin = ezfb;
+                        console.log("audel log: supposed to be web but now its fbconnect**");
+                        // pluginType = 'facebookConnect';
+                        // plugin = facebookConnectPlugin;
                     } else {
                         pluginType = 'facebookConnect';
                         plugin = facebookConnectPlugin;

@@ -56,11 +56,14 @@ angular
 
                 endOf : function(_date){
                     if (_date) {
-                        var leagueTime = moment(_date,'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss');
-                        var localTime  = moment.utc(leagueTime).toDate();
-                        var _oMoment = moment(localTime).locale(getLang());
+                        // var leagueTime = moment(_date,'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss');
+                        // var localTime  = moment.utc(leagueTime).toDate();
+
+                        var leagueTime = moment(_date,'YYYYMMDDHHmmss');
+                        var _oMoment = moment(leagueTime).locale(getLang());
+                        //updated so moment.endof('h') from endof('d')
                     }
-                    return _oMoment.endOf('d').fromNow();
+                    return _oMoment.endOf('h').fromNow();
                 },
 
                 /**

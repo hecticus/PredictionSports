@@ -142,7 +142,7 @@
     },
 
     "TERMS" : {
-        "MESSAGE" : "Por favor, lea los términos y condiciones en el sitio web hhttp://www.masmovil.com.pa/. Mediante el uso de la aplicación, el usuario se obliga a todos los Términos y Condiciones."
+        "MESSAGE" : "Por favor, lea los términos y condiciones en el sitio web http://www.masmovil.com.pa/ Mediante el uso de la aplicación, el usuario se obliga a todos los Términos y Condiciones."
     },
 
 

@@ -22,6 +22,7 @@ angular
 
             var width = $window.innerWidth;
             var widthTotal = $window.innerWidth;
+            console.log("audel debug now date:" + Moment.date());
 
             $scope.getNameClient = Client.getNickname();
 
@@ -69,6 +70,8 @@ angular
 
                 var _jMatch = $scope.leagues.fixtures[_iMatch];
                 var diffHours = Moment.date(_jMatch.date,'YYYYMMDDHHmmss').diff(Moment.date(), 'hours');
+                console.log("audel debug match date: " + Moment.date(_jMatch.date,'YYYYMMDDHHmmss'));
+                console.log("audel debug now date:" + Moment.date());
 
                 if (diffHours > 1) {
                   if (( _jMatch.id_game_matches != _Match) || (_bet != _mBet)) {

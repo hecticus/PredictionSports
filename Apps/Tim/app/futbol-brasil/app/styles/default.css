@@ -590,7 +590,7 @@ hr {
 
 .letogglecolor{
   color: #e31e30 !important; 
-  background-color: #e31e30 !important;
+  background-color: rgba(227,30,48,0.2) !important;
 }
 
 /*Audel FIN*/

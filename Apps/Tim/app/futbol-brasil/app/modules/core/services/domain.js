@@ -62,7 +62,8 @@ angular
            function getGMT(prefix){
             var tz =  moment().format('[GMT]ZZ').replace(/\s/g, '');
             tz = encodeURIComponent(tz);
-            return prefix + 'timezoneName=' + tz;
+            //return 'GMT-0500';
+            return '?timezoneName=GMT-0500'; //Cable!
            }
 
             function getLang(){
