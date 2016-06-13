@@ -50,6 +50,8 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 /**
  * Created by plesse on 9/30/14.
@@ -161,8 +163,14 @@ public class FootballClients extends Clients{
                 Client tmp  = Client.getAndUpdate(login, clientData);
                 if(tmp!=null)
                     client = new FootballClient(tmp);
-                if(tmp == null && !isRemind)
-                    return ok(buildBasicResponse(0, "OK", client.toJson()));
+                if(tmp == null && !isRemind) {
+                    ObjectNode responseNode = Json.newObject();
+                    responseNode.put("error", -2);
+                    responseNode.put("description", "error");
+                    responseNode.put("exception", "error");
+                    responseNode.put("upstream_code", 401);
+                    return internalServerError(responseNode);
+                }
                 if (tmp != null) {
                     if(isRemind) {
                         //Logger.of("upstream_subscribe").trace("app_request: " + clientData);
