@@ -413,7 +413,7 @@ public class MatchesController extends HecticusController {
                         String pivot = gameMatches.get(0).getDate().substring(0, 8);
                         Calendar pivotMaximumDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
                         pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd", TimeZone.getTimeZone("UTC")));
-                        Calendar maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
+                        Calendar maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate);
                         Calendar matchDate = null;
                         Calendar pivotDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
                         pivotDate.setTime(DateAndTime.getDate(gameMatches.get(0).getDate(), gameMatches.get(0).getDate().length()==8?"yyyyMMdd":"yyyyMMddhhmmss", TimeZone.getTimeZone("UTC")));
@@ -434,7 +434,7 @@ public class MatchesController extends HecticusController {
                                 pivot = gameMatch.getDate().substring(0, 8);
                                 pivotDate.setTime(DateAndTime.getDate(gameMatch.getDate(), gameMatch.getDate().length()==8?"yyyyMMdd":"yyyyMMddhhmmss", TimeZone.getTimeZone("UTC")));
                                 pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd", TimeZone.getTimeZone("UTC")));
-                                maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
+                                maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate);
                             }
                         }
                         if (!fixtures.isEmpty()) {
@@ -1047,7 +1047,7 @@ public class MatchesController extends HecticusController {
 
                 if (ungeneratedNews != null && !ungeneratedNews.isEmpty()) {
                     ArrayList<ObjectNode> newsToPush = new ArrayList<>();
-                    for (News news : ungeneratedNews) {
+                     for (News news : ungeneratedNews) {
                         newsToPush.add(news.toJsonPush());
                         news.setGenerated(true);
                         news.update();

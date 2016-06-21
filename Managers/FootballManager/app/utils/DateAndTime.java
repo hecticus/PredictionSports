@@ -204,6 +204,15 @@ public class DateAndTime {
         return cal;
     }
 
+    public static Calendar getMaximumDate(Calendar date){
+		Calendar cal = (Calendar) date.clone();
+		//cal.setTimeZone(TimeZone.getTimeZone(timezone));
+		cal.set(Calendar.HOUR_OF_DAY, cal.getActualMaximum(Calendar.HOUR_OF_DAY));
+		cal.set(Calendar.MINUTE, cal.getActualMaximum(Calendar.MINUTE));
+		cal.set(Calendar.SECOND, cal.getActualMaximum(Calendar.SECOND));
+		return cal;
+	}
+
     public static TimeZone getTimezoneFromID(String id){
         TimeZone timeZone = null;
         for (String string : TimeZone.getAvailableIDs(TimeZone.getTimeZone(id).getRawOffset())) {
