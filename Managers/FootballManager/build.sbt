@@ -1,6 +1,6 @@
 import play.PlayJava
 
-name := """FootballManager"""
+name := """footballmanagerpanama"""
 
 version := "1.0-SNAPSHOT"
 
