@@ -36,6 +36,7 @@ GET            /sportsapi/v1/clients/krakencreateweb/:msisdn                    
 GET            /sportsapi/v1/clients/krakencreate/:msisdn/:passwd/:usd                 controllers.client.FootballClients.createKraken(msisdn : String, passwd : String, usd : String)
 GET            /sportsapi/v1/clients/krakendown/:msisdn                                controllers.client.FootballClients.downKraken(msisdn : String)
 POST           /sportsapi/v1/clients/create                                            controllers.client.FootballClients.create()
+POST           /sportsapi/v1/clients/checkpin                                          controllers.client.FootballClients.checkPin()
 POST           /sportsapi/v1/clients/update/:id                                        controllers.client.FootballClients.update(id : Integer)
 POST           /sportsapi/v1/clients/delete/:id                                        controllers.client.Clients.delete(id : Integer)
 

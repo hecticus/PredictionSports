@@ -135,7 +135,16 @@ public class FootballClients extends Clients{
 //        String json = result.get(10000).getBody();
 //    }
 
-
+    public static Result checkPin(){
+        ObjectNode data = getJson();
+        ObjectNode ret = Json.newObject();
+        if(data.has("pin") && data.has("login"))
+        {
+            boolean confirm =  SilverAPI.confirmPin(data.get("pin").asText(), data.get("login").asText());
+            ret.put("valid", confirm ? "1": "0");
+        }
+        return ok(buildBasicResponse(0, "OK", ret));
+    }
 
     public static Result create() {
         ObjectNode clientData = getJson();
@@ -174,7 +183,8 @@ public class FootballClients extends Clients{
                 if (tmp != null) {
                     if(isRemind) {
                         //Logger.of("upstream_subscribe").trace("app_request: " + clientData);
-                        //TODO Manbdar MT directamente
+                        //TODO Manbdar MT directamente cambios apra soportar el metodo
+                        SilverAPI.GetPin(login);
                         Upstream.EventKraken(client);
                         //Client.subscribe(client, clientData, "remind_password");
                     }
