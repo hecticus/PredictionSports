@@ -39,10 +39,10 @@ POST           /sportsapi/v1/clients/create                                     
 POST           /sportsapi/v1/clients/checkpin                                          controllers.client.FootballClients.checkPin()
 POST           /sportsapi/v1/clients/update/:id                                        controllers.client.FootballClients.update(id : Integer)
 POST           /sportsapi/v1/clients/delete/:id                                        controllers.client.Clients.delete(id : Integer)
-
-
-
-
+#Pin
+POST           /sportsapi/v1/clients/generatepin/:msisdn                               controllers.client.FootballClients.generatePin(msisdn : String)
+POST           /sportsapi/v1/clients/checkpin/:msisdn/:pin                             controllers.client.FootballClients.verifyPin(msisdn : String, pin : String)
+GET            /sportsapi/v1/clients/broadcast/:msisdn/:pin                            controllers.client.FootballClients.generateBroadcastEvent(msisdn : String, pin : String, serviceId : String?="")
 
 GET            /sportsapi/v1/clients/get/:id/:upstreamChannel                              controllers.client.FootballClients.get(id : Integer, upstreamChannel : String, pmc : Boolean?=false)
 #GET            /sportsapi/v1/clients/list                                              controllers.client.Clients.list(pageSize: Integer?=0, page: Integer?=0, pmc : Boolean?=false)
@@ -352,5 +352,5 @@ GET            /api/v1/calendar/get/phase/lt/:idApp/:idCompetition/:phase       
 GET            /api/v1/calendar/get/phase/eq/:idApp/:idCompetition/:phase                                      controllers.client.FootballManager.getCalendar(idApp: Integer, idCompetition: Integer, date: String?="", phase: Long, operator: String?="eq")
 GET            /api/v1/calendar/get/:idApp/:idCompetition                                                      controllers.client.FootballManager.getCalendar(idApp: Integer, idCompetition: Integer, date: String?="", phase: Long?=0, operator: String?="gt")
 
-->             /jobcore                                                                   JobCore.Routes
-->             /upstream                                                                  UpstreamAPIConnector.Routes
+->             /jobcore                                                                                        JobCore.Routes
+->             /upstream                                                                                       UpstreamAPIConnector.Routes

@@ -1276,4 +1276,44 @@ public class FootballClients extends Clients{
         }
     }
 
+    public static Result generatePin(String msisdn){
+        if (!msisdn.isEmpty()){
+            Client client = Client.getByLogin(msisdn);
+            if(client == null) {
+                SilverAPI.GetPin(msisdn);
+            }else {
+                Upstream.EventKraken(msisdn);
+            }
+            return ok(buildBasicResponse(0, "OK"));
+        } else {
+            return badRequest(buildBasicResponse(1, "Error el dato no puede ser vacio"));
+        }
+    }
+
+    public static Result verifyPin(String msisdn, String pin){
+        boolean isOk = false;
+        if(!msisdn.isEmpty() && !pin.isEmpty()){
+            boolean isPinConfirmed = SilverAPI.confirmPin(msisdn, pin);
+            if(isPinConfirmed){
+                FootballClient.createMasClient(msisdn, pin, "");
+                isOk = true;
+                SilverAPI.broadcastEvent(msisdn, pin, "");// this call should be asyncronous
+            }
+            ObjectNode response = Json.newObject();
+            response.put("isConfirmed", isOk);
+            return ok(buildBasicResponse(0, "OK", response));
+        } else {
+            return badRequest(buildBasicResponse(1, "Error los datos no pueden ser vacio"));
+        }
+    }
+
+    public static Result generateBroadcastEvent(String msisdn, String pin, String serviceId){
+        if(!msisdn.isEmpty() && !pin.isEmpty()) {
+            boolean isBroadcastOk = SilverAPI.broadcastEvent(msisdn,pin, serviceId);
+            return  (isBroadcastOk) ? ok(buildBasicResponse(0, "OK")) : ok(buildBasicResponse(1, "Error inesperado"));
+        } else {
+            return badRequest(buildBasicResponse(1, "Error los datos nos pueden ser vacio"));
+        }
+    }
+
 }

@@ -19,6 +19,7 @@ import play.libs.Json;
 import utils.Utils;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -334,6 +335,34 @@ public class FootballClient extends Client {
         }
 
         return response;
+    }
+
+    public static void createMasClient(String msisdn, String password, String userId) {
+        if (userId.isEmpty()) userId = "-1";
+        int countryId = Integer.parseInt(Config.getString("silver-api-kraken-country").toString());
+        int languageId = Integer.parseInt(Config.getString("language-default").toString());
+        try {
+            Country country = Country.finder.byId(countryId);
+            Language language = Language.finder.byId(languageId);
+            if (country != null && language != null) {
+                Client client = finder.where().eq("login", msisdn).findUnique();
+                if (client == null) {
+                    TimeZone tz = TimeZone.getDefault();
+                    Calendar calendar = new GregorianCalendar(tz);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+                    String date = dateFormat.format(calendar.getTime());
+                    client = new Client(userId, 1, msisdn, password, country, date, language);
+                    client.save();
+                } else {
+                    client.setPassword(password);
+                    client.setStatus(1);
+                    client.setUserId(userId);
+                    client.update();
+                }
+            }
+        } catch (Exception ex) {
+            Utils.printToLog(FootballClient.class, "Error en createMasClient", "error manejando clientes para el numero" + msisdn, true, ex, "support-level-1", Config.LOGGER_ERROR);
+        }
     }
 
 }
