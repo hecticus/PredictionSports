@@ -64,6 +64,7 @@ public class Competition  extends FootballModel {
         this.extId = extId;
         this.app = idApp;
         this.status = 0;
+        this.show = 1 ;
         this.type = type;
     }
 
@@ -267,7 +268,10 @@ public class Competition  extends FootballModel {
             this.idCompetitions = fromDb.idCompetitions;
             this.type = fromDb.type;
             this.localizations = fromDb.localizations;
+            this.show = fromDb.show;;
+
         }else {
+            //this.show = 1;
             //insertar
             this.save();
         }
