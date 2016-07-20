@@ -135,7 +135,16 @@ public class FootballClients extends Clients{
 //        String json = result.get(10000).getBody();
 //    }
 
-
+    public static Result checkPin(){
+        ObjectNode data = getJson();
+        ObjectNode ret = Json.newObject();
+        if(data.has("pin") && data.has("login"))
+        {
+            boolean confirm =  SilverAPI.confirmPin(data.get("pin").asText(), data.get("login").asText());
+            ret.put("valid", confirm ? "1": "0");
+        }
+        return ok(buildBasicResponse(0, "OK", ret));
+    }
 
     public static Result create() {
         ObjectNode clientData = getJson();
@@ -174,7 +183,8 @@ public class FootballClients extends Clients{
                 if (tmp != null) {
                     if(isRemind) {
                         //Logger.of("upstream_subscribe").trace("app_request: " + clientData);
-                        //TODO Manbdar MT directamente
+                        //TODO Manbdar MT directamente cambios apra soportar el metodo
+                        SilverAPI.GetPin(login);
                         Upstream.EventKraken(client);
                         //Client.subscribe(client, clientData, "remind_password");
                     }
@@ -1263,6 +1273,46 @@ public class FootballClients extends Clients{
         }catch (Exception e) {
             Utils.printToLog(FootballClients.class, "Error manejando clients", "error creando clientbets para el client " + id, true, e, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
+        }
+    }
+
+    public static Result generatePin(String msisdn){
+        if (!msisdn.isEmpty()){
+            Client client = Client.getByLogin(msisdn);
+            if(client == null) {
+                SilverAPI.GetPin(msisdn);
+            }else {
+                Upstream.EventKraken(msisdn);
+            }
+            return ok(buildBasicResponse(0, "OK"));
+        } else {
+            return badRequest(buildBasicResponse(1, "Error el dato no puede ser vacio"));
+        }
+    }
+
+    public static Result verifyPin(String msisdn, String pin){
+        boolean isOk = false;
+        if(!msisdn.isEmpty() && !pin.isEmpty()){
+            boolean isPinConfirmed = SilverAPI.confirmPin(msisdn, pin);
+            if(isPinConfirmed){
+                FootballClient.createMasClient(msisdn, pin, "");
+                isOk = true;
+                SilverAPI.broadcastEvent(msisdn, pin, "");// this call should be asyncronous
+            }
+            ObjectNode response = Json.newObject();
+            response.put("isConfirmed", isOk);
+            return ok(buildBasicResponse(0, "OK", response));
+        } else {
+            return badRequest(buildBasicResponse(1, "Error los datos no pueden ser vacio"));
+        }
+    }
+
+    public static Result generateBroadcastEvent(String msisdn, String pin, String serviceId){
+        if(!msisdn.isEmpty() && !pin.isEmpty()) {
+            boolean isBroadcastOk = SilverAPI.broadcastEvent(msisdn,pin, serviceId);
+            return  (isBroadcastOk) ? ok(buildBasicResponse(0, "OK")) : ok(buildBasicResponse(1, "Error inesperado"));
+        } else {
+            return badRequest(buildBasicResponse(1, "Error los datos nos pueden ser vacio"));
         }
     }
 
