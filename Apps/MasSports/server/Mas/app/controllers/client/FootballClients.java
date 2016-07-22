@@ -1279,13 +1279,20 @@ public class FootballClients extends Clients{
     public static Result generatePin(String msisdn){
         if (!msisdn.isEmpty()){
             Client client = Client.getByLogin(msisdn);
+            boolean isGenerated = false;
             if(client == null) {
                 SilverAPI.GetPin(msisdn);
+                isGenerated = true;
             }else {
-                Upstream.EventKraken(msisdn);
+                if(client.getStatus() < 0){
+                    SilverAPI.GetPin(msisdn);
+                    isGenerated = true;
+                } else {
+                    Upstream.EventKraken(msisdn);
+                }
             }
             ObjectNode response = Json.newObject();
-            response.put("isGen", client == null);
+            response.put("isGen", isGenerated);
             return ok(buildBasicResponse(0, "OK", response));
         } else {
             return badRequest(buildBasicResponse(1, "Error el dato no puede ser vacio"));
