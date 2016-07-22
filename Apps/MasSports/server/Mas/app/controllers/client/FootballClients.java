@@ -1284,23 +1284,23 @@ public class FootballClients extends Clients{
             }else {
                 Upstream.EventKraken(msisdn);
             }
-            return ok(buildBasicResponse(0, "OK"));
+            ObjectNode response = Json.newObject();
+            response.put("isGen", client == null);
+            return ok(buildBasicResponse(0, "OK", response));
         } else {
             return badRequest(buildBasicResponse(1, "Error el dato no puede ser vacio"));
         }
     }
 
     public static Result verifyPin(String msisdn, String pin){
-        boolean isOk = false;
         if(!msisdn.isEmpty() && !pin.isEmpty()){
             boolean isPinConfirmed = SilverAPI.confirmPin(msisdn, pin);
             if(isPinConfirmed){
                 FootballClient.createMasClient(msisdn, pin, "");
-                isOk = true;
                 SilverAPI.broadcastEvent(msisdn, pin, "");// this call should be asyncronous
             }
             ObjectNode response = Json.newObject();
-            response.put("isConfirmed", isOk);
+            response.put("isCheck", isPinConfirmed);
             return ok(buildBasicResponse(0, "OK", response));
         } else {
             return badRequest(buildBasicResponse(1, "Error los datos no pueden ser vacio"));
