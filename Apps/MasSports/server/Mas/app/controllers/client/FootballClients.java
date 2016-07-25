@@ -1286,8 +1286,6 @@ public class FootballClients extends Clients{
             }else {
                 if(client.getStatus() < 0){
                     SilverAPI.GetPin(msisdn);
-                    client.setStatus(1);
-                    client.update();
                     isGenerated = true;
                 } else {
                     Upstream.EventKraken(msisdn);
