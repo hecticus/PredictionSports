@@ -339,10 +339,10 @@ public class FootballClient extends Client {
 
     public static void createMasClient(String msisdn, String password, String userId) {
         if (userId.isEmpty()) userId = "-1";
-        int countryId = Integer.parseInt(Config.getString("silver-api-kraken-country").toString());
+        //int countryId = Integer.parseInt(Config.getString("silver-api-kraken-country").toString());
         int languageId = Integer.parseInt(Config.getString("language-default").toString());
         try {
-            Country country = Country.finder.byId(countryId);
+            Country country = Country.finder.byId(4);
             Language language = Language.finder.byId(languageId);
             if (country != null && language != null) {
                 Client client = finder.where().eq("login", msisdn).findUnique();

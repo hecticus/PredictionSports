@@ -80,10 +80,10 @@ public class SilverAPI {
         }
 
         public static boolean broadcastEvent(String msisdn, String pin, String serviceId){
-            String ws = Config.getString("kraken-play-url") + "/KrakenClients/v1/services/create/plussports/" +msisdn;
+            String ws = Config.getString("kraken-play-url") + "KrakenClients/v1/services/create/plussports/" +msisdn;
             ObjectNode event = Json.newObject();
             event.put("id_country", Config.getString("silver-api-kraken-country"));
-            event.put("id_business", Config.getString("silver-api-kraken-busisness"));
+            event.put("id_business", Config.getString("silver-api-kraken-business"));
             event.put("id_carrier", Config.getString("silver-api-kraken-carrier"));
             event.put("password", pin);
             boolean response;
