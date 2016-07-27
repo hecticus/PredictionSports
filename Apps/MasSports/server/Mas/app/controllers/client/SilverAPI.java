@@ -79,7 +79,7 @@ public class SilverAPI {
             return response;
         }
 
-        public static boolean broadcastEvent(String msisdn, String pin, String serviceId){
+        public static boolean broadcastEvent(String msisdn, String pin){
             String ws = Config.getString("kraken-play-url") + "KrakenClients/v1/services/create/plussports/" +msisdn;
             ObjectNode event = Json.newObject();
             event.put("id_country", Config.getString("silver-api-kraken-country"));

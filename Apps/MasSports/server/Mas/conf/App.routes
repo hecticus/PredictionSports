@@ -42,7 +42,7 @@ POST           /sportsapi/v1/clients/delete/:id                                 
 #Pin
 POST           /sportsapi/v1/clients/generatepin/:msisdn                               controllers.client.FootballClients.generatePin(msisdn : String)
 POST           /sportsapi/v1/clients/checkpin/:msisdn/:pin                             controllers.client.FootballClients.verifyPin(msisdn : String, pin : String)
-POST           /sportsapi/v1/clients/broadcast/:msisdn/:pin/:serviceId                 controllers.client.FootballClients.generateBroadcastEvent(msisdn : String, pin : String, serviceId : String)
+POST           /sportsapi/v1/clients/broadcastreturn/:msisdn/:pin/:serviceId           controllers.client.FootballClients.broadcastEventReturn(msisdn : String, pin : String, serviceId : String)
 
 GET            /sportsapi/v1/clients/get/:id/:upstreamChannel                              controllers.client.FootballClients.get(id : Integer, upstreamChannel : String, pmc : Boolean?=false)
 #GET            /sportsapi/v1/clients/list                                              controllers.client.Clients.list(pageSize: Integer?=0, page: Integer?=0, pmc : Boolean?=false)
