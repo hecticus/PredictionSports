@@ -1,0 +1,166 @@
+<div id="wrapper">
+    <div class="scroller">
+
+
+
+        <div class="row">
+
+            <div class="col-xs-12">
+
+                <div class="well text-center panel">
+                    
+                    <div>
+                        <h2 class="screen-tittle">
+                        <span translate>SECTIONS.LOGIN</span></h2>
+                    </div>
+
+                    <form name="form" ng-submit="doMsisdnLogin()" class="form-horizontal css-form" novalidate>
+                        <fieldset>
+                            <div class="form-group" ng:class="{true:'has-warning', false:''}[form.msisdnInput.$dirty && form.msisdnInput.$invalid]">
+
+                                <!--div class="alert alert-dismissable alert-success"   ng-show="flash.getMessage().length">
+                                  <button type="button" class="close" data-dismiss="alert">×</button>
+                                  <strong style="font-size:1.8em;">{{flash.getMessage()}}</strong>
+                                </div-->
+
+                                <!--div ng-show="form.msisdnInput.$dirty && form.msisdnInput.$invalid">
+                                  <div class="alert alert-dismissable alert-warning">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                    <span ng-show="form.msisdnInput.$error.required">{{'FORM-CONTROL.MSISDN.REQUIRED' | translate }}</span>
+                                    <span ng-show="form.msisdnInput.$error.minlength">{{'FORM-CONTROL.MSISDN.MIN-LENGTH' | translate }} {{formController.msisdn.length.min}}</span>
+                                    <span ng-show="form.msisdnInput.$error.maxlength">{{'FORM-CONTROL.MSISDN.MAX-LENGTH' | translate }} {{formController.msisdn.length.max}}</span>
+                                  </div>
+                                </div-->
+
+                                <!--div ng-show="form.passwordInput.$dirty && form.passwordInput.$invalid">
+                                  <div class="alert alert-dismissable alert-warning">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                    <span ng-show="form.passwordInput.$error.required">{{'FORM-CONTROL.PASSWORD.REQUIRED' | translate }}</span>
+                                  </div>
+                                </div-->
+
+                                <label for="msisdnInput" class="col-xs-12 control-label" translate>LOGIN.MSISDN_LABEL</label>
+
+                                <div class="col-xs-10 col-xs-push-1">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">{{prefix}}</span>
+                                        <label for="msisdnInput" class="col-xs-12 control-label sr-only"
+                                               translate>LOGIN.MSISDN_LABEL</label>
+                                        <input type="tel" class="form-control empty" ng-model="msisdn" ng-minlength="{{formController.msisdn.length.min}}" ng-maxlength="{{formController.msisdn.length.max}}"
+                                               id="msisdnInput" name="msisdnInput" placeholder="{{ 'LOGIN.MSISDN_HOLDER' | translate }}" required>
+                                        <span class="material-input"></span>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+
+                            <div class="form-group" ng:class="{true:'has-warning', false:''}[form.passwordInput.$dirty && form.passwordInput.$invalid]">
+
+                                <label for="passwordInput" class="col-xs-12 control-label" translate>LOGIN.PASSWORD_LABEL</label>
+                                <div class="col-xs-10 col-xs-push-1">
+                                    <input type="password" class="form-control empty" ng-model="password"
+                                           id="passwordInput" name="passwordInput" placeholder="{{ 'LOGIN.PASSWORD_HELPER' | translate }}" required>
+                                    <span class="material-input"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-12 ">
+                                    <button type="submit" class="btn btn-block btn-orange touch-enable" ng-disabled="form.$invalid">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <span translate>LOGIN.LOGIN_LABEL</span>
+                                            </div>
+                                            <!-- <div class="col-xs-2 text-right">
+                                                <span><i class="mdi-navigation-chevron-right"></i></span>
+                                            </div> -->
+                                        </div>
+                                    </button>
+                                </div>                                
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 ">
+                                    <button ui-sref="remind" class="btn btn-block btn-orange touch-enable">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <span translate>LOGIN.REMIND_LABEL</span>
+                                            </div>
+                                            <!-- <div class="col-xs-2 text-right">
+                                                <span><i class="mdi-navigation-chevron-right"></i></span>
+                                            </div> -->
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+
+                    <div class="list-group">
+                        <!-- <a ui-sref="remind" class="list-group-item list-item">
+                            <div class="col-xs-10 col-xs-push-1">
+                                <span class="h-login-button" translate>LOGIN.REMIND_LABEL</span>
+                            </div>
+                            <div class="col-xs-2 text-right">
+                                <span><i class="mdi-navigation-chevron-right"></i></span>
+                            </div>
+                        </a> -->
+                        <!--div class="full-separator"></div>
+                        <a ui-sref="language-selection" class="list-group-item list-item">
+                            <div class="col-xs-10">
+                                <span translate>LOGIN.CHANGE_LANGUAGE_LABEL</span>
+                            </div>
+                            <div class="col-xs-2 text-right">
+                                <span><i class="mdi-navigation-chevron-right"></i></span>
+                            </div>
+                        </a-->
+                        <!--div class="full-separator"></div>
+                        <a ui-sref="how" class="list-group-item list-item">
+                            <div class="col-xs-10">
+                                <span class="h-login-button" translate>LOGIN.TUTORIAL_LABEL</span>
+                            </div>
+                            <div class="col-xs-2 text-right">
+                                <span><i class="mdi-navigation-chevron-right"></i></span>
+                            </div>
+                        </a-->                        
+                    </div>
+
+                    <form name="msisdnForm" ng-submit="enterAsGuest()" class="form-horizontal">
+                        <fieldset>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button type="submit" class="btn btn-block btn-orange touch-enable">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <span translate>LOGIN.ENTER_AS_GUEST_LABEL</span>
+                                            </div>
+                                            <!-- <div class="col-xs-2 text-right">
+                                                <span><i class="mdi-navigation-chevron-right"></i></span>
+                                            </div> -->
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div class="list-group">
+                        <!-- the below div was placed in the div above guest button -->
+                        <div class="full-separator"></div>
+                        <a ui-sref="terms" class="list-group-item list-item">
+                          <div class="col-xs-10 col-xs-push-1">
+                            <span class="h-login-button" translate>LOGIN.TERMS_LABEL</span>
+                          </div>
+                          <!-- <div class="col-xs-2 text-right">
+                            <span><i class="mdi-navigation-chevron-right"></i></span>
+                          </div> -->
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

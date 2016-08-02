@@ -1,0 +1,18 @@
+keytool -genkey -v -keystore tim-palpites-release-key.keystore -alias tim_palpites -keyalg RSA -keysize 2048 -validity 10000
+password: $pa1p1t32$
+
+
+Get Android key hash to Facebook
+keytool -exportcert -alias tim_palpites -keystore "C:\Hecticus\GitHub\PredictionSports\Apps\Tim\app\futbol-brasil\platforms\android\ant-build\tim-palpites-release-key.keystore" | "C:\OpenSSL-Win32\bin\openssl" sha1 -binary | "C:\OpenSSL-Win32\bin\openssl" base64
+
+
+
+Sign your app with your private key using jarsigner:
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore tim-palpites-release-key.keystore MainActivity-release-unsigned.apk tim_palpites
+
+Verify that your APK is signed. For example:
+jarsigner -verify -verbose -certs MainActivity-release-unsigned.apk
+
+
+Align the final APK package using zipalign.
+zipalign -v 4 MainActivity-release-unsigned.apk Tim_Palpites_1_0_4.apk
