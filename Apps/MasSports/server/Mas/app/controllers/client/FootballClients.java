@@ -184,7 +184,7 @@ public class FootballClients extends Clients{
                     if(isRemind) {
                         //Logger.of("upstream_subscribe").trace("app_request: " + clientData);
                         //TODO Manbdar MT directamente cambios apra soportar el metodo
-                        SilverAPI.GetPin(login);
+                        //SilverAPI.GetPin(login);
                         Upstream.EventKraken(client);
                         //Client.subscribe(client, clientData, "remind_password");
                     }
