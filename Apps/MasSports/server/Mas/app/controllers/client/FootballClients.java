@@ -152,9 +152,11 @@ public class FootballClients extends Clients{
         if(data.has("msisdn"))
         {
             Upstream.EventKraken(data.get("msisdn").asText());
+            ret.put("go", "1");
             //ret.put("valid", confirm ? "1": "0");
-        }
-        return ok(buildBasicResponse(0, "OK", "{}"));
+        }else
+            ret.put("go", "0");
+        return ok(buildBasicResponse(0, "OK", ret));
     }
 
     public static Result create() {
