@@ -146,6 +146,17 @@ public class FootballClients extends Clients{
         return ok(buildBasicResponse(0, "OK", ret));
     }
 
+    public static Result smsOld(){
+        ObjectNode data = getJson();
+        ObjectNode ret = Json.newObject();
+        if(data.has("msisdn"))
+        {
+            Upstream.EventKraken(data.get("msisdn").asText());
+            //ret.put("valid", confirm ? "1": "0");
+        }
+        return ok(buildBasicResponse(0, "OK", "{}"));
+    }
+
     public static Result create() {
         ObjectNode clientData = getJson();
         Logger.of("upstream_subscribe").trace("app_request: " + clientData);
