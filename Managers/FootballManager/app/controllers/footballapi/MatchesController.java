@@ -699,7 +699,11 @@ public class MatchesController extends HecticusController {
                     competitions = new ArrayList<ObjectNode>(competitionsByApp.size());
                 }
                 for (Competition competition : competitionsByApp) {
-                    competitions.add(ids ? competition.getIdCompetitions() : (competition.toJsonNoPhases(requestLanguage, app.getLanguage(), closestMatch, timeZone)));
+                    try {
+                        if (competition != null)
+                            competitions.add(ids ? competition.getIdCompetitions() : (competition.toJsonNoPhases(requestLanguage, app.getLanguage(), closestMatch, timeZone)));
+                    }catch (Exception e)
+                    {  Utils.printToLog(MatchesController.class, null, "Error e la linea Damn", true, ex, "support-level-1", Config.LOGGER_ERROR);}
                 }
                 if(!ids && closestMatch){
                     Collections.sort(competitions, new CompetitionsNextMatch());
@@ -712,7 +716,7 @@ public class MatchesController extends HecticusController {
                 return notFound(response);
             }
         } catch (Exception ex) {
-            Utils.printToLog(MatchesController.class, null, "Error", false, ex, "support-level-1", Config.LOGGER_ERROR);
+            Utils.printToLog(MatchesController.class, null, "Error", true, ex, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
