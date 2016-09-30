@@ -702,7 +702,7 @@ public class MatchesController extends HecticusController {
                     try {
                         if (competition != null)
                             competitions.add(ids ? competition.getIdCompetitions() : (competition.toJsonNoPhases(requestLanguage, app.getLanguage(), closestMatch, timeZone)));
-                    }catch (Exception e)
+                    }catch (Exception ex)
                     {  Utils.printToLog(MatchesController.class, null, "Error e la linea Damn", true, ex, "support-level-1", Config.LOGGER_ERROR);}
                 }
                 if(!ids && closestMatch){
