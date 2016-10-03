@@ -380,7 +380,7 @@ public class Competition  extends FootballModel {
         obj.put("competiton_type", type.toJson(language, defaultLanguage));
         if(closestMatch){
             GameMatch match = GameMatch.getClosestMatch(this);
-            obj.put("match", match!=null?(timeZone != null?match.toJsonPush(timeZone):match.toJsonPush()):null);
+            obj.put("match", (match!=null && match.getAwayTeam()!= null && match.getHomeTeam()!= null) ?(timeZone != null?match.toJsonPush(timeZone):match.toJsonPush()):null);
         }
         return obj;
     }
