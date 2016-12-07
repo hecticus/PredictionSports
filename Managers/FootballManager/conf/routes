@@ -189,6 +189,9 @@ GET            /api/v1/calendar/get/phase/eq/:idApp/:idCompetition/:phase       
 GET            /api/v1/calendar/get/:idApp/:idCompetition                                                      controllers.footballapi.MatchesController.getCalendar(idApp: Integer, idCompetition: Integer, date: String?="", phase: Long?=0, operator: String?="gt")
 
 
+#splash
+GET            /splash/get                                                                                     controllers.Splash.getCurrentSplash()
+
 #V2 RESTify routes
 
 #Matches
