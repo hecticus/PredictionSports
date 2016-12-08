@@ -57,6 +57,11 @@ GET            /sportsapi/v1/clients/scorers/:idClient                          
 
 GET            /sportsapi/v1/languages                                                 controllers.client.Clients.getActiveLanguages()
 
+
+#splash
+GET            /splash/get                                                             controllers.Splash.getCurrentSplash()
+
+
 #funciones para obtener imagenes locales
 #GET     /sportsapi/v1/localimages/:file/:size                                                           controllers.ImageProcessing.getLocalResourceBySize(file : String, size : String)
 #imagen width and height
