@@ -36,6 +36,7 @@ public class Competition  extends FootballModel {
     @JoinColumn(name = "id_app")
     private Apps app;
     private Integer status;
+    private Integer show;
 
     @ManyToOne
     @JoinColumn(name = "id_comp_type")
@@ -63,6 +64,7 @@ public class Competition  extends FootballModel {
         this.extId = extId;
         this.app = idApp;
         this.status = 0;
+        this.show = 1 ;
         this.type = type;
     }
 
@@ -106,6 +108,14 @@ public class Competition  extends FootballModel {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getShow() {
+        return show;
+    }
+
+    public void setShow(Integer show) {
+        this.show = show;
     }
 
     public CompetitionType getType() {
@@ -258,7 +268,10 @@ public class Competition  extends FootballModel {
             this.idCompetitions = fromDb.idCompetitions;
             this.type = fromDb.type;
             this.localizations = fromDb.localizations;
+            this.show = fromDb.show;;
+
         }else {
+            //this.show = 1;
             //insertar
             this.save();
         }
@@ -277,6 +290,7 @@ public class Competition  extends FootballModel {
         obj.put("id_competitions",idCompetitions);
         obj.put("name",name);
         obj.put("ext_id",extId);
+        obj.put("show",show);
         obj.put("competiton_type", type.toJson());
         if(phases != null && !phases.isEmpty()){
             ArrayList<ObjectNode> phasesList = new ArrayList<>(phases.size());
@@ -308,6 +322,7 @@ public class Competition  extends FootballModel {
         obj.put("id_competitions",idCompetitions);
         obj.put("name",name);
         obj.put("ext_id",extId);
+        obj.put("show",show);
         obj.put("competiton_type", type.toJson());
         return obj;
     }
@@ -316,6 +331,7 @@ public class Competition  extends FootballModel {
         ObjectNode obj = Json.newObject();
         obj.put("id_competitions",idCompetitions);
         obj.put("name",name);
+        obj.put("show",show);
         obj.put("ext_id",extId);
         return obj;
     }
@@ -343,6 +359,7 @@ public class Competition  extends FootballModel {
         }
         obj.put("name",clientLanguage!=null?clientLanguage.getName():name);
         obj.put("ext_id",extId);
+        obj.put("show",show);
         obj.put("competiton_type", type.toJson(language, defaultLanguage));
         if(phases != null && !phases.isEmpty()){
             ArrayList<ObjectNode> phasesList = new ArrayList<>(phases.size());
@@ -377,10 +394,11 @@ public class Competition  extends FootballModel {
         }
         obj.put("name",clientLanguage!=null?clientLanguage.getName():name);
         obj.put("ext_id",extId);
+        obj.put("show",show);
         obj.put("competiton_type", type.toJson(language, defaultLanguage));
         if(closestMatch){
             GameMatch match = GameMatch.getClosestMatch(this);
-            obj.put("match", (match!=null && match.getAwayTeam()!= null && match.getHomeTeam()!= null) ?(timeZone != null?match.toJsonPush(timeZone):match.toJsonPush()):null);
+            obj.put("match", match!=null?(timeZone != null?match.toJsonPush(timeZone):match.toJsonPush()):null);
         }
         return obj;
     }
