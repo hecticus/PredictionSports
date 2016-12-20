@@ -86,15 +86,23 @@ public class FootballClients extends Clients{
                 //client = (FootballClient) Client.getAndUpdate(login, clientData);
 
                 if (client != null) {
+                    try
+                    {
+                        if(isRemind) {
 
-                    if(isRemind) {
-                        Logger.of("upstream_subscribe").trace("app_request: " + clientData);
-                        Client.subscribe(client, clientData, "remind_password");
+                                Logger.of("upstream_subscribe").trace("app_request: " + clientData);
+                                Client.subscribe(client, clientData, "remind_password");
+
+                        }
+
+                        //Para Registrar los login de los clientes ya existentes.
+                        LoginTracks track =  new LoginTracks(client.toJson().toString(), client, remote_ip, 2, 1);
+                        track.save();
                     }
-
-                    //Para Registrar los login de los clientes ya existentes.
-                    LoginTracks track =  new LoginTracks(client.toJson().toString(), client, remote_ip, 2, 1);
-                    track.save();
+                    catch(Exception ex)
+                    {
+                        Utils.printToLog(FootballClients.class, "Error manejando clients Uptream IsDOWN", "Error en Uptream al buscar la contrasena", true, ex, "support-level-1", Config.LOGGER_ERROR);
+                    }
                     return ok(buildBasicResponse(0, "OK", client.toJson()));
                 }
             }
