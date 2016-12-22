@@ -36,6 +36,7 @@ public class Competition  extends FootballModel {
     @JoinColumn(name = "id_app")
     private Apps app;
     private Integer status;
+    @Column(name="`show`")
     private Integer show;
 
     @ManyToOne
