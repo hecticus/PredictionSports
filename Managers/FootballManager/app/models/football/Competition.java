@@ -396,6 +396,7 @@ public class Competition  extends FootballModel {
         obj.put("name",clientLanguage!=null?clientLanguage.getName():name);
         obj.put("ext_id",extId);
         obj.put("show",show);
+        obj.put("sport_id",1); //Indica el numero del deporte para el dashboard 1 es football
         obj.put("competiton_type", type.toJson(language, defaultLanguage));
         if(closestMatch){
             GameMatch match = GameMatch.getClosestMatch(this);
