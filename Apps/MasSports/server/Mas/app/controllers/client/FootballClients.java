@@ -802,7 +802,7 @@ public class FootballClients extends Clients{
     }
 
     public static Result getBetsForCompetition(Integer id, Integer idCompetition) {
-        try {
+            try {
             String[] timezoneNames = getFromQueryString("timezoneName");
             if(timezoneNames == null){//timezoneNames.length <= 0){
                 return badRequest(buildBasicResponse(1, "Falta el parametro timezonName"));
@@ -904,6 +904,114 @@ public class FootballClients extends Clients{
             return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
         }
     }
+
+
+    public static Result getBetsForCompetitionBaseball(Integer id, Integer idCompetition) {
+        try {
+            String[] timezoneNames = getFromQueryString("timezoneName");
+            if(timezoneNames == null){//timezoneNames.length <= 0){
+                return badRequest(buildBasicResponse(1, "Falta el parametro timezonName"));
+            }
+            String timezoneName = timezoneNames[0].replaceAll(" ", "").trim();
+            // FootballClient client = (FootballClient) Client.getByID(id);
+            FootballClient client = new FootballClient(Client.getByID(id));
+            if(client != null) {
+                String teams = "http://" + Utils.getBaseBallManagerHost() + "/footballapi/v1/matches/competition/date/grouped/" + Config.getInt("football-manager-id-app") + "/" + idCompetition + "?timezoneName=" + timezoneName;
+                System.out.println(teams);
+                F.Promise<WSResponse> result = WS.url(teams.toString()).get();
+                ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
+                int error = footballResponse.get("error").asInt();
+                if(error == 0) {
+                    ArrayList<Integer> matchesIDs = new ArrayList<>();
+                    ArrayList<ObjectNode> modifiedFixtures = new ArrayList<>();
+                    Map<Integer, ObjectNode> matches = new HashMap<>();
+                    int maxBetsCount = 0;
+                    int clientBetsCount = 0;
+                    ObjectNode league = (ObjectNode) footballResponse.get("response");
+                    Iterator<JsonNode> fixtures = league.get("fixtures").elements();
+                    while (fixtures.hasNext()) {
+                        ObjectNode fixture = (ObjectNode) fixtures.next();
+                        Iterator<JsonNode> externalMatches = fixture.get("matches").elements();
+                        while (externalMatches.hasNext()){
+                            ObjectNode externalMatch = (ObjectNode) externalMatches.next();
+                            int idGameMatches = externalMatch.get("id_game_matches").asInt();
+                            matchesIDs.add(idGameMatches);
+                            matches.put(idGameMatches, externalMatch);
+                        }
+                    }
+                    maxBetsCount = matchesIDs.size();
+                    List<ClientBets> list = ClientBets.finder.where().eq("client", client).eq("idTournament", league.get("id_competitions").asInt()).in("idGameMatch", matchesIDs).orderBy("idGameMatch asc").findList();
+                    if (list != null && !list.isEmpty()) {
+                        clientBetsCount+=list.size();
+                        ArrayList<ObjectNode> dataFixture = new ArrayList();
+                        ArrayList<ObjectNode> orderedFixtures = new ArrayList<>();
+                        for (ClientBets clientBets : list) {
+                            ObjectNode fixture = matches.get(clientBets.getIdGameMatch());
+                            fixture.put("bet", clientBets.toJsonNoClient());
+                            modifiedFixtures.add(fixture);
+                            matches.remove(clientBets.getIdGameMatch());
+                        }
+                        Set<Integer> keys = matches.keySet();
+                        for (int key : keys) {
+                            ObjectNode fixture = matches.get(key);
+                            modifiedFixtures.add(fixture);
+                        }
+                        Collections.sort(modifiedFixtures, new FixturesComparator());
+
+                        String pivot = modifiedFixtures.get(0).get("date").asText().substring(0, 8);
+                        Calendar pivotMaximumDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+                        pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd", TimeZone.getTimeZone("UTC")));
+                        Calendar maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
+                        for (ObjectNode gameMatch : modifiedFixtures){
+                            Calendar matchDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+                            matchDate.setTime(DateAndTime.getDate(gameMatch.get("date").asText(), "yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")));
+                            if (matchDate.before(maximumDate)) {
+                                orderedFixtures.add(gameMatch);
+                            } else {
+                                ObjectNode round = Json.newObject();
+                                round.put("date", pivot);
+                                round.put("matches", Json.toJson(orderedFixtures));
+                                dataFixture.add(round);
+                                orderedFixtures.clear();
+                                orderedFixtures.add(gameMatch);
+                                pivot = gameMatch.get("date").asText().substring(0, 8);
+                                pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd", TimeZone.getTimeZone("UTC")));
+                                maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
+                            }
+                        }
+                        if(!orderedFixtures.isEmpty()){
+                            ObjectNode round = Json.newObject();
+                            round.put("date", pivot);
+                            round.put("matches", Json.toJson(orderedFixtures));
+                            dataFixture.add(round);
+                            orderedFixtures.clear();
+                        }
+
+                        league.remove("fixtures");
+                        league.put("fixtures", Json.toJson(dataFixture));
+                        orderedFixtures.clear();
+                        dataFixture.clear();
+                    }
+                    league.put("total_bets", maxBetsCount);
+                    league.put("client_bets", clientBetsCount);
+                    modifiedFixtures.clear();
+                    matchesIDs.clear();
+                    matches.clear();
+                    return  ok(buildBasicResponse(0, "OK", league));
+                } else {
+                    return internalServerError(buildBasicResponse(3, "error llamando a footballmanager"));
+                }
+            } else {
+                return notFound(buildBasicResponse(2, "no existe el cliente " + id));
+            }
+        }catch (Exception e) {
+            Utils.printToLog(FootballClients.class, "Error manejando clients", "error creando clientbets para el client " + id, true, e, "support-level-1", Config.LOGGER_ERROR);
+            return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
+        }
+    }
+
+
+
 
     public static class FixturesComparator implements Comparator<ObjectNode> {
         @Override
@@ -1256,9 +1364,21 @@ public class FootballClients extends Clients{
                 F.Promise<WSResponse> result = WS.url(teams.toString()).get();
                 ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
                 int error = footballResponse.get("error").asInt();
+
+                teams = "http://" + Utils.getBaseBallManagerHost() + "/baseballapi/v1/competitions/list?closestMatch=true"  + (timezoneName!=null?"&timezoneName=" + timezoneName:"") + (teamsBuilder.length() > 0? teamsBuilder.toString() : "");
+                result = WS.url(teams.toString()).get();
+                ObjectNode baseballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
+                error = baseballResponse.get("error").asInt();
+
                 if(error == 0) {
                     ObjectNode response = Json.newObject();
                     JsonNode data = footballResponse.get("response");
+
+                    JsonNode aux = data.get("competitions");
+                    JsonNode aux2 = baseballResponse.get("response").get("competitions");
+                    ObjectNode tmp = Json.newObject();
+                    tmp.put("competitions_football",aux);
+                    tmp.put("competitions_baseball",aux2);
 
                     int points = 0;
                     int correct = 0;
@@ -1272,9 +1392,10 @@ public class FootballClients extends Clients{
                             correct += leaderboardGlobal.getCorrectBets();
                         }
                     }
+
                     response.put("points", points);
                     response.put("correct_bets", correct);
-                    response.put("competitions", data.get("competitions"));
+                    response.put("competitions", tmp);
 
                     return ok(buildBasicResponse(0, "OK", response));
                 } else {

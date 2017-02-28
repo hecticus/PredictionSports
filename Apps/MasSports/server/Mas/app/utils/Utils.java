@@ -260,6 +260,11 @@ public class Utils extends JobCoreUtils{
         return Config.getString("football-manager-url");
     }
 
+
+    public static String getBaseBallManagerHost() {
+        return Config.getString("baseball-manager-url");
+    }
+
     public static String getAndroidVersion() {
         return Config.getString("android-version");
     }
