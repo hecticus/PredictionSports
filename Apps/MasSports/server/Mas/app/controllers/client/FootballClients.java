@@ -57,66 +57,57 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Created by plesse on 9/30/14.
  */
 //@Security.Authenticated(Secured.class)
-public class FootballClients extends Clients{
+public class FootballClients extends Clients {
 
-    public static Result createKrakenweb(String msisdn)
-    {
-        try{
+    public static Result createKrakenweb(String msisdn) {
+        try {
             Upstream.EventKraken(msisdn);
             //Client.createkraken(msisdn, pass, usd);
             return ok(buildBasicResponse(0, "OK"));
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
 
             return Results.badRequest(buildBasicResponse(3, "ocurrio un error ", ex));
         }
 
     }
 
-    public static Result createKraken(String msisdn, String pass, String usd)
-    {
-        try{
+    public static Result createKraken(String msisdn, String pass, String usd) {
+        try {
             Client.createkraken(msisdn, pass, usd);
             //return ok(buildBasicResponse(0, "OK"));
             FootballClient client = null;
             Client baseClient = Client.getByLogin(msisdn);
-            if(baseClient != null) {
+            if (baseClient != null) {
                 client = new FootballClient(Client.getByID(baseClient.getIdClient()));
 
                 int firstLoginPoints = Config.getInt("first-login-points");
                 LeaderboardTotal firstLoginLeaderboard = new LeaderboardTotal(client, firstLoginPoints, 0);
-                if(client.getLeaderboardTotal() == null) {
+                if (client.getLeaderboardTotal() == null) {
                     client.setLeaderboardTotal(firstLoginLeaderboard);
                     client.update();
                 }
                 return ok(buildBasicResponse(0, "OK"));
 
-            }
-            else
-            {
+            } else {
                 return Results.badRequest(buildBasicResponse(3, "ocurrio un error recuperando usuario"));
             }
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
 
             return Results.badRequest(buildBasicResponse(3, "ocurrio un error recuperando password", ex));
         }
 
     }
 
-    public static Result downKraken(String msisdn)
-    {
-        try{
+    public static Result downKraken(String msisdn) {
+        try {
             Client.downkraken(msisdn);
             return ok(buildBasicResponse(0, "OK"));
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
 
             return Results.badRequest(buildBasicResponse(3, "ocurrio un error recuperando password", ex));
         }
 
     }
-
 
 
 //    public static uploadMethoKraken(){
@@ -135,26 +126,24 @@ public class FootballClients extends Clients{
 //        String json = result.get(10000).getBody();
 //    }
 
-    public static Result checkPin(){
+    public static Result checkPin() {
         ObjectNode data = getJson();
         ObjectNode ret = Json.newObject();
-        if(data.has("pin") && data.has("login"))
-        {
-            boolean confirm =  SilverAPI.confirmPin(data.get("pin").asText(), data.get("login").asText());
-            ret.put("valid", confirm ? "1": "0");
+        if (data.has("pin") && data.has("login")) {
+            boolean confirm = SilverAPI.confirmPin(data.get("pin").asText(), data.get("login").asText());
+            ret.put("valid", confirm ? "1" : "0");
         }
         return ok(buildBasicResponse(0, "OK", ret));
     }
 
-    public static Result smsOld(){
+    public static Result smsOld() {
         ObjectNode data = getJson();
         ObjectNode ret = Json.newObject();
-        if(data.has("msisdn"))
-        {
+        if (data.has("msisdn")) {
             Upstream.EventKraken(data.get("msisdn").asText());
             ret.put("go", "1");
             //ret.put("valid", confirm ? "1": "0");
-        }else
+        } else
             ret.put("go", "0");
         return ok(buildBasicResponse(0, "OK", ret));
     }
@@ -170,22 +159,22 @@ public class FootballClients extends Clients{
         try {
             FootballClient client = null;
             String login = null;
-            if(clientData.has("login")){
+            if (clientData.has("login")) {
                 login = clientData.get("login").asText();
                 login = login.replaceAll("[ \\-+^]*", "");
                 clientData.put("login", login);
             }
-            if(login != null) { //cuando es un invitado
+            if (login != null) { //cuando es un invitado
                 boolean isRemind = !clientData.has("password");
                 //client = (FootballClient) Client
                 // .getAndUpdate(login, clientData, isRemind);
                 // //Con esta linea no me funciona
 
                 //client = (FootballClient) Client.getAndUpdate(login, clientData, isRemind);
-                Client tmp  = Client.getAndUpdate(login, clientData);
-                if(tmp!=null)
+                Client tmp = Client.getAndUpdate(login, clientData);
+                if (tmp != null)
                     client = new FootballClient(tmp);
-                if(tmp == null && !isRemind) {
+                if (tmp == null && !isRemind) {
                     ObjectNode responseNode = Json.newObject();
                     responseNode.put("error", -2);
                     responseNode.put("description", "error");
@@ -194,7 +183,7 @@ public class FootballClients extends Clients{
                     return internalServerError(responseNode);
                 }
                 if (tmp != null) {
-                    if(isRemind) {
+                    if (isRemind) {
                         //Logger.of("upstream_subscribe").trace("app_request: " + clientData);
                         //TODO Manbdar MT directamente cambios apra soportar el metodo
                         //SilverAPI.GetPin(login);
@@ -202,12 +191,12 @@ public class FootballClients extends Clients{
                         //Client.subscribe(client, clientData, "remind_password");
                     }
                     return ok(buildBasicResponse(0, "OK", client.toJson()));
-                }else if(isRemind) isRecuperar = true;
+                } else if (isRemind) isRecuperar = true;
             }
             Client baseClient = Client.create("football", clientData);
-            if(isRecuperar) Upstream.EventKraken(baseClient);
+            if (isRecuperar) Upstream.EventKraken(baseClient);
             client = new FootballClient(Client.getByID(baseClient.getIdClient()));
-           // client = (FootballClient) Client.getByID(baseClient.getIdClient());
+            // client = (FootballClient) Client.getByID(baseClient.getIdClient());
             ArrayList<ClientHasPushAlerts> pushAlerts = new ArrayList<>();
             if (clientData.has("push_alerts")) {
                 Iterator<JsonNode> pushAlertIterator = clientData.get("pushAlerts").elements();
@@ -235,7 +224,7 @@ public class FootballClients extends Clients{
             if (!pushAlerts.isEmpty()) {
                 client.setPushAlerts(pushAlerts);
             }
-            if(client.getStatus() != 2 || !(client.getLogin() != null? client.getLogin().equalsIgnoreCase(Config.getString("upstreamGuestUser")): false)) {
+            if (client.getStatus() != 2 || !(client.getLogin() != null ? client.getLogin().equalsIgnoreCase(Config.getString("upstreamGuestUser")) : false)) {
                 int firstLoginPoints = Config.getInt("first-login-points");
                 LeaderboardTotal firstLoginLeaderboard = new LeaderboardTotal(client, firstLoginPoints, 0);
 
@@ -264,15 +253,15 @@ public class FootballClients extends Clients{
             //LoginTracks track = new LoginTracks(client.toJson().toString(),baseClient,remote_ip);
             //track.save();
 
-            if(client.getLogin() == null){
+            if (client.getLogin() == null) {
                 //Upstream.EventKraken(baseClient);
-                if(client.getLogin() == null){
+                if (client.getLogin() == null) {
                     client.setLogin(Config.getString("upstreamGuestUser"));
                 }
-                if(client.getPassword() == null){
+                if (client.getPassword() == null) {
                     client.setPassword(Config.getString("upstreamGuestPassword"));
                 }
-                if(client.getUserId() == null){
+                if (client.getUserId() == null) {
                     client.setUserId(Config.getString("upstreamUserID"));
                 }
                 client.setStatus(2);
@@ -289,7 +278,7 @@ public class FootballClients extends Clients{
             return created(buildBasicResponse(0, "OK", client.toJson()));
         } catch (Exception ex) {
             ObjectNode response;
-            if(ex instanceof UpstreamException){
+            if (ex instanceof UpstreamException) {
                 UpstreamException upstreamException = (UpstreamException) ex;
                 Utils.printToLog(FootballClients.class, "Error manejando clients", "error creando el client con params " + clientData + " el request fue " + upstreamException.getRequest(), true, ex, "support-level-1", Config.LOGGER_ERROR);
                 response = buildUpstreamResponse(-2, "ocurrio un error creando el registro", upstreamException);
@@ -315,31 +304,31 @@ public class FootballClients extends Clients{
     public static Result update(Integer id) {
         ObjectNode clientData = getJson();
         //Logger.of("upstream_subscribe").trace("update " + id + " app_request: " + clientData);
-        try{
-            if(clientData.has("login")) {
+        try {
+            if (clientData.has("login")) {
                 String login = clientData.get("login").asText();
                 Client byLogin = Client.getByLogin(login);
-                if(byLogin != null){
+                if (byLogin != null) {
                     id = byLogin.getIdClient();
                 }
             }
             // FootballClient client = (FootballClient) Client.update(id, clientData);
             FootballClient client = new FootballClient(Client.update(id, clientData));
-            if(client != null) {
+            if (client != null) {
 
 
                 boolean update = false;
-                if(clientData.has("remove_push_alert")){
+                if (clientData.has("remove_push_alert")) {
                     Iterator<JsonNode> alertsIterator = clientData.get("remove_push_alert").elements();
                     while (alertsIterator.hasNext()) {
                         JsonNode next = alertsIterator.next();
                         PushAlerts pushAlert = PushAlerts.finder.where().eq("idExt", next.asInt()).findUnique();
-                        if(pushAlert == null){
+                        if (pushAlert == null) {
                             continue;
                         }
                         List<ClientHasPushAlerts> clientHasPushAlerts = ClientHasPushAlerts.finder.where().eq("client.idClient", client.getIdClient()).eq("pushAlert.idPushAlert", pushAlert.getIdPushAlert()).findList();
-                        if(clientHasPushAlerts != null && !clientHasPushAlerts.isEmpty()){
-                            for(ClientHasPushAlerts clientHasPushAlert : clientHasPushAlerts) {
+                        if (clientHasPushAlerts != null && !clientHasPushAlerts.isEmpty()) {
+                            for (ClientHasPushAlerts clientHasPushAlert : clientHasPushAlerts) {
                                 client.getPushAlerts().remove(clientHasPushAlert);
                                 clientHasPushAlert.delete();
                             }
@@ -347,7 +336,7 @@ public class FootballClients extends Clients{
                         }
                     }
                 }
-                if(clientData.has("add_push_alert")) {
+                if (clientData.has("add_push_alert")) {
                     Iterator<JsonNode> alertsIterator = clientData.get("add_push_alert").elements();
                     while (alertsIterator.hasNext()) {
                         JsonNode next = alertsIterator.next();
@@ -364,26 +353,26 @@ public class FootballClients extends Clients{
                 }
                 int betsPushId = Config.getInt("bets-push-id");
                 int newsPushId = Config.getInt("news-push-id");
-                if(clientData.has("receive_news")) {
+                if (clientData.has("receive_news")) {
                     boolean receiveNews = clientData.get("receive_news").asBoolean();
                     int index = client.getPushAlertIDIndex(newsPushId);
-                    if(index > -1) {
+                    if (index > -1) {
                         client.getPushAlerts().get(index).setStatus(receiveNews);
                         update = true;
                     }
                 }
-                if(clientData.has("receive_bets")) {
+                if (clientData.has("receive_bets")) {
                     boolean receiveBets = clientData.get("receive_bets").asBoolean();
                     int index = client.getPushAlertIDIndex(betsPushId);
-                    if(index > -1) {
+                    if (index > -1) {
                         client.getPushAlerts().get(index).setStatus(receiveBets);
                         update = true;
                     }
                 }
-                if(clientData.has("receive_min")) {
+                if (clientData.has("receive_min")) {
                     boolean receiveMin = clientData.get("receive_min").asBoolean();
-                    for(ClientHasPushAlerts clientHasPushAlerts : client.getPushAlerts()){
-                        if(clientHasPushAlerts.getPushAlert().getIdPushAlert() != betsPushId && clientHasPushAlerts.getPushAlert().getIdPushAlert() != newsPushId) {
+                    for (ClientHasPushAlerts clientHasPushAlerts : client.getPushAlerts()) {
+                        if (clientHasPushAlerts.getPushAlert().getIdPushAlert() != betsPushId && clientHasPushAlerts.getPushAlert().getIdPushAlert() != newsPushId) {
                             clientHasPushAlerts.setStatus(receiveMin);
                             update = true;
                         }
@@ -391,14 +380,14 @@ public class FootballClients extends Clients{
                 }
 
                 String[] remind = getFromQueryString("remind");
-                if(remind != null && remind.length > 0){
-                    if(Boolean.parseBoolean(remind[0])) {
+                if (remind != null && remind.length > 0) {
+                    if (Boolean.parseBoolean(remind[0])) {
                         //Logger.of("upstream_subscribe").trace("app_request: " + clientData);
                         Client.subscribe(client, clientData, "remind_password_on_update");
                     }
                 }
 
-                if(update){
+                if (update) {
                     client.update();
                 }
                 return ok(buildBasicResponse(0, "OK", client.toJson()));
@@ -407,33 +396,33 @@ public class FootballClients extends Clients{
             }
         } catch (Exception ex) {
             ObjectNode response;
-            if(ex instanceof UpstreamException){
+            if (ex instanceof UpstreamException) {
                 UpstreamException upstreamException = (UpstreamException) ex;
-                Utils.printToLog(FootballClients.class,  "Error manejando clients", "error actualizando el client " + id + " el request fue " + upstreamException.getRequest(), true, ex, "support-level-1", Config.LOGGER_ERROR);
+                Utils.printToLog(FootballClients.class, "Error manejando clients", "error actualizando el client " + id + " el request fue " + upstreamException.getRequest(), true, ex, "support-level-1", Config.LOGGER_ERROR);
                 response = buildUpstreamResponse(-2, "ocurrio un error creando el registro", upstreamException);
             } else {
-                Utils.printToLog(FootballClients.class,  "Error manejando clients", "error actualizando el client " + id, true, ex, "support-level-1", Config.LOGGER_ERROR);
+                Utils.printToLog(FootballClients.class, "Error manejando clients", "error actualizando el client " + id, true, ex, "support-level-1", Config.LOGGER_ERROR);
                 response = buildBasicResponse(-1, "ocurrio un error creando el registro", ex);
             }
             return internalServerError(response);
         }
     }
 
-    public static Result get(Integer id, String upstreamChannel, Boolean pmc){
+    public static Result get(Integer id, String upstreamChannel, Boolean pmc) {
         try {
             // FootballClient client = (FootballClient) Client.getByID(id);
             FootballClient client = new FootballClient(Client.getByID(id));
-            if(client != null) {
-                if(!pmc) {
+            if (client != null) {
+                if (!pmc) {
                     client.checkStatus(upstreamChannel);
                 }
-                return ok(buildBasicResponse(0, "OK", pmc?client.toPMCJson():client.toJson()));
+                return ok(buildBasicResponse(0, "OK", pmc ? client.toPMCJson() : client.toJson()));
             } else {
                 return notFound(buildBasicResponse(2, "no existe el registro a consultar"));
             }
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             ObjectNode response;
-            if(ex instanceof UpstreamException){
+            if (ex instanceof UpstreamException) {
                 UpstreamException upstreamException = (UpstreamException) ex;
                 Utils.printToLog(FootballClients.class, "Error manejando clients", "error obteniendo el client " + id + " el request fue " + upstreamException.getRequest(), true, ex, "support-level-1", Config.LOGGER_ERROR);
                 response = buildUpstreamResponse(-2, "ocurrio un error creando el registro", upstreamException);
@@ -449,21 +438,21 @@ public class FootballClients extends Clients{
         try {
             // FootballClient client = (FootballClient) Client.getByID(id);
             FootballClient client = new FootballClient(Client.getByID(id));
-            if(client != null) {
-                if(client.getStatus() >= 0) {
+            if (client != null) {
+                if (client.getStatus() >= 0) {
                     List<ClientHasPushAlerts> pushAlerts = client.getPushAlerts();
                     ArrayList jsonAlerts = new ArrayList();
-                    for(int i=0; i<pushAlerts.size(); i++){
+                    for (int i = 0; i < pushAlerts.size(); i++) {
                         jsonAlerts.add(pushAlerts.get(i).toJson());
                     }
                     return ok(buildBasicResponse(0, "OK", Json.toJson(jsonAlerts)));
-                }else{
+                } else {
                     return badRequest(buildBasicResponse(3, "cliente " + id + " no se encuentra en status valido"));
                 }
             } else {
                 return notFound(buildBasicResponse(2, "no existe el cliente " + id));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             Utils.printToLog(FootballClients.class, "Error manejando clients", "error obteniendo la lista de alertas para el client " + id, true, e, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
         }
@@ -485,14 +474,14 @@ public class FootballClients extends Clients{
         try {
             //FootballClient client = (FootballClient) Client.getByID(id);
             FootballClient client = new FootballClient(Client.getByID(id));
-            if(client != null) {
+            if (client != null) {
                 Iterator<JsonNode> bets = betsData.get("bets").elements();
                 Map<Integer, ObjectNode> betsMap = new HashMap<>();
                 StringBuilder matchesRequest = new StringBuilder();
                 matchesRequest.append("http://").append(Utils.getFootballManagerHost()).append("/footballapi/v1/matches/get/ids/").append(Config.getInt("football-manager-id-app")).append("?");
                 int idTournament = -1, idPhase = -1, idGameMatch = -1, clientBet = -1;
                 ClientBets clientBets = null;
-                while(bets.hasNext()){
+                while (bets.hasNext()) {
                     JsonNode bet = bets.next();
                     idTournament = bet.get("id_tournament").asInt();
                     idGameMatch = bet.get("id_game_match").asInt();
@@ -509,7 +498,7 @@ public class FootballClients extends Clients{
                 ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
 
                 int error = footballResponse.get("error").asInt();
-                if(error == 0) {
+                if (error == 0) {
                     Map<Integer, ClientBets> clientBetsAsMap = client.getClientBetsAsMap();
                     JsonNode data = footballResponse.get("response");
                     Iterator<JsonNode> matches = data.get("matches").elements();
@@ -542,13 +531,13 @@ public class FootballClients extends Clients{
                     }
                     client.update();
                     return ok(buildBasicResponse(0, "done"));
-                } else{
+                } else {
                     return internalServerError(buildBasicResponse(1, "error vaidando partidos"));
                 }
             } else {
                 return notFound(buildBasicResponse(2, "no existe el cliente " + id));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             Utils.printToLog(FootballClients.class, "Error manejando clients", "error creando clientbets para el client " + id, true, e, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
         }
@@ -559,7 +548,7 @@ public class FootballClients extends Clients{
         try {
             // FootballClient client = (FootballClient) Client.getByID(id);
             FootballClient client = new FootballClient(Client.getByID(id));
-            if(client != null) {
+            if (client != null) {
                 ObjectNode bet = (ObjectNode) betData.get("bet");
                 int idTournament = -1, idPhase = -1, idGameMatch = -1, clientBet = -1;
                 ClientBets clientBets = null;
@@ -571,7 +560,7 @@ public class FootballClients extends Clients{
                 ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
                 int betWindow = Config.getInt("bet-window");
                 int error = footballResponse.get("error").asInt();
-                if(error == 0) {
+                if (error == 0) {
                     ObjectNode match = (ObjectNode) footballResponse.get("response");
                     idGameMatch = match.get("id_game_matches").asInt();
 
@@ -593,7 +582,7 @@ public class FootballClients extends Clients{
                             clientBets.setClientBet(clientBet);
                         } else {
                             clientBets = new ClientBets(client, idTournament, idPhase, idGameMatch, clientBet, dateText);
-                            if((client.getStatus() != 1) && (client.getClientsBet().size() >= Config.getInt("visitor-number-bets")))
+                            if ((client.getStatus() != 1) && (client.getClientsBet().size() >= Config.getInt("visitor-number-bets")))
                                 return ok(buildBasicResponse(1, "ERROR - Bet number reached", clientBets.toJsonNoClient()));
                         }
 
@@ -604,32 +593,118 @@ public class FootballClients extends Clients{
                         return badRequest(buildBasicResponse(1, "La apuesta no puede ser creada por ser de un partido pasado"));
                     }
                 } else {
-                    return (error > 0)?notFound(footballResponse):internalServerError(footballResponse);
+                    return (error > 0) ? notFound(footballResponse) : internalServerError(footballResponse);
                 }
             } else {
                 return notFound(buildBasicResponse(2, "no existe el cliente" + id));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             Utils.printToLog(FootballClients.class, "Error manejando clients", "error creando clientbets para el client " + id, true, e, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
         }
     }
 
+    ///Nueva funcion super sensual de fernando que soporta multiples deportes in da same place pasalr el Identificador del deporte and boom eady to go
+    public static Result createBetNew(Integer id) {
+        ObjectNode betData = getJson();
+        try {
+            // FootballClient client = (FootballClient) Client.getByID(id);
+            FootballClient client = new FootballClient(Client.getByID(id));
+            if (client != null) {
+                ObjectNode bet = (ObjectNode) betData.get("bet");
+                int idTournament = -1, idPhase = -1, idGameMatch = -1, clientBet = -1;
+                ClientBets clientBets = null;
+                idGameMatch = bet.get("id_game_match").asInt();
+                StringBuilder matchesRequest = new StringBuilder();
+
+
+                int sportId = bet.get("sport_id").asInt();
+                if (sportId == 1) {
+                    matchesRequest.append("http://").append(Utils.getFootballManagerHost()).append("/footballapi/v2/").append(Config.getInt("football-manager-id-app")).append("/match/").append(idGameMatch);
+                }
+
+                //Para Baseball
+                if (sportId == 2) {
+                    matchesRequest.append("http://").append(Utils.getBaseBallManagerHost()).append("/baseballapi/v2/match/").append(idGameMatch);
+                }
+                    F.Promise<WSResponse> result = WS.url(matchesRequest.toString()).get();
+                    ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
+                    int betWindow = Config.getInt("bet-window");
+                    int error = footballResponse.get("error").asInt();
+                    if (error == 0) {
+                        ObjectNode match = (ObjectNode) footballResponse.get("response");
+
+                        String dateText = match.get("date").asText();
+
+                        if (sportId == 1) {
+                            idGameMatch = match.get("id_game_matches").asInt();
+                            idTournament = bet.get("id_tournament").asInt();
+                            idPhase = match.get("phase").asInt();
+                        }
+
+                        if (sportId == 2) {
+                            idGameMatch = match.get("id_game").asInt();
+                            idTournament = bet.get("id_tournament").asInt();
+                            idPhase = 1;
+                        }
+                        clientBet = bet.get("client_bet").asInt();
+
+
+
+                        Date date = DateAndTime.getDate(dateText, dateText.length() == 8 ? "yyyyMMdd" : "yyyyMMddhhmmss");
+                        Calendar gameDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+                        gameDate.setTime(date);
+                        gameDate.add(Calendar.MINUTE, -betWindow);
+                        Date today = new Date(System.currentTimeMillis());
+                        client.getClientsBet();
+
+                        if (gameDate.getTime().after(today)) {
+                            clientBets = client.getBet(idTournament, idPhase, idGameMatch, sportId);
+                            if (clientBets != null) {
+                                clientBets.setClientBet(clientBet);
+                            } else {
+                                clientBets = new ClientBets(client, idTournament, idPhase, idGameMatch, clientBet, dateText, sportId);
+                                if ((client.getStatus() != 1) && (client.getClientsBet().size() >= Config.getInt("visitor-number-bets")))
+                                    return ok(buildBasicResponse(1, "ERROR - Bet number reached", clientBets.toJsonNoClient()));
+                            }
+
+                            client.addClientBet(clientBets);
+                            client.update();
+                            return ok(buildBasicResponse(0, "ok", clientBets.toJsonNoClient()));
+                        } else {
+                            return badRequest(buildBasicResponse(1, "La apuesta no puede ser creada por ser de un partido pasado"));
+                        }
+                    } else {
+                        return (error > 0) ? notFound(footballResponse) : internalServerError(footballResponse);
+                    }
+
+
+
+            } else {
+                return notFound(buildBasicResponse(2, "no existe el cliente" + id));
+            }
+        } catch (Exception e) {
+            Utils.printToLog(FootballClients.class, "Error manejando clients", "error creando clientbets para el client " + id, true, e, "support-level-1", Config.LOGGER_ERROR);
+            return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
+        }
+    }
+
+
     public static Result getBets(Integer id) {
         try {
             String[] timezoneNames = getFromQueryString("timezoneName");
-            if(timezoneNames == null || timezoneNames.length <= 0){
+            if (timezoneNames == null || timezoneNames.length <= 0) {
                 return badRequest(buildBasicResponse(1, "Falta el parametro timezonName"));
             }
             String timezoneName = timezoneNames[0].replaceAll(" ", "").trim();
             // FootballClient client = (FootballClient) Client.getByID(id);
             FootballClient client = new FootballClient(Client.getByID(id));
-            if(client != null) {
+            if (client != null) {
                 String teams = "http://" + Utils.getFootballManagerHost() + "/footballapi/v1/matches/date/grouped/" + Config.getInt("football-manager-id-app") + "?timezoneName=" + timezoneName;
                 F.Promise<WSResponse> result = WS.url(teams.toString()).get();
                 ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
                 int error = footballResponse.get("error").asInt();
-                if(error == 0) {
+                if (error == 0) {
                     JsonNode data = footballResponse.get("response");
                     ArrayList<ObjectNode> finalData = new ArrayList<>();
                     ObjectNode responseData = Json.newObject();
@@ -645,7 +720,7 @@ public class FootballClients extends Clients{
                         while (fixtures.hasNext()) {
                             ObjectNode fixture = (ObjectNode) fixtures.next();
                             Iterator<JsonNode> externalMatches = fixture.get("matches").elements();
-                            while (externalMatches.hasNext()){
+                            while (externalMatches.hasNext()) {
                                 ObjectNode externalMatch = (ObjectNode) externalMatches.next();
                                 int idGameMatches = externalMatch.get("id_game_matches").asInt();
                                 matchesIDs.add(idGameMatches);
@@ -655,7 +730,7 @@ public class FootballClients extends Clients{
                         maxBetsCount = matchesIDs.size();
                         List<ClientBets> list = ClientBets.finder.where().eq("client", client).eq("idTournament", league.get("id_competitions").asInt()).in("idGameMatch", matchesIDs).orderBy("idGameMatch asc").findList();
                         if (list != null && !list.isEmpty()) {
-                            clientBetsCount+=list.size();
+                            clientBetsCount += list.size();
                             ArrayList<ObjectNode> dataFixture = new ArrayList();
                             ArrayList<ObjectNode> orderedFixtures = new ArrayList<>();
                             for (ClientBets clientBets : list) {
@@ -672,8 +747,8 @@ public class FootballClients extends Clients{
                             Collections.sort(modifiedFixtures, new FixturesComparator());
 
                             String pivot = modifiedFixtures.get(0).get("date").asText().substring(0, 8);
-                            for (ObjectNode gameMatch : modifiedFixtures){
-                                if(gameMatch.get("date").asText().startsWith(pivot)){
+                            for (ObjectNode gameMatch : modifiedFixtures) {
+                                if (gameMatch.get("date").asText().startsWith(pivot)) {
                                     orderedFixtures.add(gameMatch);
                                 } else {
                                     ObjectNode round = Json.newObject();
@@ -685,7 +760,7 @@ public class FootballClients extends Clients{
                                     pivot = gameMatch.get("date").asText().substring(0, 8);
                                 }
                             }
-                            if(!orderedFixtures.isEmpty()){
+                            if (!orderedFixtures.isEmpty()) {
                                 ObjectNode round = Json.newObject();
                                 round.put("date", pivot);
                                 round.put("matches", Json.toJson(orderedFixtures));
@@ -713,7 +788,7 @@ public class FootballClients extends Clients{
             } else {
                 return notFound(buildBasicResponse(2, "no existe el cliente " + id));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             Utils.printToLog(FootballClients.class, "Error manejando clients", "error creando clientbets para el client " + id, true, e, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
         }
@@ -722,18 +797,18 @@ public class FootballClients extends Clients{
     public static Result getBetsForDate(Integer id, String date) {
         try {
             String[] timezoneNames = getFromQueryString("timezoneName");
-            if(timezoneNames.length <= 0){
+            if (timezoneNames.length <= 0) {
                 return badRequest(buildBasicResponse(1, "Falta el parametro timezonName"));
             }
             String timezoneName = timezoneNames[0].replaceAll(" ", "").trim();
             // FootballClient client = (FootballClient) Client.getByID(id);
             FootballClient client = new FootballClient(Client.getByID(id));
-            if(client != null) {
+            if (client != null) {
                 String teams = "http://" + Utils.getFootballManagerHost() + "/footballapi/v1/matches/all/date/get/" + Config.getInt("football-manager-id-app") + "/" + date + "?timezoneName=" + timezoneName;
                 F.Promise<WSResponse> result = WS.url(teams.toString()).get();
                 ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
                 int error = footballResponse.get("error").asInt();
-                if(error == 0) {
+                if (error == 0) {
                     ObjectNode response = Json.newObject();
                     JsonNode data = footballResponse.get("response");
                     ArrayList<ObjectNode> finalData = new ArrayList<>();
@@ -781,7 +856,7 @@ public class FootballClients extends Clients{
                     int points = 0;
                     int correct = 0;
                     List<LeaderboardGlobal> leaderboardGlobalList = client.getLeaderboardGlobal();
-                    for(LeaderboardGlobal leaderboardGlobal : leaderboardGlobalList){
+                    for (LeaderboardGlobal leaderboardGlobal : leaderboardGlobalList) {
                         points += leaderboardGlobal.getScore();
                         correct += leaderboardGlobal.getCorrectBets();
                     }
@@ -795,28 +870,28 @@ public class FootballClients extends Clients{
             } else {
                 return notFound(buildBasicResponse(2, "no existe el cliente " + id));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             Utils.printToLog(FootballClients.class, "Error manejando clients", "error creando clientbets para el client " + id, true, e, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
         }
     }
 
     public static Result getBetsForCompetition(Integer id, Integer idCompetition) {
-            try {
+        try {
             String[] timezoneNames = getFromQueryString("timezoneName");
-            if(timezoneNames == null){//timezoneNames.length <= 0){
+            if (timezoneNames == null) {//timezoneNames.length <= 0){
                 return badRequest(buildBasicResponse(1, "Falta el parametro timezonName"));
             }
             String timezoneName = timezoneNames[0].replaceAll(" ", "").trim();
             // FootballClient client = (FootballClient) Client.getByID(id);
             FootballClient client = new FootballClient(Client.getByID(id));
-            if(client != null) {
+            if (client != null) {
                 String teams = "http://" + Utils.getFootballManagerHost() + "/footballapi/v1/matches/competition/date/grouped/" + Config.getInt("football-manager-id-app") + "/" + idCompetition + "?timezoneName=" + timezoneName;
                 System.out.println(teams);
                 F.Promise<WSResponse> result = WS.url(teams.toString()).get();
                 ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
                 int error = footballResponse.get("error").asInt();
-                if(error == 0) {
+                if (error == 0) {
                     ArrayList<Integer> matchesIDs = new ArrayList<>();
                     ArrayList<ObjectNode> modifiedFixtures = new ArrayList<>();
                     Map<Integer, ObjectNode> matches = new HashMap<>();
@@ -827,7 +902,7 @@ public class FootballClients extends Clients{
                     while (fixtures.hasNext()) {
                         ObjectNode fixture = (ObjectNode) fixtures.next();
                         Iterator<JsonNode> externalMatches = fixture.get("matches").elements();
-                        while (externalMatches.hasNext()){
+                        while (externalMatches.hasNext()) {
                             ObjectNode externalMatch = (ObjectNode) externalMatches.next();
                             int idGameMatches = externalMatch.get("id_game_matches").asInt();
                             matchesIDs.add(idGameMatches);
@@ -837,7 +912,7 @@ public class FootballClients extends Clients{
                     maxBetsCount = matchesIDs.size();
                     List<ClientBets> list = ClientBets.finder.where().eq("client", client).eq("idTournament", league.get("id_competitions").asInt()).in("idGameMatch", matchesIDs).orderBy("idGameMatch asc").findList();
                     if (list != null && !list.isEmpty()) {
-                        clientBetsCount+=list.size();
+                        clientBetsCount += list.size();
                         ArrayList<ObjectNode> dataFixture = new ArrayList();
                         ArrayList<ObjectNode> orderedFixtures = new ArrayList<>();
                         for (ClientBets clientBets : list) {
@@ -857,7 +932,7 @@ public class FootballClients extends Clients{
                         Calendar pivotMaximumDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
                         pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd", TimeZone.getTimeZone("UTC")));
                         Calendar maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
-                        for (ObjectNode gameMatch : modifiedFixtures){
+                        for (ObjectNode gameMatch : modifiedFixtures) {
                             Calendar matchDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
                             matchDate.setTime(DateAndTime.getDate(gameMatch.get("date").asText(), "yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")));
                             if (matchDate.before(maximumDate)) {
@@ -874,7 +949,7 @@ public class FootballClients extends Clients{
                                 maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
                             }
                         }
-                        if(!orderedFixtures.isEmpty()){
+                        if (!orderedFixtures.isEmpty()) {
                             ObjectNode round = Json.newObject();
                             round.put("date", pivot);
                             round.put("matches", Json.toJson(orderedFixtures));
@@ -892,14 +967,14 @@ public class FootballClients extends Clients{
                     modifiedFixtures.clear();
                     matchesIDs.clear();
                     matches.clear();
-                    return  ok(buildBasicResponse(0, "OK", league));
+                    return ok(buildBasicResponse(0, "OK", league));
                 } else {
                     return internalServerError(buildBasicResponse(3, "error llamando a footballmanager"));
                 }
             } else {
                 return notFound(buildBasicResponse(2, "no existe el cliente " + id));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             Utils.printToLog(FootballClients.class, "Error manejando clients", "error creando clientbets para el client " + id, true, e, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
         }
@@ -909,19 +984,19 @@ public class FootballClients extends Clients{
     public static Result getBetsForCompetitionBaseball(Integer id, Integer idCompetition) {
         try {
             String[] timezoneNames = getFromQueryString("timezoneName");
-            if(timezoneNames == null){//timezoneNames.length <= 0){
+            if (timezoneNames == null) {//timezoneNames.length <= 0){
                 return badRequest(buildBasicResponse(1, "Falta el parametro timezonName"));
             }
             String timezoneName = timezoneNames[0].replaceAll(" ", "").trim();
             // FootballClient client = (FootballClient) Client.getByID(id);
             FootballClient client = new FootballClient(Client.getByID(id));
-            if(client != null) {
+            if (client != null) {
                 String teams = "http://" + Utils.getBaseBallManagerHost() + "/footballapi/v1/matches/competition/date/grouped/" + Config.getInt("football-manager-id-app") + "/" + idCompetition + "?timezoneName=" + timezoneName;
                 System.out.println(teams);
                 F.Promise<WSResponse> result = WS.url(teams.toString()).get();
                 ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
                 int error = footballResponse.get("error").asInt();
-                if(error == 0) {
+                if (error == 0) {
                     ArrayList<Integer> matchesIDs = new ArrayList<>();
                     ArrayList<ObjectNode> modifiedFixtures = new ArrayList<>();
                     Map<Integer, ObjectNode> matches = new HashMap<>();
@@ -932,7 +1007,7 @@ public class FootballClients extends Clients{
                     while (fixtures.hasNext()) {
                         ObjectNode fixture = (ObjectNode) fixtures.next();
                         Iterator<JsonNode> externalMatches = fixture.get("matches").elements();
-                        while (externalMatches.hasNext()){
+                        while (externalMatches.hasNext()) {
                             ObjectNode externalMatch = (ObjectNode) externalMatches.next();
                             int idGameMatches = externalMatch.get("id_game_matches").asInt();
                             matchesIDs.add(idGameMatches);
@@ -942,7 +1017,7 @@ public class FootballClients extends Clients{
                     maxBetsCount = matchesIDs.size();
                     List<ClientBets> list = ClientBets.finder.where().eq("client", client).eq("idTournament", league.get("id_competitions").asInt()).in("idGameMatch", matchesIDs).orderBy("idGameMatch asc").findList();
                     if (list != null && !list.isEmpty()) {
-                        clientBetsCount+=list.size();
+                        clientBetsCount += list.size();
                         ArrayList<ObjectNode> dataFixture = new ArrayList();
                         ArrayList<ObjectNode> orderedFixtures = new ArrayList<>();
                         for (ClientBets clientBets : list) {
@@ -962,7 +1037,7 @@ public class FootballClients extends Clients{
                         Calendar pivotMaximumDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
                         pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd", TimeZone.getTimeZone("UTC")));
                         Calendar maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
-                        for (ObjectNode gameMatch : modifiedFixtures){
+                        for (ObjectNode gameMatch : modifiedFixtures) {
                             Calendar matchDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
                             matchDate.setTime(DateAndTime.getDate(gameMatch.get("date").asText(), "yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")));
                             if (matchDate.before(maximumDate)) {
@@ -979,7 +1054,7 @@ public class FootballClients extends Clients{
                                 maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
                             }
                         }
-                        if(!orderedFixtures.isEmpty()){
+                        if (!orderedFixtures.isEmpty()) {
                             ObjectNode round = Json.newObject();
                             round.put("date", pivot);
                             round.put("matches", Json.toJson(orderedFixtures));
@@ -997,98 +1072,96 @@ public class FootballClients extends Clients{
                     modifiedFixtures.clear();
                     matchesIDs.clear();
                     matches.clear();
-                    return  ok(buildBasicResponse(0, "OK", league));
+                    return ok(buildBasicResponse(0, "OK", league));
                 } else {
                     return internalServerError(buildBasicResponse(3, "error llamando a footballmanager"));
                 }
             } else {
                 return notFound(buildBasicResponse(2, "no existe el cliente " + id));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             Utils.printToLog(FootballClients.class, "Error manejando clients", "error creando clientbets para el client " + id, true, e, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
         }
     }
 
 
-
-
     public static class FixturesComparator implements Comparator<ObjectNode> {
         @Override
         public int compare(ObjectNode o1, ObjectNode o2) {
             int result = o1.get("date").asText().compareTo(o2.get("date").asText());
-            if(result == 0){
+            if (result == 0) {
                 return o1.get("id_game_matches").asInt() - o2.get("id_game_matches").asInt();
             }
             return result;
         }
     }
 
-    public static Result getLocale(String lang){
+    public static Result getLocale(String lang) {
         try {
             Language language = Language.finder.where().eq("active", 1).eq("shortName", lang).findUnique();
-            if(language != null) {
+            if (language != null) {
                 String filePath = Config.getString("locales-path") + language.getAppLocalizationFile();
-                if(filePath != null && !filePath.isEmpty()){
+                if (filePath != null && !filePath.isEmpty()) {
                     File file = new File(filePath);
-                    if(file != null && file.exists()){
+                    if (file != null && file.exists()) {
                         byte[] encoded = Files.readAllBytes(Paths.get(filePath));
-                        String localization =  new String(encoded, StandardCharsets.UTF_8);
+                        String localization = new String(encoded, StandardCharsets.UTF_8);
                         response().setHeader("Content-Type", "application/json");
                         return ok(localization);
                     } else {
                         return notFound();
                     }
-                }else {
+                } else {
                     return notFound();
                 }
-            }else {
+            } else {
                 return notFound();
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             Utils.printToLog(FootballClients.class, "Error manejando Idiomas", "error obteniendo localizacion ", true, e, "support-level-1", Config.LOGGER_ERROR);
-            return internalServerError(buildBasicResponse(1,"Error buscando localizacion",e));
+            return internalServerError(buildBasicResponse(1, "Error buscando localizacion", e));
         }
     }
 
-    public static Result setLocale(String lang){
+    public static Result setLocale(String lang) {
         try {
             ObjectNode locale = getJson();
             Language language = Language.finder.where().eq("active", 1).eq("shortName", lang).findUnique();
-            if(language != null) {
+            if (language != null) {
                 StringBuilder filePath = new StringBuilder();
                 filePath.append(Config.getString("locales-path"));
                 String appLocalizationFile = language.getAppLocalizationFile();
                 boolean update = false;
-                if(appLocalizationFile != null && !appLocalizationFile.isEmpty()){
+                if (appLocalizationFile != null && !appLocalizationFile.isEmpty()) {
                     filePath.append(appLocalizationFile);
                 } else {
                     filePath.append("locale-").append(lang).append(".json");
-                    language.setAppLocalizationFile("locale-"+lang+".json");
+                    language.setAppLocalizationFile("locale-" + lang + ".json");
                     update = true;
                 }
                 PrintWriter writer = new PrintWriter(filePath.toString(), "UTF-8");
                 writer.println(locale);
                 writer.close();
-                if(update){
+                if (update) {
                     language.update();
                 }
                 return created(locale);
-            }else {
+            } else {
                 return notFound();
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             Utils.printToLog(FootballClients.class, "Error manejando Idiomas", "error creando localizacion ", true, e, "support-level-1", Config.LOGGER_ERROR);
-            return internalServerError(buildBasicResponse(1,"Error buscando localizacion",e));
+            return internalServerError(buildBasicResponse(1, "Error buscando localizacion", e));
         }
     }
 
-    public static Result getActiveLanguages(){
+    public static Result getActiveLanguages() {
         try {
             List<Language> activeLanguages = Language.finder.where().eq("active", 1).findList();
-            if(activeLanguages != null && !activeLanguages.isEmpty()) {
+            if (activeLanguages != null && !activeLanguages.isEmpty()) {
                 ArrayList<ObjectNode> languages = new ArrayList<>();
-                for(Language language : activeLanguages){
+                for (Language language : activeLanguages) {
                     languages.add(language.toJson());
                 }
                 ObjectNode responseData = Json.newObject();
@@ -1097,52 +1170,52 @@ public class FootballClients extends Clients{
             } else {
                 return notFound(buildBasicResponse(2, "no hay idiomas activos"));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             Utils.printToLog(Clients.class, "Error manejando Idiomas", "error obteniendo los idiomas activos ", true, e, "support-level-1", Config.LOGGER_ERROR);
-            return internalServerError(buildBasicResponse(1,"Error buscando idiomas",e));
+            return internalServerError(buildBasicResponse(1, "Error buscando idiomas", e));
         }
     }
 
-    public static Result getLeaderboardForClient(Integer id, Integer idTournament, Integer idPhase){
+    public static Result getLeaderboardForClient(Integer id, Integer idTournament, Integer idPhase) {
         try {
             ObjectNode responseData = Json.newObject();
             // FootballClient client = (FootballClient) Client.getByID(id);
             FootballClient client = new FootballClient(Client.getByID(id));
-            if(client != null){
+            if (client != null) {
                 int leaderboardSize = Config.getInt("leaderboard-size");
 
                 List<Client> friends = null;
                 String[] friendsArray = getFromQueryString("friends");
                 if (friendsArray != null && friendsArray.length > 0) {
-                 //   friends = Client.getFriends(friendsArray);
+                    //   friends = Client.getFriends(friendsArray);
                 }
 
-                if(idPhase > 0) {
+                if (idPhase > 0) {
                     Leaderboard clientLeaderboard = null;
                     List<Leaderboard> leaderboards = null;
-                    if(friends != null && !friends.isEmpty()){
+                    if (friends != null && !friends.isEmpty()) {
                         friends.add(client);
                         leaderboards = Leaderboard.finder.where().in("client", friends).eq("idTournament", idTournament).eq("idPhase", idPhase).orderBy("score desc").findList();
                     } else {
                         leaderboards = Leaderboard.finder.where().eq("idTournament", idTournament).eq("idPhase", idPhase).orderBy("score desc").findList();
                     }
                     clientLeaderboard = client.getLeaderboard(idTournament, idPhase);
-                    if(leaderboards != null && !leaderboards.isEmpty()) {
+                    if (leaderboards != null && !leaderboards.isEmpty()) {
                         int index = leaderboards.indexOf(clientLeaderboard);
                         ArrayList<ObjectNode> leaderboardsJson = new ArrayList<>();
-                        leaderboardSize = leaderboardSize>leaderboards.size()?leaderboards.size():leaderboardSize;
-                        for(int i = 0; i < leaderboardSize; ++i){
+                        leaderboardSize = leaderboardSize > leaderboards.size() ? leaderboards.size() : leaderboardSize;
+                        for (int i = 0; i < leaderboardSize; ++i) {
                             leaderboardsJson.add(leaderboards.get(i).toJsonSimple());
                         }
                         ObjectNode clientLeaderboardJson = null;
-                        if(clientLeaderboard != null) {
+                        if (clientLeaderboard != null) {
                             clientLeaderboardJson = clientLeaderboard.toJsonSimple();
                             clientLeaderboardJson.put("index", index);
                         } else {
                             String nickname = client.getNickname();
                             clientLeaderboardJson = Json.newObject();
                             clientLeaderboardJson.put("id_client", client.getIdClient());
-                            clientLeaderboardJson.put("client", nickname==null?"Anônimo":nickname);
+                            clientLeaderboardJson.put("client", nickname == null ? "Anônimo" : nickname);
                             clientLeaderboardJson.put("score", 0);
                             clientLeaderboardJson.put("hits", 0);
                             clientLeaderboardJson.put("index", leaderboards.size());
@@ -1157,29 +1230,29 @@ public class FootballClients extends Clients{
                 } else {
                     LeaderboardGlobal clientLeaderboardGlobal = null;
                     List<LeaderboardGlobal> globalLeaderboards = null;
-                    if(friends != null && !friends.isEmpty()){
+                    if (friends != null && !friends.isEmpty()) {
                         friends.add(client);
                         globalLeaderboards = LeaderboardGlobal.finder.where().in("client", friends).eq("idTournament", idTournament).orderBy("score desc").findList();
                     } else {
                         globalLeaderboards = LeaderboardGlobal.finder.where().eq("idTournament", idTournament).orderBy("score desc").findList();
                     }
                     clientLeaderboardGlobal = client.getLeaderboardGlobal(idTournament);
-                    if(globalLeaderboards != null && !globalLeaderboards.isEmpty()) {
+                    if (globalLeaderboards != null && !globalLeaderboards.isEmpty()) {
                         int index = globalLeaderboards.indexOf(clientLeaderboardGlobal);
                         ArrayList<ObjectNode> leaderboardsJson = new ArrayList<>();
-                        leaderboardSize = leaderboardSize>globalLeaderboards.size()?globalLeaderboards.size():leaderboardSize;
-                        for(int i = 0; i < leaderboardSize; ++i){
+                        leaderboardSize = leaderboardSize > globalLeaderboards.size() ? globalLeaderboards.size() : leaderboardSize;
+                        for (int i = 0; i < leaderboardSize; ++i) {
                             leaderboardsJson.add(globalLeaderboards.get(i).toJsonSimple());
                         }
                         ObjectNode clientLeaderboardJson = null;
-                        if(clientLeaderboardGlobal != null) {
+                        if (clientLeaderboardGlobal != null) {
                             clientLeaderboardJson = clientLeaderboardGlobal.toJsonSimple();
                             clientLeaderboardJson.put("index", index);
                         } else {
                             String nickname = client.getNickname();
                             clientLeaderboardJson = Json.newObject();
                             clientLeaderboardJson.put("id_client", client.getIdClient());
-                            clientLeaderboardJson.put("client", nickname==null?"Anônimo":nickname);
+                            clientLeaderboardJson.put("client", nickname == null ? "Anônimo" : nickname);
                             clientLeaderboardJson.put("score", 0);
                             clientLeaderboardJson.put("hits", 0);
                             clientLeaderboardJson.put("index", globalLeaderboards.size());
@@ -1194,18 +1267,18 @@ public class FootballClients extends Clients{
             } else {
                 return notFound(buildBasicResponse(2, "no existe el cliente " + id));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             Utils.printToLog(FootballClients.class, "Error manejando clients", "error obteniendo los idiomas activos ", true, e, "support-level-1", Config.LOGGER_ERROR);
-            return internalServerError(buildBasicResponse(1,"Error buscando el registro",e));
+            return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
         }
     }
 
-    public static Result getLeaderboardTotalForClient(Integer id){
+    public static Result getLeaderboardTotalForClient(Integer id) {
         try {
             ObjectNode responseData = Json.newObject();
             // FootballClient client = (FootballClient) Client.getByID(id);
             FootballClient client = new FootballClient(Client.getByID(id));
-            if(client != null){
+            if (client != null) {
                 int leaderboardSize = Config.getInt("leaderboard-size");
 
                 List<Client> friends = null;
@@ -1215,29 +1288,29 @@ public class FootballClients extends Clients{
                 }
                 LeaderboardTotal clientLeaderboardTotal = null;
                 List<LeaderboardTotal> totalLeaderboards = null;
-                if(friends != null && !friends.isEmpty()){
+                if (friends != null && !friends.isEmpty()) {
                     friends.add(client);
                     totalLeaderboards = LeaderboardTotal.finder.where().in("client", friends).orderBy("score desc").findList();
                 } else {
                     totalLeaderboards = LeaderboardTotal.finder.where().orderBy("score desc").findList();
                 }
                 clientLeaderboardTotal = client.getLeaderboardTotal();
-                if(totalLeaderboards != null && !totalLeaderboards.isEmpty()) {
+                if (totalLeaderboards != null && !totalLeaderboards.isEmpty()) {
                     int index = totalLeaderboards.indexOf(clientLeaderboardTotal);
                     ArrayList<ObjectNode> leaderboardsJson = new ArrayList<>();
-                    leaderboardSize = leaderboardSize>totalLeaderboards.size()?totalLeaderboards.size():leaderboardSize;
-                    for(int i = 0; i < leaderboardSize; ++i){
+                    leaderboardSize = leaderboardSize > totalLeaderboards.size() ? totalLeaderboards.size() : leaderboardSize;
+                    for (int i = 0; i < leaderboardSize; ++i) {
                         leaderboardsJson.add(totalLeaderboards.get(i).toJsonSimple());
                     }
                     ObjectNode clientLeaderboardJson = null;
-                    if(clientLeaderboardTotal != null) {
+                    if (clientLeaderboardTotal != null) {
                         clientLeaderboardJson = clientLeaderboardTotal.toJsonSimple();
                         clientLeaderboardJson.put("index", index);
                     } else {
                         String nickname = client.getNickname();
                         clientLeaderboardJson = Json.newObject();
                         clientLeaderboardJson.put("id_client", client.getIdClient());
-                        clientLeaderboardJson.put("client", nickname==null?"Anônimo":nickname);
+                        clientLeaderboardJson.put("client", nickname == null ? "Anônimo" : nickname);
                         clientLeaderboardJson.put("score", 0);
                         clientLeaderboardJson.put("hits", 0);
                         clientLeaderboardJson.put("index", totalLeaderboards.size());
@@ -1251,21 +1324,21 @@ public class FootballClients extends Clients{
             } else {
                 return notFound(buildBasicResponse(2, "no existe el cliente " + id));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             Utils.printToLog(FootballClients.class, "Error manejando clients", "error obteniendo los idiomas activos ", true, e, "support-level-1", Config.LOGGER_ERROR);
-            return internalServerError(buildBasicResponse(1,"Error buscando el registro",e));
+            return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
         }
     }
 
-    public static Result getPersonalLeaderboardForClient(Integer id, Integer idTournament, final Integer idPhase, Boolean global){
+    public static Result getPersonalLeaderboardForClient(Integer id, Integer idTournament, final Integer idPhase, Boolean global) {
         try {
-           //  FootballClient client = (FootballClient) Client.getByID(id);
+            //  FootballClient client = (FootballClient) Client.getByID(id);
             FootballClient client = new FootballClient(Client.getByID(id));
-            if(client != null){
+            if (client != null) {
                 ArrayList<ObjectNode> leaderboardsJson = new ArrayList<>();
-                if(global){
+                if (global) {
                     List<LeaderboardGlobal> leaderboardGlobalList = client.getLeaderboardGlobal();
-                    for(LeaderboardGlobal leaderboardGlobal : leaderboardGlobalList){
+                    for (LeaderboardGlobal leaderboardGlobal : leaderboardGlobalList) {
                         leaderboardsJson.add(leaderboardGlobal.toJsonClean());
                     }
                 } else {
@@ -1273,13 +1346,13 @@ public class FootballClients extends Clients{
                     ArrayList<ObjectNode> phasesJson = new ArrayList<>();
                     if (idTournament > 0) {
                         leaderboards = client.getLeaderboard(idTournament);
-                        if(leaderboards != null && !leaderboards.isEmpty()){
+                        if (leaderboards != null && !leaderboards.isEmpty()) {
                             final String[] phasesArray = getFromQueryString("phases");
-                            if(phasesArray != null && phasesArray.length > 0) {
+                            if (phasesArray != null && phasesArray.length > 0) {
                                 Predicate<Leaderboard> validObjs = new Predicate<Leaderboard>() {
                                     public boolean apply(Leaderboard obj) {
-                                        for(int i = 0; i < phasesArray.length; ++i){
-                                            if(obj.getIdPhase().intValue() == Integer.parseInt(phasesArray[i])){
+                                        for (int i = 0; i < phasesArray.length; ++i) {
+                                            if (obj.getIdPhase().intValue() == Integer.parseInt(phasesArray[i])) {
                                                 return true;
                                             }
                                         }
@@ -1287,7 +1360,7 @@ public class FootballClients extends Clients{
                                     }
                                 };
                                 leaderboards = (List<Leaderboard>) Utils.filterCollection(leaderboards, validObjs);
-                            } else if(idPhase > 0) {
+                            } else if (idPhase > 0) {
                                 Predicate<Leaderboard> validObjs = new Predicate<Leaderboard>() {
                                     public boolean apply(Leaderboard obj) {
                                         return obj.getIdPhase().intValue() > idPhase;
@@ -1295,7 +1368,7 @@ public class FootballClients extends Clients{
                                 };
                                 leaderboards = (List<Leaderboard>) Utils.filterCollection(leaderboards, validObjs);
                             }
-                            for(Leaderboard leaderboard : leaderboards){
+                            for (Leaderboard leaderboard : leaderboards) {
                                 phasesJson.add(leaderboard.toJsonClean());
                             }
                             ObjectNode tournament = Json.newObject();
@@ -1305,10 +1378,10 @@ public class FootballClients extends Clients{
                         }
                     } else {
                         leaderboards = client.getLeaderboards();
-                        if(leaderboards != null && !leaderboards.isEmpty()){
+                        if (leaderboards != null && !leaderboards.isEmpty()) {
                             int pivot = leaderboards.get(0).getIdTournament();
-                            for(Leaderboard leaderboard : leaderboards){
-                                if(leaderboard.getIdTournament() == pivot){
+                            for (Leaderboard leaderboard : leaderboards) {
+                                if (leaderboard.getIdTournament() == pivot) {
                                     phasesJson.add(leaderboard.toJsonClean());
                                 } else {
                                     ObjectNode tournament = Json.newObject();
@@ -1320,7 +1393,7 @@ public class FootballClients extends Clients{
                                     phasesJson.add(leaderboard.toJsonClean());
                                 }
                             }
-                            if(!leaderboardsJson.isEmpty()){
+                            if (!leaderboardsJson.isEmpty()) {
                                 ObjectNode tournament = Json.newObject();
                                 tournament.put("id_tournament", pivot);
                                 tournament.put("phases", Json.toJson(phasesJson));
@@ -1334,7 +1407,7 @@ public class FootballClients extends Clients{
             } else {
                 return ok(buildBasicResponse(2, "no existe el cliente " + id));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             Utils.printToLog(FootballClients.class, "Error manejando clients", "error obteniendo los idiomas activos ", true, e, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
         }
@@ -1344,7 +1417,7 @@ public class FootballClients extends Clients{
         try {
             String[] timezoneNames = getFromQueryString("timezoneName");
             String timezoneName = null;
-            if(timezoneNames == null || timezoneNames.length <= 0){
+            if (timezoneNames == null || timezoneNames.length <= 0) {
                 //resturar cuando se cambie la version que no manda el timezone (HOY ES 27/07/2015, avisenle a iñaki cuando quiten esto. mi apuesta es que nadie se dara cuenta)
 //                return badRequest(buildBasicResponse(1, "Falta el parametro timezonName"));
             } else {
@@ -1352,37 +1425,37 @@ public class FootballClients extends Clients{
             }
             // FootballClient client = (FootballClient) Client.getByID(id);
             FootballClient client = new FootballClient(Client.getByID(id));
-            if(client != null) {
+            if (client != null) {
                 String[] favorites = getFromQueryString("teams");
                 StringBuilder teamsBuilder = new StringBuilder();
                 if (favorites != null && favorites.length > 0) {
-                    for(String team : favorites) {
+                    for (String team : favorites) {
                         teamsBuilder.append("&teams=").append(team);
                     }
                 }
-                String teams = "http://" + Utils.getFootballManagerHost() + "/footballapi/v1/competitions/list/" + Config.getInt("football-manager-id-app") + "/" + idLanguage + "?closestMatch=true"  + (timezoneName!=null?"&timezoneName=" + timezoneName:"") + (teamsBuilder.length() > 0? teamsBuilder.toString() : "");
+                String teams = "http://" + Utils.getFootballManagerHost() + "/footballapi/v1/competitions/list/" + Config.getInt("football-manager-id-app") + "/" + idLanguage + "?closestMatch=true" + (timezoneName != null ? "&timezoneName=" + timezoneName : "") + (teamsBuilder.length() > 0 ? teamsBuilder.toString() : "");
                 F.Promise<WSResponse> result = WS.url(teams.toString()).get();
                 ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
                 int error = footballResponse.get("error").asInt();
 
-                teams = "http://" + Utils.getBaseBallManagerHost() + "/baseballapi/v1/competitions/list?closestMatch=true"  + (timezoneName!=null?"&timezoneName=" + timezoneName:"") + (teamsBuilder.length() > 0? teamsBuilder.toString() : "");
+                teams = "http://" + Utils.getBaseBallManagerHost() + "/baseballapi/v1/competitions/list?closestMatch=true" + (timezoneName != null ? "&timezoneName=" + timezoneName : "") + (teamsBuilder.length() > 0 ? teamsBuilder.toString() : "");
                 result = WS.url(teams.toString()).get();
                 ObjectNode baseballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
                 error = baseballResponse.get("error").asInt();
 
-                if(error == 0) {
+                if (error == 0) {
                     ObjectNode response = Json.newObject();
                     JsonNode data = footballResponse.get("response");
 
                     JsonNode aux = data.get("competitions");
                     JsonNode aux2 = baseballResponse.get("response").get("competitions");
                     ObjectNode tmp = Json.newObject();
-                    tmp.put("competitions_football",aux);
-                    tmp.put("competitions_baseball",aux2);
+                    tmp.put("competitions_football", aux);
+                    tmp.put("competitions_baseball", aux2);
 
                     int points = 0;
                     int correct = 0;
-                    if(client.getLeaderboardTotal() != null){
+                    if (client.getLeaderboardTotal() != null) {
                         points = client.getLeaderboardTotal().getScore();
                         correct = client.getLeaderboardTotal().getCorrectBets();
                     } else {
@@ -1404,21 +1477,21 @@ public class FootballClients extends Clients{
             } else {
                 return notFound(buildBasicResponse(2, "no existe el cliente " + id));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             Utils.printToLog(FootballClients.class, "Error manejando clients", "error creando clientbets para el client " + id, true, e, "support-level-1", Config.LOGGER_ERROR);
             return internalServerError(buildBasicResponse(1, "Error buscando el registro", e));
         }
     }
 
-    public static Result generatePin(String msisdn){
-        if (!msisdn.isEmpty()){
+    public static Result generatePin(String msisdn) {
+        if (!msisdn.isEmpty()) {
             Client client = Client.getByLogin(msisdn);
             boolean isGenerated = false;
-            if(client == null) {
+            if (client == null) {
                 SilverAPI.GetPin(msisdn);
                 isGenerated = true;
-            }else {
-                if(client.getStatus() < 0){
+            } else {
+                if (client.getStatus() < 0) {
                     SilverAPI.GetPin(msisdn);
                     isGenerated = true;
                 } else {
@@ -1433,10 +1506,10 @@ public class FootballClients extends Clients{
         }
     }
 
-    public static Result verifyPin(String msisdn, String pin){
-        if(!msisdn.isEmpty() && !pin.isEmpty()){
+    public static Result verifyPin(String msisdn, String pin) {
+        if (!msisdn.isEmpty() && !pin.isEmpty()) {
             boolean isPinConfirmed = SilverAPI.confirmPin(msisdn, pin);
-            if(isPinConfirmed){
+            if (isPinConfirmed) {
                 FootballClient.createMasClient(msisdn, pin, "");
                 SilverAPI.broadcastEvent(msisdn, pin);// this call should be asyncronous
             }
@@ -1448,8 +1521,8 @@ public class FootballClients extends Clients{
         }
     }
 
-    public static Result broadcastEventReturn(String msisdn, String pin, String serviceId){
-        if(!msisdn.isEmpty() && !pin.isEmpty() && !serviceId.isEmpty()) {
+    public static Result broadcastEventReturn(String msisdn, String pin, String serviceId) {
+        if (!msisdn.isEmpty() && !pin.isEmpty() && !serviceId.isEmpty()) {
             FootballClient.createMasClient(msisdn, pin, serviceId);
             return ok(buildBasicResponse(0, "OK"));
         } else {
