@@ -34,6 +34,8 @@ public class ClientBets extends HecticusModel{
     private Integer clientBet;
     private Integer status;
 
+    private Integer sportId;
+
     public static Finder<Integer, ClientBets> finder = new Finder<Integer, ClientBets>(Integer.class, ClientBets.class);
 
     public ClientBets(Client client, Integer idTournament, Integer idPhase, Integer idGameMatch, Integer clientBet, Integer status, String gameMatchDate) {
@@ -46,6 +48,7 @@ public class ClientBets extends HecticusModel{
         this.gameMatchDate = gameMatchDate;
     }
 
+
     public ClientBets(Client client, Integer idTournament, Integer idPhase, Integer idGameMatch, Integer clientBet, String gameMatchDate) {
         this.client = client;
         this.idTournament = idTournament;
@@ -54,6 +57,17 @@ public class ClientBets extends HecticusModel{
         this.clientBet = clientBet;
         this.status = 1;
         this.gameMatchDate = gameMatchDate;
+    }
+
+    public ClientBets(Client client, Integer idTournament, Integer idPhase, Integer idGameMatch, Integer clientBet, String gameMatchDate, Integer sportId) {
+        this.client = client;
+        this.idTournament = idTournament;
+        this.idPhase = idPhase;
+        this.idGameMatch = idGameMatch;
+        this.clientBet = clientBet;
+        this.status = 1;
+        this.gameMatchDate = gameMatchDate;
+        this.sportId = sportId;
     }
 
     public Long getIdClientBets() {
@@ -120,6 +134,14 @@ public class ClientBets extends HecticusModel{
         this.gameMatchDate = gameMatchDate;
     }
 
+    public Integer getSportId() {
+        return sportId;
+    }
+
+    public void setSportId(Integer sportId) {
+        this.sportId = sportId;
+    }
+
     public static ClientBets getClientBetForMatch(Integer idClient, Integer idTournament, Integer idGameMatch){
         return finder.where().eq("id_client", idClient).eq("id_tournament", idTournament).eq("id_game_match", idGameMatch).findUnique();
     }
@@ -142,6 +164,8 @@ public class ClientBets extends HecticusModel{
         objNode.put("id_game_match", idGameMatch);
         objNode.put("client_bet", clientBet);
         objNode.put("status", status);
+        objNode.put("sport_id", sportId);
+
         return objNode;
     }
 
@@ -153,6 +177,9 @@ public class ClientBets extends HecticusModel{
         objNode.put("game_match_date", gameMatchDate);
         objNode.put("client_bet", clientBet);
         objNode.put("status", status);
+        objNode.put("sport_id", sportId);
         return objNode;
     }
+
+
 }

@@ -81,7 +81,7 @@ GET            /sportsapi/v2/client/:id                                         
 PUT            /sportsapi/v2/client/:id                                                controllers.client.FootballClients.update(id : Integer)
 DELETE         /sportsapi/v2/client/:id                                                controllers.client.Clients.delete(id : Integer)
 GET            /sportsapi/v2/client/:id/alerts                                         controllers.client.FootballClients.getPushAlertsForClient(id : Integer)
-POST           /sportsapi/v2/client/:id/bet                                            controllers.client.FootballClients.createBet(id : Integer)
+POST           /sportsapi/v2/client/:id/bet                                            controllers.client.FootballClients.createBetNew(id : Integer)
 POST           /sportsapi/v2/client/:id/bets                                           controllers.client.FootballClients.createBets(id : Integer)
 GET            /sportsapi/v2/client/:id/bets                                           controllers.client.FootballClients.getBets(id : Integer)
 GET            /sportsapi/v2/client/:id/bets/:idCompetition                            controllers.client.FootballClients.getBetsForCompetition(id : Integer, idCompetition : Integer)

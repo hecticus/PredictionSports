@@ -23,6 +23,7 @@ public class LeaderboardGlobal extends HecticusModel{
     @Constraints.Required
     private Integer idTournament;
     private Integer score;
+    private Integer sportId;
 
     private Integer correctBets;
 
@@ -75,6 +76,14 @@ public class LeaderboardGlobal extends HecticusModel{
         return correctBets;
     }
 
+    public Integer getSportId() {
+        return sportId;
+    }
+
+    public void setSportId(Integer sportId) {
+        this.sportId = sportId;
+    }
+
     public void setCorrectBets(Integer correctBets) {
         this.correctBets = correctBets;
     }
@@ -91,6 +100,7 @@ public class LeaderboardGlobal extends HecticusModel{
         objNode.put("id_tournament", idTournament);
         objNode.put("score", score);
         objNode.put("hits", correctBets);
+        objNode.put("sport_id", sportId);
         return objNode;
     }
 
@@ -99,6 +109,7 @@ public class LeaderboardGlobal extends HecticusModel{
         objNode.put("id_tournament", idTournament);
         objNode.put("score", score);
         objNode.put("hits", correctBets);
+        objNode.put("sport_id", sportId);
         return objNode;
     }
 
@@ -109,6 +120,9 @@ public class LeaderboardGlobal extends HecticusModel{
         objNode.put("client", nickname==null?"Anônimo":nickname);
         objNode.put("score", score);
         objNode.put("hits", correctBets);
+        objNode.put("sport_id", sportId);
         return objNode;
     }
+
+
 }

@@ -1,0 +1,18 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                                                                                                               controllers.Application.index
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file                                                                                                   controllers.Assets.at(path="/public", file)
+
+GET    /scrapper/update                                                                                                 controllers.Debugger.Scrapper()
+
+
+#Zona de Matches
+GET     /baseballapi/v1/competitions/list                                                                               controllers.MatchController.getActiveCompetitions()
+GET     /baseballapi/v1/matches/competition/date/grouped/:idLeague                                                      controllers.MatchController.getFixturesForCompetitionGroupByDateNoPhase(idLeague: Long)
+
+GET     /baseballapi/v2/match/:idGameMatch                                                                       controllers.MatchController.getFixturesByID(idGameMatch : Integer)
