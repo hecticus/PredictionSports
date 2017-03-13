@@ -322,7 +322,7 @@ public class FootballClients extends Clients {
                     Iterator<JsonNode> alertsIterator = clientData.get("remove_push_alert").elements();
                     while (alertsIterator.hasNext()) {
                         JsonNode next = alertsIterator.next();
-                        PushAlerts pushAlert = PushAlerts.finder.where().eq("idExt", next.asInt()).findUnique();
+                        PushAlerts pushAlert = PushAlerts.finder.where().eq("idExt", next.asInt()).eq("sport_id", 1).findUnique();
                         if (pushAlert == null) {
                             continue;
                         }
@@ -342,7 +342,7 @@ public class FootballClients extends Clients {
                         JsonNode next = alertsIterator.next();
                         int index = client.getPushAlertIndex(next.asInt());
                         if (index == -1) {
-                            PushAlerts pushAlert = PushAlerts.finder.where().eq("idExt", next.asInt()).findUnique();
+                            PushAlerts pushAlert = PushAlerts.finder.where().eq("idExt", next.asInt()).eq("sport_id", 1).findUnique();
                             if (pushAlert != null) {
                                 ClientHasPushAlerts chpa = new ClientHasPushAlerts(client, pushAlert);
                                 client.getPushAlerts().add(chpa);
@@ -351,6 +351,42 @@ public class FootballClients extends Clients {
                         }
                     }
                 }
+
+                if (clientData.has("remove_push_alert_baseball")) {
+                    Iterator<JsonNode> alertsIterator = clientData.get("remove_push_alert").elements();
+                    while (alertsIterator.hasNext()) {
+                        JsonNode next = alertsIterator.next();
+                        PushAlerts pushAlert = PushAlerts.finder.where().eq("idExt", next.asInt()).eq("sport_id", 2).findUnique();
+                        if (pushAlert == null) {
+                            continue;
+                        }
+                        List<ClientHasPushAlerts> clientHasPushAlerts = ClientHasPushAlerts.finder.where().eq("client.idClient", client.getIdClient()).eq("pushAlert.idPushAlert", pushAlert.getIdPushAlert()).findList();
+                        if (clientHasPushAlerts != null && !clientHasPushAlerts.isEmpty()) {
+                            for (ClientHasPushAlerts clientHasPushAlert : clientHasPushAlerts) {
+                                client.getPushAlerts().remove(clientHasPushAlert);
+                                clientHasPushAlert.delete();
+                            }
+                            update = true;
+                        }
+                    }
+                }
+                if (clientData.has("add_push_alert_baseball")) {
+                    Iterator<JsonNode> alertsIterator = clientData.get("add_push_alert").elements();
+                    while (alertsIterator.hasNext()) {
+                        JsonNode next = alertsIterator.next();
+                        int index = client.getPushAlertIndex(next.asInt());
+                        if (index == -1) {
+                            PushAlerts pushAlert = PushAlerts.finder.where().eq("idExt", next.asInt()).eq("sport_id", 2).findUnique();
+                            if (pushAlert != null) {
+                                ClientHasPushAlerts chpa = new ClientHasPushAlerts(client, pushAlert);
+                                client.getPushAlerts().add(chpa);
+                                update = true;
+                            }
+                        }
+                    }
+                }
+
+
                 int betsPushId = Config.getInt("bets-push-id");
                 int newsPushId = Config.getInt("news-push-id");
                 if (clientData.has("receive_news")) {
@@ -618,14 +654,15 @@ public class FootballClients extends Clients {
                 StringBuilder matchesRequest = new StringBuilder();
 
 
-                int sportId = bet.get("sport_id").asInt();
-                if (sportId == 1) {
-                    matchesRequest.append("http://").append(Utils.getFootballManagerHost()).append("/footballapi/v2/").append(Config.getInt("football-manager-id-app")).append("/match/").append(idGameMatch);
-                }
+                int sportId = bet.get("sport_id") == null? 1:bet.get("sport_id").asInt() ;
 
                 //Para Baseball
                 if (sportId == 2) {
                     matchesRequest.append("http://").append(Utils.getBaseBallManagerHost()).append("/baseballapi/v2/match/").append(idGameMatch);
+                }
+                else
+                {
+                    matchesRequest.append("http://").append(Utils.getFootballManagerHost()).append("/footballapi/v2/").append(Config.getInt("football-manager-id-app")).append("/match/").append(idGameMatch);
                 }
                     F.Promise<WSResponse> result = WS.url(matchesRequest.toString()).get();
                     ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
@@ -636,20 +673,18 @@ public class FootballClients extends Clients {
 
                         String dateText = match.get("date").asText();
 
-                        if (sportId == 1) {
-                            idGameMatch = match.get("id_game_matches").asInt();
-                            idTournament = bet.get("id_tournament").asInt();
-                            idPhase = match.get("phase").asInt();
-                        }
-
                         if (sportId == 2) {
                             idGameMatch = match.get("id_game").asInt();
                             idTournament = bet.get("id_tournament").asInt();
                             idPhase = 1;
                         }
+                        else
+                        {
+                            idGameMatch = match.get("id_game_matches").asInt();
+                            idTournament = bet.get("id_tournament").asInt();
+                            idPhase = match.get("phase").asInt();
+                        }
                         clientBet = bet.get("client_bet").asInt();
-
-
 
                         Date date = DateAndTime.getDate(dateText, dateText.length() == 8 ? "yyyyMMdd" : "yyyyMMddhhmmss");
                         Calendar gameDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
@@ -882,6 +917,9 @@ public class FootballClients extends Clients {
             if (timezoneNames == null) {//timezoneNames.length <= 0){
                 return badRequest(buildBasicResponse(1, "Falta el parametro timezonName"));
             }
+            String ssptid = getFromQueryString("sport_id") == null? "":getFromQueryString("sport_id")[0];
+            if(ssptid.equals("2")) ///Validacion bien chingona que detecta si quieres el status 2 para obtener los valores de baseball
+                return getBetsForCompetitionBaseball(id, idCompetition);
             String timezoneName = timezoneNames[0].replaceAll(" ", "").trim();
             // FootballClient client = (FootballClient) Client.getByID(id);
             FootballClient client = new FootballClient(Client.getByID(id));
@@ -991,7 +1029,7 @@ public class FootballClients extends Clients {
             // FootballClient client = (FootballClient) Client.getByID(id);
             FootballClient client = new FootballClient(Client.getByID(id));
             if (client != null) {
-                String teams = "http://" + Utils.getBaseBallManagerHost() + "/footballapi/v1/matches/competition/date/grouped/" + Config.getInt("football-manager-id-app") + "/" + idCompetition + "?timezoneName=" + timezoneName;
+                String teams = "http://" + Utils.getBaseBallManagerHost() + "/baseballapi/v1/matches/competition/date/grouped/" + idCompetition + "?timezoneName=" + timezoneName;
                 System.out.println(teams);
                 F.Promise<WSResponse> result = WS.url(teams.toString()).get();
                 ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
@@ -1009,13 +1047,13 @@ public class FootballClients extends Clients {
                         Iterator<JsonNode> externalMatches = fixture.get("matches").elements();
                         while (externalMatches.hasNext()) {
                             ObjectNode externalMatch = (ObjectNode) externalMatches.next();
-                            int idGameMatches = externalMatch.get("id_game_matches").asInt();
+                            int idGameMatches = externalMatch.get("id_game").asInt();
                             matchesIDs.add(idGameMatches);
                             matches.put(idGameMatches, externalMatch);
                         }
                     }
                     maxBetsCount = matchesIDs.size();
-                    List<ClientBets> list = ClientBets.finder.where().eq("client", client).eq("idTournament", league.get("id_competitions").asInt()).in("idGameMatch", matchesIDs).orderBy("idGameMatch asc").findList();
+                    List<ClientBets> list = ClientBets.finder.where().eq("client", client).eq("idTournament", league.get("id_competition").asInt()).in("idGameMatch", matchesIDs).orderBy("idGameMatch asc").findList();
                     if (list != null && !list.isEmpty()) {
                         clientBetsCount += list.size();
                         ArrayList<ObjectNode> dataFixture = new ArrayList();
@@ -1031,7 +1069,7 @@ public class FootballClients extends Clients {
                             ObjectNode fixture = matches.get(key);
                             modifiedFixtures.add(fixture);
                         }
-                        Collections.sort(modifiedFixtures, new FixturesComparator());
+                        Collections.sort(modifiedFixtures, new FixturesComparatorBaseball());
 
                         String pivot = modifiedFixtures.get(0).get("date").asText().substring(0, 8);
                         Calendar pivotMaximumDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
@@ -1092,6 +1130,17 @@ public class FootballClients extends Clients {
             int result = o1.get("date").asText().compareTo(o2.get("date").asText());
             if (result == 0) {
                 return o1.get("id_game_matches").asInt() - o2.get("id_game_matches").asInt();
+            }
+            return result;
+        }
+    }
+
+    public static class FixturesComparatorBaseball implements Comparator<ObjectNode> {
+        @Override
+        public int compare(ObjectNode o1, ObjectNode o2) {
+            int result = o1.get("date").asText().compareTo(o2.get("date").asText());
+            if (result == 0) {
+                return o1.get("id_game").asInt() - o2.get("id_game").asInt();
             }
             return result;
         }

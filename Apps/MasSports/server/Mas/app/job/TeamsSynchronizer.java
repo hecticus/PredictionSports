@@ -48,9 +48,12 @@ public class TeamsSynchronizer extends HecticusThread {
     @Override
     public void process(Map args) {
         try {
-            PushAlerts lastTeamAlert = PushAlerts.getLastTeamAlert();
+            PushAlerts lastTeamAlert = PushAlerts.getLastTeamAlert(1);
             int id = lastTeamAlert != null ? lastTeamAlert.getIdExt() : 0;
             synchTeams(id);
+            lastTeamAlert = PushAlerts.getLastTeamAlert(1);
+            id = lastTeamAlert != null ? lastTeamAlert.getIdExt() : 0;
+            synchTeamsBaseball(id);
         } catch (Exception ex) {
             Utils.printToLog(TeamsSynchronizer.class, "Error sincronizando equipos", "Error sincronizando equipos", true, ex, "support-level-1", Config.LOGGER_ERROR);
         }
@@ -71,6 +74,7 @@ public class TeamsSynchronizer extends HecticusThread {
                             shortName = null,
                             abbreviationName = null,
                             teamLogo = null;
+                    int sport_id = 1;
                     try {
                         if (next.hasNonNull("officialName"))
                             officialName = URLEncoder.encode(next.get("officialName").asText(), ENCODING);
@@ -89,7 +93,48 @@ public class TeamsSynchronizer extends HecticusThread {
                             officialName,
                             shortName,
                             abbreviationName,
-                            teamLogo);
+                            teamLogo, sport_id);
+                    pushAlerts.save();
+                }
+            }
+        }
+    }
+
+
+    public void synchTeamsBaseball(int idExt) throws UnsupportedEncodingException {
+        F.Promise<WSResponse> result = WS.url("http://" + Utils.getBaseBallManagerHost() + "/baseballapi/v2/teams/" + idExt).get();
+        ObjectNode response = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
+        JsonNode data = null;
+        int error = response.get("error").asInt();
+        if(error == 0) {
+            data = response.get("response");
+            if(data.has("teams")){
+                Iterator<JsonNode> teams = data.get("teams").elements();
+                while (isAlive() && teams.hasNext()){
+                    JsonNode next = teams.next();
+                    String officialName = null,
+                            shortName = null,
+                            abbreviationName = null,
+                            teamLogo = null;
+                    try {
+                        if (next.hasNonNull("name"))
+                            officialName = URLEncoder.encode(next.get("name").asText(), ENCODING);
+                        if (next.hasNonNull("short_name"))
+                            shortName = URLEncoder.encode(next.get("short_name").asText(), ENCODING);
+                        if (next.hasNonNull("abbreviation_name"))
+                            abbreviationName = URLEncoder.encode(next.get("abbreviation_name").asText(), ENCODING);
+                        if (next.hasNonNull("team_logo"))
+                            teamLogo = next.get("team_logo").asText();
+                    }catch (Exception ex){
+                        //failed do nothing
+                    }
+                    PushAlerts pushAlerts = new PushAlerts(URLEncoder.encode(next.get("name").asText(), "UTF-8"),
+                            next.get("id_teams").asInt(),
+                            true,
+                            officialName,
+                            shortName,
+                            abbreviationName,
+                            teamLogo, 2);
                     pushAlerts.save();
                 }
             }

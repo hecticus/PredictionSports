@@ -96,6 +96,11 @@ public class Team extends Model {
         return finder.where().eq("short_code", shortCode).findUnique();
     }
 
+    public static Team getById(long idTeam){
+        //EbeanServer server = Ebean.getServer("clients");
+        return finder.where().eq("id_team", idTeam).findUnique();
+    }
+
     public ObjectNode toJson() {
         ObjectNode obj = Json.newObject();
         obj.put("id_teams",idTeam);

@@ -78,14 +78,14 @@ public class MatchController extends HecticusController {
                         matchDate = new GregorianCalendar();
                         matchDate.setTime(DateAndTime.getDate(new SimpleDateFormat("yyyyMMdd").format(Game.getDate()).toString(), "yyyyMMdd"));
                         if (matchDate.before(maximumDate)) {
-                            fixtures.add(Game.toJson());
+                            fixtures.add(Game.toJsonSimpleDate());
                         } else {
                             ObjectNode round = Json.newObject();
                             round.put("date", tzFormatter.format(pivotDate.getTime()));
                             round.put("matches", Json.toJson(fixtures));
                             data.add(round);
                             fixtures.clear();
-                            fixtures.add(Game.toJson());
+                            fixtures.add(Game.toJsonSimpleDate());
                             pivot = new SimpleDateFormat("yyyyMMdd").format(Game.getDate()).toString();
                             pivotDate.setTime(DateAndTime.getDate(new SimpleDateFormat("yyyyMMdd").format(Game.getDate()).toString(), "yyyyMMdd"));
                             pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd"));

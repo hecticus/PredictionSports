@@ -15,4 +15,9 @@ GET    /scrapper/update                                                         
 GET     /baseballapi/v1/competitions/list                                                                               controllers.MatchController.getActiveCompetitions()
 GET     /baseballapi/v1/matches/competition/date/grouped/:idLeague                                                      controllers.MatchController.getFixturesForCompetitionGroupByDateNoPhase(idLeague: Long)
 
-GET     /baseballapi/v2/match/:idGameMatch                                                                       controllers.MatchController.getFixturesByID(idGameMatch : Integer)
+GET     /baseballapi/v1/team/competition/all/:idLeague                                                                  controllers.TeamsController.getTeams(idLeague: Long)
+
+
+
+GET     /baseballapi/v2/match/:idGameMatch                                                                              controllers.MatchController.getFixturesByID(idGameMatch : Integer)
+GET     /baseballapi/v2/teams/:idTeam                                                                                   controllers.TeamsController.getTeamsGt(idTeam: Long)

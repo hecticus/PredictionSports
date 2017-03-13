@@ -49,6 +49,10 @@ GET            /sportsapi/v1/clients/get/:id/:upstreamChannel                   
 #GET            /sportsapi/v1/clients/list                                              controllers.client.Clients.list(pageSize: Integer?=0, page: Integer?=0, pmc : Boolean?=false)
 GET            /sportsapi/v1/clients/alerts/:id                                        controllers.client.FootballClients.getPushAlertsForClient(id : Integer)
 GET            /sportsapi/v1/clients/bets/get/:id/:idCompetition                       controllers.client.FootballClients.getBetsForCompetition(id : Integer, idCompetition : Integer)
+#New By  FER
+GET            /baseballapi/v1/clients/bets/get/:id/:idCompetition                       controllers.client.FootballClients.getBetsForCompetitionBaseball(id : Integer, idCompetition : Integer)
+
+
 GET            /sportsapi/v1/clients/bets/get/date/:id/:date                           controllers.client.FootballClients.getBetsForDate(id : Integer, date : String)
 GET            /sportsapi/v1/clients/bets/get/:id                                      controllers.client.FootballClients.getBets(id : Integer)
 POST           /sportsapi/v1/clients/bets/create/:id                                   controllers.client.FootballClients.createBets(id : Integer)
@@ -81,6 +85,7 @@ GET            /sportsapi/v2/client/:id                                         
 PUT            /sportsapi/v2/client/:id                                                controllers.client.FootballClients.update(id : Integer)
 DELETE         /sportsapi/v2/client/:id                                                controllers.client.Clients.delete(id : Integer)
 GET            /sportsapi/v2/client/:id/alerts                                         controllers.client.FootballClients.getPushAlertsForClient(id : Integer)
+#Modified by fer
 POST           /sportsapi/v2/client/:id/bet                                            controllers.client.FootballClients.createBetNew(id : Integer)
 POST           /sportsapi/v2/client/:id/bets                                           controllers.client.FootballClients.createBets(id : Integer)
 GET            /sportsapi/v2/client/:id/bets                                           controllers.client.FootballClients.getBets(id : Integer)
@@ -307,6 +312,11 @@ GET            /footballapi/v1/competitions/phases/:idApp/:idCompetition/:idLang
 GET            /footballapi/v1/competitions/phases/latest/:idApp/:idCompetition/:date                          controllers.client.FootballManager.getCurrentAndLastPhaseForCompetition(idApp : Integer, idCompetition: Integer, date : String, idLanguage : Integer?=300)
 GET            /footballapi/v1/competitions/phases/latest/:idApp/:idCompetition/:date/:idLanguage              controllers.client.FootballManager.getCurrentAndLastPhaseForCompetition(idApp : Integer, idCompetition: Integer, date : String, idLanguage : Integer)
 
+#Zona baseball
+GET            /baseballapi/v1/competitions/list                                                               controllers.client.BaseballManager.getActiveCompetitions(ids: Boolean?=false, closestMatch: Boolean?=false, timezoneName : String ?= "")
+GET            /baseballapi/v1/team/competition/all/:idCompetition                                             controllers.client.BaseballManager.getTeams(idCompetition: Long)
+
+
 #MaM
 GET            /footballapi/v1/matches/mam/:idApp/:idCompetition/:idMatch                                      controllers.client.FootballManager.getMinuteToMinuteForCompetition(idApp : Integer, idCompetition: Integer, idMatch : Long, idLanguage : Integer?=300, idEvent: Long?=0, forward: Boolean?=false)
 GET            /footballapi/v1/matches/mam/:idApp/:idCompetition/:idMatch/:idLanguage                          controllers.client.FootballManager.getMinuteToMinuteForCompetition(idApp : Integer, idCompetition: Integer, idMatch : Long, idLanguage : Integer, idEvent: Long?=0, forward: Boolean?=false)
@@ -352,6 +362,9 @@ GET            /api/v1/calendar/get/phase/gt/:idApp/:idCompetition/:phase       
 GET            /api/v1/calendar/get/phase/lt/:idApp/:idCompetition/:phase                                      controllers.client.FootballManager.getCalendar(idApp: Integer, idCompetition: Integer, date: String?="", phase: Long, operator: String?="lt")
 GET            /api/v1/calendar/get/phase/eq/:idApp/:idCompetition/:phase                                      controllers.client.FootballManager.getCalendar(idApp: Integer, idCompetition: Integer, date: String?="", phase: Long, operator: String?="eq")
 GET            /api/v1/calendar/get/:idApp/:idCompetition                                                      controllers.client.FootballManager.getCalendar(idApp: Integer, idCompetition: Integer, date: String?="", phase: Long?=0, operator: String?="gt")
+
+GET            /synctest                       controllers.client.BaseballManager.testsync()
+
 
 ->             /jobcore                                                                                        JobCore.Routes
 ->             /upstream                                                                                       UpstreamAPIConnector.Routes

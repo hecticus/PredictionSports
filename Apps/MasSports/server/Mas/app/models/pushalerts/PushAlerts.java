@@ -34,12 +34,15 @@ public class PushAlerts extends HecticusModel {
     private String abbreviationName;
     private String teamLogo;
 
+    private int sport_id;
+
     public static Model.Finder<Integer, PushAlerts> finder = new Model.Finder<Integer, PushAlerts>(Integer.class, PushAlerts.class);
 
     public PushAlerts(String name, Integer idExt, Boolean pushable) {
         this.name = name;
         this.idExt = idExt;
         this.pushable = pushable;
+        this.sport_id = 1;
     }
 
     public PushAlerts(String name, Integer idExt, Boolean pushable, String officialName, String shortName, String abbreviationName, String teamLogo) {
@@ -50,7 +53,20 @@ public class PushAlerts extends HecticusModel {
         this.shortName = shortName;
         this.abbreviationName = abbreviationName;
         this.teamLogo = teamLogo;
+        this.sport_id = 1;
     }
+
+    public PushAlerts(String name, Integer idExt, Boolean pushable, String officialName, String shortName, String abbreviationName, String teamLogo, int sport_id) {
+        this.name = name;
+        this.idExt = idExt;
+        this.pushable = pushable;
+        this.officialName = officialName;
+        this.shortName = shortName;
+        this.abbreviationName = abbreviationName;
+        this.teamLogo = teamLogo;
+        this.sport_id = sport_id;
+    }
+
 
     public Integer getIdPushAlert() {
         return idPushAlert;
@@ -116,6 +132,10 @@ public class PushAlerts extends HecticusModel {
         this.teamLogo = teamLogo;
     }
 
+    public int getSport_id() {         return sport_id;    }
+
+    public void setSport_id(int sport_id) {         this.sport_id = sport_id;    }
+
     @Override
     public ObjectNode toJson() {
         ObjectNode objNode = Json.newObject();
@@ -143,10 +163,15 @@ public class PushAlerts extends HecticusModel {
 
         objNode.put("team_logo",teamLogo);
         objNode.put("pushable", pushable);
+        objNode.put("sport_id", sport_id);
         return objNode;
     }
 
     public static PushAlerts getLastTeamAlert(){
-        return finder.where().ne("idExt", -1).orderBy("idExt desc").setMaxRows(1).findUnique();
+       return getLastTeamAlert(1);
+    }
+
+    public static PushAlerts getLastTeamAlert(int sport_id){
+        return finder.where().ne("idExt", -1).eq("sport_id", sport_id).orderBy("idExt desc").setMaxRows(1).findUnique();
     }
 }

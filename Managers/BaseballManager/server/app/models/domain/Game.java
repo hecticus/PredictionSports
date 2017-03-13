@@ -376,6 +376,8 @@ public class Game extends Model  {
         json.put("date", gameDate.toString());
         json.put("home_team",homeTeam.toJson());
         json.put("away_team",awayTeam.toJson());
+        json.put("home_run",rHome);
+        json.put("away_run",rAway);
         return json;
     }
 
@@ -388,6 +390,8 @@ public class Game extends Model  {
         json.put("date",  new SimpleDateFormat("yyyyMMddhhmmss").format(gameDate).toString()).toString(); // DateAndTime.getDate(new SimpleDateFormat("yyyyMMdd").format(gameDate.toString()), "yyyyMMdd"));
         json.put("home_team",homeTeam.toJson());
         json.put("away_team",awayTeam.toJson());
+        json.put("home_run",rHome);
+        json.put("away_run",rAway);
         return json;
     }
 

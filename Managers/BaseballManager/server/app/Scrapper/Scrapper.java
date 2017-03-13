@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 //import com.google.inject.Inject;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import models.domain.Game;
+import models.domain.TeamHasLeague;
 import models.handlers.*;
 import org.asynchttpclient.AsyncHttpClientConfig;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
@@ -138,6 +139,10 @@ public class Scrapper {
                     current_game.update();
                 else
                     current_game.save();
+
+                ///ZOna de agregar partido a la magia de la league para referencias de ams adelante.get
+                TeamHasLeagueHandler.CheckAndInsert(current_game.getHomeTeam().getIdTeam(), current_game.getLeague().getIdLeague());
+                TeamHasLeagueHandler.CheckAndInsert(current_game.getAwayTeam().getIdTeam(), current_game.getLeague().getIdLeague());
 
                 if(current_game.getStatus().getIdStatus() > 1) {
                         Innings =  obj.get("linescore").get("inning");
