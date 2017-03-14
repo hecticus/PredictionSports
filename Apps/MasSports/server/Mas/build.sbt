@@ -1,6 +1,6 @@
 import play.PlayJava
 
-name := "TimPanama"
+name := "MasSports"
 
 version := "1.0-SNAPSHOT"
 
