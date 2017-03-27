@@ -67,7 +67,18 @@ create table league (
   name                          varchar(50) not null,
   status                        integer,
   `show`                        integer,
+  league_type_id_league_type    bigint not null,
   constraint pk_league primary key (id_league)
+);
+
+create table league_type (
+  id_league_type                bigint auto_increment not null,
+  status                        integer,
+  name                          varchar(50) not null,
+  type                          integer,
+  sort                          integer,
+  comp_logo                     varchar(255),
+  constraint pk_league_type primary key (id_league_type)
 );
 
 create table status (
@@ -82,6 +93,13 @@ create table team (
   short_code                    varchar(3) not null,
   city                          varchar(255) not null,
   constraint pk_team primary key (id_team)
+);
+
+create table team_has_leagues (
+  id_team_has_league            bigint auto_increment not null,
+  id_team                       bigint,
+  id_league                     bigint,
+  constraint pk_team_has_leagues primary key (id_team_has_league)
 );
 
 create table venue (
@@ -114,6 +132,15 @@ create index ix_game_status_id_status on game (status_id_status);
 alter table inning add constraint fk_inning_game_id_game foreign key (game_id_game) references game (id_game) on delete restrict on update restrict;
 create index ix_inning_game_id_game on inning (game_id_game);
 
+alter table league add constraint fk_league_league_type_id_league_type foreign key (league_type_id_league_type) references league_type (id_league_type) on delete restrict on update restrict;
+create index ix_league_league_type_id_league_type on league (league_type_id_league_type);
+
+alter table team_has_leagues add constraint fk_team_has_leagues_id_team foreign key (id_team) references team (id_team) on delete restrict on update restrict;
+create index ix_team_has_leagues_id_team on team_has_leagues (id_team);
+
+alter table team_has_leagues add constraint fk_team_has_leagues_id_league foreign key (id_league) references league (id_league) on delete restrict on update restrict;
+create index ix_team_has_leagues_id_league on team_has_leagues (id_league);
+
 
 # --- !Downs
 
@@ -141,6 +168,15 @@ drop index ix_game_status_id_status on game;
 alter table inning drop foreign key fk_inning_game_id_game;
 drop index ix_inning_game_id_game on inning;
 
+alter table league drop foreign key fk_league_league_type_id_league_type;
+drop index ix_league_league_type_id_league_type on league;
+
+alter table team_has_leagues drop foreign key fk_team_has_leagues_id_team;
+drop index ix_team_has_leagues_id_team on team_has_leagues;
+
+alter table team_has_leagues drop foreign key fk_team_has_leagues_id_league;
+drop index ix_team_has_leagues_id_league on team_has_leagues;
+
 drop table if exists action;
 
 drop table if exists configs;
@@ -153,9 +189,13 @@ drop table if exists inning;
 
 drop table if exists league;
 
+drop table if exists league_type;
+
 drop table if exists status;
 
 drop table if exists team;
+
+drop table if exists team_has_leagues;
 
 drop table if exists venue;
 

@@ -6,13 +6,13 @@ import models.domain.LeagueType;
 /**
  * Created by palenge on 12/30/16.
  */
-public class LeagueHandler {
+public class LeagueTypeHandler {
 
 
-    public static League CheckAndInsert( String name) {
-        League tm = League.getByName(name);
+    public static LeagueType CheckAndInsert(String name) {
+        LeagueType tm = LeagueType.getByName(name);
         if(tm == null) {
-            tm = new League(name);
+            tm = new LeagueType(name);
             tm.save();
         }
         return tm;

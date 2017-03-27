@@ -2,12 +2,11 @@ package models.domain;
 
 import com.avaje.ebean.Model;
 //import jdk.nashorn.internal.ir.ObjectNode;
+import models.handlers.LeagueTypeHandler;
 import play.data.validation.Constraints;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 import play.libs.Json;
 
@@ -29,6 +28,11 @@ public class League extends Model {
 
     @Column(name="`show`")
     private int show;
+
+    @Constraints.Required
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private LeagueType leagueType;
 
     public static Model.Finder<Long, League> finder = new Model.Finder<Long, League>(League.class);
 
@@ -67,8 +71,10 @@ public class League extends Model {
     public League(String name) {
         this.name = name;
         this.status = 0;
-        this.status = 0;
+        this.leagueType = LeagueTypeHandler.CheckAndInsert(name);
     }
+
+
 
     public static League getByName(String name) {
         //EbeanServer server = Ebean.getServer("clients");
@@ -91,7 +97,7 @@ public class League extends Model {
         obj.put("ext_id",-1); //no aplica en baseball los id son directos
         obj.put("show",show);
         obj.put("status",status);
-        obj.put("competiton_type",100); //No tenemos aun este dato
+        obj.put("competiton_type", leagueType.getJson()); //No tenemos aun este dato
 
         if(closestMatch){
             Game match = Game.getClosestMatch(this);
