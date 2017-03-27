@@ -106,7 +106,7 @@ public class LeagueType extends Model  {
         obj.put("name",this.name); //no aplica en baseball los id son directos
         obj.put("type",this.type);
         obj.put("sort",this.sort);
-        obj.put("comp_logo", Config.getString("team-logo-url") + this.comp_logo + "png");
+        obj.put("comp_logo", Config.getString("competition-logo-url") + this.comp_logo + "png");
         return obj;
     }
 }
