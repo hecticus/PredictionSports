@@ -373,7 +373,7 @@ public class Game extends Model  {
         ObjectNode json = Json.newObject();
         json.put("id_game", idGame.toString());
         json.put("id_league", league.getIdLeague().toString());
-        json.put("date", gameDate.toString());
+        json.put("date", new SimpleDateFormat("yyyyMMddhhmmss").format(gameDate).toString()).toString();
         json.put("home_team",homeTeam.toJson());
         json.put("away_team",awayTeam.toJson());
         json.put("home_run",rHome);

@@ -93,7 +93,7 @@ public class League extends Model {
     public ObjectNode getJsonDashboard(boolean closestMatch) {
         ObjectNode obj = Json.newObject();
         obj.put("sport_id",2); //baseball
-        obj.put("id_competition",idLeague); //baseball
+        obj.put("id_competitions",idLeague); //baseball
         obj.put("ext_id",-1); //no aplica en baseball los id son directos
         obj.put("show",show);
         obj.put("status",status);
