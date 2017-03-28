@@ -55,4 +55,23 @@ public class Status extends Model  {
         //EbeanServer server = Ebean.getServer("clients");
         return finder.where().eq("name", name).findUnique();
     }
+
+
+    public static Status convertToFootball(Status obj)
+    {
+        Status aux = new Status();
+        switch (obj.getIdStatus().toString())
+        {
+            case "1":
+                aux.setName("Programado");
+                aux.setIdStatus(3l);
+                break;
+            case "2":
+                aux.setName("Jugado");
+                aux.setIdStatus(1l);
+                break;
+
+        }
+        return aux;
+    }
 }
