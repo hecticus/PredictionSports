@@ -377,6 +377,7 @@ public class Game extends Model  {
         json.put("home_team",homeTeam.toJson());
         json.put("away_team",awayTeam.toJson());
         json.put("home_run",rHome);
+
         json.put("away_run",rAway);
         return json;
     }
@@ -392,6 +393,10 @@ public class Game extends Model  {
         json.put("away_team",awayTeam.toJson());
         json.put("home_run",rHome);
         json.put("away_run",rAway);
+        ObjectNode aux = Json.newObject();
+        aux.put("id_status", status.getIdStatus());
+        aux.put("name", status.getName());
+        json.put("status", aux);
         return json;
     }
 
