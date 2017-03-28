@@ -70,6 +70,14 @@ public class Status extends Model  {
                 aux.setName("Jugado");
                 aux.setIdStatus(1l);
                 break;
+            case "3":
+                aux.setName("Jugando");
+                aux.setIdStatus(2l);
+                break;
+            default:
+                aux.setName("Jugando");
+                aux.setIdStatus(2l);
+                break;
 
         }
         return aux;
