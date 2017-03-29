@@ -23,6 +23,6 @@ GET     /baseballapi/v2/match/:idGameMatch                                      
 GET     /baseballapi/v2/teams/:idTeam                                                                                   controllers.TeamsController.getTeamsGt(idTeam: Long)
 
 
-GET            /footballapi/v1/matches/date/paged/:date                                                                 controllers.MatchController.getFixturesDatePaged(date : String, pageSize: Integer?=0, page: Integer?=0, timezoneName : String ?= "")
+GET            /baseballapi/v1/matches/date/paged/:date                                                                 controllers.MatchController.getFixturesDatePaged(date : String, pageSize: Integer?=0, page: Integer?=0, timezoneName : String ?= "")
 
 #GET            /footballapi/v1/matches/date/paged/:idApp/:idLanguage/:date                                     controllers.MatchController.getFixturesDatePaged(idApp: Integer, idLanguage : Integer, date : String, pageSize: Integer?=0, page: Integer?=0, timezoneName : String ?= "")
