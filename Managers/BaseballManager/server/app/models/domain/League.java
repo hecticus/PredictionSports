@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.text.ParseException;
 import java.util.List;
 import play.libs.Json;
-
+import java.util.*;
 /**
  * Created by palenge on 12/28/16.
  */
@@ -96,19 +96,19 @@ public class League extends Model {
 
 
     public static List<League> getLeaguePage( int page, int pageSize, String date){
-        return finder.fetch("matches").where().eq("status", 1).ilike("game_date", date+"%").setFirstRow(page).setMaxRows(pageSize).findList();
+        return finder.fetch("matches").where().eq("status", 1).ilike("matches.game_date", date+"%").setFirstRow(page).setMaxRows(pageSize).findList();
     }
 
-    public static List<League> getLeaguePage( int page, int pageSize, String minDate, String maxDate){
-        return finder.fetch("matches").where().eq("status", 1).between("game_date", minDate, maxDate).setFirstRow(page).setMaxRows(pageSize).findList();
+    public static List<League> getLeaguePage( int page, int pageSize, Date minDate, Date maxDate){
+        return finder.fetch("matches").where().eq("status", 1).between("matches.gameDate", minDate, maxDate).setFirstRow(page).setMaxRows(pageSize).findList();
     }
 
     public static List<League> getLeaguePage( int page, int pageSize, String date, List<Team> teams){
-        return finder.fetch("teams").fetch("matches").where().eq("status", 1).ilike("game_date", date + "%").in("teams.team", teams).setFirstRow(page).setMaxRows(pageSize).findList();
+        return finder.fetch("teams").fetch("matches").where().eq("status", 1).ilike("matches.game_date", date + "%").in("teams.team", teams).setFirstRow(page).setMaxRows(pageSize).findList();
     }
 
     public static List<League> getLeaguePage(int page, int pageSize, String minDate, String maxDate, List<Team> teams){
-        return finder.fetch("teams").fetch("matches").where().eq("status", 1).between("game_date", minDate, maxDate).in("teams.team", teams).setFirstRow(page).setMaxRows(pageSize).findList();
+        return finder.fetch("teams").fetch("matches").where().eq("status", 1).between("matches.game_date", minDate, maxDate).in("teams.team", teams).setFirstRow(page).setMaxRows(pageSize).findList();
     }
 
     public List<Game> getMatchesByDateDB(final String minDate, final String maxDate){

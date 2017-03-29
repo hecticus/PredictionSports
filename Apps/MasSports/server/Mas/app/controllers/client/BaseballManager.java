@@ -70,7 +70,7 @@ public class BaseballManager extends FootballController {
         return ok(callBaseballManager(request().path()));
     }
 
-    public static Result getFixturesDatePaged(Integer idApp, Integer idLanguage, String date, Integer pageSize,Integer page, String timezoneName){
+    public static Result getFixturesDatePaged(String date, Integer pageSize,Integer page, String timezoneName){
         return ok(callBaseballManager(request().path()));
     }
 }

@@ -167,7 +167,7 @@ public class MatchController extends HecticusController {
                 //    competitions = League.getCompetitionsPage(app, page, pageSize, sdf.format(minimumDate.getTime()), sdf.format(maximumDate.getTime()), teams);
                 //    teams.clear();
                 //} else {
-                    competitions = League.getLeaguePage( page, pageSize, sdf.format(minimumDate.getTime()), sdf.format(maximumDate.getTime()));
+                    competitions = League.getLeaguePage( page, pageSize, minimumDate.getTime(), maximumDate.getTime());
                // }
 
                 //Utils.printToLog(MatchesController.class, "", "query comp:" + (System.currentTimeMillis() - comt), false, null, "support-level-1", Config.LOGGER_INFO);
