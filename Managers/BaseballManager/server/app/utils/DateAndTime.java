@@ -213,6 +213,15 @@ public class DateAndTime {
         return cal;
     }
 
+    public static Calendar getMinimumDate(Calendar date){
+        Calendar cal = (Calendar) date.clone();
+        //cal.setTimeZone(TimeZone.getTimeZone(timezone));
+        cal.set(Calendar.HOUR_OF_DAY, cal.getActualMinimum(Calendar.HOUR_OF_DAY));
+        cal.set(Calendar.MINUTE, cal.getActualMinimum(Calendar.MINUTE));
+        cal.set(Calendar.SECOND, cal.getActualMinimum(Calendar.SECOND));
+        return cal;
+    }
+
     public static TimeZone getTimezoneFromID(String id){
         TimeZone timeZone = null;
         for (String string : TimeZone.getAvailableIDs(TimeZone.getTimeZone(id).getRawOffset())) {

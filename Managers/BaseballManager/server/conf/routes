@@ -21,3 +21,9 @@ GET     /baseballapi/v1/team/competition/all/:idLeague                          
 
 GET     /baseballapi/v2/match/:idGameMatch                                                                              controllers.MatchController.getFixturesByID(idGameMatch : Integer)
 GET     /baseballapi/v2/teams/:idTeam                                                                                   controllers.TeamsController.getTeamsGt(idTeam: Long)
+
+
+GET            /footballapi/v1/matches/date/paged/:date                                                                 controllers.MatchController.getFixturesDatePaged(date : String, pageSize: Integer?=0, page: Integer?=0, timezoneName : String ?= "")
+
+baseballapi/v1/matches/date/paged/1/300/20170331?timezoneName=GMT-0500&upstreamChannel=Web&api_password=1234)9|1&page=0&pageSize=100
+#GET            /footballapi/v1/matches/date/paged/:idApp/:idLanguage/:date                                     controllers.MatchController.getFixturesDatePaged(idApp: Integer, idLanguage : Integer, date : String, pageSize: Integer?=0, page: Integer?=0, timezoneName : String ?= "")

@@ -357,6 +357,13 @@ public class Game extends Model  {
         return finder.where().eq("identifier", identifier).findUnique();
     }
 
+
+
+
+    public static List<Game> findAllByCompetitionBetweenDate(Long idCompetition, String minDate, String maxDate){
+        return finder.where().eq("league_id_league",idCompetition).between("game_date", minDate, maxDate).orderBy("game_date asc").findList();
+    }
+
     public static Game getClosestMatch(League league)
     {
         Calendar today = new GregorianCalendar();

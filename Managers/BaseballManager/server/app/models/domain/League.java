@@ -7,6 +7,7 @@ import play.data.validation.Constraints;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javax.persistence.*;
+import java.text.ParseException;
 import java.util.List;
 import play.libs.Json;
 
@@ -33,6 +34,10 @@ public class League extends Model {
     @ManyToOne
     @JoinColumn(nullable = false)
     private LeagueType leagueType;
+
+
+    @OneToMany(mappedBy="league", cascade = CascadeType.ALL)
+    private List<Game> matches;
 
     public static Model.Finder<Long, League> finder = new Model.Finder<Long, League>(League.class);
 
@@ -90,6 +95,27 @@ public class League extends Model {
     }
 
 
+    public static List<League> getLeaguePage( int page, int pageSize, String date){
+        return finder.fetch("matches").where().eq("status", 1).ilike("game_date", date+"%").setFirstRow(page).setMaxRows(pageSize).findList();
+    }
+
+    public static List<League> getLeaguePage( int page, int pageSize, String minDate, String maxDate){
+        return finder.fetch("matches").where().eq("status", 1).between("game_date", minDate, maxDate).setFirstRow(page).setMaxRows(pageSize).findList();
+    }
+
+    public static List<League> getLeaguePage( int page, int pageSize, String date, List<Team> teams){
+        return finder.fetch("teams").fetch("matches").where().eq("status", 1).ilike("game_date", date + "%").in("teams.team", teams).setFirstRow(page).setMaxRows(pageSize).findList();
+    }
+
+    public static List<League> getLeaguePage(int page, int pageSize, String minDate, String maxDate, List<Team> teams){
+        return finder.fetch("teams").fetch("matches").where().eq("status", 1).between("game_date", minDate, maxDate).in("teams.team", teams).setFirstRow(page).setMaxRows(pageSize).findList();
+    }
+
+    public List<Game> getMatchesByDateDB(final String minDate, final String maxDate){
+        return Game.findAllByCompetitionBetweenDate(this.getIdLeague(), minDate, maxDate);
+    }
+
+
     public ObjectNode getJsonDashboard(boolean closestMatch) {
         ObjectNode obj = Json.newObject();
         obj.put("sport_id",2); //baseball
@@ -114,6 +140,23 @@ public class League extends Model {
         obj.put("ext_id",idLeague);
         return obj;
     }
+
+    public ObjectNode toJsonNoPhases(boolean closestMatch) {
+        ObjectNode obj = Json.newObject();
+        obj.put("id_competitions",idLeague);
+        obj.put("name",name);
+        obj.put("ext_id",-1);
+        obj.put("show",show);
+        obj.put("competiton_type",  leagueType.getJson());
+        obj.put("sport_id",2); //baseball
+
+        if(closestMatch){
+            Game match = Game.getClosestMatch(this);
+            obj.put("match", match!=null?match.toJson():null);
+        }
+        return obj;
+    }
+
 
 
 }

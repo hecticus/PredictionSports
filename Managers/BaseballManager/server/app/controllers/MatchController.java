@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Config;
 import models.domain.Game;
 import models.domain.League;
+import models.domain.Team;
 import models.handlers.*;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -128,4 +129,97 @@ public class MatchController extends HecticusController {
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
+
+
+    public  Result getFixturesDatePaged(String date, Integer pageSize,Integer page, String timezoneName){
+        try {
+            long start = System.currentTimeMillis();
+            timezoneName = timezoneName.replaceAll(" ", "").trim();
+            //Apps app = Apps.findId(idApp);
+            //Utils.printToLog(MatchesController.class, "", "find id:" + (System.currentTimeMillis() - start), false, null, "support-level-1", Config.LOGGER_INFO);
+                /*long time = System.currentTimeMillis();
+                TimeZone timeZone = DateAndTime.getTimezoneFromID(timezoneName);
+                if(timeZone == null){
+                    return badRequest(buildBasicResponse(1, "Es necesario pasar un timezone"));
+                }*/
+                Calendar today = new GregorianCalendar();
+                if(date != null && !date.isEmpty() && !date.equalsIgnoreCase("today")){
+                    today.set(Calendar.YEAR, Integer.parseInt(date.substring(0, 4)));
+                    today.set(Calendar.MONTH, Integer.parseInt(date.substring(4, 6)) - 1);
+                    today.set(Calendar.DAY_OF_MONTH, Integer.parseInt(date.substring(6)));
+                }
+                Calendar minimumDate = DateAndTime.getMinimumDate(today);
+                Calendar maximumDate = DateAndTime.getMaximumDate(today);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyMMddHHmmss");
+                //sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+                //Utils.printToLog(MatchesController.class, "", "time:"+(System.currentTimeMillis() - time), false, null, "support-level-1", Config.LOGGER_INFO);
+                ArrayList responseData = new ArrayList();
+                List<Team> teams = null;
+                String[] favorites = getFromQueryString("teams");
+                if (favorites != null && favorites.length > 0) {
+                    teams = Team.finder.where().in("idTeams", favorites).findList();
+                }
+                long comt = System.currentTimeMillis();
+                List<League> competitions = null;
+              //  if (teams != null && !teams.isEmpty()) {
+                //    competitions = League.getCompetitionsPage(app, page, pageSize, sdf.format(minimumDate.getTime()), sdf.format(maximumDate.getTime()), teams);
+                //    teams.clear();
+                //} else {
+                    competitions = League.getLeaguePage( page, pageSize, sdf.format(minimumDate.getTime()), sdf.format(maximumDate.getTime()));
+               // }
+
+                //Utils.printToLog(MatchesController.class, "", "query comp:" + (System.currentTimeMillis() - comt), false, null, "support-level-1", Config.LOGGER_INFO);
+                if (competitions != null && !competitions.isEmpty()) {
+                    long sort = System.currentTimeMillis();
+                    //Collections.sort(competitions, new CompetitionsSortComparator());
+
+
+                    //Utils.printToLog(MatchesController.class, "", "sort:" + (System.currentTimeMillis() - sort), false, null, "support-level-1", Config.LOGGER_INFO);
+                    ArrayList data = new ArrayList();
+                    List<Game> fullList = null;
+                    for (League competition : competitions) {
+                        fullList = competition.getMatchesByDateDB(sdf.format(minimumDate.getTime()), sdf.format(maximumDate.getTime()));
+//                        fullList = competition.getMatchesByDate(minimumDate, maximumDate);
+                        if (fullList != null && !fullList.isEmpty()) {
+                            ObjectNode competitionJson = competition.toJsonNoPhases(false);
+                            for (int i = 0; i < fullList.size(); i++) {
+                                data.add(fullList.get(i).toJson());
+                            }
+                            competitionJson.put("fixtures", Json.toJson(data));
+                            data.clear();
+                            responseData.add(competitionJson);
+                            fullList.clear();
+                        }
+
+                        //Utils.printToLog(MatchesController.class, "", "ite:" + (System.currentTimeMillis() - fort), false, null, "support-level-1", Config.LOGGER_INFO);
+                    }
+
+                    competitions.clear();
+                }
+                ObjectNode response = hecticusResponse(0, "ok", "leagues", responseData);
+                responseData.clear();
+                return ok(response);
+
+        }catch (Exception ex){
+            return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
+        }
+    }
+
+
+
+
 }
+
+/*
+
+public class CompetitionsSortComparator implements Comparator<League> {
+    @Override
+    public int compare(League c1, League c2) {
+        return c1.getType().getSort() - c2.getType().getSort();
+    }
+}
+
+
+*/

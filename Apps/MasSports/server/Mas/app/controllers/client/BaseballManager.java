@@ -69,4 +69,8 @@ public class BaseballManager extends FootballController {
     public static Result getTeams(Long idCompetition){
         return ok(callBaseballManager(request().path()));
     }
+
+    public static Result getFixturesDatePaged(Integer idApp, Integer idLanguage, String date, Integer pageSize,Integer page, String timezoneName){
+        return ok(callBaseballManager(request().path()));
+    }
 }
