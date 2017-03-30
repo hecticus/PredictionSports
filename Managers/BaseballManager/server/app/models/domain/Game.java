@@ -409,6 +409,23 @@ public class Game extends Model  {
     }
 
 
+    public ObjectNode toJsonSimpleDateMTM()
+    {
+        ObjectNode json = Json.newObject();
+        json.put("id_game", idGame.toString());
+        json.put("id_league", league.getIdLeague().toString());
+        json.put("date",  new SimpleDateFormat("yyyyMMddhhmmss").format(gameDate).toString()).toString(); // DateAndTime.getDate(new SimpleDateFormat("yyyyMMdd").format(gameDate.toString()), "yyyyMMdd"));
+        json.put("hometeam",homeTeam.toJson());
+        json.put("awayteam",awayTeam.toJson());
+        json.put("home_run",rHome);
+        json.put("away_run",rAway);
+        ObjectNode aux = Json.newObject();
+        Status tmp = Status.convertToFootball(this.status);
+        aux.put("id_status", tmp.getIdStatus());
+        aux.put("name", tmp.getName());
+        json.put("status", aux);
+        return json;
+    }
 
 
 

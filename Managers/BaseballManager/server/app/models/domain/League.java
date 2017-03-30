@@ -152,7 +152,7 @@ public class League extends Model {
 
         if(closestMatch){
             Game match = Game.getClosestMatch(this);
-            obj.put("match", match!=null?match.toJson():null);
+            obj.put("match", match!=null?match.toJsonSimpleDateMTM():null);
         }
         return obj;
     }

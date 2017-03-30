@@ -185,7 +185,7 @@ public class MatchController extends HecticusController {
                         if (fullList != null && !fullList.isEmpty()) {
                             ObjectNode competitionJson = competition.toJsonNoPhases(false);
                             for (int i = 0; i < fullList.size(); i++) {
-                                data.add(fullList.get(i).toJson());
+                                data.add(fullList.get(i).toJsonSimpleDateMTM());
                             }
                             competitionJson.put("fixtures", Json.toJson(data));
                             data.clear();
