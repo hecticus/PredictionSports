@@ -358,6 +358,10 @@ public class Game extends Model  {
     }
 
 
+    public static Game getById(long id){
+        //EbeanServer server = Ebean.getServer("clients");
+        return finder.where().eq("id_game", id).findUnique();
+    }
 
 
     public static List<Game> findAllByCompetitionBetweenDate(Long idCompetition, String minDate, String maxDate){
@@ -374,6 +378,38 @@ public class Game extends Model  {
             return latestGameMatch.get(0);
         return null;
     }
+
+
+
+/*
+    public List<GameMatchEvent> getEventsNoDB(final long idEvent, boolean forward){
+        List<GameMatchEvent> tr = null;
+        try {
+            if(idEvent == 0){
+                tr = events;
+            } else {
+                GameMatchEvent gameMatchEvent = Iterables.find(events, new Predicate<GameMatchEvent>() {
+                    public boolean apply(GameMatchEvent gameMatchEvent) {
+                        return gameMatchEvent.getIdGameMatchEvents().intValue() == idEvent;
+                    }
+                });
+                int eventIndex = events.indexOf(gameMatchEvent);
+                if(forward){
+                    tr = events.subList(eventIndex+1, events.size());
+                } else {
+                    tr = events.subList(0, eventIndex);
+                }
+            }
+        } catch (NoSuchElementException ex){
+            tr = null;
+        }
+        if(tr != null){
+            Collections.sort(tr, forward?new GameMatchEventComparatorDesc():new GameMatchEventComparatorAsc());
+        }
+        return tr;
+    }*/
+
+
 
     public ObjectNode toJson()
     {

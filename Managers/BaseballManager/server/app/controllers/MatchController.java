@@ -8,9 +8,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 //import jdk.nashorn.internal.ir.ObjectNode;
 import models.Config;
-import models.domain.Game;
-import models.domain.League;
-import models.domain.Team;
+import models.domain.*;
 import models.handlers.*;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -206,9 +204,76 @@ public class MatchController extends HecticusController {
             return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
         }
     }
+/*
+
+    public static Result getMinuteToMinuteForCompetition( Integer idCompetition, Long idMatch, Integer idLanguage, Long idEvent, Boolean forward){
+        try {
+            ArrayList<ObjectNode> responseData = new ArrayList();
+            League competition = League.getByID((long)idCompetition);
+            if (competition != null) {
+                Game gameMatch = Game.getById(idMatch);   //competition.getMatch(idMatch);
+                if (gameMatch != null) {
+                    List<Event> events = gameMatch.getEventsNoDB(idEvent, forward);
+                    ObjectNode resp = Json.newObject();
+
+                    resp.put("home_team", gameMatch.getHomeTeam().toJson());
+                    resp.put("home_team_goals", gameMatch.getHrHome());
+                    resp.put("away_team", gameMatch.getAwayTeam().toJson());
+                    resp.put("away_team_goals", gameMatch.getHrAway());
+
+                    //resp.put("status", gameMatch.getStatus().(requestLanguage, app.getLanguage()));
+
+                    ObjectNode aux = Json.newObject();
+                    Status tmp = Status.convertToFootball(gameMatch.getStatus());
+                    //json.put("id_status", tmp.getIdStatus());
+
+                    aux.put("id_status", tmp.getIdStatus());
+                    aux.put("name", tmp.getName());
+                    resp.put("status", aux);
 
 
 
+
+                    if (events != null & !events.isEmpty()) {
+                        Event pivot = events.get(0);
+                        ArrayList<ObjectNode> periodData = new ArrayList<>();
+                        for (Event gameMatchEvent : events) {
+                            if (gameMatchEvent.getPeriod().getIdPeriods() == pivot.getPeriod().getIdPeriods()) {
+                                periodData.add(gameMatchEvent.toJsonNoPeriod(requestLanguage, app.getLanguage()));
+                            } else {
+                                ObjectNode period = Json.newObject();
+                                period.put("period", pivot.getPeriod().toJson());
+                                period.put("events", Json.toJson(periodData));
+                                periodData.clear();
+                                periodData.add(gameMatchEvent.toJsonNoPeriod(requestLanguage, app.getLanguage()));
+                                pivot = gameMatchEvent;
+                                responseData.add(period);
+                            }
+                        }
+                        events.clear();
+                        if (!periodData.isEmpty()) {
+                            ObjectNode period = Json.newObject();
+                            period.put("period", pivot.getPeriod().toJson());
+                            period.put("events", Json.toJson(periodData));
+                            periodData.clear();
+                            responseData.add(period);
+                        }
+
+                    }
+                    resp.put("actions", Json.toJson(responseData));
+                    responseData.clear();
+                    return ok(hecticusResponse(0, "ok", resp));
+                } else {
+                    return notFound(buildBasicResponse(2, "El partido " + idMatch + " no existe"));
+                }
+            } else {
+                return notFound(buildBasicResponse(3, "La competencia " + idCompetition + " no existe, o no esta activa, para el app " + idApp));
+            }
+
+        } catch (Exception ex) {
+            return internalServerError(buildBasicResponse(-1, "ocurrio un error:" + ex.toString()));
+        }
+    }*/
 
 }
 

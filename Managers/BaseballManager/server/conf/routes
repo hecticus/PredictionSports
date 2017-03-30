@@ -16,7 +16,7 @@ GET     /baseballapi/v1/competitions/list                                       
 GET     /baseballapi/v1/matches/competition/date/grouped/:idLeague                                                      controllers.MatchController.getFixturesForCompetitionGroupByDateNoPhase(idLeague: Long)
 
 GET     /baseballapi/v1/team/competition/all/:idLeague                                                                  controllers.TeamsController.getTeams(idLeague: Long)
-
+#GET            /footballapi/v1/matches/mam/next/:idApp/:idCompetition/:idMatch/:idEvent                                 controllers.MatchController.getMinuteToMinuteForCompetition(idApp : Integer, idCompetition: Integer, idMatch : Long, idLanguage : Integer?=405, idEvent: Long, forward: Boolean?=true)
 
 
 GET     /baseballapi/v2/match/:idGameMatch                                                                              controllers.MatchController.getFixturesByID(idGameMatch : Integer)
