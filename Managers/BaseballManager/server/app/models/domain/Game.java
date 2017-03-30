@@ -421,6 +421,8 @@ public class Game extends Model  {
         json.put("away_run",rAway);
         ObjectNode aux = Json.newObject();
         Status tmp = Status.convertToFootball(this.status);
+        json.put("id_status", tmp.getIdStatus());
+
         aux.put("id_status", tmp.getIdStatus());
         aux.put("name", tmp.getName());
         json.put("status", aux);
