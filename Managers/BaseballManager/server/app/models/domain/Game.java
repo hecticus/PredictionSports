@@ -415,7 +415,7 @@ public class Game extends Model  {
         ObjectNode json = Json.newObject();
         json.put("id_game", idGame.toString());
         json.put("id_league", league.getIdLeague().toString());
-        json.put("date", new SimpleDateFormat("yyyyMMddhhmmss").format(gameDate).toString()).toString();
+        json.put("date", new SimpleDateFormat("yyyyMMddHHmmss").format(gameDate).toString()).toString();
         json.put("home_team",awayTeam.toJson());
         json.put("away_team",homeTeam.toJson());
         json.put("home_run",rAway);
@@ -434,7 +434,7 @@ public class Game extends Model  {
         ObjectNode json = Json.newObject();
         json.put("id_game", idGame.toString());
         json.put("id_league", league.getIdLeague().toString());
-        json.put("date",  new SimpleDateFormat("yyyyMMddhhmmss").format(gameDate).toString()).toString(); // DateAndTime.getDate(new SimpleDateFormat("yyyyMMdd").format(gameDate.toString()), "yyyyMMdd"));
+        json.put("date",  new SimpleDateFormat("yyyyMMddHHmmss").format(gameDate).toString()).toString(); // DateAndTime.getDate(new SimpleDateFormat("yyyyMMdd").format(gameDate.toString()), "yyyyMMdd"));
         json.put("home_team",awayTeam.toJson());
         json.put("away_team",homeTeam.toJson());
         json.put("home_run",rAway);
@@ -453,7 +453,7 @@ public class Game extends Model  {
         ObjectNode json = Json.newObject();
         json.put("id_game_matches", idGame.toString());
         json.put("id_league", league.getIdLeague().toString());
-        json.put("date",  new SimpleDateFormat("yyyyMMddhhmmss").format(gameDate).toString()).toString(); // DateAndTime.getDate(new SimpleDateFormat("yyyyMMdd").format(gameDate.toString()), "yyyyMMdd"));
+        json.put("date",  new SimpleDateFormat("yyyyMMddHHmmss").format(gameDate).toString()).toString(); // DateAndTime.getDate(new SimpleDateFormat("yyyyMMdd").format(gameDate.toString()), "yyyyMMdd"));
         json.put("home_team",awayTeam.toJson());
         json.put("away_team",homeTeam.toJson());
         json.put("home_run",rAway);
