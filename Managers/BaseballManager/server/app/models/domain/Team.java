@@ -107,7 +107,7 @@ public class Team extends Model {
         obj.put("name",name);
         obj.put("short_name", name);
         obj.put("abbreviation_name",name);
-        obj.put("team_logo", Config.getString("team-logo-url") + idTeam);
+        obj.put("team_logo", Config.getString("team-logo-url") + idTeam + ".png");
         return obj;
     }
 }
