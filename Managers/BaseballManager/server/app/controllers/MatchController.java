@@ -56,6 +56,8 @@ public class MatchController extends HecticusController {
     public Result getFixturesForCompetitionGroupByDateNoPhase(Long idLeague) {
         try {
             Calendar today = new GregorianCalendar();
+            today.add(Calendar.HOUR_OF_DAY, Config.getInt("server_hour_diff")); // adds one hour
+            today.add(Calendar.MINUTE, Config.getInt("server_minute_diff")); // adds one hour
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             ArrayList<ObjectNode> data = new ArrayList();
             League competition = League.getByID(idLeague);

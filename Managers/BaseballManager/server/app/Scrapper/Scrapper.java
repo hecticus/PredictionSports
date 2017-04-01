@@ -129,8 +129,17 @@ public class Scrapper {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm");
                 Date convertedCurrentDate = sdf.parse(obj.get("time_date").asText());
 
+
+
+
                 Calendar cal2 = Calendar.getInstance(); // creates calendar
+
+
+
                 cal2.setTime(convertedCurrentDate); // sets calendar time/date
+                cal2.add(Calendar.HOUR_OF_DAY, (obj.get("ampm").asText().equals("PM")?12:0) ); // pone doce horas adicionales si es pm
+
+                //esto cuadra las horas para ser exacto and stuff
                 cal2.add(Calendar.HOUR_OF_DAY, Config.getInt("hour_diff")); // adds one hour
                 cal2.add(Calendar.MINUTE, Config.getInt("minute_diff")); // adds one hour
 
