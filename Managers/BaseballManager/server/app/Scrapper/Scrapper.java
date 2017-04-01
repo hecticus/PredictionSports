@@ -6,6 +6,7 @@ import akka.stream.ActorMaterializerSettings;
 import com.fasterxml.jackson.databind.JsonNode;
 //import com.google.inject.Inject;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import models.Config;
 import models.domain.Game;
 import models.domain.TeamHasLeague;
 import models.handlers.*;
@@ -39,9 +40,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class Scrapper {
 
-    public int number_days = 60;
+    public int number_days = 3;
 
     public void ScrapperDays() throws IOException {
+        //Scrapper(DateUtil(15));
         for (int i = 0 ; i< number_days; i++)
         {
             Scrapper(DateUtil(i));
@@ -54,8 +56,8 @@ public class Scrapper {
         java.util.Date date= new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.add(Calendar.HOUR,  -24 * offset);
-        cal.add(Calendar.HOUR,  24 * 15);
+        cal.add(Calendar.HOUR,  24 * offset);
+        cal.add(Calendar.HOUR,  -24 );
         //cal.add(Calendar.MONTH, 2);
         return cal.getTime();
         //int month = cal.get(Calendar.MONTH);
@@ -108,7 +110,8 @@ public class Scrapper {
                 Game current_game =  GameHandler.CheckAndGet(obj.get("id").asText());
                 current_game.setIdentifier(obj.get("id").asText());
                 // Obterner y/o obtener Liga
-                current_game.setLeague(LeagueHandler.CheckAndInsert(obj.get("league").asText())) ;
+                //current_game.setLeague(LeagueHandler.CheckAndInsert(obj.get("league").asText())) ;
+                current_game.setLeague(LeagueHandler.CheckAndInsert("MLB")) ;
 
                 /// Obterner y/o obtener el Estadio el Venue
                 current_game.setVenue(VenueHandler.CheckAndInsert(obj.get("venue_id").asLong(), obj.get("venue").asText())) ;
@@ -125,7 +128,14 @@ public class Scrapper {
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm");
                 Date convertedCurrentDate = sdf.parse(obj.get("time_date").asText());
-                current_game.setDate(convertedCurrentDate);
+
+                Calendar cal2 = Calendar.getInstance(); // creates calendar
+                cal2.setTime(convertedCurrentDate); // sets calendar time/date
+                cal2.add(Calendar.HOUR_OF_DAY, Config.getInt("hour_diff")); // adds one hour
+                cal2.add(Calendar.MINUTE, Config.getInt("minute_diff")); // adds one hour
+
+
+                current_game.setDate(cal2.getTime());
                 if(current_game.getStatus().getIdStatus() > 1) {
                     lineScore = obj.get("linescore");
                     current_game.setHr(new LineScoreHandler(lineScore.get("hr")));
