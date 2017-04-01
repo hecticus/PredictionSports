@@ -1511,13 +1511,18 @@ public class FootballClients extends Clients {
                         List<LeaderboardGlobal> leaderboardGlobalList = client.getLeaderboardGlobal();
                         for (LeaderboardGlobal leaderboardGlobal : leaderboardGlobalList) {
                             points += leaderboardGlobal.getScore();
-                            correct += leaderboardGlobal.getCorrectBets();
+                            correct += leaderboardGlobal.getCorrectBets(); 
                         }
                     }
 
                     response.put("points", points);
                     response.put("correct_bets", correct);
-                    response.put("competitions", tmp);
+
+                    if(getFromQueryString("new") != null)
+                        response.put("competitions", tmp);
+                    else
+                        response.put("competitions", aux);
+
 
                     return ok(buildBasicResponse(0, "OK", response));
                 } else {
