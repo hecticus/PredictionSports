@@ -9,10 +9,10 @@ import models.domain.LeagueType;
 public class LeagueTypeHandler {
 
 
-    public static LeagueType CheckAndInsert(String name) {
-        LeagueType tm = LeagueType.getByName(name);
+    public static LeagueType CheckAndInsert(int name) {
+        LeagueType tm = LeagueType.getByID(name);
         if(tm == null) {
-            tm = new LeagueType(name);
+            tm = new LeagueType("");
             tm.save();
         }
         return tm;

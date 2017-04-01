@@ -73,10 +73,11 @@ public class League extends Model {
         this.show = show;
     }
 
+
     public League(String name) {
         this.name = name;
         this.status = 0;
-        this.leagueType = LeagueTypeHandler.CheckAndInsert(name);
+        this.leagueType = LeagueTypeHandler.CheckAndInsert(1);
     }
 
 

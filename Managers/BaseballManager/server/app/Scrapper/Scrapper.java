@@ -136,7 +136,7 @@ public class Scrapper {
 
 
                 current_game.setDate(cal2.getTime());
-                if(current_game.getStatus().getIdStatus() > 1) {
+                if(current_game.getStatus().getIdStatus() > 1  && (current_game.getStatus().getIdStatus() < 4)) {
                     lineScore = obj.get("linescore");
                     current_game.setHr(new LineScoreHandler(lineScore.get("hr")));
                     current_game.setE(new LineScoreHandler(lineScore.get("e")));
@@ -154,7 +154,7 @@ public class Scrapper {
                 TeamHasLeagueHandler.CheckAndInsert(current_game.getHomeTeam().getIdTeam(), current_game.getLeague().getIdLeague());
                 TeamHasLeagueHandler.CheckAndInsert(current_game.getAwayTeam().getIdTeam(), current_game.getLeague().getIdLeague());
 
-                if(current_game.getStatus().getIdStatus() > 1) {
+                if(current_game.getStatus().getIdStatus() > 1 && (current_game.getStatus().getIdStatus() < 4)) {
                         Innings =  obj.get("linescore").get("inning");
                         for(int i=0 ; i < Innings.size(); i++) {
                             Inn = Innings.get(i);
@@ -166,7 +166,7 @@ public class Scrapper {
 
 
                     //chequeamos los eventow de este partido en particular
-                    evt.Scrapper(current_game);
+                    //evt.Scrapper(current_game);
                 }
 
             }
@@ -174,7 +174,7 @@ public class Scrapper {
         catch(Exception e)
         {
             //ws.close();
-            System.out.println(e.getCause());
+            e.printStackTrace();
             ws.close();
         }
         ws.close();

@@ -73,7 +73,8 @@ public class TeamHasLeague extends Model {
 
     public static TeamHasLeague getByValues(long idTeam, long idLeague){
         //EbeanServer server = Ebean.getServer("clients");
-        return finder.where().eq("id_team", idTeam).eq("id_league", idLeague).findUnique();
+        List<TeamHasLeague> aux = finder.where().eq("id_team", idTeam).eq("id_league", idLeague).findList();
+        return (aux.size() > 0?  aux.get(0):null);//.findUnique();
     }
 
     public static List<Team> getTeamsByLeague(long idLeague){

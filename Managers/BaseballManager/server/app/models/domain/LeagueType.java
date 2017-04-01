@@ -86,17 +86,21 @@ public class LeagueType extends Model  {
     public static Model.Finder<Long, LeagueType> finder = new Model.Finder<Long, LeagueType>(LeagueType.class);
 
     public LeagueType(String name) {
-        this.name = name;
+        this.name = "";
         this.status = 1;
         this.type = 1;
         this.sort = 0;
         this.comp_logo = "";
-
     }
 
     public static LeagueType getByName(String name) {
         //EbeanServer server = Ebean.getServer("clients");
         return finder.where().eq("name", name).findUnique();
+    }
+
+    public static LeagueType getByID(int ID) {
+        //EbeanServer server = Ebean.getServer("clients");
+        return finder.where().eq("id_league_type", ID).findUnique();
     }
 
 
