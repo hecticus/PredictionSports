@@ -61,7 +61,7 @@ public class MatchController extends HecticusController {
             League competition = League.getByID(idLeague);
             if (competition != null) {
                 int gamesLimit = Config.getInt("game-match-limit");
-                List<Game> game = Game.finder.where().eq("league", competition).ge("game_date", today.getTime()).setMaxRows(gamesLimit).orderBy("game_date asc").findList();
+                List<Game> game = Game.finder.where().eq("league", competition).ne("status_id_status", 6).ne("status_id_status", 5).ge("game_date", today.getTime()).setMaxRows(gamesLimit).orderBy("game_date asc").findList();
                 if (game != null && !game.isEmpty()) {
                     ArrayList<ObjectNode> fixtures = new ArrayList<ObjectNode>();
                     String pivot = new SimpleDateFormat("yyyyMMdd").format(game.get(0).getDate()).toString();
