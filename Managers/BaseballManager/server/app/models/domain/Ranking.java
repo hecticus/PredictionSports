@@ -44,6 +44,12 @@ public class Ranking extends Model  {
     @Constraints.Required
     private int runAgainst;
 
+    @Constraints.Required
+    private float pct;
+
+    @Constraints.Required
+    private float gb;
+
     public static Finder<Long, Ranking> finder = new Finder<Long, Ranking>(Ranking.class);
 
     public Long getIdRanking() {
@@ -118,6 +124,29 @@ public class Ranking extends Model  {
         this.runAgainst = runAgainst;
     }
 
+    public int getRunFor() {
+        return runFor;
+    }
+
+    public void setRunFor(int runFor) {
+        this.runFor = runFor;
+    }
+
+    public float getPct() {
+        return pct;
+    }
+
+    public void setPct(float pct) {
+        this.pct = pct;
+    }
+
+    public float getGb() {
+        return gb;
+    }
+
+    public void setGb(float gb) {
+        this.gb = gb;
+    }
 
     public Ranking() {
     }
@@ -141,6 +170,8 @@ public class Ranking extends Model  {
         node.put("goal_against",runAgainst);
         node.put("nivel",0);
         node.put("orden",0);
+        node.put("pct",0.000);
+        node.put("gb",0.0);
         return node;
     }
 
