@@ -1,7 +1,9 @@
 package models.domain;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.data.validation.Constraints;
+import play.libs.Json;
 
 import javax.persistence.*;
 
@@ -88,5 +90,14 @@ public class Inning extends Model  {
     public static Inning getByNumberAndGame(Game game, int InningNumber){
         //EbeanServer server = Ebean.getServer("clients");
         return finder.where().eq("game_id_game", game.getIdGame()).eq("inning_number", InningNumber).findUnique();
+    }
+
+
+    public ObjectNode toJson() {
+        ObjectNode obj = Json.newObject();
+        obj.put("id_periods",inningNumber);
+        obj.put("name",inningNumber);
+        obj.put("short_name",inningNumber);
+        return obj;
     }
 }

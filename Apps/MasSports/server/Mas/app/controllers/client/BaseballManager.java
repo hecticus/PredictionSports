@@ -73,4 +73,8 @@ public class BaseballManager extends FootballController {
     public static Result getFixturesDatePaged(String date, Integer pageSize,Integer page, String timezoneName){
         return ok(callBaseballManager(request().path()));
     }
+
+    public static Result getRankingsForPhase(Integer idCompetition){
+        return ok(callBaseballManager(request().path()));
+    }
 }
