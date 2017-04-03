@@ -170,8 +170,8 @@ public class Ranking extends Model  {
         node.put("goal_against",runAgainst);
         node.put("nivel",0);
         node.put("orden",0);
-        node.put("pct",pct);
-        node.put("gb",gb);
+        node.put("pct",String.format("%.4f", pct));
+        node.put("gb",String.format("%.2f", gb));
         return node;
     }
 
