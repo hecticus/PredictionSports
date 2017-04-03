@@ -153,7 +153,7 @@ public class Ranking extends Model  {
 
 
     public static List<Ranking> getRanking() {
-        return finder.where().findList();
+        return finder.where().orderBy("pct desc").findList();
     }
 
     public ObjectNode toJsonPhaseID() {
