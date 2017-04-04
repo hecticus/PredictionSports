@@ -40,7 +40,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Scrapper {
 
-    public int number_days = 3;
+    public int number_days = 5;
 
     public void ScrapperDays() throws IOException {
         //Scrapper(DateUtil(15));
@@ -117,10 +117,10 @@ public class Scrapper {
                 current_game.setVenue(VenueHandler.CheckAndInsert(obj.get("venue_id").asLong(), obj.get("venue").asText())) ;
 
                 /// Obterner y/o obtener el Equipo de casa
-                current_game.setHomeTeam(TeamHandler.CheckAndInsert(obj.get("home_team_id").asLong(), obj.get("home_team_name").asText(), obj.get("home_code").asText(), obj.get("home_team_city").asText()));
+                current_game.setHomeTeam(TeamHandler.CheckAndInsert(obj.get("home_team_id").asLong(), obj.get("home_team_name").asText(), obj.get("home_code").asText(), obj.get("home_team_city").asText(),LeagueHandler.CheckAndInsert(obj.get("home_division").asText())));
 
                 /// Obterner y/o obtener el Equipo visitante
-                current_game.setAwayTeam(TeamHandler.CheckAndInsert(obj.get("away_team_id").asLong(), obj.get("away_team_name").asText(), obj.get("away_code").asText(), obj.get("away_team_city").asText()));
+                current_game.setAwayTeam(TeamHandler.CheckAndInsert(obj.get("away_team_id").asLong(), obj.get("away_team_name").asText(), obj.get("away_code").asText(), obj.get("away_team_city").asText(), LeagueHandler.CheckAndInsert(obj.get("away_division").asText())));
 
                 current_game.setStatus(StatusHandler.CheckAndInsert(obj.get("status").get("status").asText())); ;
 
