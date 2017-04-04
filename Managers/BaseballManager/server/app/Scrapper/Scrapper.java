@@ -183,7 +183,7 @@ public class Scrapper {
         catch(Exception e)
         {
             //ws.close();
-            e.printStackTrace();
+            e.printStackTrace(); 
             ws.close();
         }
         ws.close();
