@@ -92,7 +92,7 @@ public class League extends Model {
         return finder.where().eq("id_league", id).findUnique();
     }
     public static List<League> getActiveLeagues() {
-        return finder.where().eq("status", 1).orderBy("name desc").findList();
+        return finder.where().eq("status", 1).findList();
     }
 
 
