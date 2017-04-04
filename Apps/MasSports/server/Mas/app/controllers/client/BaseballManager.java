@@ -77,4 +77,8 @@ public class BaseballManager extends FootballController {
     public static Result getRankingsForPhase(Integer idCompetition){
         return ok(callBaseballManager(request().path()));
     }
+
+    public static Result getMinuteToMinuteForCompetition( Integer idCompetition, Long idMatch,  Long idEvent, Boolean forward){
+        return ok(callBaseballManager(request().path()));
+    }
 }

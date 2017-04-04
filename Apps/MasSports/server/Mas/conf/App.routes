@@ -318,6 +318,10 @@ GET            /baseballapi/v1/team/competition/all/:idCompetition              
 GET            /baseballapi/v1/matches/date/paged/:date                                                        controllers.client.BaseballManager.getFixturesDatePaged(date : String, pageSize: Integer?=0, page: Integer?=0, timezoneName : String ?= "")
 GET            /baseballapi/v1/competitions/ranking/:idCompetition                                              controllers.client.BaseballManager.getRankingsForPhase(idCompetition: Integer)
 
+GET            /baseballapi/v1/matches/mam/:idCompetition/:idMatch                                      controllers.client.BaseballManager.getMinuteToMinuteForCompetition(idCompetition: Integer, idMatch : Long, idEvent: Long?=0, forward: Boolean?=false)
+GET            /baseballapi/v1/matches/mam/next/:idCompetition/:idMatch/:idEvent                        controllers.client.BaseballManager.getMinuteToMinuteForCompetition(idCompetition: Integer, idMatch : Long, idEvent: Long, forward: Boolean?=true)
+GET            /baseballapi/v1/matches/mam/previous/:idCompetition/:idMatch/:idEvent                    controllers.client.BaseballManager.getMinuteToMinuteForCompetition(idCompetition: Integer, idMatch : Long, idEvent: Long, forward: Boolean?=false)
+#
 
 #MaM
 GET            /footballapi/v1/matches/mam/:idApp/:idCompetition/:idMatch                                      controllers.client.FootballManager.getMinuteToMinuteForCompetition(idApp : Integer, idCompetition: Integer, idMatch : Long, idLanguage : Integer?=300, idEvent: Long?=0, forward: Boolean?=false)
