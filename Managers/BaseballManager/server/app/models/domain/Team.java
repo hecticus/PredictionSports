@@ -41,6 +41,13 @@ public class Team extends Model {
     @Column(nullable = false)
     private String city;
 
+
+
+    @Constraints.Required
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private League league;
+
     @OneToMany(mappedBy = "homeTeam", cascade = CascadeType.ALL)
     private List<Game> homeGames = new ArrayList<>();
 
@@ -81,6 +88,14 @@ public class Team extends Model {
         this.shortCode = shortCode;
     }
 
+    public League getLeague() {
+        return league;
+    }
+
+    public void setLeague(League league) {
+        this.league = league;
+    }
+
     public Team() {
     }
 
@@ -89,6 +104,14 @@ public class Team extends Model {
         this.idTeam = idTeam;
         this.name = name;
         this.shortCode = shortCode;
+    }
+
+    public Team(String city, Long idTeam, String name, String shortCode, League league) {
+        this.city = city;
+        this.idTeam = idTeam;
+        this.name = name;
+        this.shortCode = shortCode;
+        this.league = league;
     }
 
     public static Team getByShortCode(String shortCode){
@@ -107,6 +130,7 @@ public class Team extends Model {
         obj.put("name",name);
         obj.put("short_name", name);
         obj.put("abbreviation_name",name);
+        obj.put("league",league.getIdLeague());
         obj.put("team_logo", Config.getString("team-logo-url") + idTeam + ".png");
         return obj;
     }

@@ -50,6 +50,13 @@ public class Ranking extends Model  {
     @Constraints.Required
     private float gb;
 
+
+
+    @Constraints.Required
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private League league;
+
     public static Finder<Long, Ranking> finder = new Finder<Long, Ranking>(Ranking.class);
 
     public Long getIdRanking() {
@@ -148,12 +155,20 @@ public class Ranking extends Model  {
         this.gb = gb;
     }
 
+    public League getLeague() {
+        return league;
+    }
+
+    public void setLeague(League league) {
+        this.league = league;
+    }
+
     public Ranking() {
     }
 
 
-    public static List<Ranking> getRanking() {
-        return finder.where().orderBy("pct desc").findList();
+    public static List<Ranking> getRanking(long idCompetition) {
+        return finder.where().eq("league_id_league", idCompetition).orderBy("pct desc").findList();
     }
 
     public ObjectNode toJsonPhaseID() {

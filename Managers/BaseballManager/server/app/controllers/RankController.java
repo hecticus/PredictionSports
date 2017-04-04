@@ -29,7 +29,7 @@ public class RankController extends HecticusController {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
                 String formattedToday = simpleDateFormat.format(today.getTime());
 
-                ranks = Ranking.getRanking();
+                ranks = Ranking.getRanking((long)idCompetition);
                 if (ranks != null && !ranks.isEmpty()) {
                     ArrayList rankingObjs = new ArrayList();
                     ArrayList<ObjectNode> group = new ArrayList<>();
