@@ -1,9 +1,12 @@
 package models.domain;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.data.validation.Constraints;
+import play.libs.Json;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by palenge on 12/30/16.
@@ -135,6 +138,29 @@ public class Action extends Model {
     public static Action getByGuid(String guid){
         //EbeanServer server = Ebean.getServer("clients");
         return finder.where().eq("guid", guid).findUnique();
+    }
+
+
+    public static List<Action> getListbyGame(long idGame)
+    {
+        //return finder.where().eq("id_league", id).findList();
+        return finder.fetch("inning").where().eq("inning.ig_game", idGame).findList();
+
+    }
+
+
+    public ObjectNode toJsonNoInning(long IdGame) {
+        ObjectNode json = Json.newObject();
+        json.put("id_game_match_events",idAction);
+        json.put("id_game_matches", IdGame);
+        json.put("action",event.toJson());
+        json.put("teams","TEsting");
+        json.put("player_a","Pepe1");
+        json.put("player_b","pepe2");
+        json.put("action_minute",inning.getInningNumber());
+        json.put("date","20170401010101");
+        json.put("_sort",1);
+        return json;
     }
 }
 

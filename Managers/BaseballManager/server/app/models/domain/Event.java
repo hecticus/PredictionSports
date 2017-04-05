@@ -1,7 +1,9 @@
 package models.domain;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.data.validation.Constraints;
+import play.libs.Json;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -60,7 +62,13 @@ public class Event extends Model{
         //EbeanServer server = Ebean.getServer("clients");
         return finder.where().eq("name", name).findUnique();
     }
-    
 
+    public ObjectNode toJson() {
+        ObjectNode node = Json.newObject();
+        node.put("id_action",idEvent);
+        node.put("mnemonic","bsb");
+        node.put("description",name);
+        return node;
+    }
 
 }
