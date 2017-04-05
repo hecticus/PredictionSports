@@ -379,8 +379,8 @@ public class Game extends Model  {
     }
 
 
-
 /*
+
     public List<GameMatchEvent> getEventsNoDB(final long idEvent, boolean forward){
         List<GameMatchEvent> tr = null;
         try {
@@ -406,9 +406,9 @@ public class Game extends Model  {
             Collections.sort(tr, forward?new GameMatchEventComparatorDesc():new GameMatchEventComparatorAsc());
         }
         return tr;
-    }*/
+    }
 
-
+*/
 
     public ObjectNode toJson()
     {

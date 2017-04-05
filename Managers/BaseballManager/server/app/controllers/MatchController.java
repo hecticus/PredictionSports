@@ -215,7 +215,8 @@ public class MatchController extends HecticusController {
             if (competition != null) {
                 Game gameMatch = Game.getById(idMatch);   //competition.getMatch(idMatch);
                 if (gameMatch != null) {
-                    List<Action> events = gameMatch.getEventsNoDB(idEvent, forward);
+                    //List<Action> events = gameMatch.getEventsNoDB(idEvent, forward);
+                    List<Action> events = null;
                     ObjectNode resp = Json.newObject();
 
                     resp.put("home_team", gameMatch.getHomeTeam().toJson());
