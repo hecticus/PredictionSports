@@ -693,6 +693,10 @@ public class FootballClients extends Clients {
                         Date today = new Date(System.currentTimeMillis());
                         client.getClientsBet();
 
+                        if (sportId == 2) 
+                            gameDate.add(Calendar.HOUR_OF_DAY, -5); 
+                        
+
                         if (gameDate.getTime().after(today)) {
                             clientBets = client.getBet(idTournament, idPhase, idGameMatch, sportId);
                             if (clientBets != null) {
