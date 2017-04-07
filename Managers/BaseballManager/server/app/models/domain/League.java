@@ -35,6 +35,8 @@ public class League extends Model {
     @JoinColumn(nullable = false)
     private LeagueType leagueType;
 
+    private int orderby;
+
 
     @OneToMany(mappedBy="league", cascade = CascadeType.ALL)
     private List<Game> matches;
@@ -73,6 +75,14 @@ public class League extends Model {
         this.show = show;
     }
 
+    public int getOrderBy() {
+        return orderby;
+    }
+
+    public void setOrderBy(int orderby) {
+        this.orderby = orderby;
+    }
+
 
     public League(String name) {
         this.name = name;
@@ -92,7 +102,7 @@ public class League extends Model {
         return finder.where().eq("id_league", id).findUnique();
     }
     public static List<League> getActiveLeagues() {
-        return finder.where().eq("status", 1).findList();
+        return finder.where().eq("status", 1).orderBy("orderby asc").findList();
     }
 
 
