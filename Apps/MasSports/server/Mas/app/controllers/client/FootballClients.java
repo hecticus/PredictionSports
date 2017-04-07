@@ -694,7 +694,7 @@ public class FootballClients extends Clients {
                         client.getClientsBet();
 
                         if (sportId == 2) 
-                            gameDate.add(Calendar.HOUR_OF_DAY, -5); 
+                            gameDate.add(Calendar.HOUR_OF_DAY, 5); 
                         
 
                         if (gameDate.getTime().after(today)) {
