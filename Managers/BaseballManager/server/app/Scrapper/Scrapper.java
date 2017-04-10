@@ -40,14 +40,18 @@ import java.util.concurrent.TimeUnit;
  */
 public class Scrapper {
 
-    public int number_days = 5;
+    public int number_days = 6;
 
     public void ScrapperDays() throws IOException {
+        //RankinrCreator rg = new RankinrCreator();
         //Scrapper(DateUtil(15));
         for (int i = 0 ; i< number_days; i++)
         {
             Scrapper(DateUtil(i));
         }
+
+        RankinrCreator.executeRanking();
+
     }
 
 
