@@ -48,7 +48,7 @@ public class Scrapper {
     public void ScrapperDays() throws IOException {
         Thread t = new Thread() {
             public void run() {
-                Mailer.SendError("Inicia el Scrapper MLB","Otro Scrapper");
+               // Mailer.SendError("Inicia el Scrapper MLB","Otro Scrapper");
                 int daysAfter = Config.getInt("days_after");
 
                 for (int i = 1 ; i< daysAfter; i++)
