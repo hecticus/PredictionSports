@@ -46,33 +46,26 @@ public class Scrapper {
     public int number_days = 6;
 
     public void ScrapperDays() throws IOException {
-        //RankinrCreator rg = new RankinrCreator();
-        //Scrapper(DateUtil(15));
-        //Mailer m = new Mailer();
-        //m.sendEmail();
+        Thread t = new Thread() {
+            public void run() {
+                Mailer.SendError("Inicia el Scrapper MLB","Otro Scrapper");
+                int daysAfter = Config.getInt("days_after");
 
-        //MailerPlugin p = new MailerPlugin();
+                for (int i = 1 ; i< daysAfter; i++)
+                {
+                    try {
+                        Scrapper(DateUtil(i));
+                    }catch(Exception e){
+                        Mailer.SendError("Error Realizando Scrapper",e.getCause().getMessage());
+                    }
+                }
 
-        /*
-        val mail = use[MailerPlugin].email
-        mail.setSubject(&quot;mailer test&quot;)
-        mail.setRecipient(&quot;myfriend@gmail.com&quot;)
-        mail.send(&quot;Hello, this is a test. &quot;)
-        */
-        Mailer.SendError("Inicia el Scrapper MLB","Otro Scrapper");
+                Mailer.SendError("Ejecutando Ranking","Otro Ranking");
 
-
-        int daysAfter = Config.getInt("days_after");
-
-        for (int i = 1 ; i< daysAfter; i++)
-        {
-            Scrapper(DateUtil(i));
-        }
-
-        Mailer.SendError("Ejecutando Ranking","Otro Ranking");
-
-        RankinrCreator.executeRanking();
-
+                RankinrCreator.executeRanking();
+            }
+        };
+        t.start();
     }
 
 
