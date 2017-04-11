@@ -12,6 +12,8 @@ import models.domain.TeamHasLeague;
 import models.handlers.*;
 import org.asynchttpclient.AsyncHttpClientConfig;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
+import play.libs.mailer.Email;
+import play.libs.mailer.MailerPlugin;
 import play.libs.ws.WSResponse;
 //import scala.util.parsing.json.JSONArray;
 //import scala.util.parsing.json.JSONObject;
@@ -25,6 +27,7 @@ import java.net.URL;
 import play.libs.ws.ahc.AhcWSClient;
 import play.mvc.*;
 import play.libs.ws.*;
+import utils.Mailer;
 
 import javax.inject.Inject;
 import java.text.DateFormat;
@@ -45,10 +48,28 @@ public class Scrapper {
     public void ScrapperDays() throws IOException {
         //RankinrCreator rg = new RankinrCreator();
         //Scrapper(DateUtil(15));
-        for (int i = 0 ; i< number_days; i++)
+        //Mailer m = new Mailer();
+        //m.sendEmail();
+
+        //MailerPlugin p = new MailerPlugin();
+
+        /*
+        val mail = use[MailerPlugin].email
+        mail.setSubject(&quot;mailer test&quot;)
+        mail.setRecipient(&quot;myfriend@gmail.com&quot;)
+        mail.send(&quot;Hello, this is a test. &quot;)
+        */
+        Mailer.SendError("Inicia el Scrapper MLB","Otro Scrapper");
+
+
+        int daysAfter = Config.getInt("days_after");
+
+        for (int i = 1 ; i< daysAfter; i++)
         {
             Scrapper(DateUtil(i));
         }
+
+        Mailer.SendError("Ejecutando Ranking","Otro Ranking");
 
         RankinrCreator.executeRanking();
 
@@ -57,15 +78,18 @@ public class Scrapper {
 
     public Date DateUtil(int offset)
     {
+        int daysBefore = Config.getInt("days_before");
+
         java.util.Date date= new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.HOUR,  24 * offset);
-        cal.add(Calendar.HOUR,  -24 );
+        cal.add(Calendar.HOUR,  -24 * daysBefore);
         //cal.add(Calendar.MONTH, 2);
         return cal.getTime();
         //int month = cal.get(Calendar.MONTH);
     }
+
     public void  Scrapper(Date date) throws IOException {
 
         AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
@@ -188,6 +212,7 @@ public class Scrapper {
         }
         catch(Exception e)
         {
+            Mailer.SendError("Error Realizando Scrapper",e.getCause().getMessage());
             //ws.close();
             e.printStackTrace();
             ws.close();

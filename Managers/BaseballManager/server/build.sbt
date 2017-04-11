@@ -14,7 +14,8 @@ libraryDependencies ++= Seq(
   javaWs,
   specs2 % Test,
   "mysql" % "mysql-connector-java" % "5.1.38",
-  "org.modelmapper" % "modelmapper" % "0.7.7"
+  "org.modelmapper" % "modelmapper" % "0.7.7",
+  "com.typesafe.play" %% "play-mailer" % "5.0.0"
 )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
