@@ -186,6 +186,7 @@ public class Scrapper {
 
 
                 //if(current_game.getStatus().getIdStatus() > 1 && (current_game.getStatus().getIdStatus() < 4)) {
+                /*
                     Innings = obj.get("linescore").get("inning");
                     for (int i = 0; i < Innings.size(); i++) {
                         try {
@@ -197,9 +198,11 @@ public class Scrapper {
                         }
                     }
                 //}
+                                    EventScrapper evt = new EventScrapper();
+
+                */
 
 
-                    EventScrapper evt = new EventScrapper();
 
 
                     //chequeamos los eventow de este partido en particular
