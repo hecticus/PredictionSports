@@ -43,29 +43,26 @@ import java.util.concurrent.TimeUnit;
  */
 public class Scrapper {
 
-    public int number_days = 6;
+    public int number_days = 2;
 
     public void ScrapperDays() throws IOException {
-        Thread t = new Thread() {
-            public void run() {
-               // Mailer.SendError("Inicia el Scrapper MLB","Otro Scrapper");
-                int daysAfter = Config.getInt("days_after");
 
-                for (int i = 0 ; i< daysAfter; i++)
-                {
-                    try {
-                        Scrapper(DateUtil(i));
-                    }catch(Exception e){
-                        Mailer.SendError("Error Realizando Scrapper",e.getCause().getMessage());
-                    }
-                }
+        int daysAfter = Config.getInt("days_after");
+        Mailer.SendError("Ejecutando Ranking para " + daysAfter,"Otro Ranking");
 
-                Mailer.SendError("Ejecutando Ranking","Otro Ranking");
-
-                RankinrCreator.executeRanking();
+        for (int i = 0 ; i< daysAfter; i++)
+        {
+            try {
+                Scrapper(DateUtil(i));
+            }catch(Exception e){
+                Mailer.SendError("Error Realizando Scrapper",e.getCause().getMessage());
             }
-        };
-        t.start();
+        }
+
+        Mailer.SendError("Ejecutando Ranking","Otro Ranking");
+
+        RankinrCreator.executeRanking();
+
     }
 
 
