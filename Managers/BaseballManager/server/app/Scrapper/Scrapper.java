@@ -51,7 +51,7 @@ public class Scrapper {
                // Mailer.SendError("Inicia el Scrapper MLB","Otro Scrapper");
                 int daysAfter = Config.getInt("days_after");
 
-                for (int i = 1 ; i< daysAfter; i++)
+                for (int i = 0 ; i< daysAfter; i++)
                 {
                     try {
                         Scrapper(DateUtil(i));
