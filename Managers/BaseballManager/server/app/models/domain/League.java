@@ -135,6 +135,7 @@ public class League extends Model {
         obj.put("show",show);
         obj.put("status",status);
         obj.put("competiton_type", leagueType.getJson()); //No tenemos aun este dato
+        obj.put("orderby", orderby); //No tenemos aun este dato
 
         if(closestMatch){
             Game match = Game.getClosestMatch(this);
