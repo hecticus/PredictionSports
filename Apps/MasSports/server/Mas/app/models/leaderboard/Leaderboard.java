@@ -34,12 +34,14 @@ public class Leaderboard extends HecticusModel{
 
     public static Model.Finder<Integer, Leaderboard> finder = new Model.Finder<Integer, Leaderboard>(Integer.class, Leaderboard.class);
 
-    public Leaderboard(Client client, Integer idTournament, Integer idPhase, Integer score, Integer correctBets) {
+    public Leaderboard(Client client, Integer idTournament, Integer idPhase, Integer score, Integer correctBets, Integer sportId) {
         this.client = client;
         this.idTournament = idTournament;
         this.score = score;
         this.idPhase = idPhase;
         this.correctBets = correctBets;
+        this.sportId = sportId;
+
     }
 
     public Long getIdLeaderboard() {
@@ -137,7 +139,7 @@ public class Leaderboard extends HecticusModel{
         ObjectNode objNode = Json.newObject();
         objNode.put("id_client", client.getIdClient());
         String nickname = client.getNickname();
-        objNode.put("client", nickname==null?"Anônimo":nickname);
+        objNode.put("client", nickname==null?"Anonimo":nickname);
         objNode.put("score", score);
         objNode.put("hits", correctBets);
         objNode.put("sport_id", sportId);
