@@ -12,8 +12,8 @@ import models.domain.TeamHasLeague;
 import models.handlers.*;
 import org.asynchttpclient.AsyncHttpClientConfig;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
-import play.libs.mailer.Email;
-import play.libs.mailer.MailerPlugin;
+//import play.libs.mailer.Email;
+//import play.libs.mailer.MailerPlugin;
 import play.libs.ws.WSResponse;
 //import scala.util.parsing.json.JSONArray;
 //import scala.util.parsing.json.JSONObject;
@@ -48,14 +48,15 @@ public class Scrapper {
     public void ScrapperDays() throws IOException {
 
         int daysAfter = Config.getInt("days_after");
-        Mailer.SendError("Ejecutando Ranking para " + daysAfter,"Otro Ranking");
+        //Mailer.SendError("Ejecutando Ranking para " + daysAfter,"Otro Ranking");
 
         for (int i = 0 ; i< daysAfter; i++)
         {
             try {
                 Scrapper(DateUtil(i));
             }catch(Exception e){
-                Mailer.SendError("Error Realizando Scrapper",e.getCause().getMessage());
+                e.printStackTrace();
+                //Mailer.SendError("Error Realizando Scrapper",e.getCause().getMessage());
             }
         }
 
@@ -183,12 +184,19 @@ public class Scrapper {
                 TeamHasLeagueHandler.CheckAndInsert(current_game.getHomeTeam().getIdTeam(), current_game.getLeague().getIdLeague());
                 TeamHasLeagueHandler.CheckAndInsert(current_game.getAwayTeam().getIdTeam(), current_game.getLeague().getIdLeague());
 
-                if(current_game.getStatus().getIdStatus() > 1 && (current_game.getStatus().getIdStatus() < 4)) {
-                        Innings =  obj.get("linescore").get("inning");
-                        for(int i=0 ; i < Innings.size(); i++) {
+
+                //if(current_game.getStatus().getIdStatus() > 1 && (current_game.getStatus().getIdStatus() < 4)) {
+                    Innings = obj.get("linescore").get("inning");
+                    for (int i = 0; i < Innings.size(); i++) {
+                        try {
                             Inn = Innings.get(i);
-                            current_game.addInning(InningHandler.CheckAndInsert(current_game, i+1, Inn.hasNonNull("home") ? Inn.get("home").asInt(): 0, Inn.hasNonNull("away") ? Inn.get("away").asInt(): 0));
+                            if (Inn != null)
+                                current_game.addInning(InningHandler.CheckAndInsert(current_game, i + 1, Inn.hasNonNull("home") ? Inn.get("home").asInt() : 0, Inn.hasNonNull("away") ? Inn.get("away").asInt() : 0));
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
+                    }
+                //}
 
 
                     EventScrapper evt = new EventScrapper();
@@ -196,13 +204,12 @@ public class Scrapper {
 
                     //chequeamos los eventow de este partido en particular
                     //evt.Scrapper(current_game);
-                }
 
             }
         }
         catch(Exception e)
         {
-            Mailer.SendError("Error Realizando Scrapper",e.getCause().getMessage());
+            //Mailer.SendError("Error Realizando Scrapper",e.getCause().getMessage());
             //ws.close();
             e.printStackTrace();
             ws.close();
