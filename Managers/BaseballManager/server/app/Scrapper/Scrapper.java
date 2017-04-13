@@ -14,6 +14,7 @@ import org.asynchttpclient.AsyncHttpClientConfig;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
 //import play.libs.mailer.Email;
 //import play.libs.mailer.MailerPlugin;
+import play.Logger;
 import play.libs.ws.WSResponse;
 //import scala.util.parsing.json.JSONArray;
 //import scala.util.parsing.json.JSONObject;
@@ -48,23 +49,18 @@ public class Scrapper {
     public void ScrapperDays() throws IOException {
 
         int daysAfter = Config.getInt("days_after");
-        Mailer.SendError("pal Ejecutando scrapper" + daysAfter,"se inica el scrapper");
+        //Mailer.SendError("pal Ejecutando scrapper" + daysAfter,"se inica el scrapper");
         //Scrapper(DateUtil(0));
 
         for (int i = 0 ; i< daysAfter; i++)
         {
-            try {
                 Scrapper(DateUtil(i));
-            }catch(Exception e){
-                e.printStackTrace();
-                Mailer.SendError("Error Realizando Scrapper",e.getCause().getMessage());
-            }
         }
 
-        Mailer.SendError("pal Ejecutando Ranking","Otro Ranking");
+        //Mailer.SendError("pal Ejecutando Ranking","Otro Ranking");
 
         RankinrCreator.executeRanking();
-        Mailer.SendError("proces finalizado Ranking","Otro Ranking");
+        //Mailer.SendError("proces finalizado Ranking","Otro Ranking");
 
 
     }
@@ -183,8 +179,8 @@ public class Scrapper {
                     //}
                 }catch(Exception e)
                 {
-                    Mailer.SendError("Error Realizando linescore",e.getCause().getMessage());
-
+//                    Mailer.SendError("Error Realizando linescore",e.getCause().getMessage());
+                    Logger.info("Error Realizando linescore " + e.getCause().getMessage());
                     e.printStackTrace();
 
                 }
@@ -225,7 +221,9 @@ public class Scrapper {
         }
         catch(Exception e)
         {
-            Mailer.SendError("Error Realizando Scrapper juejue",e.getCause().getMessage());
+            Logger.info("Error Realizando Scrapper juejue");
+
+            //Mailer.SendError("Error Realizando Scrapper juejue",e.getCause().getMessage());
             //ws.close();
             e.printStackTrace();
             ws.close();
