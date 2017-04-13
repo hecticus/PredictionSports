@@ -27,16 +27,20 @@ public class Mailer {
     public static void SendError(String title, String body)
     {
         String to = "fernando.alvarez@hecticus.com";
+        try {
+            Email email = new Email()
+                    .setSubject(title)
+                    .setFrom("Mister FROM <alarma.rk@gmail.com>")
+                    .addTo("Miss TO <"+ to +">")
+                    // adds attachment
+                    // sends text, HTML or both...
+                    .setBodyText(body);
+            MailerPlugin mp = new MailerPlugin();
+                mp.send(email);
+        }catch(Exception e)
+        {
 
-        Email email = new Email()
-                .setSubject(title)
-                .setFrom("Mister FROM <alarma.rk@gmail.com>")
-                .addTo("Miss TO <"+ to +">")
-                // adds attachment
-                // sends text, HTML or both...
-                .setBodyText(body);
-        MailerPlugin mp = new MailerPlugin();
-        mp.send(email);
+        }
 
     }
 }
