@@ -166,15 +166,23 @@ public class Scrapper {
 
 
                 current_game.setDate(cal2.getTime());
-                if(current_game.getStatus().getIdStatus() > 1  && (current_game.getStatus().getIdStatus() < 4)) {
-                    lineScore = obj.get("linescore");
-                    current_game.setHr(new LineScoreHandler(lineScore.get("hr")));
-                    current_game.setE(new LineScoreHandler(lineScore.get("e")));
-                    current_game.setSo(new LineScoreHandler(lineScore.get("so")));
-                    current_game.setR(new LineScoreHandler(lineScore.get("r")));
-                    current_game.setH(new LineScoreHandler(lineScore.get("h")));
-                }
+                //if(current_game.getStatus().getIdStatus() > 1  && (current_game.getStatus().getIdStatus() < 4)) {
+                try {
+                    if(obj.hasNonNull("linescore")) {
+                        lineScore = obj.get("linescore");
 
+                        current_game.setHr(new LineScoreHandler(lineScore.get("hr")));
+                        current_game.setE(new LineScoreHandler(lineScore.get("e")));
+                        current_game.setSo(new LineScoreHandler(lineScore.get("so")));
+                        current_game.setR(new LineScoreHandler(lineScore.get("r")));
+                        current_game.setH(new LineScoreHandler(lineScore.get("h")));
+                    }
+                    //}
+                }catch(Exception e)
+                {
+                    e.printStackTrace();
+
+                }
                 if(GameHandler.CheckExist(obj.get("id").asText()))
                     current_game.update();
                 else
