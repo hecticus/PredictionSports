@@ -8,9 +8,10 @@ import org.apache.commons.mail.EmailAttachment;
 import play.libs.mailer.MailerPlugin;
 
 public class Mailer {
-    @Inject MailerClient mailerClient;
-
+    //@Inject MailerClient mailerClient;
+/*
     public void sendEmail() {
+
         String cid = "1234";
         Email email = new Email()
                 .setSubject("Info Mail")
@@ -21,7 +22,7 @@ public class Mailer {
                 .setBodyText("A text message")
                 .setBodyHtml("<html><body><p>An <b>html</b> empezo el correito</p></body></html>");
         mailerClient.send(email);
-    }
+    }*/
 
     public static void SendError(String title, String body)
     {
@@ -34,7 +35,8 @@ public class Mailer {
                 // adds attachment
                 // sends text, HTML or both...
                 .setBodyText(body);
-        MailerPlugin.send(email);
+        MailerPlugin mp = new MailerPlugin();
+        mp.send(email);
 
     }
 }

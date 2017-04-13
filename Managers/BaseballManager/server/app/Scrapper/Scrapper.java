@@ -48,7 +48,8 @@ public class Scrapper {
     public void ScrapperDays() throws IOException {
 
         int daysAfter = Config.getInt("days_after");
-        //Mailer.SendError("Ejecutando Ranking para " + daysAfter,"Otro Ranking");
+        Mailer.SendError("pal Ejecutando scrapper" + daysAfter,"se inica el scrapper");
+        //Scrapper(DateUtil(0));
 
         for (int i = 0 ; i< daysAfter; i++)
         {
@@ -56,13 +57,15 @@ public class Scrapper {
                 Scrapper(DateUtil(i));
             }catch(Exception e){
                 e.printStackTrace();
-                //Mailer.SendError("Error Realizando Scrapper",e.getCause().getMessage());
+                Mailer.SendError("Error Realizando Scrapper",e.getCause().getMessage());
             }
         }
 
-        Mailer.SendError("Ejecutando Ranking","Otro Ranking");
+        Mailer.SendError("pal Ejecutando Ranking","Otro Ranking");
 
         RankinrCreator.executeRanking();
+        Mailer.SendError("proces finalizado Ranking","Otro Ranking");
+
 
     }
 
@@ -180,6 +183,8 @@ public class Scrapper {
                     //}
                 }catch(Exception e)
                 {
+                    Mailer.SendError("Error Realizando linescore",e.getCause().getMessage());
+
                     e.printStackTrace();
 
                 }
@@ -220,7 +225,7 @@ public class Scrapper {
         }
         catch(Exception e)
         {
-            //Mailer.SendError("Error Realizando Scrapper",e.getCause().getMessage());
+            Mailer.SendError("Error Realizando Scrapper juejue",e.getCause().getMessage());
             //ws.close();
             e.printStackTrace();
             ws.close();
