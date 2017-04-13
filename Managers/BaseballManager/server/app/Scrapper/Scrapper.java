@@ -19,9 +19,7 @@ import play.libs.ws.WSResponse;
 //import scala.util.parsing.json.JSONArray;
 //import scala.util.parsing.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -179,6 +177,11 @@ public class Scrapper {
                     //}
                 }catch(Exception e)
                 {
+                    StringWriter sw = new StringWriter();
+                    e.printStackTrace(new PrintWriter(sw));
+                    //String exceptionAsString = sw.toString();
+                    Logger.info("Error Realizando linescore "  + sw.toString());
+
 //                    Mailer.SendError("Error Realizando linescore",e.getCause().getMessage());
                     Logger.info("Error Realizando linescore " + e.getCause().getMessage());
                     e.printStackTrace();
@@ -221,7 +224,10 @@ public class Scrapper {
         }
         catch(Exception e)
         {
-            Logger.info("Error Realizando Scrapper juejue");
+            StringWriter sw = new StringWriter();
+            e.printStackTrace(new PrintWriter(sw));
+            //String exceptionAsString = sw.toString();
+            Logger.info("Error Realizando Scrapper juejue " + sw.toString());
 
             //Mailer.SendError("Error Realizando Scrapper juejue",e.getCause().getMessage());
             //ws.close();
