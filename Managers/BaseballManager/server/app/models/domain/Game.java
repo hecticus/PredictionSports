@@ -419,7 +419,7 @@ public class Game extends Model  {
         json.put("home_team",awayTeam.toJson());
         json.put("away_team",homeTeam.toJson());
         json.put("home_run",rAway);
-        json.put("away_run",hHome);
+        json.put("away_run",rHome);
        // json.put("home_team",homeTeam.toJson());
         //json.put("away_team",awayTeam.toJson());
         //json.put("home_run",rHome);
@@ -438,7 +438,7 @@ public class Game extends Model  {
         json.put("home_team",awayTeam.toJson());
         json.put("away_team",homeTeam.toJson());
         json.put("home_run",rAway);
-        json.put("away_run",hHome);
+        json.put("away_run",rHome);
         ObjectNode aux = Json.newObject();
         Status tmp = Status.convertToFootball(this.status);
         aux.put("id_status", tmp.getIdStatus());
@@ -457,7 +457,7 @@ public class Game extends Model  {
         json.put("home_team",awayTeam.toJson());
         json.put("away_team",homeTeam.toJson());
         json.put("home_run",rAway);
-        json.put("away_run",hHome);
+        json.put("away_run",rHome);
         ObjectNode aux = Json.newObject();
         Status tmp = Status.convertToFootball(this.status);
         json.put("id_status", tmp.getIdStatus());
