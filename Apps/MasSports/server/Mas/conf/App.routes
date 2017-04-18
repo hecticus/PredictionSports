@@ -369,8 +369,10 @@ GET            /api/v1/calendar/get/phase/lt/:idApp/:idCompetition/:phase       
 GET            /api/v1/calendar/get/phase/eq/:idApp/:idCompetition/:phase                                      controllers.client.FootballManager.getCalendar(idApp: Integer, idCompetition: Integer, date: String?="", phase: Long, operator: String?="eq")
 GET            /api/v1/calendar/get/:idApp/:idCompetition                                                      controllers.client.FootballManager.getCalendar(idApp: Integer, idCompetition: Integer, date: String?="", phase: Long?=0, operator: String?="gt")
 
+
 GET            /synctest                       controllers.client.BaseballManager.testsync()
 
+POST /Accumulated/GetPointsByClientId             controllers.client.Accumulateds.GetPointsByClientId()
 
 ->             /jobcore                                                                                        JobCore.Routes
 ->             /upstream                                                                                       UpstreamAPIConnector.Routes
