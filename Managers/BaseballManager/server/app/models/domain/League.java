@@ -94,7 +94,7 @@ public class League extends Model {
 
     public static League getByName(String name) {
         //EbeanServer server = Ebean.getServer("clients");
-        return finder.where().eq("name", name).findUnique();
+        return finder.where().like("name", name).findUnique();
     }
 
     public static League getByID(Long id) {
