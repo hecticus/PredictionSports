@@ -9,6 +9,7 @@ GET     /                                                                       
 GET     /assets/*file                                                                                                   controllers.Assets.at(path="/public", file)
 
 GET    /scrapper/update                                                                                                 controllers.Debugger.Scrapper()
+GET    /status                                                                                                          controllers.Debugger.Status()
 
 
 #Zona de Matches

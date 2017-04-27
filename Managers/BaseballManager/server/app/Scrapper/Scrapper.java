@@ -49,7 +49,7 @@ public class Scrapper {
         int daysAfter = Config.getInt("days_after");
         //Mailer.SendError("pal Ejecutando scrapper" + daysAfter,"se inica el scrapper");
         //Scrapper(DateUtil(0));
-
+        Long startTime = System.currentTimeMillis();
         for (int i = 0 ; i< daysAfter; i++)
         {
                 Scrapper(DateUtil(i));
@@ -59,6 +59,10 @@ public class Scrapper {
 
         RankinrCreator.executeRanking();
         //Mailer.SendError("proces finalizado Ranking","Otro Ranking");
+        long stopTime = System.currentTimeMillis();
+        //long elapsedTime =
+        Logger.info("Finalizo el Scrapper duraccion en millis" + (stopTime - startTime));
+
 
 
     }
