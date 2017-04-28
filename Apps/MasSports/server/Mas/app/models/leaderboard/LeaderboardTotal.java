@@ -24,6 +24,10 @@ public class LeaderboardTotal extends HecticusModel {
 
     private Integer correctBets;
 
+
+    @Column(name = "smsscore")
+    private int smsscore;
+
     public static Finder<Long, LeaderboardTotal> finder = new Finder<Long, LeaderboardTotal>(Long.class, LeaderboardTotal.class);
 
     public LeaderboardTotal(Client client, Integer score, Integer correctBets) {
@@ -64,19 +68,28 @@ public class LeaderboardTotal extends HecticusModel {
         this.correctBets = correctBets;
     }
 
+    public int getSmsscore() {
+        return smsscore;
+    }
+
+    public void setSmsscore(int smsscore) {
+        this.smsscore = smsscore;
+    }
+
+
     @Override
     public ObjectNode toJson() {
         ObjectNode objNode = Json.newObject();
         objNode.put("id_leaderboard_total",idLeaderboardTotal);
         objNode.put("client", client.toJsonWithoutRelations());
-        objNode.put("score", score);
+        objNode.put("score", score + smsscore);
         objNode.put("hits", correctBets);
         return objNode;
     }
 
     public ObjectNode toJsonClean() {
         ObjectNode objNode = Json.newObject();
-        objNode.put("score", score);
+        objNode.put("score", score + smsscore);
         objNode.put("hits", correctBets);
         return objNode;
     }
@@ -86,7 +99,7 @@ public class LeaderboardTotal extends HecticusModel {
         objNode.put("id_client", client.getIdClient());
         String nickname = client.getNickname();
         objNode.put("client", nickname==null?"Anônimo":nickname);
-        objNode.put("score", score);
+        objNode.put("score", score + smsscore);
         objNode.put("hits", correctBets);
         return objNode;
     }

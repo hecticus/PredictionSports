@@ -112,6 +112,8 @@ public class Scrapper {
 
             //JsonNode p = jsonPromise2.toCompletableFuture().get(1000, TimeUnit.DAYS);
             JsonNode p = jsonPromise2.toCompletableFuture().get();
+            ws.close();
+
             //JsonNode p = e.get();
             data = p.get("data");
             games = data.get("games");
@@ -120,7 +122,8 @@ public class Scrapper {
             JsonNode lineScore;
             JsonNode Innings;
             JsonNode Inn;
-            if(game == null) { System.out.println("Dia " + cal.getTime() + " No tiene partidos"); ws.close(); return; }
+            if(game == null) { System.out.println("Dia " + cal.getTime() + " No tiene partidos"); ws.close();             system.terminate();
+;                return; }
             for(int x=0 ; x< game.size();x++ ){
                 //Game current_game = new Game();
                 obj = game.get(x);
@@ -237,7 +240,10 @@ public class Scrapper {
             //ws.close();
             e.printStackTrace();
             ws.close();
+            system.terminate();
         }
-        ws.close();
+        system.terminate();
+
+        //ws.close();
     }
 }

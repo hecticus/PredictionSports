@@ -1509,7 +1509,7 @@ public class FootballClients extends Clients {
                     int points = 0;
                     int correct = 0;
                     if (client.getLeaderboardTotal() != null) {
-                        points = client.getLeaderboardTotal().getScore();
+                        points = client.getLeaderboardTotal().getScore() + client.getLeaderboardTotal().getSmsscore();
                         correct = client.getLeaderboardTotal().getCorrectBets();
                     } else {
                         List<LeaderboardGlobal> leaderboardGlobalList = client.getLeaderboardGlobal();
@@ -1518,6 +1518,7 @@ public class FootballClients extends Clients {
                             correct += leaderboardGlobal.getCorrectBets(); 
                         }
                     }
+
 
                     response.put("points", points);
                     response.put("correct_bets", correct);
