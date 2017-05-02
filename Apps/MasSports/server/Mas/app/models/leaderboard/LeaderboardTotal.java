@@ -28,6 +28,17 @@ public class LeaderboardTotal extends HecticusModel {
     @Column(name = "smsscore")
     private int smsscore;
 
+    public int getTotalscore() {
+        return totalscore;
+    }
+
+    public void setTotalscore(int totalscore) {
+        this.totalscore = totalscore;
+    }
+
+    @Column(name = "totalscore")
+    private int totalscore;
+
     public static Finder<Long, LeaderboardTotal> finder = new Finder<Long, LeaderboardTotal>(Long.class, LeaderboardTotal.class);
 
     public LeaderboardTotal(Client client, Integer score, Integer correctBets) {

@@ -1343,9 +1343,9 @@ public class FootballClients extends Clients {
                 List<LeaderboardTotal> totalLeaderboards = null;
                 if (friends != null && !friends.isEmpty()) {
                     friends.add(client);
-                    totalLeaderboards = LeaderboardTotal.finder.where().in("client", friends).orderBy("smsscore desc").orderBy("score desc").findList();
+                    totalLeaderboards = LeaderboardTotal.finder.where().in("client", friends).orderBy("totalscore desc").findList();
                 } else {
-                    totalLeaderboards = LeaderboardTotal.finder.where().orderBy("smsscore desc").orderBy("score desc").findList(); //smsscore
+                    totalLeaderboards = LeaderboardTotal.finder.where().orderBy("totalscore desc").findList();
                 }
                 clientLeaderboardTotal = client.getLeaderboardTotal();
                 if (totalLeaderboards != null && !totalLeaderboards.isEmpty()) {
