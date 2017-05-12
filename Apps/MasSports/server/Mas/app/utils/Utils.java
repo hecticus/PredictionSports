@@ -270,7 +270,7 @@ public class Utils extends JobCoreUtils{
     }
 
     public static String getKrakenHost() {
-        return Config.getString("kraken-url");
+        return Config.getString("kraken-fake-url");
     }
 
     public static String getAndroidVersion() {
