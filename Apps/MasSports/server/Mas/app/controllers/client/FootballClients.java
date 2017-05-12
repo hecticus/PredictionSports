@@ -109,6 +109,29 @@ public class FootballClients extends Clients {
 
     }
 
+    public static Result down(String msisdn) {
+        try {
+            //http://02.kapp.hecticus.com/ws/receiveMO.php?destination=9090&service_type=pacws&msg=APPCANCELAR&received_time=20151118170000&source=XXXXXXXXXX
+            //http://silversolempresas.com/DesconexionUnificada/webServices/wsSuscripciones.asmx/Baja?OperadoraId=1&NumeroCorto=9090&Telefono=string
+            StringBuilder url = new StringBuilder();
+            url.append("http://").append(Utils.getSilverHost()).append(msisdn);
+            F.Promise<WSResponse> result = WS.url(url.toString()).get();
+            String prueba = result.get(1000).getBody();
+
+            url = new StringBuilder();
+            url.append("http://").append(Utils.getKrakenHost()).append(msisdn);
+            result = WS.url(url.toString()).get();
+            prueba = result.get(1000).getBody();
+
+            Client.downkraken(msisdn);
+            return ok(buildBasicResponse(0, "OK"));
+        } catch (Exception ex) {
+
+            return Results.badRequest(buildBasicResponse(3, "ocurrio un error dando de baja", ex));
+        }
+
+    }
+
 
 //    public static uploadMethoKraken(){
 //        String ws = daemonUrl.getValueConf()+"/KrakenDaemon/v1/prediction";
