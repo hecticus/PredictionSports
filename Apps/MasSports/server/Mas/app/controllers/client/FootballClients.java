@@ -123,7 +123,7 @@ public class FootballClients extends Clients {
             result = WS.url(url.toString()).get();
             prueba = result.get(1000).getBody();
 
-            Client.downkraken(msisdn);
+            //Client.downkraken(msisdn);
             return ok(buildBasicResponse(0, "OK"));
         } catch (Exception ex) {
 
