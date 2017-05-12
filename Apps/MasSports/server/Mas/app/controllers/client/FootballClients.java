@@ -127,7 +127,7 @@ public class FootballClients extends Clients {
             return ok(buildBasicResponse(0, "OK"));
         } catch (Exception ex) {
 
-            return Results.badRequest(buildBasicResponse(3, "ocurrio un error dando de baja", ex));
+            return Results.badRequest(buildBasicResponse(3, "ocurrio un error dando de baja par ale numero " + msisdn, ex));
         }
 
     }
