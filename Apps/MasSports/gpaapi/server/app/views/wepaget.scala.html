@@ -1,0 +1,22 @@
+@(msisdn: String, ttype: String)
+
+@main("MAS DEPORTES") {
+
+    <div id="outPopUp">
+        <form action="/wep/confirm" method="post">
+            Bienvenido a +Deporte
+                <br/>
+            <p>Bien @msisdn <br/>
+                Intruduce el pin que recibiste pon telefono para yterminar el proceso!!
+                <br/>
+                <input  name="msisdn" type="hidden"  value="@msisdn" >
+                <input  name="ttype" type="hidden"  value="@ttype" >
+                Pin:<br/>
+                <input  name="pin" type="test" value="" >
+
+            <button type="submit">ok</button>
+                <button type="reset">reset</button>
+        </form>
+
+    </div>
+}

@@ -1,0 +1,15 @@
+@(goodie: Boolean)
+
+@main("MAS DEPORTES") {
+
+    <div id="outPopUp">
+        @if(goodie){
+            <span>Felicidades ha entrado correctamente a +Deportes</span>
+        } else {
+            <span>Pin invalido intente nuevamente</span>
+             <button onclick="window.history.back()">Go Back</button>
+        }
+
+
+    </div>
+}

@@ -1,0 +1,15 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index
+GET     /wep                        controllers.wepsite.index
+POST    /wep/getpin                 controllers.wepsite.getpin
+POST    /wep/confirm                controllers.wepsite.confirm
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+POST    /client/getPin               controllers.Register.GetPin()
+#GET     /user/findByEmail/:email    controllers.Users.findByEmail(email: String)
