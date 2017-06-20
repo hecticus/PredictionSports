@@ -19,6 +19,8 @@ import java.io.IOException;
 import play.libs.ws.ahc.AhcWSClient;
 import play.libs.ws.*;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 //import play.api.libs.ws.WS;
@@ -36,7 +38,15 @@ public class Register extends Controller {
 
     public Result CheckHeader() throws IOException {
         String msisdn = request().hasHeader("MSISDN")?request().getHeader("MSISDN"): "" ;
-        return ok(Response.buildExtendResponse(msisdn));
+        String aux = "";
+        Iterator<String> iter = request().headers().keySet().iterator();
+        while (iter.hasNext()){
+            String key = iter.next();
+            String values = request().getHeader(key);
+            String s = key + " = " + values + "\n";
+            aux += s;
+        }
+        return ok(Response.buildExtendResponse(aux));
 
     }
 
