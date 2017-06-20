@@ -12,4 +12,6 @@ POST    /wap/confirm                controllers.wepsite.confirm
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 POST    /client/getPin               controllers.Register.GetPin()
+POST    /client/confirm              controllers.Register.confirmPin()
+GET     /header                      controllers.Register.CheckHeader()
 #GET     /user/findByEmail/:email    controllers.Users.findByEmail(email: String)

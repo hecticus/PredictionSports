@@ -33,6 +33,13 @@ import utils.Response;
  */
 public class Register extends Controller {
 
+
+    public Result CheckHeader() throws IOException {
+        String msisdn = request().hasHeader("MSISDN")?request().getHeader("MSISDN"): "" ;
+        return ok(Response.buildExtendResponse(msisdn));
+
+    }
+
     public Result GetPin() throws IOException {
         JsonNode json = request().body().asJson();
 
