@@ -87,7 +87,8 @@ public class Register extends Controller {
         } finally {
             ws.close();
         }
-        return ok(Response.buildExtendResponse("OK", p));
+        return ok(Response.buildExtendResponse("Valid"));
+        //return ok(Response.buildExtendResponse("OK", p));
     }
 
     public Result confirmPin() throws IOException {
