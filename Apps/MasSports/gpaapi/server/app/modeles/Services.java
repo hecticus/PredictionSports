@@ -50,6 +50,8 @@ public class Services extends Model  {
 
     protected int productIdentifier;
 
+    protected String descripcionProducto;
+
 //    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
 //    private List<Clients> clients = new ArrayList<>();
 
@@ -60,17 +62,15 @@ public class Services extends Model  {
         return name;
     }
 
-    public int getProductIdentifier() {
-        return productIdentifier;
-    }
+    public int getProductIdentifier() { return productIdentifier;   }
 
-    public void setProductIdentifier(int productIdentifier) {
-        this.productIdentifier = productIdentifier;
-    }
+    public void setProductIdentifier(int productIdentifier) {   this.productIdentifier = productIdentifier; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String getDescripcionProducto() { return descripcionProducto;   }
+
+    public void setDescripcionProducto(String descripcionProducto) {   this.descripcionProducto = descripcionProducto; }
+
+    public void setName(String name) {  this.name = name;   }
 
     public String getIdentifier() {
         return identifier;

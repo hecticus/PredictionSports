@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 
 
 import javax.persistence.*;
+import java.util.UUID;
 
 /**
  * Created by palenge on 5/17/17.
@@ -19,6 +20,8 @@ public class Clients extends Model {
 
     @Id
     private Long id;
+
+    public String identifier;
 
     public Long getId() {
         return id;
@@ -43,17 +46,15 @@ public class Clients extends Model {
     public static Model.Finder<Long, Clients> finder = new Model.Finder<Long, Clients>(Clients.class);
 
 
-    public int getMsisdn() {
-        return msisdn;
-    }
+    public String getUuid() {   return identifier;  }
 
-    public void setMsisdn(int msisdn) {
-        this.msisdn = msisdn;
-    }
+    public void setUuid(String uuid) {  this.identifier = uuid; }
 
-    public String getToken() {
-        return token;
-    }
+    public int getMsisdn() {    return msisdn;  }
+
+    public void setMsisdn(int msisdn) { this.msisdn = msisdn;   }
+
+    public String getToken() {  return token;   }
 
     public void setToken(String token) {
         this.token = token;

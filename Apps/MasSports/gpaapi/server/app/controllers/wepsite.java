@@ -3,6 +3,7 @@ package controllers;
 import akka.actor.ActorSystem;
 import akka.stream.ActorMaterializer;
 import akka.stream.ActorMaterializerSettings;
+import com.avaje.ebeaninternal.server.lib.util.Str;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import modeles.Clients;
@@ -22,21 +23,31 @@ import views.html.*;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CompletionStage;
-//import play.mvc.
 
 /**
  * Created by Ferck on 17/6/2017.
  */
 public class wepsite extends Controller {
+
+    public final String urlSilver = "http://silversolempresas.com";
+
     public Result index()  {
         String token  = "";
         String ttype = "";
+        Services ser =  new Services();
+        ser = ser.getServiceByName("md");
         if(request().queryString().containsKey("token")) {
             ttype = "GLOBA";
             token  = request().getQueryString("token");
         }
         String msisdn = request().hasHeader("MSISDN")?request().getHeader("MSISDN"): "" ;
+        if (!msisdn.isEmpty()){
+            InsertClient(msisdn,ttype, token, ser);
+            String url = urlSilver+ "/suscripcion/servicios/api/Wssuscripcion.asmx/SuscripcionWap";
+            return redirect(getSuscriptionWap(url,));
+        }
         //Obtener Token
         return ok(wepa.render(msisdn, token, ttype));
     }
@@ -70,8 +81,8 @@ public class wepsite extends Controller {
         ser = ser.getServiceByName("md");
 
         ObjectNode event = Json.newObject();
-        //event.put("usuario", Config.getString("silver-api-user"));
-        //event.put("password", Config.getString("silver-api-pass"));
+        event.put("usuario", Config.getString("silver-api-user"));
+        event.put("password", Config.getString("silver-api-pass"));
         event.put("celular", msisdn);
         event.put("operadoraId", ser.getIdentifier());
         event.put("numeroCorto", ser.getShortCode());
@@ -172,5 +183,39 @@ public class wepsite extends Controller {
         } finally {
             ws.close();
         }
+    }
+
+    /*Creado por Erick Subero
+     * Esto genera un nuevo UUID.
+     */
+    public String GenerateUUID(){
+        UUID idClient = UUID.randomUUID();
+        return idClient.toString();
+    }
+
+    /*Creado por Erick Subero
+     * Esto registra en BD un nuevo cliente.
+     */
+    public void InsertClient(String msisdn, String ttype, String token, Services service){
+        Clients client =  new Clients();
+
+        client.setMsisdn(Integer.parseInt(msisdn));
+        client.setUuid(GenerateUUID());
+        client.setConfirm(ttype);
+        client.setToken(token);
+        client.setService(service);
+        try {
+            client.insert();
+        } catch (Exception e) {
+        } finally {
+        }
+    }
+
+    private static String getSuscriptionWap(String urlOrigen,String usuario, String password, String operadoraId, String celular, String numeroCorto, String productoId, String descripcionProducto, String request_id, String urlFinal, String urlLanding) {
+        String queryParameters = "usuario=" + usuario + "&password=" + password + "&operadoraId=" + operadoraId + "&celular=" + celular + "&numeroCorto=" + numeroCorto + "&productoId=" + productoId + "&descripcionProducto=" + descripcionProducto + "&request_id=" + request_id + "&urlFinal=" + urlFinal+"&urlLanding=" + urlLanding;
+        StringBuilder url = new StringBuilder();
+        //url.append("http://").append("silversolempresas.com/suscripcion/servicios/api/WsSuscripcion.asmx/SuscripcionWap").append("?").append(queryParameters);
+        url.append(urlOrigen).append("?").append(queryParameters);
+        return url.toString();
     }
 }
