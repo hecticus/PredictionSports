@@ -18,10 +18,13 @@ import play.libs.ws.ahc.AhcWSClient;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.*;
+import router.Routes;
 import utils.Response;
 import views.html.*;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletionStage;
@@ -32,8 +35,13 @@ import java.util.concurrent.CompletionStage;
 public class wepsite extends Controller {
 
     public final String urlSilver = "http://silversolempresas.com";
+    ////XPALX Parametros de silver api que son iguales para todo el mundo
+    public static final String SILVER_API_USER = "nemhttp";
+    public static final String SILVER_API_PASS = "dsad3ss";
+    public static final String urlSub = "/suscripcion/servicios/api/Wssuscripcion.asmx/SuscripcionWap";
 
-    public Result index()  {
+
+    public Result index() throws IOException {
         String token  = "";
         String ttype = "";
         Services ser =  new Services();
@@ -44,12 +52,56 @@ public class wepsite extends Controller {
         }
         String msisdn = request().hasHeader("MSISDN")?request().getHeader("MSISDN"): "" ;
         if (!msisdn.isEmpty()){
-            InsertClient(msisdn,ttype, token, ser);
-            String url = urlSilver+ "/suscripcion/servicios/api/Wssuscripcion.asmx/SuscripcionWap";
-            return redirect(getSuscriptionWap(url,));
+            GetSubsWAP(InsertClient(msisdn,ttype, token, ser));
+            //return redirect(getSuscriptionWap(url,ser,msisdn,urlFinal, urlLanding));
         }
         //Obtener Token
         return ok(wepa.render(msisdn, token, ttype));
+    }
+
+
+    public JsonNode GetSubsWAP(Clients client) throws IOException {
+
+        String urlFinal = request().host() + "/wap/confirm";
+        String urlLanding = request().host() + "/assets/image.jpg";
+        ObjectNode event = Json.newObject();
+        event.put("celular", client.getMsisdn());
+        event.put("operadoraId", client.getService().getIdentifier());
+        event.put("numeroCorto", client.getService().getShortCode());
+        event.put("productoId", client.getService().getProductIdentifier());
+        event.put("descripcionProducto", client.getService().getDescripcionProducto());
+        event.put("requestId", client.getService().getId());
+        event.put("urlFinal",  urlFinal);
+        event.put("urlLanding",  urlLanding);
+        JsonNode response = Json.newObject();
+
+        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
+                .setMaxRequestRetry(0)
+                .setShutdownQuietPeriod(0)
+                .setShutdownTimeout(0).build();
+
+        String name = "wsclient";
+        ActorSystem system = ActorSystem.create(name);
+        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
+        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
+
+        WSClient ws = new AhcWSClient(config, materializer);
+
+        String urlOrigen = urlSilver+urlSub;
+
+        //CompletionStage<JsonNode> jsonPromise2 = ws.url(Config.getString("silver-api-url") + "api/v1/user/subscripcionWap").get()
+        String aux = getSuscriptionWap(urlOrigen,client.getService(), client.getMsisdn(), urlFinal, urlLanding);
+        CompletionStage<String> jsonPromise2 = ws.url(getSuscriptionWap(urlOrigen,client.getService(), client.getMsisdn(), urlFinal, urlLanding)).get()
+                .thenApply(respon ->  respon.getBody());
+        String pepe;
+        try {
+            pepe = jsonPromise2.toCompletableFuture().get();
+            //response = jsonPromise2.toCompletableFuture().get();
+        } catch (Exception e) {
+        } finally {
+            ws.close();
+        }
+        return response;
     }
 
     public Result getpin() throws IOException {
@@ -63,7 +115,7 @@ public class wepsite extends Controller {
                 client = new Clients();
                 client.setToken(aux.get("token")[0]);
                 client.setConfirm(aux.get("ttype")[0]);
-                client.setMsisdn(Integer.parseInt(aux.get("msisdn")[0]));
+                client.setMsisdn(Long.parseLong(aux.get("msisdn")[0]));
                 client.save();
             }
             else
@@ -185,21 +237,22 @@ public class wepsite extends Controller {
         }
     }
 
-    /*Creado por Erick Subero
+    /**Creado por Erick Subero
      * Esto genera un nuevo UUID.
-     */
+     *
+     **/
     public String GenerateUUID(){
         UUID idClient = UUID.randomUUID();
         return idClient.toString();
     }
 
-    /*Creado por Erick Subero
+    /**Creado por Erick Subero
      * Esto registra en BD un nuevo cliente.
-     */
-    public void InsertClient(String msisdn, String ttype, String token, Services service){
+     **/
+    public Clients InsertClient(String msisdn, String ttype, String token, Services service){
         Clients client =  new Clients();
 
-        client.setMsisdn(Integer.parseInt(msisdn));
+        client.setMsisdn(Long.parseLong(msisdn));
         client.setUuid(GenerateUUID());
         client.setConfirm(ttype);
         client.setToken(token);
@@ -209,13 +262,32 @@ public class wepsite extends Controller {
         } catch (Exception e) {
         } finally {
         }
+        return client;
     }
 
-    private static String getSuscriptionWap(String urlOrigen,String usuario, String password, String operadoraId, String celular, String numeroCorto, String productoId, String descripcionProducto, String request_id, String urlFinal, String urlLanding) {
-        String queryParameters = "usuario=" + usuario + "&password=" + password + "&operadoraId=" + operadoraId + "&celular=" + celular + "&numeroCorto=" + numeroCorto + "&productoId=" + productoId + "&descripcionProducto=" + descripcionProducto + "&request_id=" + request_id + "&urlFinal=" + urlFinal+"&urlLanding=" + urlLanding;
+    private static String getSuscriptionWap(String urlOrigen,Services ser, Long msisdn, String urlFinal, String urlLanding) throws UnsupportedEncodingException {
+        String usuario = SILVER_API_USER;
+        String password = SILVER_API_PASS;
+        String operadoraId = ser.getIdentifier();
+        String celular = Long.toString(msisdn);
+        String numeroCorto = Integer.toString(ser.getShortCode());
+        String productoId = Integer.toString(ser.getProductIdentifier());
+        String descripcionProducto = ser.getDescripcionProducto();
+        String request_id = Long.toString(ser.getId());
+        String queryParameters = "usuario=" + usuario + "&password=" + password + "&operadoraId=" + operadoraId + "&celular=" + celular + "&numeroCorto=" + numeroCorto + "&productoId=" + productoId + "&descripcionProducto=" + descripcionProducto + "&request_id=" + request_id + "&urlFinal=" + URLEncoder.encode(urlFinal, "UTF-8") +"&urlLanding=" + URLEncoder.encode(urlLanding, "UTF-8");
         StringBuilder url = new StringBuilder();
         //url.append("http://").append("silversolempresas.com/suscripcion/servicios/api/WsSuscripcion.asmx/SuscripcionWap").append("?").append(queryParameters);
         url.append(urlOrigen).append("?").append(queryParameters);
         return url.toString();
+    }
+
+    public Result GetSuscription() throws IOException {
+        Map<String, String[]> aux = request().body().asFormUrlEncoded();
+        if(!aux.get("urlAlta")[0].isEmpty())
+        {
+
+        }
+        CallGetSilver(aux.get("msisdn")[0]);
+        return ok(wepaget.render(aux.get("msisdn")[0], aux.get("ttype")[0]));
     }
 }

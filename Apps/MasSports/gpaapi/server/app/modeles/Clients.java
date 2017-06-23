@@ -31,7 +31,7 @@ public class Clients extends Model {
     }
 
     @Column(nullable = false)
-    protected int msisdn;
+    protected Long msisdn;
 
     @Column(nullable = false)
     protected String token;
@@ -50,9 +50,9 @@ public class Clients extends Model {
 
     public void setUuid(String uuid) {  this.identifier = uuid; }
 
-    public int getMsisdn() {    return msisdn;  }
+    public Long getMsisdn() {    return msisdn;  }
 
-    public void setMsisdn(int msisdn) { this.msisdn = msisdn;   }
+    public void setMsisdn(Long msisdn) { this.msisdn = msisdn;   }
 
     public String getToken() {  return token;   }
 

@@ -62,7 +62,7 @@ public class Register extends Controller {
         boolean isnew = cli == null;
         if(cli == null) cli = new Clients();
         cli.setToken(json.get("IDTRX").asText());
-        cli.setMsisdn(json.get("msisdn").asInt());
+        cli.setMsisdn(json.get("msisdn").asLong());
         cli.setService(ser);
         cli.setConfirm(json.get("pixel").asText());
 
@@ -129,7 +129,7 @@ public class Register extends Controller {
         boolean isnew = cli == null;
         if(cli == null) cli = new Clients();
         cli.setToken(json.get("token").asText());
-        cli.setMsisdn(json.get("msisdn").asInt());
+        cli.setMsisdn(json.get("msisdn").asLong());
         cli.setService(ser);
         cli.setConfirm(json.get("pixel").asText());
 
