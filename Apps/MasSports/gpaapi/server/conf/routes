@@ -4,14 +4,16 @@
 
 # Home page
 GET     /                           controllers.Application.index
-GET     /wap                        controllers.wepsite.index
-POST    /wap/getpin                 controllers.wepsite.getpin
-POST    /wap/confirm                controllers.wepsite.confirm
-
+GET     /wap                        controllers.WapSite.index
+POST    /wap/getpin                 controllers.WapSite.getpin
+POST    /wap/confirm                controllers.WapSite.confirm
+GET    /wap/externalconfirm        controllers.WapSite.confirmExternal
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 POST    /client/getPin               controllers.Register.GetPin()
 POST    /client/confirm              controllers.Register.confirmPin()
 GET     /header                      controllers.Register.CheckHeader()
+GET     /pal/config                  controllers.Register.Config
+
 #GET     /user/findByEmail/:email    controllers.Users.findByEmail(email: String)

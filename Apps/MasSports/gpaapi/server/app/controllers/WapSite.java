@@ -3,6 +3,7 @@ package controllers;
 import akka.actor.ActorSystem;
 import akka.stream.ActorMaterializer;
 import akka.stream.ActorMaterializerSettings;
+import akka.stream.Client;
 import com.avaje.ebeaninternal.server.lib.util.Str;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -11,6 +12,7 @@ import modeles.Config;
 import modeles.Services;
 import org.asynchttpclient.AsyncHttpClientConfig;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
+import org.w3c.dom.Document;
 import play.libs.Json;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
@@ -18,7 +20,6 @@ import play.libs.ws.ahc.AhcWSClient;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.*;
-import router.Routes;
 import utils.Response;
 import views.html.*;
 
@@ -32,7 +33,7 @@ import java.util.concurrent.CompletionStage;
 /**
  * Created by Ferck on 17/6/2017.
  */
-public class wepsite extends Controller {
+public class WapSite extends Controller {
 
     public final String urlSilver = "http://silversolempresas.com";
     ////XPALX Parametros de silver api que son iguales para todo el mundo
@@ -46,33 +47,23 @@ public class wepsite extends Controller {
         String ttype = "";
         Services ser =  new Services();
         ser = ser.getServiceByName("md");
-        if(request().queryString().containsKey("token")) {
+        if(request().queryString().containsKey("clickid")) {
             ttype = "GLOBA";
-            token  = request().getQueryString("token");
+            token  = request().getQueryString("clickid");
         }
         String msisdn = request().hasHeader("MSISDN")?request().getHeader("MSISDN"): "" ;
         if (!msisdn.isEmpty()){
-            GetSubsWAP(InsertClient(msisdn,ttype, token, ser));
-            //return redirect(getSuscriptionWap(url,ser,msisdn,urlFinal, urlLanding));
+            return redirect(GetSubsWAP(InsertClient(msisdn,ttype, token, ser)));
         }
         //Obtener Token
         return ok(wepa.render(msisdn, token, ttype));
     }
 
 
-    public JsonNode GetSubsWAP(Clients client) throws IOException {
+    public String GetSubsWAP(Clients client) throws IOException {
 
         String urlFinal = request().host() + "/wap/confirm";
         String urlLanding = request().host() + "/assets/image.jpg";
-        ObjectNode event = Json.newObject();
-        event.put("celular", client.getMsisdn());
-        event.put("operadoraId", client.getService().getIdentifier());
-        event.put("numeroCorto", client.getService().getShortCode());
-        event.put("productoId", client.getService().getProductIdentifier());
-        event.put("descripcionProducto", client.getService().getDescripcionProducto());
-        event.put("requestId", client.getService().getId());
-        event.put("urlFinal",  urlFinal);
-        event.put("urlLanding",  urlLanding);
         JsonNode response = Json.newObject();
 
         AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
@@ -91,17 +82,22 @@ public class wepsite extends Controller {
 
         //CompletionStage<JsonNode> jsonPromise2 = ws.url(Config.getString("silver-api-url") + "api/v1/user/subscripcionWap").get()
         String aux = getSuscriptionWap(urlOrigen,client.getService(), client.getMsisdn(), urlFinal, urlLanding);
-        CompletionStage<String> jsonPromise2 = ws.url(getSuscriptionWap(urlOrigen,client.getService(), client.getMsisdn(), urlFinal, urlLanding)).get()
-                .thenApply(respon ->  respon.getBody());
-        String pepe;
+        CompletionStage<String> jsonPromise2 = ws.url(aux).get()
+                .thenApply(WSResponse::getBody);
+        String pepe = "";
+        String temp = "";
         try {
             pepe = jsonPromise2.toCompletableFuture().get();
+            //temp = pepe.getElementsByTagName("urlAlta").item(0).getFirstChild().getTextContent();
+            temp = pepe.substring(pepe.indexOf("&lt;urlAlta&gt;") + 15, pepe.indexOf("&lt;/urlAlta&gt;"));
             //response = jsonPromise2.toCompletableFuture().get();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         } finally {
             ws.close();
         }
-        return response;
+        return temp;
     }
 
     public Result getpin() throws IOException {
@@ -183,6 +179,20 @@ public class wepsite extends Controller {
         return ok(wepaconfirm.render(p));
     }
 
+
+    public Result confirmExternal() throws IOException {
+        String id =  "";
+        if(request().queryString().containsKey("request_id")) {
+            id  = request().getQueryString("request_id");
+
+            Clients clit  = Clients.getClientByIdentifier(id);
+            if(clit !=null){
+                CallWithTokenGlobality(clit.getToken());
+            }
+        }
+        return ok(wepaconfirm.render(true));
+    }
+
     public boolean CheckPin(String msisdn, String pin) throws IOException {
         Services ser =  new Services();
         ser = ser.getServiceByName("md");
@@ -229,9 +239,14 @@ public class wepsite extends Controller {
         ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
 
         WSClient ws = new AhcWSClient(config, materializer);
+        CompletionStage<String> jsonPromise = ws.url(Config.getString("globality-url") + token).get()
+                .thenApply(WSResponse::getBody);
+//        JsonNode aux = Json.newObject();
+        String aux = "";
         try {
-            ws.url(Config.getString("glocality-url") + token).get().toCompletableFuture().get();
+           aux = jsonPromise.toCompletableFuture().get();
         } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             ws.close();
         }
@@ -250,17 +265,21 @@ public class wepsite extends Controller {
      * Esto registra en BD un nuevo cliente.
      **/
     public Clients InsertClient(String msisdn, String ttype, String token, Services service){
-        Clients client =  new Clients();
 
-        client.setMsisdn(Long.parseLong(msisdn));
-        client.setUuid(GenerateUUID());
-        client.setConfirm(ttype);
-        client.setToken(token);
-        client.setService(service);
-        try {
-            client.insert();
-        } catch (Exception e) {
-        } finally {
+        Clients client =  new Clients();
+        client = client.getClientByMSisdnAndConfirm(msisdn, ttype);
+        if(client == null) {
+            client =  new Clients();
+            client.setMsisdn(Long.parseLong(msisdn));
+            client.setUuid(GenerateUUID());
+            client.setConfirm(ttype);
+            client.setToken(token);
+            client.setService(service);
+            try {
+                client.insert();
+            } catch (Exception e) {
+            } finally {
+            }
         }
         return client;
     }
@@ -271,10 +290,10 @@ public class wepsite extends Controller {
         String operadoraId = ser.getIdentifier();
         String celular = Long.toString(msisdn);
         String numeroCorto = Integer.toString(ser.getShortCode());
-        String productoId = Integer.toString(ser.getProductIdentifier());
+        String productoId = ser.getProductIdentifier();
         String descripcionProducto = ser.getDescripcionProducto();
         String request_id = Long.toString(ser.getId());
-        String queryParameters = "usuario=" + usuario + "&password=" + password + "&operadoraId=" + operadoraId + "&celular=" + celular + "&numeroCorto=" + numeroCorto + "&productoId=" + productoId + "&descripcionProducto=" + descripcionProducto + "&request_id=" + request_id + "&urlFinal=" + URLEncoder.encode(urlFinal, "UTF-8") +"&urlLanding=" + URLEncoder.encode(urlLanding, "UTF-8");
+        String queryParameters = "usuario=" + usuario + "&password=" + password + "&operadoraId=" + operadoraId + "&celular=" + celular + "&numeroCorto=" + numeroCorto + "&productoId=" + productoId + "&DescripcionProducto=" + descripcionProducto + "&request_id=" + request_id + "&urlFinal=" + URLEncoder.encode(urlFinal, "UTF-8") +"&urlLanding=" + URLEncoder.encode(urlLanding, "UTF-8");
         StringBuilder url = new StringBuilder();
         //url.append("http://").append("silversolempresas.com/suscripcion/servicios/api/WsSuscripcion.asmx/SuscripcionWap").append("?").append(queryParameters);
         url.append(urlOrigen).append("?").append(queryParameters);

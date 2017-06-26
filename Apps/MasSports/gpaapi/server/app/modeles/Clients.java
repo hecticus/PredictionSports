@@ -80,4 +80,9 @@ public class Clients extends Model {
     {
         return  finder.where().eq("msisdn", msisdn).eq("confirm", confirm).findUnique();
     }
+
+    public static Clients getClientByIdentifier(String identifier)
+    {
+        return  finder.where().eq("identifier", identifier).findUnique();
+    }
 }

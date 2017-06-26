@@ -126,22 +126,17 @@ public class Register extends Controller {
         Clients cli = new Clients();
         cli = cli.getClientByMSisdnAndConfirm(json.get("msisdn").asText(), json.get("pixel").asText());
 
-        boolean isnew = cli == null;
-        if(cli == null) cli = new Clients();
-        cli.setToken(json.get("token").asText());
-        cli.setMsisdn(json.get("msisdn").asLong());
-        cli.setService(ser);
-        cli.setConfirm(json.get("pixel").asText());
-
+        if(cli == null)
+            return Response.accessDenied();
         if(ser == null)
             return Response.accessDenied();
-        //String nullws =  Config.getString("silver-api-url") + "api/v1/user/generarPin";
+
         ObjectNode event = Json.newObject();
         event.put("celular", json.get("msisdn").asText());
         event.put("operadoraId", ser.getIdentifier());
         event.put("numeroCorto", ser.getShortCode());
         event.put("productoId", ser.getProductIdentifier());
-        event.put("pin",  json.get("msisdn").asText());
+        event.put("Pin", ser.getDescripcionProducto());
         boolean response;
 
         AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
@@ -157,14 +152,37 @@ public class Register extends Controller {
         WSClient ws = new AhcWSClient(config, materializer);
         CompletionStage<JsonNode> jsonPromise2 = ws.url(Config.getString("silver-api-url") + "api/v1/user/confirmarPin").post(event)
                 .thenApply(WSResponse::asJson);
+        JsonNode jsonr = Json.newObject();
         try {
-            response = (jsonPromise2.toCompletableFuture().get().get("response").get("code").asText() == "0");
+            jsonr =jsonPromise2.toCompletableFuture().get();
+            response = (jsonr.get("response").get("code").asText() == "0");
         } catch (Exception e) {
             return ok("Internal Error");
         } finally {
             ws.close();
         }
         return ok(Response.buildExtendResponse(response? "Valid":"Invalid"));
+    }
+
+    public Result Config()
+    {
+        Services ser =new Services("md", "1", "GANA @pin",9090, "COPA", "");
+        ser.insert();
+
+        Config con = new Config();
+        con.setConfigKey("silver-api-url");
+        con.setValue("http://silverapi.hecticus.com/");
+        con.insert();
+
+
+        con = new Config();
+        con.setConfigKey("globality-url");
+        con.setValue("http://ad.globadlity.com/wss2s.asmx/ConfirmS2S?trx_id=");
+        con.insert();
+
+        //con.insert();
+        //String name, String identifier, String sms, int shortCode, int productIdentifier, String descripcionProducto)
+        return ok();
     }
 
 

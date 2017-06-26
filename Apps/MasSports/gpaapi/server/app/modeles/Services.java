@@ -48,7 +48,7 @@ public class Services extends Model  {
 
     protected int shortCode;
 
-    protected int productIdentifier;
+    protected String productIdentifier;
 
     protected String descripcionProducto;
 
@@ -57,14 +57,25 @@ public class Services extends Model  {
 
     public static Model.Finder<Long, Services> finder = new Model.Finder<Long, Services>(Services.class);
 
+    public Services(String name, String identifier, String sms, int shortCode, String productIdentifier, String descripcionProducto) {
+        this.name = name;
+        this.identifier = identifier;
+        this.sms = sms;
+        this.shortCode = shortCode;
+        this.productIdentifier = productIdentifier;
+        this.descripcionProducto = descripcionProducto;
+    }
+
+    public Services() {
+    }
 
     public String getName() {
         return name;
     }
 
-    public int getProductIdentifier() { return productIdentifier;   }
+    public String getProductIdentifier() { return productIdentifier;   }
 
-    public void setProductIdentifier(int productIdentifier) {   this.productIdentifier = productIdentifier; }
+    public void setProductIdentifier(String productIdentifier) {   this.productIdentifier = productIdentifier; }
 
     public String getDescripcionProducto() { return descripcionProducto;   }
 
