@@ -5,7 +5,8 @@
 
 create table clients (
   id                            bigint auto_increment not null,
-  msisdn                        integer not null,
+  identifier                    varchar(255),
+  msisdn                        bigint not null,
   token                         varchar(255) not null,
   confirm                       varchar(255),
   service_id                    bigint not null,
@@ -26,7 +27,8 @@ create table services (
   identifier                    varchar(16) not null,
   sms                           varchar(150) not null,
   short_code                    integer,
-  product_identifier            integer,
+  product_identifier            varchar(255),
+  descripcion_producto          varchar(255),
   constraint pk_services primary key (id)
 );
 
