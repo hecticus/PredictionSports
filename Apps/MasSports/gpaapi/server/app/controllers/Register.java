@@ -49,12 +49,16 @@ public class Register extends Controller {
         }
 
         String aux2 = "";
-        for (String cookieStr : request().headers().get("Cookie")) {
-            String name = cookieStr.substring(0, cookieStr.indexOf("="));
+        try {
+            for (String cookieStr : request().headers().get("Cookie")) {
+                String name = cookieStr.substring(0, cookieStr.indexOf("="));
 
 
-            Http.Cookie cookie = request().cookie(name); // Get the instance of the cookie !
-            aux2 += " __ " + name + " = " + cookie.value();
+                Http.Cookie cookie = request().cookie(name); // Get the instance of the cookie !
+                aux2 += " __ " + name + " = " + cookie.value();
+            }
+        }catch(Exception e)
+        {
         }
         return ok(Response.buildExtendResponse(aux + " - COOOKIES " +aux2));
 
