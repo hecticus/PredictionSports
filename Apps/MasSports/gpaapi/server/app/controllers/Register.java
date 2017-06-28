@@ -27,6 +27,7 @@ import java.util.concurrent.CompletionStage;
 //import play.api.libs.ws.WSClient;
 import play.libs.Json;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import utils.Response;
 
@@ -46,7 +47,16 @@ public class Register extends Controller {
             String s = key + " = " + values + "\n";
             aux += s;
         }
-        return ok(Response.buildExtendResponse(aux));
+        
+        String aux2 = "";
+        for (String cookieStr : request().headers().get("Cookie")) {
+            String name = cookieStr.substring(0, cookieStr.indexOf("="));
+
+
+            Http.Cookie cookie = request().cookie(name); // Get the instance of the cookie !
+            aux2 += " " + cookie.value();
+        }
+        return ok(Response.buildExtendResponse(aux + " - COOOKIES " +aux2));
 
     }
 
