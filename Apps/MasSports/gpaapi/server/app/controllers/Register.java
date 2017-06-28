@@ -53,6 +53,8 @@ public class Register extends Controller {
     public Result GetPin() throws IOException {
         JsonNode json = request().body().asJson();
 
+
+
         Services ser =  new Services();
         ser = ser.getServiceByName(json.get("product").asText());
 
@@ -61,7 +63,7 @@ public class Register extends Controller {
 
         boolean isnew = cli == null;
         if(cli == null) cli = new Clients();
-        cli.setToken(json.get("IDTRX").asText());
+        cli.setToken(json.get("idtrx").asText());
         cli.setMsisdn(json.get("msisdn").asLong());
         cli.setService(ser);
         cli.setConfirm(json.get("pixel").asText());
