@@ -47,14 +47,14 @@ public class Register extends Controller {
             String s = key + " = " + values + "\n";
             aux += s;
         }
-        
+
         String aux2 = "";
         for (String cookieStr : request().headers().get("Cookie")) {
             String name = cookieStr.substring(0, cookieStr.indexOf("="));
 
 
             Http.Cookie cookie = request().cookie(name); // Get the instance of the cookie !
-            aux2 += " " + cookie.value();
+            aux2 += " __ " + name + " = " + cookie.value();
         }
         return ok(Response.buildExtendResponse(aux + " - COOOKIES " +aux2));
 
