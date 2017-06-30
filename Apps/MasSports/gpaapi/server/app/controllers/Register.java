@@ -78,6 +78,8 @@ public class Register extends Controller {
         boolean isnew = cli == null;
         if(cli == null) cli = new Clients();
 
+        String msisdn = json.get("msisdn").asText();
+        msisdn = (msisdn.startsWith("507")?"":"507") + msisdn;
 
         String idtok = "";
         if(json.has("idtrx"))
@@ -85,7 +87,7 @@ public class Register extends Controller {
         if(json.has("IDTRX"))
             idtok= json.get("IDTRX").asText();
         cli.setToken(idtok);
-        cli.setMsisdn(json.get("msisdn").asLong());
+        cli.setMsisdn(Long.parseLong(msisdn));
         cli.setService(ser);
         cli.setConfirm(json.get("pixel").asText());
 
