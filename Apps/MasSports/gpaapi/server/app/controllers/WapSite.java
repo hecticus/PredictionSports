@@ -102,6 +102,7 @@ public class WapSite extends Controller {
 
     public Result getpin() throws IOException {
         Map<String, String[]> aux = request().body().asFormUrlEncoded();
+        String msisdn = (aux.get("msisdn")[0].startsWith("507")?"":"507") + aux.get("msisdn")[0];
         if(!aux.get("token")[0].isEmpty())
         {
             Clients client = new Clients();
