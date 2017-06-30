@@ -12,6 +12,7 @@ GET    /wap/externalconfirm        controllers.WapSite.confirmExternal
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 POST    /client/getPin               controllers.Register.GetPin()
+POST    /client/getpin               controllers.Register.GetPin()
 POST    /client/confirm              controllers.Register.confirmPin()
 GET     /header                      controllers.Register.CheckHeader()
 GET     /pal/config                  controllers.Register.Config
