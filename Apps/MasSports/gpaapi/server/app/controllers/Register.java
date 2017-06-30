@@ -97,7 +97,7 @@ public class Register extends Controller {
         ObjectNode event = Json.newObject();
         //event.put("usuario", Config.getString("silver-api-user"));
         //event.put("password", Config.getString("silver-api-pass"));
-        event.put("celular", json.get("msisdn").asText());
+        event.put("celular", msisdn);
         event.put("operadoraId", ser.getIdentifier());
         event.put("numeroCorto", ser.getShortCode());
         event.put("productoId", ser.getProductIdentifier());
