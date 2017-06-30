@@ -51,7 +51,9 @@ public class WapSite extends Controller {
             ttype = "GLOBA";
             token  = request().getQueryString("clickid");
         }
-        String msisdn = request().hasHeader("MSISDN")?request().getHeader("MSISDN"): "" ;
+        //String msisdn = request().hasHeader("MSISDN")?request().getHeader("MSISDN"): "" ;
+        String msisdn = request().cookie("User-Identity-Forward-msisdn") == null ? "" : request().cookie("User-Identity-Forward-msisdn").value();
+        //User-Identity-Forward-msisdn
         if (!msisdn.isEmpty()){
             return redirect(GetSubsWAP(InsertClient(msisdn,ttype, token, ser)));
         }
@@ -294,7 +296,7 @@ public class WapSite extends Controller {
         String productoId = ser.getProductIdentifier();
         String descripcionProducto = ser.getDescripcionProducto();
         String request_id = Long.toString(ser.getId());
-        String queryParameters = "usuario=" + usuario + "&password=" + password + "&operadoraId=" + operadoraId + "&celular=" + celular + "&numeroCorto=" + numeroCorto + "&productoId=" + productoId + "&DescripcionProducto=" + descripcionProducto + "&request_id=" + request_id + "&urlFinal=" + URLEncoder.encode(urlFinal, "UTF-8") +"&urlLanding=" + URLEncoder.encode(urlLanding, "UTF-8");
+        String queryParameters = "usuario=" + usuario + "&password=" + password + "&operadoraId=" + operadoraId + "&celular=" + celular + "&numeroCorto=" + numeroCorto + "&productoId=" + productoId + "&DescripcionProducto=" + URLEncoder.encode(descripcionProducto, "UTF-8") + "&request_id=" + request_id + "&urlFinal=" + URLEncoder.encode(urlFinal, "UTF-8") +"&urlLanding=" + URLEncoder.encode(urlLanding, "UTF-8");
         StringBuilder url = new StringBuilder();
         //url.append("http://").append("silversolempresas.com/suscripcion/servicios/api/WsSuscripcion.asmx/SuscripcionWap").append("?").append(queryParameters);
         url.append(urlOrigen).append("?").append(queryParameters);
