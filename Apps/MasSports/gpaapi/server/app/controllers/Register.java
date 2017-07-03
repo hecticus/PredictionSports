@@ -72,14 +72,16 @@ public class Register extends Controller {
         Services ser =  new Services();
         ser = ser.getServiceByName(json.get("product").asText());
 
+        String msisdn = json.get("msisdn").asText();
+        msisdn = (msisdn.startsWith("507")?"":"507") + msisdn;
+
         Clients cli = new Clients();
-        cli = cli.getClientByMSisdnAndConfirm(json.get("msisdn").asText(), json.get("pixel").asText());
+        cli = cli.getClientByMSisdnAndConfirm(msisdn, json.get("pixel").asText());
 
         boolean isnew = cli == null;
         if(cli == null) cli = new Clients();
 
-        String msisdn = json.get("msisdn").asText();
-        msisdn = (msisdn.startsWith("507")?"":"507") + msisdn;
+
 
         String idtok = "";
         if(json.has("idtrx"))
@@ -148,8 +150,11 @@ public class Register extends Controller {
         Services ser =  new Services();
         ser = ser.getServiceByName(json.get("product").asText());
 
+        String msisdn = json.get("msisdn").asText();
+        msisdn = (msisdn.startsWith("507")?"":"507") + msisdn;
+
         Clients cli = new Clients();
-        cli = cli.getClientByMSisdnAndConfirm(json.get("msisdn").asText(), json.get("pixel").asText());
+        cli = cli.getClientByMSisdnAndConfirm(msisdn, json.get("pixel").asText());
 
         if(cli == null)
             return Response.accessDenied();
@@ -157,7 +162,7 @@ public class Register extends Controller {
             return Response.accessDenied();
 
         ObjectNode event = Json.newObject();
-        event.put("celular", json.get("msisdn").asText());
+        event.put("celular", msisdn);
         event.put("operadoraId", ser.getIdentifier());
         event.put("numeroCorto", ser.getShortCode());
         event.put("productoId", ser.getProductIdentifier());
