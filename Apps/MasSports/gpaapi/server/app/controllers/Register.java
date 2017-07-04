@@ -166,7 +166,7 @@ public class Register extends Controller {
         event.put("operadoraId", ser.getIdentifier());
         event.put("numeroCorto", ser.getShortCode());
         event.put("productoId", ser.getProductIdentifier());
-        event.put("Pin", ser.getDescripcionProducto());
+        event.put("pin", json.get("pin").asText());
         boolean response;
 
         AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
