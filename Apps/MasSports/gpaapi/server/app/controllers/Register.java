@@ -185,7 +185,7 @@ public class Register extends Controller {
         JsonNode jsonr = Json.newObject();
         try {
             jsonr =jsonPromise2.toCompletableFuture().get();
-            response = (jsonr.get("response").get("code").asText() == "0");
+            response = (jsonr.get("response").get("code").asText().equals("0"));
         } catch (Exception e) {
             return ok("Internal Error");
         } finally {
