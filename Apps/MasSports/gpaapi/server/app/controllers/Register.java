@@ -184,9 +184,14 @@ public class Register extends Controller {
                 .thenApply(WSResponse::asJson);
         JsonNode jsonr = Json.newObject();
         try {
-            jsonr =jsonPromise2.toCompletableFuture().get();
+            jsonr = jsonPromise2.toCompletableFuture().get();
             response = (jsonr.get("response").get("code").asText().equals("0"));
-            if (response) toKraken(msisdn);
+            if (response) {
+                toKraken(msisdn);
+                if(!cli.getToken().isEmpty()) {
+                    CallWithTokenGlobality(cli.getToken());
+                }
+            }
         } catch (Exception e) {
             return ok("Internal Error");
         } finally {
@@ -217,6 +222,31 @@ public class Register extends Controller {
         try {
             jsonr =jsonPromise2.toCompletableFuture().get();
         } catch (Exception e) {
+        } finally {
+            ws.close();
+        }
+    }
+
+    public void CallWithTokenGlobality(String token) throws IOException {
+        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
+                .setMaxRequestRetry(0)
+                .setShutdownQuietPeriod(0)
+                .setShutdownTimeout(0).build();
+
+        String name = "wsclient";
+        ActorSystem system = ActorSystem.create(name);
+        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
+        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
+
+        WSClient ws = new AhcWSClient(config, materializer);
+        CompletionStage<String> jsonPromise = ws.url(Config.getString("globality-url") + token).get()
+                .thenApply(WSResponse::getBody);
+//        JsonNode aux = Json.newObject();
+        String aux = "";
+        try {
+            aux = jsonPromise.toCompletableFuture().get();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             ws.close();
         }
