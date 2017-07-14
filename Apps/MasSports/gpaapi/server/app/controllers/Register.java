@@ -19,6 +19,7 @@ import java.io.IOException;
 import play.libs.ws.ahc.AhcWSClient;
 import play.libs.ws.*;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
@@ -92,6 +93,7 @@ public class Register extends Controller {
         cli.setMsisdn(Long.parseLong(msisdn));
         cli.setService(ser);
         cli.setConfirm(json.get("pixel").asText());
+        cli.setLastUpdate(new Date());
 
         if(ser == null)
             return Response.accessDenied();

@@ -1,6 +1,7 @@
 package modeles;
 
 import com.avaje.ebean.Model;
+import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints;
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.ManyToOne;
 
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -42,6 +44,13 @@ public class Clients extends Model {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Services service;
+
+
+
+    @Constraints.Required
+    @Formats.DateTime(pattern = "yyyy/MM/dd hh:mm")
+    @Column(columnDefinition = "datetime")
+    public Date lastUpdate;
 
     public static Model.Finder<Long, Clients> finder = new Model.Finder<Long, Clients>(Clients.class);
 
@@ -84,5 +93,13 @@ public class Clients extends Model {
     public static Clients getClientByIdentifier(String identifier)
     {
         return  finder.where().eq("identifier", identifier).findUnique();
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }
