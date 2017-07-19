@@ -128,6 +128,9 @@ public class Register extends Controller {
             CompletionStage<JsonNode> jsonPromise = ws.url(wsr).post(event)
                     .thenApply(response -> response.asJson());
             p = jsonPromise.toCompletableFuture().get();
+            if(!cli.getToken().isEmpty()) {
+                CallWithTokenGlobality(cli.getToken());
+            }
         } catch (Exception e) {
             return Response.accessDenied();
         } finally {
@@ -190,9 +193,9 @@ public class Register extends Controller {
             response = (jsonr.get("response").get("code").asText().equals("0"));
             if (response) {
                 toKraken(msisdn);
-                if(!cli.getToken().isEmpty()) {
-                    CallWithTokenGlobality(cli.getToken());
-                }
+                //if(!cli.getToken().isEmpty()) {
+                //    CallWithTokenGlobality(cli.getToken());
+                //}
             }
         } catch (Exception e) {
             return ok("Internal Error");
