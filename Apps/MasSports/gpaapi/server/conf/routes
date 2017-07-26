@@ -3,11 +3,11 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
-GET     /wap                        controllers.WapSite.index
-POST    /wap/getpin                 controllers.WapSite.getpin
-POST    /wap/confirm                controllers.WapSite.confirm
-GET    /wap/externalconfirm        controllers.WapSite.confirmExternal
+#GET    /                           controllers.Application.index
+GET     /                           controllers.WapSite.index
+POST    /getpin                     controllers.WapSite.getpin
+POST    /confirm                    controllers.WapSite.confirm
+GET     /externalconfirm            controllers.WapSite.confirmExternal
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 

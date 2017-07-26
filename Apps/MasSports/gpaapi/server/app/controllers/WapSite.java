@@ -41,67 +41,32 @@ public class WapSite extends Controller {
     public static final String SILVER_API_PASS = "dsad3ss";
     public static final String urlSub = "/suscripcion/servicios/api/Wssuscripcion.asmx/SuscripcionWap";
 
-
+    ///La que llega desde los diferentes agregadores
     public Result index() throws IOException {
         String token  = "";
-        String ttype = "";
+        String ttype = "none";
         Services ser =  new Services();
         ser = ser.getServiceByName("md");
-        if(request().queryString().containsKey("clickid")) {
+        if(request().queryString().containsKey("IDTRX")) {
             ttype = "GLOBA";
-            token  = request().getQueryString("clickid");
+            token  = request().getQueryString("IDTRX");
         }
-        //String msisdn = request().hasHeader("MSISDN")?request().getHeader("MSISDN"): "" ;
+
+        if(request().queryString().containsKey("idtrx")) {
+            ttype = "GLOBA";
+            token  = request().getQueryString("idtrx");
+        }
+
+        if(request().queryString().containsKey("click_id")) {
+            ttype = "SPIRALIS";
+            token  = request().getQueryString("click_id");
+        }
         String msisdn = request().cookie("User-Identity-Forward-msisdn") == null ? "" : request().cookie("User-Identity-Forward-msisdn").value();
-        //User-Identity-Forward-msisdn
-        if (!msisdn.isEmpty()){
-            return redirect(GetSubsWAP(InsertClient(msisdn,ttype, token, ser)));
-        }
-        //Obtener Token
         return ok(wepa.render(msisdn, token, ttype));
     }
 
 
-    public String GetSubsWAP(Clients client) throws IOException {
-
-        String urlFinal = request().host() + "/wap/confirm";
-        String urlLanding = request().host() + "/assets/image.jpg";
-        JsonNode response = Json.newObject();
-
-        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
-                .setMaxRequestRetry(0)
-                .setShutdownQuietPeriod(0)
-                .setShutdownTimeout(0).build();
-
-        String name = "wsclient";
-        ActorSystem system = ActorSystem.create(name);
-        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
-        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
-
-        WSClient ws = new AhcWSClient(config, materializer);
-
-        String urlOrigen = urlSilver+urlSub;
-
-        //CompletionStage<JsonNode> jsonPromise2 = ws.url(Config.getString("silver-api-url") + "api/v1/user/subscripcionWap").get()
-        String aux = getSuscriptionWap(urlOrigen,client.getService(), client.getMsisdn(), urlFinal, urlLanding);
-        CompletionStage<String> jsonPromise2 = ws.url(aux).get()
-                .thenApply(WSResponse::getBody);
-        String pepe = "";
-        String temp = "";
-        try {
-            pepe = jsonPromise2.toCompletableFuture().get();
-            //temp = pepe.getElementsByTagName("urlAlta").item(0).getFirstChild().getTextContent();
-            temp = pepe.substring(pepe.indexOf("&lt;urlAlta&gt;") + 15, pepe.indexOf("&lt;/urlAlta&gt;"));
-            //response = jsonPromise2.toCompletableFuture().get();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            ws.close();
-        }
-        return temp;
-    }
-
+    ///pantalla para salvar el usuaior introducido
     public Result getpin() throws IOException {
         Map<String, String[]> aux = request().body().asFormUrlEncoded();
         String msisdn = (aux.get("msisdn")[0].startsWith("507")?"":"507") + aux.get("msisdn")[0];
@@ -111,10 +76,13 @@ public class WapSite extends Controller {
             client = client.getClientByMSisdnAndConfirm(aux.get("msisdn")[0],aux.get("ttype")[0]);
             if(client == null)
             {
+                Services ser =  new Services();
+                ser = ser.getServiceByName("md");
                 client = new Clients();
                 client.setToken(aux.get("token")[0]);
                 client.setConfirm(aux.get("ttype")[0]);
-                client.setMsisdn(Long.parseLong(aux.get("msisdn")[0]));
+                client.setMsisdn(Long.parseLong(msisdn));
+                client.setService(ser);
                 client.save();
             }
             else
@@ -123,17 +91,16 @@ public class WapSite extends Controller {
                 client.update();
             }
         }
-        CallGetSilver(aux.get("msisdn")[0]);
-        return ok(wepaget.render(aux.get("msisdn")[0], aux.get("ttype")[0]));
+        CallGetSilver(msisdn);
+        return ok(wepaget.render(msisdn, aux.get("ttype")[0]));
     }
 
+    ///Para llamar a Silver el pimer paso
     public void CallGetSilver(String msisdn) throws IOException {
         Services ser =  new Services();
         ser = ser.getServiceByName("md");
 
         ObjectNode event = Json.newObject();
-        //event.put("usuario", Config.getString("silver-api-user"));
-        //event.put("password", Config.getString("silver-api-pass"));
         event.put("celular", msisdn);
         event.put("operadoraId", ser.getIdentifier());
         event.put("numeroCorto", ser.getShortCode());
@@ -166,36 +133,28 @@ public class WapSite extends Controller {
 
     public Result confirm() throws IOException {
         Map<String, String[]> aux = request().body().asFormUrlEncoded();
-        boolean p = false;
-        p = CheckPin(aux.get("msisdn")[0],aux.get("pin")[0]);
+        boolean validPin =  false;
+        validPin = CheckPin(aux.get("msisdn")[0],aux.get("pin")[0]);
         if(!aux.get("msisdn")[0].isEmpty())
         {
             Clients client = new Clients();
             client = client.getClientByMSisdnAndConfirm(aux.get("msisdn")[0],aux.get("ttype")[0]);
             if(client != null)
             {
+                String ttype = aux.get("ttype")[0];
                 String pin = aux.get("pin")[0];
-                if(p)
-                    CallWithTokenGlobality(client.getToken());
+                if(validPin) {
+                    if(ttype.equals("GLOBAL"))
+                        CallWithTokenGlobality(client.getToken());
+                    if(ttype.equals("SPIRALIS"))
+                        CallWithTokenSpiralis(client.getToken());
+                }
             }
         }
-        return ok(wepaconfirm.render(p));
+        return ok(wepaconfirm.render(validPin));
     }
 
-
-    public Result confirmExternal() throws IOException {
-        String id =  "";
-        if(request().queryString().containsKey("request_id")) {
-            id  = request().getQueryString("request_id");
-
-            Clients clit  = Clients.getClientByIdentifier(id);
-            if(clit !=null){
-                CallWithTokenGlobality(clit.getToken());
-            }
-        }
-        return ok(wepaconfirm.render(true));
-    }
-
+    //Valida que el usuario contrasena introducido
     public boolean CheckPin(String msisdn, String pin) throws IOException {
         Services ser =  new Services();
         ser = ser.getServiceByName("md");
@@ -255,6 +214,31 @@ public class WapSite extends Controller {
         }
     }
 
+    public void CallWithTokenSpiralis(String token) throws IOException {
+        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
+                .setMaxRequestRetry(0)
+                .setShutdownQuietPeriod(0)
+                .setShutdownTimeout(0).build();
+
+        String name = "wsclient";
+        ActorSystem system = ActorSystem.create(name);
+        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
+        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
+
+        WSClient ws = new AhcWSClient(config, materializer);
+        CompletionStage<String> jsonPromise = ws.url(Config.getString("spiralis-url") + token).get()
+                .thenApply(WSResponse::getBody);
+//        JsonNode aux = Json.newObject();
+        String aux = "";
+        try {
+            aux = jsonPromise.toCompletableFuture().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ws.close();
+        }
+    }
+
     /**Creado por Erick Subero
      * Esto genera un nuevo UUID.
      *
@@ -287,6 +271,11 @@ public class WapSite extends Controller {
         return client;
     }
 
+
+
+
+
+
     private static String getSuscriptionWap(String urlOrigen,Services ser, Long msisdn, String urlFinal, String urlLanding) throws UnsupportedEncodingException {
         String usuario = SILVER_API_USER;
         String password = SILVER_API_PASS;
@@ -312,4 +301,66 @@ public class WapSite extends Controller {
         CallGetSilver(aux.get("msisdn")[0]);
         return ok(wepaget.render(aux.get("msisdn")[0], aux.get("ttype")[0]));
     }
+
+
+    //Cuando la confirmacion es externa
+    public Result confirmExternal() throws IOException {
+        String id =  "";
+        if(request().queryString().containsKey("request_id")) {
+            id  = request().getQueryString("request_id");
+
+            Clients clit  = Clients.getClientByIdentifier(id);
+            if(clit !=null){
+                CallWithTokenGlobality(clit.getToken());
+            }
+        }
+        return ok(wepaconfirm.render(true));
+    }
+
+
+    ///Zona no borrar en caso de emergencia
+      /*
+
+
+
+    public String GetSubsWAP(Clients client) throws IOException {
+
+        String urlFinal = request().host() + "/wap/confirm";
+        String urlLanding = request().host() + "/assets/image.jpg";
+        JsonNode response = Json.newObject();
+
+        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
+                .setMaxRequestRetry(0)
+                .setShutdownQuietPeriod(0)
+                .setShutdownTimeout(0).build();
+
+        String name = "wsclient";
+        ActorSystem system = ActorSystem.create(name);
+        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
+        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
+
+        WSClient ws = new AhcWSClient(config, materializer);
+
+        String urlOrigen = urlSilver+urlSub;
+
+        //CompletionStage<JsonNode> jsonPromise2 = ws.url(Config.getString("silver-api-url") + "api/v1/user/subscripcionWap").get()
+        String aux = getSuscriptionWap(urlOrigen,client.getService(), client.getMsisdn(), urlFinal, urlLanding);
+        CompletionStage<String> jsonPromise2 = ws.url(aux).get()
+                .thenApply(WSResponse::getBody);
+        String pepe = "";
+        String temp = "";
+        try {
+            pepe = jsonPromise2.toCompletableFuture().get();
+            //temp = pepe.getElementsByTagName("urlAlta").item(0).getFirstChild().getTextContent();
+            temp = pepe.substring(pepe.indexOf("&lt;urlAlta&gt;") + 15, pepe.indexOf("&lt;/urlAlta&gt;"));
+            //response = jsonPromise2.toCompletableFuture().get();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            ws.close();
+        }
+        return temp;
+    }
+    */
 }

@@ -3,7 +3,7 @@
 @main("MAS DEPORTES") {
 
     <div id="outPopUp">
-        <form action="/wap/getpin" method="post">
+        <form action="/getpin" method="post">
 
             <p>Bienvenido a +Deporte</p>
             <p>Bienvenido Usuario @msisdn, presiona Ok para recibir un mensaje de texto y empezar a ganar premios!</p>
@@ -11,14 +11,15 @@
             @if(msisdn.isEmpty()) {
                 <span>Telefono:</span><br/>
             }
-            <input  name="msisdn" @if(!(msisdn.isEmpty())){ type="hidden" }else{ type="text"} value="@msisdn" />
+            <input  type="number" min="0" step="1"  name="msisdn" @if(!(msisdn.isEmpty())){ type="hidden" }else{ type="text"} value="@msisdn" />
             <input  name="token" type="hidden" value="@token" />
             <input  name="ttype" type="hidden" value="@ttype" />
             <br/>
-            <button type="submit">ok</button>
-            @if(msisdn.isEmpty()) {
-                <button type="reset">reset</button>
-            }
+
+            <input type="checkbox" name="check" onchange="document.getElementById('checker').disabled = !this.checked;">Acepto los terminos y condiciones<br>
+            <br/>
+            <button type="submit" id="checker" disabled>ok</button>
+
         </form>
 
     </div>
