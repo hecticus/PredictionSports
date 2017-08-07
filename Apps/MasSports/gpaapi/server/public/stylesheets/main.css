@@ -1,9 +1,87 @@
+
 #outPopUp {
     position: absolute;
     width: 300px;
     height: 200px;
-    z-index: 15;
-    top: 50%;
-    left: 50%;
-    margin: -100px 0 0 -150px;
+    z-index: 3;
+    top: 30%;
+    left: 30%;
+    margin: -100px 0 0 -30px;
+}
+
+#mslogo
+{
+    padding-top: 40px;
+}
+
+.texto
+{
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    font-size: 8vmin;
+    font-style: italic;
+}
+
+.form
+{
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    font-size: 3.5vmin;
+    font-style: italic;
+}
+
+.formst
+{
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    font-size: 1.5vmin;
+    line-height: 2.2vmin;
+    font-style: italic;
+}
+
+.submitbutton
+{
+    background-color: #ffcb3b;
+    border: 0px;
+    width: 50%;
+    color: black;
+    height: 30px;
+    font-size: 12pt;
+}
+
+.submitbutton:disabled
+{
+    background-color: #a6852a;
+    border: 0px;
+    width: 50%;
+    color: black;
+    height: 30px;
+    font-size: 12pt;
+    
+}
+
+.bottom
+{
+    font-family: 'Oswald', sans-serif;
+    text-align: left;
+    font-size: 2vmin;
+    font-style: italic;
+     vertical-align: middle;
+}
+
+.rotater
+{
+    -webkit-transform: rotate(-3deg);
+    -moz-transform: rotate(-3deg);
+    -ms-transform: rotate(-3deg);
+    -o-transform: rotate(-3deg);
+    position: absolute;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 110px;
 }

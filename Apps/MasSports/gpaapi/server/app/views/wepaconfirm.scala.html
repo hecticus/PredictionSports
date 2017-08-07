@@ -1,13 +1,24 @@
 @(goodie: Boolean)
 
-@main("MAS DEPORTES") {
+@main("MAS DEPORTES - Confirmar") {
 
-    <div id="outPopUp">
         @if(goodie){
-            <span>Felicidades ha entrado correctamente a +Deportes</span>
+            <div class="row">
+                <div class="col-md-12">Bienvenido a +Deportes
+                    <hr style="margin-top: 5px; width: 50%; color: white; height: 2px; " />
+                </div>
+            </div>
         } else {
-            <span>Pin invalido intente nuevamente</span>
-             <button onclick="window.history.back()">Go Back</button>
+            <div class="row">
+                <div class="col-md-12">Pin invalido<br>intente nuevamente
+                    <hr style="margin-top: 5px; width: 50%; color: white; height: 2px; " />
+                </div>
+            </div>
+            <div class="row formst">
+                <div class="col-md-12">
+                    <button class="submitbutton" onclick="window.location.href ='/'">Volver</button>
+
+                </div>
+            </div>
         }
-    </div>
 }

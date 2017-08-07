@@ -1,26 +1,25 @@
 @(msisdn: String, token: String, ttype: String)
 
 @main("MAS DEPORTES") {
-
-    <div id="outPopUp">
-        <form action="/getpin" method="post">
-
-            <p>Bienvenido a +Deporte</p>
-            <p>Bienvenido Usuario @msisdn, presiona Ok para recibir un mensaje de texto y empezar a ganar premios!</p>
+        <form action="/getpin" method="post" id="wepa">
+            <div class="row">
+                <div class="col-md-12">GANA YA!!
+                    <hr style="margin-top: 5px; width: 50%; color: white; height: 2px; " />
+                </div>
+            </div>
+            <div class="row formst">
+                <div class="col-md-12">
+                    Número de Celular <br/>
+                        <input style="width: 50%; color:black; text-align: center ; font-size:  2.5vmin;" type="number" min="0" step="1" id="msisdn"  name="msisdn" @if(!(msisdn.isEmpty())){ type="hidden" }else{ type="text"} value="@msisdn" />
+                        <input  name="token" type="hidden" value="@token" />
+                        <input  name="ttype" type="hidden" value="@ttype" />
+                    <br>
+                        <br>
+                    <button id="checker" type="submit"  class="submitbutton">ENVIAR!</button>
+                    <br>
+                    <input type="checkbox" id="conditions" name="check" value="done" >He leido y acepto los terminos y condiciones
+                </div>
+            </div>
             <br/>
-            @if(msisdn.isEmpty()) {
-                <span>Telefono:</span><br/>
-            }
-            <input  type="number" min="0" step="1"  name="msisdn" @if(!(msisdn.isEmpty())){ type="hidden" }else{ type="text"} value="@msisdn" />
-            <input  name="token" type="hidden" value="@token" />
-            <input  name="ttype" type="hidden" value="@ttype" />
-            <br/>
-
-            <input type="checkbox" name="check" onchange="document.getElementById('checker').disabled = !this.checked;">Acepto los terminos y condiciones<br>
-            <br/>
-            <button type="submit" id="checker" disabled>ok</button>
-
         </form>
-
-    </div>
 }
