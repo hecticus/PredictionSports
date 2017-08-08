@@ -69,6 +69,15 @@
      vertical-align: middle;
 }
 
+.footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 120px;
+    background-image: url("assets/images/backfoot.png");
+}
+
 .rotater
 {
     -webkit-transform: rotate(-3deg);
@@ -84,4 +93,10 @@
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 110px;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
 }
