@@ -43,7 +43,7 @@ public class WapSite extends Controller {
 
     ///La que llega desde los diferentes agregadores
     public Result index() throws IOException {
-        String token  = "";
+        String token  = "NA";
         String ttype = "none";
         Services ser =  new Services();
         ser = ser.getServiceByName("md");
@@ -61,6 +61,18 @@ public class WapSite extends Controller {
             ttype = "SPIRALIS";
             token  = request().getQueryString("click_id");
         }
+
+        if(request().queryString().containsKey("HASH")) {
+            ttype = "MOBUSI";
+            token  = request().getQueryString("HASH");
+        }
+
+        if(request().queryString().containsKey("hash")) {
+            ttype = "MOBUSI";
+            token  = request().getQueryString("hash");
+        }
+
+
         String msisdn = request().cookie("User-Identity-Forward-msisdn") == null ? "" : request().cookie("User-Identity-Forward-msisdn").value();
         return ok(wepa.render(msisdn, token, ttype));
     }
@@ -73,7 +85,7 @@ public class WapSite extends Controller {
         if(!aux.get("token")[0].isEmpty())
         {
             Clients client = new Clients();
-            client = client.getClientByMSisdnAndConfirm(aux.get("msisdn")[0],aux.get("ttype")[0]);
+            client = client.getClientByMSisdnAndConfirm(msisdn,aux.get("ttype")[0]);
             if(client == null)
             {
                 Services ser =  new Services();
@@ -149,6 +161,8 @@ public class WapSite extends Controller {
                         CallWithTokenGlobality(client.getToken());
                     if(ttype.equals("SPIRALIS"))
                         CallWithTokenSpiralis(client.getToken());
+                    if(ttype.equals("MOBUSI"))
+                        CallWithTokenGeneric("mobusi-url", client.getToken());
                 }
             }
         }
@@ -208,6 +222,31 @@ public class WapSite extends Controller {
         String aux = "";
         try {
            aux = jsonPromise.toCompletableFuture().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ws.close();
+        }
+    }
+
+    public void CallWithTokenGeneric(String routeget, String token) throws IOException {
+        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
+                .setMaxRequestRetry(0)
+                .setShutdownQuietPeriod(0)
+                .setShutdownTimeout(0).build();
+
+        String name = "wsclient";
+        ActorSystem system = ActorSystem.create(name);
+        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
+        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
+
+        WSClient ws = new AhcWSClient(config, materializer);
+        CompletionStage<String> jsonPromise = ws.url(Config.getString(routeget) + token).get()
+                .thenApply(WSResponse::getBody);
+//        JsonNode aux = Json.newObject();
+        String aux = "";
+        try {
+            aux = jsonPromise.toCompletableFuture().get();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
