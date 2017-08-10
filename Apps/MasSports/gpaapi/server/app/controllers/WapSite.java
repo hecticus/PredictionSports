@@ -95,13 +95,13 @@ public class WapSite extends Controller {
                 client.setConfirm(aux.get("ttype")[0]);
                 client.setMsisdn(Long.parseLong(msisdn));
                 client.setService(ser);
-                cli.setLastUpdate(new Date());
+                client.setLastUpdate(new Date());
                 client.save();
             }
             else
             {
                 client.setToken(aux.get("token")[0]);
-                cli.setLastUpdate(new Date());
+                client.setLastUpdate(new Date());
                 client.update();
             }
         }
