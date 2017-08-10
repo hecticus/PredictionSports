@@ -156,13 +156,24 @@ public class WapSite extends Controller {
                 String ttype = aux.get("ttype")[0];
                 String pin = aux.get("pin")[0];
                 if(validPin) {
-                    toKraken(client.getMsisdn().toString());
-                    if(ttype.equals("GLOBAL"))
+                    if(ttype.equals("GLOBAL")) {
                         CallWithTokenGlobality(client.getToken());
-                    if(ttype.equals("SPIRALIS"))
+                        toKraken(client.getMsisdn().toString(), "GLOBALWEB");
+
+                    }
+                    if(ttype.equals("SPIRALIS")) {
                         CallWithTokenSpiralis(client.getToken());
-                    if(ttype.equals("MOBUSI"))
+                        toKraken(client.getMsisdn().toString(), "SPIRALISWEB");
+
+                    }
+                    if(ttype.equals("MOBUSI")) {
                         CallWithTokenGeneric("mobusi-url", client.getToken());
+                        toKraken(client.getMsisdn().toString(), "MOBUSIWEB");
+
+                    }
+                    if(ttype.equals("none")) {
+                        toKraken(client.getMsisdn().toString(), "WEB");
+                    }
                 }
             }
         }
@@ -306,7 +317,32 @@ public class WapSite extends Controller {
         }
     }
 
+    public void toKraken(String msisdn, String msg) throws IOException {
+        // http://02.kapp.hecticus.com/ws/receiveMO.php?source=50765070490&destination=9090&service_type=pacws&msg=GLOBALWEB&received_time=20151118170000
 
+        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
+                .setMaxRequestRetry(0)
+                .setShutdownQuietPeriod(0)
+                .setShutdownTimeout(0).build();
+
+        String name = "wsclient";
+        ActorSystem system = ActorSystem.create(name);
+        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
+        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
+
+        WSClient ws = new AhcWSClient(config, materializer);
+
+        String durl = "http://02.kapp.hecticus.com/ws/receiveMO.php?source=" + msisdn + "&destination=9090&service_type=pacws&msg="+ msg +"&received_time=20151118170000" ;
+        CompletionStage<String> jsonPromise2 = ws.url(durl).get()
+                .thenApply(WSResponse::getBody);
+        String jsonr = "";
+        try {
+            jsonr =jsonPromise2.toCompletableFuture().get();
+        } catch (Exception e) {
+        } finally {
+            ws.close();
+        }
+    }
     /**Creado por Erick Subero
      * Esto genera un nuevo UUID.
      *
