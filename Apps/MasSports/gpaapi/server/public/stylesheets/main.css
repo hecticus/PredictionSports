@@ -1,3 +1,20 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+
+.pfooter {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 120px;
+    background-image: url(../images/backfoot.png);
+    background-repeat: repeat-x;
+
+}
+
 
 #outPopUp {
     position: absolute;
@@ -49,6 +66,7 @@
     font-size: 12pt;
 }
 
+
 .submitbutton:disabled
 {
     background-color: #a6852a;
@@ -57,25 +75,14 @@
     color: black;
     height: 30px;
     font-size: 12pt;
-    
 }
-
 .bottom
 {
     font-family: 'Oswald', sans-serif;
     text-align: left;
     font-size: 2vmin;
     font-style: italic;
-     vertical-align: middle;
-}
-
-.footer {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 120px;
-    background-image: url("assets/images/backfoot.png");
+    vertical-align: middle;
 }
 
 .rotater
@@ -88,15 +95,9 @@
 }
 
 #footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 110px;
-}
-
-.vcenter {
-    display: inline-block;
-    vertical-align: middle;
-    float: none;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 110px;
 }
