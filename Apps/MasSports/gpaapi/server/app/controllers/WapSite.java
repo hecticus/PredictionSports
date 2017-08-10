@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import modeles.Clients;
 import modeles.Config;
 import modeles.Services;
+import modeles.log;
 import org.asynchttpclient.AsyncHttpClientConfig;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
 import org.w3c.dom.Document;
@@ -106,6 +107,13 @@ public class WapSite extends Controller {
                 client.update();
             }
         }
+
+        log tmp = new log();
+        tmp.setIdentifier(aux.get("ttype")[0]);
+        tmp.setMsisdn(msisdn);
+        tmp.setLastUpdate(new Date());
+        tmp.save();
+
         CallGetSilver(msisdn);
         return ok(wepaget.render(msisdn, aux.get("ttype")[0]));
     }
