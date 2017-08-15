@@ -183,7 +183,7 @@ public class WapSite extends Controller {
 
                     }
                     if(ttype.equals("none")) {
-                        toKraken(client.getMsisdn().toString(), "WEB");
+                        toKraken(client.getMsisdn().toString(), "NONEWEB");
                     }
                 }
             }
