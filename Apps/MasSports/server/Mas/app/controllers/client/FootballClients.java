@@ -149,6 +149,17 @@ public class FootballClients extends Clients {
 //        String json = result.get(10000).getBody();
 //    }
 
+    public static Result checkMsisdn() {
+        ObjectNode data = getJson();
+        ObjectNode ret = Json.newObject();
+        if (data.has("msisdn")) {
+            Client client = Client.getByLogin(data.get("msisdn").asText());
+            if(client != null)
+                ret.put("client", client.toJsonWithoutRelations());
+        }
+        return ok(buildBasicResponse(0, "OK", ret));
+    }
+
     public static Result checkPin() {
         ObjectNode data = getJson();
         ObjectNode ret = Json.newObject();
