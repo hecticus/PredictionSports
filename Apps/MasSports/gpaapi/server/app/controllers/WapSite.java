@@ -84,29 +84,36 @@ public class WapSite extends Controller {
     public Result getpin() throws IOException {
         Map<String, String[]> aux = request().body().asFormUrlEncoded();
         String msisdn = (aux.get("msisdn")[0].startsWith("507")?"":"507") + aux.get("msisdn")[0];
-        if(!aux.get("token")[0].isEmpty())
+        //if(!aux.get("token")[0].isEmpty())
+        //{
+
+        if(checkMD(msisdn))
+            return ok(wepaerror.render());
+        
+        Clients client = new Clients();
+        client = client.getClientByMSisdnAndConfirm(msisdn,aux.get("ttype")[0]);
+
+
+
+        if(client == null)
         {
-            Clients client = new Clients();
-            client = client.getClientByMSisdnAndConfirm(msisdn,aux.get("ttype")[0]);
-            if(client == null)
-            {
-                Services ser =  new Services();
-                ser = ser.getServiceByName("md");
-                client = new Clients();
-                client.setToken(aux.get("token")[0]);
-                client.setConfirm(aux.get("ttype")[0]);
-                client.setMsisdn(Long.parseLong(msisdn));
-                client.setService(ser);
-                client.setLastUpdate(new Date());
-                client.save();
-            }
-            else
-            {
-                client.setToken(aux.get("token")[0]);
-                client.setLastUpdate(new Date());
-                client.update();
-            }
+            Services ser =  new Services();
+            ser = ser.getServiceByName("md");
+            client = new Clients();
+            client.setToken(aux.get("token")[0]);
+            client.setConfirm(aux.get("ttype")[0]);
+            client.setMsisdn(Long.parseLong(msisdn));
+            client.setService(ser);
+            client.setLastUpdate(new Date());
+            client.save();
         }
+        else
+        {
+            client.setToken(aux.get("token")[0]);
+            client.setLastUpdate(new Date());
+            client.update();
+        }
+        //}
 
         log tmp = new log();
         tmp.setIdentifier(aux.get("ttype")[0]);
@@ -116,6 +123,39 @@ public class WapSite extends Controller {
 
         CallGetSilver(msisdn);
         return ok(wepaget.render(msisdn, aux.get("ttype")[0]));
+    }
+
+
+    public boolean checkMD(String msisdn) throws IOException
+    {
+        ObjectNode event = Json.newObject();
+        event.put("msisdn", msisdn);
+
+
+        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
+                .setMaxRequestRetry(0)
+                .setShutdownQuietPeriod(0)
+                .setShutdownTimeout(0).build();
+
+        String name = "wsclient";
+        ActorSystem system = ActorSystem.create(name);
+        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
+        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
+
+        WSClient ws = new AhcWSClient(config, materializer);
+        String wsr =  "http://plussports.hecticus.com/checkmsisdn";
+
+        JsonNode p;
+        try {
+            CompletionStage<JsonNode> jsonPromise = ws.url(wsr).post(event)
+                    .thenApply(response -> response.asJson());
+            p = jsonPromise.toCompletableFuture().get();
+            return p.has("client");
+        } catch (Exception e) {
+        } finally {
+            ws.close();
+        }
+        return false;
     }
 
     ///Para llamar a Silver el pimer paso
