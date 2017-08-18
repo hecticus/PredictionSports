@@ -89,7 +89,7 @@ public class WapSite extends Controller {
 
         if(checkMD(msisdn))
             return ok(wepaerror.render());
-        
+
         Clients client = new Clients();
         client = client.getClientByMSisdnAndConfirm(msisdn,aux.get("ttype")[0]);
 
@@ -150,7 +150,7 @@ public class WapSite extends Controller {
             CompletionStage<JsonNode> jsonPromise = ws.url(wsr).post(event)
                     .thenApply(response -> response.asJson());
             p = jsonPromise.toCompletableFuture().get();
-            return p.has("client");
+            return p.get("response").has("client");
         } catch (Exception e) {
         } finally {
             ws.close();
