@@ -74,6 +74,11 @@ public class WapSite extends Controller {
             token  = request().getQueryString("hash");
         }
 
+        if(request().queryString().containsKey("source")) {
+            ttype = "INSTA";
+            token  = request().getQueryString("source");
+        }
+
 
         String msisdn = request().cookie("User-Identity-Forward-msisdn") == null ? "" : request().cookie("User-Identity-Forward-msisdn").value();
         return ok(wepa.render(msisdn, token, ttype));
@@ -224,6 +229,9 @@ public class WapSite extends Controller {
                     }
                     if(ttype.equals("none")) {
                         toKraken(client.getMsisdn().toString(), "NONEWEB");
+                    }
+                    if(ttype.equals("INSTA")) {
+                        toKraken(client.getMsisdn().toString(), "INSTAWEB");
                     }
                 }
             }
