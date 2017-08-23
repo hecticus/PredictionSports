@@ -233,7 +233,7 @@ public class WapSite extends Controller {
                         toKraken(client.getMsisdn().toString(), "NONEWEB");
                     }
                     if(ttype.startsWith("INS")) {
-                        toKraken(client.getMsisdn().toString(), "INSTAWEB");
+                        toKraken(client.getMsisdn().toString(), ttype);
                     }
                 }
             }
