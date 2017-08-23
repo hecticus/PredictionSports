@@ -156,7 +156,7 @@ public class WapSite extends Controller {
                     .thenApply(response -> response.asJson());
             p = jsonPromise.toCompletableFuture().get();
             if(p.get("response").has("client"))
-                return p.get("response").get("client").get("status").asInt() != 1;
+                return p.get("response").get("client").get("status").asInt() == 1;
             //return p.get("response").has("client");
         } catch (Exception e) {
         } finally {
