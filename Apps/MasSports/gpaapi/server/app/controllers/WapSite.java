@@ -75,7 +75,7 @@ public class WapSite extends Controller {
         }
 
         if(request().queryString().containsKey("source")) {
-            ttype = "INSTA";
+            ttype  = request().getQueryString("source");
             token  = request().getQueryString("source");
         }
 
@@ -155,7 +155,9 @@ public class WapSite extends Controller {
             CompletionStage<JsonNode> jsonPromise = ws.url(wsr).post(event)
                     .thenApply(response -> response.asJson());
             p = jsonPromise.toCompletableFuture().get();
-            return p.get("response").has("client");
+            if(p.get("response").has("client"))
+                return p.get("response").get("client").get("status").asInt() != 1;
+            //return p.get("response").has("client");
         } catch (Exception e) {
         } finally {
             ws.close();
@@ -230,7 +232,7 @@ public class WapSite extends Controller {
                     if(ttype.equals("none")) {
                         toKraken(client.getMsisdn().toString(), "NONEWEB");
                     }
-                    if(ttype.equals("INSTA")) {
+                    if(ttype.startsWith("INS")) {
                         toKraken(client.getMsisdn().toString(), "INSTAWEB");
                     }
                 }
