@@ -74,6 +74,11 @@ public class WapSite extends Controller {
             token  = request().getQueryString("hash");
         }
 
+        if(request().queryString().containsKey("mobraid")) {
+            ttype = "MOBRAIN";
+            token  = request().getQueryString("mobraid");// + "@@@" +  request().getQueryString("mobrapu");
+        }
+
         if(request().queryString().containsKey("source")) {
             ttype  = request().getQueryString("source");
             token  = request().getQueryString("source");
@@ -229,6 +234,12 @@ public class WapSite extends Controller {
                         toKraken(client.getMsisdn().toString(), "MOBUSIWEB");
 
                     }
+
+                    if(ttype.equals("MOBRAIN")) {
+                        CallWithTokenMobrain(client.getToken());
+                        toKraken(client.getMsisdn().toString(), "MOBRAWEB");
+
+                    }
                     if(ttype.equals("none")) {
                         toKraken(client.getMsisdn().toString(), "NONEWEB");
                     }
@@ -294,6 +305,32 @@ public class WapSite extends Controller {
         String aux = "";
         try {
            aux = jsonPromise.toCompletableFuture().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ws.close();
+        }
+    }
+
+
+    public void CallWithTokenMobrain(String token) throws IOException {
+        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
+                .setMaxRequestRetry(0)
+                .setShutdownQuietPeriod(0)
+                .setShutdownTimeout(0).build();
+
+        String name = "wsclient";
+        ActorSystem system = ActorSystem.create(name);
+        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
+        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
+
+        WSClient ws = new AhcWSClient(config, materializer);
+        CompletionStage<String> jsonPromise = ws.url(Config.getString("mobrain-url")  + token + "?token=" + Config.getString("mobrain-token") ).get()
+                .thenApply(WSResponse::getBody);
+//        JsonNode aux = Json.newObject();
+        String aux = "";
+        try {
+            aux = jsonPromise.toCompletableFuture().get();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
