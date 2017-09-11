@@ -49,6 +49,8 @@ import java.util.concurrent.TimeUnit;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.*;
+import models.Job;
+
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -1554,7 +1556,19 @@ public class FootballClients extends Clients {
                     }
 
 
+                    Job job = Job.finder.where().eq("name", "LeaderBoardNew").findUnique();
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(job.getNextTimestamp() - job.getTimeParams());
+
+                    int mYear = calendar.get(Calendar.YEAR);
+                    int mMonth = calendar.get(Calendar.MONTH);
+                    int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+
+
                     response.put("points", points);
+                    response.put("ddate", mYear + "-" + mMonth + "-" + mDay );
+                    response.put("dhour", hour);
                     response.put("correct_bets", correct);
 
                     if(getFromQueryString("new") != null)
