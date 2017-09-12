@@ -1556,9 +1556,10 @@ public class FootballClients extends Clients {
                     }
 
 
-                    Job job = Job.getByID(7l);
+                    //Job job = Job.getByID(7l);
+                    Long millis = Long.parseLong(Config.getString("lastmillis"));
                     Calendar calendar = Calendar.getInstance();
-                    calendar.setTimeInMillis(job.getNextTimestamp() - Long.parseLong(job.getTimeParams()));
+                    calendar.setTimeInMillis(millis);
 
                     int mYear = calendar.get(Calendar.YEAR);
                     int mMonth = calendar.get(Calendar.MONTH);
