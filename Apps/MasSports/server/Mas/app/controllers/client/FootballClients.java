@@ -1556,9 +1556,9 @@ public class FootballClients extends Clients {
                     }
 
 
-                    Job job = Job.finder.where().eq("name", "LeaderBoardNew").findUnique();
+                    Job job = Job.getByID(7l);
                     Calendar calendar = Calendar.getInstance();
-                    calendar.setTimeInMillis(job.getNextTimestamp() - job.getTimeParams());
+                    calendar.setTimeInMillis(job.getNextTimestamp() - Long.parseLong(job.getTimeParams()));
 
                     int mYear = calendar.get(Calendar.YEAR);
                     int mMonth = calendar.get(Calendar.MONTH);
@@ -1568,7 +1568,7 @@ public class FootballClients extends Clients {
 
                     response.put("points", points);
                     response.put("ddate", mYear + "-" + mMonth + "-" + mDay );
-                    response.put("dhour", hour);
+                    response.put("dhour", hour + ":" + (calendar.get(Calendar.MINUTE)<10? "0"+calendar.get(Calendar.MINUTE):calendar.get(Calendar.MINUTE) ));
                     response.put("correct_bets", correct);
 
                     if(getFromQueryString("new") != null)
