@@ -1562,13 +1562,13 @@ public class FootballClients extends Clients {
                     calendar.setTimeInMillis(millis);
 
                     int mYear = calendar.get(Calendar.YEAR);
-                    int mMonth = calendar.get(Calendar.MONTH);
+                    int mMonth = calendar.get(Calendar.MONTH) -1;
                     int mDay = calendar.get(Calendar.DAY_OF_MONTH);
                     int hour = calendar.get(Calendar.HOUR_OF_DAY) -5;
 
 
                     response.put("points", points);
-                    response.put("ddate", mYear + "-" + mMonth + "-" + mDay );
+                    response.put("ddate",  mDay  + "/" + mMonth + "/" +  mYear );
                     response.put("dhour", hour + ":" + (calendar.get(Calendar.MINUTE)<10? "0"+calendar.get(Calendar.MINUTE):calendar.get(Calendar.MINUTE) ));
                     response.put("correct_bets", correct);
 
