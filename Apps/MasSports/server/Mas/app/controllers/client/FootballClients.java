@@ -1403,8 +1403,6 @@ public class FootballClients extends Clients {
                     int hour = calendar.get(Calendar.HOUR_OF_DAY) -5;
 
 
-                    clientLeaderboardJson.put("ddate",  mDay  + "/" + mMonth + "/" +  mYear );
-                    clientLeaderboardJson.put("dhour", hour + ":" + (calendar.get(Calendar.MINUTE)<10? "0"+calendar.get(Calendar.MINUTE):calendar.get(Calendar.MINUTE) ));
 
                     if (clientLeaderboardTotal != null) {
                         clientLeaderboardJson = clientLeaderboardTotal.toJsonSimple();
@@ -1418,6 +1416,10 @@ public class FootballClients extends Clients {
                         clientLeaderboardJson.put("hits", 0);
                         clientLeaderboardJson.put("index", totalLeaderboards.size());
                     }
+
+                    clientLeaderboardJson.put("ddate",  mDay  + "/" + mMonth + "/" +  mYear );
+                    clientLeaderboardJson.put("dhour", hour + ":" + (calendar.get(Calendar.MINUTE)<10? "0"+calendar.get(Calendar.MINUTE):calendar.get(Calendar.MINUTE) ));
+
                     responseData.put("leaderboard", Json.toJson(leaderboardsJson));
                     responseData.put("client", clientLeaderboardJson);
                     return ok(buildBasicResponse(0, "OK", responseData));
