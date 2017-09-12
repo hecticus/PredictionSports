@@ -1392,6 +1392,20 @@ public class FootballClients extends Clients {
                         leaderboardsJson.add(totalLeaderboards.get(i).toJsonSimple());
                     }
                     ObjectNode clientLeaderboardJson = null;
+
+                    Long millis = Long.parseLong(Config.getString("lastmillis"));
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(millis);
+
+                    int mYear = calendar.get(Calendar.YEAR);
+                    int mMonth = calendar.get(Calendar.MONTH) -1;
+                    int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY) -5;
+
+
+                    clientLeaderboardJson.put("ddate",  mDay  + "/" + mMonth + "/" +  mYear );
+                    clientLeaderboardJson.put("dhour", hour + ":" + (calendar.get(Calendar.MINUTE)<10? "0"+calendar.get(Calendar.MINUTE):calendar.get(Calendar.MINUTE) ));
+
                     if (clientLeaderboardTotal != null) {
                         clientLeaderboardJson = clientLeaderboardTotal.toJsonSimple();
                         clientLeaderboardJson.put("index", index);
