@@ -74,9 +74,9 @@ public class WapSite extends Controller {
             token  = request().getQueryString("hash");
         }
 
-        if(request().queryString().containsKey("mobraid")) {
+        if(request().queryString().containsKey("mobrainid")) {
             ttype = "MOBRAIN";
-            token  = request().getQueryString("mobraid");// + "@@@" +  request().getQueryString("mobrapu");
+            token  = request().getQueryString("mobrainid");// + "@@@" +  request().getQueryString("mobrapu");
         }
 
         if(request().queryString().containsKey("source")) {
