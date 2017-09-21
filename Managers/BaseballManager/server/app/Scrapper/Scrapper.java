@@ -48,9 +48,9 @@ public class Scrapper {
 
         int daysAfter = Config.getInt("days_after");
         if(  Config.getInt("file_master") ==  1)
-            new File("master.mlb").createNewFile();
+            new File(System.getProperty("user.home") + "/master.mlb").createNewFile();
 
-        if(!new File("master.mlb").exists()) return;
+        if(!new File(System.getProperty("user.home") + "/master.mlb").exists()) return;
         //Mailer.SendError("pal Ejecutando scrapper" + daysAfter,"se inica el scrapper");
         //Scrapper(DateUtil(0));
         Long startTime = System.currentTimeMillis();
