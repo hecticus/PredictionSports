@@ -1388,10 +1388,13 @@ public class FootballClients extends Clients {
                     int index = totalLeaderboards.indexOf(clientLeaderboardTotal);
                     ArrayList<ObjectNode> leaderboardsJson = new ArrayList<>();
                     leaderboardSize = leaderboardSize > totalLeaderboards.size() ? totalLeaderboards.size() : leaderboardSize;
+                    int auux =0;
                     for (int i = 0; i < leaderboardSize; ++i) {
+                        auux++;
                         leaderboardsJson.add(totalLeaderboards.get(i).toJsonSimple());
                     }
                     ObjectNode clientLeaderboardJson = null;
+                    clientLeaderboardJson.put("auux", auux);
 
                     Long millis = Long.parseLong(Config.getString("lastmillis"));
                     Calendar calendar = Calendar.getInstance();
@@ -1445,7 +1448,7 @@ public class FootballClients extends Clients {
                     List<LeaderboardGlobal> leaderboardGlobalList = client.getLeaderboardGlobal();
                     for (LeaderboardGlobal leaderboardGlobal : leaderboardGlobalList) {
                         if(leaderboardGlobal.getScore() > 0 && leaderboardGlobal.getCorrectBets() > 0 )
-                        leaderboardsJson.add(leaderboardGlobal.toJsonClean());
+                            leaderboardsJson.add(leaderboardGlobal.toJsonClean());
                     }
                 } else {
                     List<Leaderboard> leaderboards = null;

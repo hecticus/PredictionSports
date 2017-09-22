@@ -109,8 +109,8 @@ public class LeaderboardTotal extends HecticusModel {
         ObjectNode objNode = Json.newObject();
         objNode.put("id_client", client.getIdClient());
         String nickname = client.getNickname();
-        objNode.put("client", nickname==null?"Anônimo":nickname);
-        objNode.put("score", score + smsscore);
+        objNode.put("client", nickname==null?"Jugador Anónimo":nickname);
+        objNode.put("score", (score == null?0:score) + smsscore);
         objNode.put("hits", correctBets);
         return objNode;
     }
