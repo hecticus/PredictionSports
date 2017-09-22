@@ -1444,6 +1444,7 @@ public class FootballClients extends Clients {
                 if (global) {
                     List<LeaderboardGlobal> leaderboardGlobalList = client.getLeaderboardGlobal();
                     for (LeaderboardGlobal leaderboardGlobal : leaderboardGlobalList) {
+                        if(leaderboardGlobal.getScore() > 0 && leaderboardGlobal.getCorrectBets() > 0 )
                         leaderboardsJson.add(leaderboardGlobal.toJsonClean());
                     }
                 } else {
