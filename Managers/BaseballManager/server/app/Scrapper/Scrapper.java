@@ -110,8 +110,8 @@ public class Scrapper {
 
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            System.out.println("http://gd2.mlb.com/components/game/mlb/year_"+ cal.get(Calendar.YEAR) + "/month_" + (cal.get(Calendar.MONTH) < 10? "0" + (cal.get(Calendar.MONTH)+1): cal.get(Calendar.MONTH)+1) + "/day_" + (cal.get(Calendar.DAY_OF_MONTH) < 10? "0" + cal.get(Calendar.DAY_OF_MONTH): cal.get(Calendar.DAY_OF_MONTH)) + "/master_scoreboard.json");
-            CompletionStage<JsonNode> jsonPromise2 = ws.url("http://gd2.mlb.com/components/game/mlb/year_"+ cal.get(Calendar.YEAR) + "/month_" + (cal.get(Calendar.MONTH) < 10? "0" + (cal.get(Calendar.MONTH)+1): cal.get(Calendar.MONTH)+1) + "/day_" + (cal.get(Calendar.DAY_OF_MONTH) < 10? "0" + cal.get(Calendar.DAY_OF_MONTH): cal.get(Calendar.DAY_OF_MONTH)) + "/master_scoreboard.json").get()
+            System.out.println("http://gd2.mlb.com/components/game/mlb/year_"+ cal.get(Calendar.YEAR) + "/month_" + (cal.get(Calendar.MONTH+1) < 10? "0" + (cal.get(Calendar.MONTH)+1): cal.get(Calendar.MONTH)+1) + "/day_" + (cal.get(Calendar.DAY_OF_MONTH) < 10? "0" + cal.get(Calendar.DAY_OF_MONTH): cal.get(Calendar.DAY_OF_MONTH)) + "/master_scoreboard.json");
+            CompletionStage<JsonNode> jsonPromise2 = ws.url("http://gd2.mlb.com/components/game/mlb/year_"+ cal.get(Calendar.YEAR) + "/month_" + ((cal.get(Calendar.MONTH)+1) < 10? "0" + (cal.get(Calendar.MONTH)+1): cal.get(Calendar.MONTH)+1) + "/day_" + (cal.get(Calendar.DAY_OF_MONTH) < 10? "0" + cal.get(Calendar.DAY_OF_MONTH): cal.get(Calendar.DAY_OF_MONTH)) + "/master_scoreboard.json").get()
                     .thenApply(WSResponse::asJson);
 
             //JsonNode p = jsonPromise2.toCompletableFuture().get(1000, TimeUnit.DAYS);
