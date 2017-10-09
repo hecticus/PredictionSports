@@ -1398,11 +1398,13 @@ public class FootballClients extends Clients {
                     Long millis = Long.parseLong(Config.getString("lastmillis"));
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTimeInMillis(millis);
+                    calendar.add(Calendar.HOUR, -5);
+
 
                     int mYear = calendar.get(Calendar.YEAR);
                     int mMonth = calendar.get(Calendar.MONTH) +1;
                     int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-                    int hour = calendar.get(Calendar.HOUR_OF_DAY) -5;
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
 
 
 
@@ -1580,11 +1582,12 @@ public class FootballClients extends Clients {
                     Long millis = Long.parseLong(Config.getString("lastmillis"));
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTimeInMillis(millis);
+                    calendar.add(Calendar.HOUR, -5);
 
                     int mYear = calendar.get(Calendar.YEAR);
                     int mMonth = calendar.get(Calendar.MONTH) +1;
                     int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-                    int hour = calendar.get(Calendar.HOUR_OF_DAY) -5;
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
 
 
                     response.put("points", points);
