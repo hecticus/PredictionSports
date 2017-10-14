@@ -98,7 +98,7 @@ public class WapSite extends Controller {
         //{
 
         if(checkMD(msisdn))
-            return ok(wepaerror.render());
+            return ok(wepaerror.render(aux.get("ttype")[0]));
 
         Clients client = new Clients();
         client = client.getClientByMSisdnAndConfirm(msisdn,aux.get("ttype")[0]);
@@ -249,7 +249,7 @@ public class WapSite extends Controller {
                 }
             }
         }
-        return ok(wepaconfirm.render(validPin));
+        return ok(wepaconfirm.render(validPin, aux.get("ttype")[0]));
     }
 
     //Valida que el usuario contrasena introducido
@@ -516,7 +516,7 @@ public class WapSite extends Controller {
                 CallWithTokenGlobality(clit.getToken());
             }
         }
-        return ok(wepaconfirm.render(true));
+        return ok(wepaconfirm.render(true,""));
     }
 
 

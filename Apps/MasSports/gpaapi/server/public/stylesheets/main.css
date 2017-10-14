@@ -101,3 +101,32 @@ html, body {
     /* Set the fixed height of the footer here */
     height: 110px;
 }
+
+
+.ftexto
+{
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    font-size: 9vmin;
+    font-style: italic;
+    color: #F6FF00;
+}
+
+.btexto
+{
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    font-size: 7vmin;
+    font-style: italic;
+    color: #F6FF00;
+}
+
+.mtexto
+{
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    font-size: 3vmin;
+    font-style: italic;
+    color: white;
+      text-transform: uppercase;
+}

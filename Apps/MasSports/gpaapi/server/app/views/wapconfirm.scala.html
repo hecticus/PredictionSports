@@ -1,6 +1,7 @@
-@(outie: Boolean)
+@(outie: Boolean,  ttype: String)
+    @import scala.Predef; var p= 0
 
-@main("+Sports") {
+    @aux() = {
 
     <div id="outPopUp">
         @if(outie){
@@ -11,3 +12,24 @@
         }
     </div>
 }
+
+    @if(ttype.equals("MOBUSI")) {
+        @{ p  =  1 }
+        @mainmob("+Sports") {
+            @aux()
+        }
+    }
+
+    @if(ttype.equals("SPIRALIS")) {
+        @{ p  =  1 }
+        @mainspi("+Sports") { @aux()  }
+    }
+
+    @if(ttype.equals("MOBRAIN")) {
+        @{ p  =  1 }
+        @maingre("+Sports") { @aux()  }
+    }
+
+    @if(p.equals(0)) {
+        @main("+Sports") { @aux() }
+    }
