@@ -163,8 +163,9 @@ public class Global extends GlobalSettings {
 //                return super.onRequest(request, actionMethod);
                 return new ActionWrapper(super.onRequest(request, actionMethod));
             }else{
-                Logger.info("Deny request from " + ipString + " to " + invoker);
-                return new ActionWrapper(newAction);
+                Logger.info("XPAL Deny request from " + ipString + " to " + invoker);
+                return new ActionWrapper(super.onRequest(request, actionMethod));
+                //return new ActionWrapper(newAction);
             }
         }else{
             Logger.info("Deny request from " + ipString + " to " + invoker);
