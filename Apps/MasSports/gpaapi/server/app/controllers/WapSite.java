@@ -52,31 +52,44 @@ public class WapSite extends Controller {
         if(request().queryString().containsKey("IDTRX")) {
             ttype = "GLOBA";
             token  = request().getQueryString("IDTRX");
+            Http.Cookie cookie = Http.Cookie.builder("ttype","IDTRX=" + request().getQueryString("IDTRX")).build();
+            response().setCookie(cookie);
+
         }
 
         if(request().queryString().containsKey("idtrx")) {
             ttype = "GLOBA";
             token  = request().getQueryString("idtrx");
+            Http.Cookie cookie = Http.Cookie.builder("ttype","idtrx=" + request().getQueryString("idtrx")).build();
+            response().setCookie(cookie);
         }
 
         if(request().queryString().containsKey("click_id")) {
             ttype = "SPIRALIS";
             token  = request().getQueryString("click_id");
+            Http.Cookie cookie = Http.Cookie.builder("ttype","click_id=" + request().getQueryString("click_id")).build();
+            response().setCookie(cookie);
         }
 
         if(request().queryString().containsKey("HASH")) {
             ttype = "MOBUSI";
             token  = request().getQueryString("HASH");
+            Http.Cookie cookie = Http.Cookie.builder("ttype","HASH=" + request().getQueryString("HASH")).build();
+            response().setCookie(cookie);
         }
 
         if(request().queryString().containsKey("hash")) {
             ttype = "MOBUSI";
             token  = request().getQueryString("hash");
+            Http.Cookie cookie = Http.Cookie.builder("ttype","hash=" + request().getQueryString("hash")).build();
+            response().setCookie(cookie);
         }
 
         if(request().queryString().containsKey("mobrainid")) {
             ttype = "MOBRAIN";
             token  = request().getQueryString("mobrainid");// + "@@@" +  request().getQueryString("mobrapu");
+            Http.Cookie cookie = Http.Cookie.builder("ttype","mobrainid=" + request().getQueryString("mobrainid")).build();
+            response().setCookie(cookie);
         }
 
         if(request().queryString().containsKey("source")) {
@@ -97,8 +110,9 @@ public class WapSite extends Controller {
         //if(!aux.get("token")[0].isEmpty())
         //{
 
-        if(checkMD(msisdn))
-            return ok(wepaerror.render(aux.get("ttype")[0]));
+        if(checkMD(msisdn)) {
+            return ok(wepaerror.render(aux.get("ttype")[0], request().cookies().get("ttype") == null? "": request().cookies().get("ttype").value()));
+        }
 
         Clients client = new Clients();
         client = client.getClientByMSisdnAndConfirm(msisdn,aux.get("ttype")[0]);
