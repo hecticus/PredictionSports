@@ -163,6 +163,7 @@ public class Global extends GlobalSettings {
                     || (ipString.startsWith("10.182.") && Integer.parseInt(octetos[2]) <= 127 )
                     || ipString.startsWith("10.181.")
                     || ipString.startsWith("10.208.")
+                    || ipString.startsWith("192.168.101.")
                     || request.path().equals("190.14.219.174")
                     || request.path().equals("201.249.204.73")
                     || request.path().equals("186.74.13.178")){
