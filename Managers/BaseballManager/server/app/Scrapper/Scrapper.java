@@ -26,6 +26,7 @@ import java.net.URL;
 import play.libs.ws.ahc.AhcWSClient;
 import play.mvc.*;
 import play.libs.ws.*;
+import scala.util.parsing.json.JSONArray;
 import utils.Mailer;
 
 import javax.inject.Inject;
@@ -130,7 +131,14 @@ public class Scrapper {
 ;                return; }
             for(int x=0 ; x< game.size();x++ ){
                 //Game current_game = new Game();
-                obj = game.get(x);
+
+                if (game.isArray())
+                    obj  = game.get(x);
+                else {
+                    obj  = game;
+                    x    = 999999;
+                }
+
 
                 //Verificamos que el partido aun no exista
                 //if(GameHandler.CheckExist(obj.get("id").asText())) continue;
