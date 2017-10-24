@@ -353,7 +353,11 @@ public class Game extends Model  {
 
     public static Game getByIdentifier(String identifier){
         //EbeanServer server = Ebean.getServer("clients");
-        return finder.where().eq("identifier", identifier).findUnique();
+        List<Game> GameMatch = finder.where().eq("identifier", identifier).setMaxRows(1).findList();
+        if(!latestGameMatch.isEmpty())
+            return latestGameMatch.get(0);
+        return null;
+        //return finder.where().eq("identifier", identifier).findList().get(0);
     }
 
 
