@@ -101,6 +101,17 @@ public class Services extends Model  {
 
     public Services getServiceByName(String identifier)
     {
-        return finder.where().eq("name", identifier).findUnique();
+        //1	md	1	Tu pin es: @pin. Ingresalo en la pagina web para continuar.	9090	COPA	test
+
+        Services obj = new Services();
+        obj.setName("md");
+        obj.setIdentifier("1");
+        obj.setSms("Tu pin es: @pin. Ingresalo en la pagina web para continuar.");
+        obj.setShortCode(9090);
+        obj.setProductIdentifier("COPA");
+        obj.setDescripcionProducto("test");
+        return obj;
+
+        //return finder.where().eq("name", identifier).findUnique();
     }
 }
