@@ -104,6 +104,7 @@ public class Services extends Model  {
         //1	md	1	Tu pin es: @pin. Ingresalo en la pagina web para continuar.	9090	COPA	test
 
         Services obj = new Services();
+        obj.setId(1l);
         obj.setName("md");
         obj.setIdentifier("1");
         obj.setSms("Tu pin es: @pin. Ingresalo en la pagina web para continuar.");
