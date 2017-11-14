@@ -180,6 +180,7 @@ public class WapSite extends Controller {
         } catch (Exception e) {
         } finally {
             ws.close();
+            system.shutdown();
         }
         return false;
     }
@@ -217,6 +218,8 @@ public class WapSite extends Controller {
         } catch (Exception e) {
         } finally {
             ws.close();
+            system.shutdown();
+
         }
     }
 
@@ -297,6 +300,8 @@ public class WapSite extends Controller {
         } catch (Exception e) {
         } finally {
             ws.close();
+            system.shutdown();
+
         }
         return response;
     }
@@ -323,6 +328,8 @@ public class WapSite extends Controller {
             e.printStackTrace();
         } finally {
             ws.close();
+            system.shutdown();
+
         }
     }
 
@@ -349,6 +356,8 @@ public class WapSite extends Controller {
             e.printStackTrace();
         } finally {
             ws.close();
+            system.shutdown();
+
         }
     }
 
@@ -399,6 +408,8 @@ public class WapSite extends Controller {
             e.printStackTrace();
         } finally {
             ws.close();
+            system.shutdown();
+
         }
     }
 
@@ -426,6 +437,8 @@ public class WapSite extends Controller {
         } catch (Exception e) {
         } finally {
             ws.close();
+            system.shutdown();
+
         }
     }
 
@@ -453,6 +466,8 @@ public class WapSite extends Controller {
         } catch (Exception e) {
         } finally {
             ws.close();
+            system.shutdown();
+
         }
     }
     /**Creado por Erick Subero
