@@ -35,6 +35,8 @@ public class League extends Model {
     @JoinColumn(nullable = false)
     private LeagueType leagueType;
 
+    private int orderby;
+
 
     @OneToMany(mappedBy="league", cascade = CascadeType.ALL)
     private List<Game> matches;
@@ -73,6 +75,14 @@ public class League extends Model {
         this.show = show;
     }
 
+    public int getOrderBy() {
+        return orderby;
+    }
+
+    public void setOrderBy(int orderby) {
+        this.orderby = orderby;
+    }
+
 
     public League(String name) {
         this.name = name;
@@ -84,7 +94,7 @@ public class League extends Model {
 
     public static League getByName(String name) {
         //EbeanServer server = Ebean.getServer("clients");
-        return finder.where().eq("name", name).findUnique();
+        return finder.where().like("name", name).findUnique();
     }
 
     public static League getByID(Long id) {
@@ -92,7 +102,7 @@ public class League extends Model {
         return finder.where().eq("id_league", id).findUnique();
     }
     public static List<League> getActiveLeagues() {
-        return finder.where().eq("status", 1).findList();
+        return finder.where().eq("status", 1).orderBy("orderby asc").findList();
     }
 
 
@@ -125,6 +135,7 @@ public class League extends Model {
         obj.put("show",show);
         obj.put("status",status);
         obj.put("competiton_type", leagueType.getJson()); //No tenemos aun este dato
+        obj.put("orderby", orderby); //No tenemos aun este dato
 
         if(closestMatch){
             Game match = Game.getClosestMatch(this);

@@ -29,11 +29,12 @@ public class LeaderboardGlobal extends HecticusModel{
 
     public static Finder<Integer, LeaderboardGlobal> finder = new Finder<Integer, LeaderboardGlobal>(Integer.class, LeaderboardGlobal.class);
 
-    public LeaderboardGlobal(Client client, Integer idTournament, Integer score, Integer correctBets) {
+    public LeaderboardGlobal(Client client, Integer idTournament, Integer score, Integer correctBets, Integer sportId) {
         this.client = client;
         this.score = score;
         this.idTournament = idTournament;
         this.correctBets = correctBets;
+        this.sportId = sportId;
     }
 
     public static LeaderboardGlobal getLeaderboardByClient(Integer idClient){

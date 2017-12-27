@@ -12,19 +12,22 @@ import models.domain.TeamHasLeague;
 import models.handlers.*;
 import org.asynchttpclient.AsyncHttpClientConfig;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
+//import play.libs.mailer.Email;
+//import play.libs.mailer.MailerPlugin;
+import play.Logger;
 import play.libs.ws.WSResponse;
 //import scala.util.parsing.json.JSONArray;
 //import scala.util.parsing.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import play.libs.ws.ahc.AhcWSClient;
 import play.mvc.*;
 import play.libs.ws.*;
+import scala.util.parsing.json.JSONArray;
+import utils.Mailer;
 
 import javax.inject.Inject;
 import java.text.DateFormat;
@@ -40,28 +43,50 @@ import java.util.concurrent.TimeUnit;
  */
 public class Scrapper {
 
-    public int number_days = 5;
+    public int number_days = 2;
 
     public void ScrapperDays() throws IOException {
-        //Scrapper(DateUtil(15));
-        for (int i = 0 ; i< number_days; i++)
+
+        int daysAfter = Config.getInt("days_after");
+        if(  Config.getInt("file_master") ==  1)
+            new File(System.getProperty("user.home") + "/master.mlb").createNewFile();
+
+        if(!new File(System.getProperty("user.home") + "/master.mlb").exists()) return;
+        //Mailer.SendError("pal Ejecutando scrapper" + daysAfter,"se inica el scrapper");
+        //Scrapper(DateUtil(0));
+        Long startTime = System.currentTimeMillis();
+        for (int i = 0 ; i< daysAfter; i++)
         {
-            Scrapper(DateUtil(i));
+                Scrapper(DateUtil(i));
         }
+
+        //Mailer.SendError("pal Ejecutando Ranking","Otro Ranking");
+
+        RankinrCreator.executeRanking();
+        //Mailer.SendError("proces finalizado Ranking","Otro Ranking");
+        long stopTime = System.currentTimeMillis();
+        //long elapsedTime =
+        Logger.info("Finalizo el Scrapper duraccion en millis" + (stopTime - startTime));
+
+
+
     }
 
 
     public Date DateUtil(int offset)
     {
+        int daysBefore = Config.getInt("days_before");
+
         java.util.Date date= new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.HOUR,  24 * offset);
-        cal.add(Calendar.HOUR,  -24 );
+        cal.add(Calendar.HOUR,  -24 * daysBefore);
         //cal.add(Calendar.MONTH, 2);
         return cal.getTime();
         //int month = cal.get(Calendar.MONTH);
     }
+
     public void  Scrapper(Date date) throws IOException {
 
         AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
@@ -86,12 +111,14 @@ public class Scrapper {
 
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            System.out.println("http://gd2.mlb.com/components/game/mlb/year_"+ cal.get(Calendar.YEAR) + "/month_" + (cal.get(Calendar.MONTH) < 10? "0" + (cal.get(Calendar.MONTH)+1): cal.get(Calendar.MONTH)+1) + "/day_" + (cal.get(Calendar.DAY_OF_MONTH) < 10? "0" + cal.get(Calendar.DAY_OF_MONTH): cal.get(Calendar.DAY_OF_MONTH)) + "/master_scoreboard.json");
-            CompletionStage<JsonNode> jsonPromise2 = ws.url("http://gd2.mlb.com/components/game/mlb/year_"+ cal.get(Calendar.YEAR) + "/month_" + (cal.get(Calendar.MONTH) < 10? "0" + (cal.get(Calendar.MONTH)+1): cal.get(Calendar.MONTH)+1) + "/day_" + (cal.get(Calendar.DAY_OF_MONTH) < 10? "0" + cal.get(Calendar.DAY_OF_MONTH): cal.get(Calendar.DAY_OF_MONTH)) + "/master_scoreboard.json").get()
+            System.out.println("http://gd2.mlb.com/components/game/mlb/year_"+ cal.get(Calendar.YEAR) + "/month_" + (cal.get(Calendar.MONTH+1) < 10? "0" + (cal.get(Calendar.MONTH)+1): cal.get(Calendar.MONTH)+1) + "/day_" + (cal.get(Calendar.DAY_OF_MONTH) < 10? "0" + cal.get(Calendar.DAY_OF_MONTH): cal.get(Calendar.DAY_OF_MONTH)) + "/master_scoreboard.json");
+            CompletionStage<JsonNode> jsonPromise2 = ws.url("http://gd2.mlb.com/components/game/mlb/year_"+ cal.get(Calendar.YEAR) + "/month_" + ((cal.get(Calendar.MONTH)+1) < 10? "0" + (cal.get(Calendar.MONTH)+1): cal.get(Calendar.MONTH)+1) + "/day_" + (cal.get(Calendar.DAY_OF_MONTH) < 10? "0" + cal.get(Calendar.DAY_OF_MONTH): cal.get(Calendar.DAY_OF_MONTH)) + "/master_scoreboard.json").get()
                     .thenApply(WSResponse::asJson);
 
             //JsonNode p = jsonPromise2.toCompletableFuture().get(1000, TimeUnit.DAYS);
             JsonNode p = jsonPromise2.toCompletableFuture().get();
+            ws.close();
+
             //JsonNode p = e.get();
             data = p.get("data");
             games = data.get("games");
@@ -100,10 +127,18 @@ public class Scrapper {
             JsonNode lineScore;
             JsonNode Innings;
             JsonNode Inn;
-            if(game == null) { System.out.println("Dia " + cal.getTime() + " No tiene partidos"); ws.close(); return; }
+            if(game == null) { System.out.println("Dia " + cal.getTime() + " No tiene partidos"); ws.close();             system.terminate();
+;                return; }
             for(int x=0 ; x< game.size();x++ ){
                 //Game current_game = new Game();
-                obj = game.get(x);
+
+                if (game.isArray())
+                    obj  = game.get(x);
+                else {
+                    obj  = game;
+                    x    = 999999;
+                }
+
 
                 //Verificamos que el partido aun no exista
                 //if(GameHandler.CheckExist(obj.get("id").asText())) continue;
@@ -147,15 +182,30 @@ public class Scrapper {
 
 
                 current_game.setDate(cal2.getTime());
-                if(current_game.getStatus().getIdStatus() > 1  && (current_game.getStatus().getIdStatus() < 4)) {
-                    lineScore = obj.get("linescore");
-                    current_game.setHr(new LineScoreHandler(lineScore.get("hr")));
-                    current_game.setE(new LineScoreHandler(lineScore.get("e")));
-                    current_game.setSo(new LineScoreHandler(lineScore.get("so")));
-                    current_game.setR(new LineScoreHandler(lineScore.get("r")));
-                    current_game.setH(new LineScoreHandler(lineScore.get("h")));
-                }
+                //if(current_game.getStatus().getIdStatus() > 1  && (current_game.getStatus().getIdStatus() < 4)) {
+                try {
+                    if(obj.hasNonNull("linescore")) {
+                        lineScore = obj.get("linescore");
 
+                        current_game.setHr(new LineScoreHandler(lineScore.get("hr")));
+                        current_game.setE(new LineScoreHandler(lineScore.get("e")));
+                        current_game.setSo(new LineScoreHandler(lineScore.get("so")));
+                        current_game.setR(new LineScoreHandler(lineScore.get("r")));
+                        current_game.setH(new LineScoreHandler(lineScore.get("h")));
+                    }
+                    //}
+                }catch(Exception e)
+                {
+                    StringWriter sw = new StringWriter();
+                    e.printStackTrace(new PrintWriter(sw));
+                    //String exceptionAsString = sw.toString();
+                    Logger.info("Error Realizando linescore "  + sw.toString());
+
+//                    Mailer.SendError("Error Realizando linescore",e.getCause().getMessage());
+                    Logger.info("Error Realizando linescore " + e.getCause().getMessage());
+                    e.printStackTrace();
+
+                }
                 if(GameHandler.CheckExist(obj.get("id").asText()))
                     current_game.update();
                 else
@@ -165,29 +215,47 @@ public class Scrapper {
                 TeamHasLeagueHandler.CheckAndInsert(current_game.getHomeTeam().getIdTeam(), current_game.getLeague().getIdLeague());
                 TeamHasLeagueHandler.CheckAndInsert(current_game.getAwayTeam().getIdTeam(), current_game.getLeague().getIdLeague());
 
-                if(current_game.getStatus().getIdStatus() > 1 && (current_game.getStatus().getIdStatus() < 4)) {
-                        Innings =  obj.get("linescore").get("inning");
-                        for(int i=0 ; i < Innings.size(); i++) {
+
+                //if(current_game.getStatus().getIdStatus() > 1 && (current_game.getStatus().getIdStatus() < 4)) {
+                /*
+                    Innings = obj.get("linescore").get("inning");
+                    for (int i = 0; i < Innings.size(); i++) {
+                        try {
                             Inn = Innings.get(i);
-                            current_game.addInning(InningHandler.CheckAndInsert(current_game, i+1, Inn.hasNonNull("home") ? Inn.get("home").asInt(): 0, Inn.hasNonNull("away") ? Inn.get("away").asInt(): 0));
+                            if (Inn != null)
+                                current_game.addInning(InningHandler.CheckAndInsert(current_game, i + 1, Inn.hasNonNull("home") ? Inn.get("home").asInt() : 0, Inn.hasNonNull("away") ? Inn.get("away").asInt() : 0));
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
+                    }
+                //}
+                                    EventScrapper evt = new EventScrapper();
+
+                */
 
 
-                    EventScrapper evt = new EventScrapper();
 
 
                     //chequeamos los eventow de este partido en particular
                     //evt.Scrapper(current_game);
-                }
 
             }
         }
         catch(Exception e)
         {
+            StringWriter sw = new StringWriter();
+            e.printStackTrace(new PrintWriter(sw));
+            //String exceptionAsString = sw.toString();
+            Logger.info("Error Realizando Scrapper juejue " + sw.toString());
+
+            //Mailer.SendError("Error Realizando Scrapper juejue",e.getCause().getMessage());
             //ws.close();
             e.printStackTrace();
             ws.close();
+            system.terminate();
         }
-        ws.close();
+        system.terminate();
+
+        //ws.close();
     }
 }

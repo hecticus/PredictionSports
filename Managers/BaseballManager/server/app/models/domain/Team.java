@@ -116,7 +116,7 @@ public class Team extends Model {
 
     public static Team getByShortCode(String shortCode){
         //EbeanServer server = Ebean.getServer("clients");
-        return finder.where().eq("short_code", shortCode).findUnique();
+        return finder.where().like("short_code", shortCode).findUnique();
     }
 
     public static Team getById(long idTeam){

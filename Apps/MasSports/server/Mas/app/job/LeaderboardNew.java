@@ -57,6 +57,9 @@ public class LeaderboardNew extends HecticusThread {
         CallableStatement cs = null;
         try {
             connection = DB.getConnection();
+            Config tmp = Config.getByID(100l);
+            tmp.setValue("" + System.currentTimeMillis());
+            tmp.update();
             cs = connection.prepareCall("call sp_LeaderboardCalculatorNew()");
             isAlive();
             cs.execute();

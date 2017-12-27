@@ -49,6 +49,8 @@ import java.util.concurrent.TimeUnit;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.*;
+import models.Job;
+
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -109,6 +111,29 @@ public class FootballClients extends Clients {
 
     }
 
+    public static Result down(String msisdn) {
+        try {
+            //http://02.kapp.hecticus.com/ws/receiveMO.php?destination=9090&service_type=pacws&msg=APPCANCELAR&received_time=20151118170000&source=XXXXXXXXXX
+            //http://silversolempresas.com/DesconexionUnificada/webServices/wsSuscripciones.asmx/Baja?OperadoraId=1&NumeroCorto=9090&Telefono=string
+            StringBuilder url = new StringBuilder();
+            url.append("http://").append(Utils.getSilverHost()).append(msisdn);
+            F.Promise<WSResponse> result = WS.url(url.toString()).get();
+            String prueba = result.get(1000).getBody();
+
+            url = new StringBuilder();
+            url.append("http://").append(Utils.getKrakenHost()).append(msisdn);
+            result = WS.url(url.toString()).get();
+            prueba = result.get(1000).getBody();
+
+            Client.downkraken(msisdn);
+            return ok(buildBasicResponse(0, "OK"));
+        } catch (Exception ex) {
+
+            return Results.badRequest(buildBasicResponse(3, "ocurrio un error dando de baja par ale numero " + msisdn, ex));
+        }
+
+    }
+
 
 //    public static uploadMethoKraken(){
 //        String ws = daemonUrl.getValueConf()+"/KrakenDaemon/v1/prediction";
@@ -125,6 +150,17 @@ public class FootballClients extends Clients {
 //        F.Promise<WSResponse> result = WS.url(ws).post(event);
 //        String json = result.get(10000).getBody();
 //    }
+
+    public static Result checkMsisdn() {
+        ObjectNode data = getJson();
+        ObjectNode ret = Json.newObject();
+        if (data.has("msisdn")) {
+            Client client = Client.getByLogin(data.get("msisdn").asText());
+            if(client != null)
+                ret.put("client", client.toJsonWithoutRelations());
+        }
+        return ok(buildBasicResponse(0, "OK", ret));
+    }
 
     public static Result checkPin() {
         ObjectNode data = getJson();
@@ -692,6 +728,10 @@ public class FootballClients extends Clients {
                         gameDate.add(Calendar.MINUTE, -betWindow);
                         Date today = new Date(System.currentTimeMillis());
                         client.getClientsBet();
+
+                        if (sportId == 2) 
+                            gameDate.add(Calendar.HOUR_OF_DAY, 5); 
+                        
 
                         if (gameDate.getTime().after(today)) {
                             clientBets = client.getBet(idTournament, idPhase, idGameMatch, sportId);
@@ -1339,19 +1379,35 @@ public class FootballClients extends Clients {
                 List<LeaderboardTotal> totalLeaderboards = null;
                 if (friends != null && !friends.isEmpty()) {
                     friends.add(client);
-                    totalLeaderboards = LeaderboardTotal.finder.where().in("client", friends).orderBy("score desc").findList();
+                    totalLeaderboards = LeaderboardTotal.finder.where().in("client", friends).orderBy("totalscore desc").findList();
                 } else {
-                    totalLeaderboards = LeaderboardTotal.finder.where().orderBy("score desc").findList();
+                    totalLeaderboards = LeaderboardTotal.finder.where().orderBy("totalscore desc").findList();
                 }
                 clientLeaderboardTotal = client.getLeaderboardTotal();
                 if (totalLeaderboards != null && !totalLeaderboards.isEmpty()) {
                     int index = totalLeaderboards.indexOf(clientLeaderboardTotal);
                     ArrayList<ObjectNode> leaderboardsJson = new ArrayList<>();
                     leaderboardSize = leaderboardSize > totalLeaderboards.size() ? totalLeaderboards.size() : leaderboardSize;
+                    int auux =0;
                     for (int i = 0; i < leaderboardSize; ++i) {
+                        auux++;
                         leaderboardsJson.add(totalLeaderboards.get(i).toJsonSimple());
                     }
                     ObjectNode clientLeaderboardJson = null;
+
+                    Long millis = Long.parseLong(Config.getString("lastmillis"));
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(millis);
+                    calendar.add(Calendar.HOUR, -5);
+
+
+                    int mYear = calendar.get(Calendar.YEAR);
+                    int mMonth = calendar.get(Calendar.MONTH) +1;
+                    int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+
+
+
                     if (clientLeaderboardTotal != null) {
                         clientLeaderboardJson = clientLeaderboardTotal.toJsonSimple();
                         clientLeaderboardJson.put("index", index);
@@ -1364,6 +1420,11 @@ public class FootballClients extends Clients {
                         clientLeaderboardJson.put("hits", 0);
                         clientLeaderboardJson.put("index", totalLeaderboards.size());
                     }
+
+                    clientLeaderboardJson.put("ddate",  mDay  + "/" + mMonth + "/" +  mYear );
+                    clientLeaderboardJson.put("dhour", hour + ":" + (calendar.get(Calendar.MINUTE)<10? "0"+calendar.get(Calendar.MINUTE):calendar.get(Calendar.MINUTE) ));
+                     clientLeaderboardJson.put("auux", auux);
+
                     responseData.put("leaderboard", Json.toJson(leaderboardsJson));
                     responseData.put("client", clientLeaderboardJson);
                     return ok(buildBasicResponse(0, "OK", responseData));
@@ -1388,7 +1449,8 @@ public class FootballClients extends Clients {
                 if (global) {
                     List<LeaderboardGlobal> leaderboardGlobalList = client.getLeaderboardGlobal();
                     for (LeaderboardGlobal leaderboardGlobal : leaderboardGlobalList) {
-                        leaderboardsJson.add(leaderboardGlobal.toJsonClean());
+                        if(leaderboardGlobal.getScore() > 0 && leaderboardGlobal.getCorrectBets() > 0 )
+                            leaderboardsJson.add(leaderboardGlobal.toJsonClean());
                     }
                 } else {
                     List<Leaderboard> leaderboards = null;
@@ -1505,7 +1567,7 @@ public class FootballClients extends Clients {
                     int points = 0;
                     int correct = 0;
                     if (client.getLeaderboardTotal() != null) {
-                        points = client.getLeaderboardTotal().getScore();
+                        points = client.getLeaderboardTotal().getScore() + client.getLeaderboardTotal().getSmsscore();
                         correct = client.getLeaderboardTotal().getCorrectBets();
                     } else {
                         List<LeaderboardGlobal> leaderboardGlobalList = client.getLeaderboardGlobal();
@@ -1515,7 +1577,22 @@ public class FootballClients extends Clients {
                         }
                     }
 
+
+                    //Job job = Job.getByID(7l);
+                    Long millis = Long.parseLong(Config.getString("lastmillis"));
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(millis);
+                    calendar.add(Calendar.HOUR, -5);
+
+                    int mYear = calendar.get(Calendar.YEAR);
+                    int mMonth = calendar.get(Calendar.MONTH) +1;
+                    int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+
+
                     response.put("points", points);
+                    response.put("ddate",  mDay  + "/" + mMonth + "/" +  mYear );
+                    response.put("dhour", hour + ":" + (calendar.get(Calendar.MINUTE)<10? "0"+calendar.get(Calendar.MINUTE):calendar.get(Calendar.MINUTE) ));
                     response.put("correct_bets", correct);
 
                     if(getFromQueryString("new") != null)

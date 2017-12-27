@@ -1,0 +1,132 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+
+.pfooter {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 120px;
+    background-image: url(../images/backfoot.png);
+    background-repeat: repeat-x;
+
+}
+
+
+#outPopUp {
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    z-index: 3;
+    top: 30%;
+    left: 30%;
+    margin: -100px 0 0 -30px;
+}
+
+#mslogo
+{
+    padding-top: 40px;
+}
+
+.texto
+{
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    font-size: 8vmin;
+    font-style: italic;
+}
+
+.form
+{
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    font-size: 3.5vmin;
+    font-style: italic;
+}
+
+.formst
+{
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    font-size: 1.5vmin;
+    line-height: 2.2vmin;
+    font-style: italic;
+}
+
+.submitbutton
+{
+    background-color: #ffcb3b;
+    border: 0px;
+    width: 50%;
+    color: black;
+    height: 30px;
+    font-size: 12pt;
+}
+
+
+.submitbutton:disabled
+{
+    background-color: #a6852a;
+    border: 0px;
+    width: 50%;
+    color: black;
+    height: 30px;
+    font-size: 12pt;
+}
+.bottom
+{
+    font-family: 'Oswald', sans-serif;
+    text-align: left;
+    font-size: 2vmin;
+    font-style: italic;
+    vertical-align: middle;
+}
+
+.rotater
+{
+    -webkit-transform: rotate(-3deg);
+    -moz-transform: rotate(-3deg);
+    -ms-transform: rotate(-3deg);
+    -o-transform: rotate(-3deg);
+    position: absolute;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 110px;
+}
+
+
+.ftexto
+{
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    font-size: 9vmin;
+    font-style: italic;
+    color: #F6FF00;
+}
+
+.btexto
+{
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    font-size: 7vmin;
+    font-style: italic;
+    color: #F6FF00;
+}
+
+.mtexto
+{
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    font-size: 3vmin;
+    font-style: italic;
+    color: white;
+      text-transform: uppercase;
+}

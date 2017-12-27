@@ -353,7 +353,11 @@ public class Game extends Model  {
 
     public static Game getByIdentifier(String identifier){
         //EbeanServer server = Ebean.getServer("clients");
-        return finder.where().eq("identifier", identifier).findUnique();
+        List<Game> GameMatchs = finder.where().eq("identifier", identifier).setMaxRows(1).findList();
+        if(!GameMatchs.isEmpty())
+            return GameMatchs.get(0);
+        return null;
+        //return finder.where().eq("identifier", identifier).findList().get(0);
     }
 
 
@@ -379,8 +383,8 @@ public class Game extends Model  {
     }
 
 
-
 /*
+
     public List<GameMatchEvent> getEventsNoDB(final long idEvent, boolean forward){
         List<GameMatchEvent> tr = null;
         try {
@@ -406,9 +410,9 @@ public class Game extends Model  {
             Collections.sort(tr, forward?new GameMatchEventComparatorDesc():new GameMatchEventComparatorAsc());
         }
         return tr;
-    }*/
+    }
 
-
+*/
 
     public ObjectNode toJson()
     {
@@ -419,7 +423,7 @@ public class Game extends Model  {
         json.put("home_team",awayTeam.toJson());
         json.put("away_team",homeTeam.toJson());
         json.put("home_run",rAway);
-        json.put("away_run",hHome);
+        json.put("away_run",rHome);
        // json.put("home_team",homeTeam.toJson());
         //json.put("away_team",awayTeam.toJson());
         //json.put("home_run",rHome);
@@ -438,7 +442,7 @@ public class Game extends Model  {
         json.put("home_team",awayTeam.toJson());
         json.put("away_team",homeTeam.toJson());
         json.put("home_run",rAway);
-        json.put("away_run",hHome);
+        json.put("away_run",rHome);
         ObjectNode aux = Json.newObject();
         Status tmp = Status.convertToFootball(this.status);
         aux.put("id_status", tmp.getIdStatus());
@@ -457,7 +461,7 @@ public class Game extends Model  {
         json.put("home_team",awayTeam.toJson());
         json.put("away_team",homeTeam.toJson());
         json.put("home_run",rAway);
-        json.put("away_run",hHome);
+        json.put("away_run",rHome);
         ObjectNode aux = Json.newObject();
         Status tmp = Status.convertToFootball(this.status);
         json.put("id_status", tmp.getIdStatus());

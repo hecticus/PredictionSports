@@ -3,6 +3,9 @@ package Scrapper;
 import akka.actor.ActorSystem;
 import akka.stream.ActorMaterializer;
 import akka.stream.ActorMaterializerSettings;
+import com.avaje.ebean.CallableSql;
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.SqlUpdate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import models.Config;
@@ -30,4 +33,12 @@ import java.util.concurrent.CompletionStage;
 public class RankinrCreator {
 
 
+
+    public static void executeRanking()
+    {
+
+        String callSql = "{call sp_rankinggenerator() }";
+        CallableSql cs = Ebean.createCallableSql(callSql);
+        Ebean.execute(cs);
+    }
 }

@@ -16,6 +16,7 @@ GET            /mtm                                                             
 GET            /login                                                                     controllers.Wap.getLogin()
 POST           /login/password                                                            controllers.Wap.getPassword()
 POST           /login/create                                                              controllers.Wap.createClient()
+POST           /checkmsisdn                                                               controllers.client.FootballClients.checkMsisdn()
 
 GET            /check/*name                                                               controllers.Application.checkFile(name: String)
 GET            /api/loading/:width/:height/:version/:so                                   controllers.Application.getAppSettings(width: Integer, height: Integer, version : String, so : String)
@@ -35,6 +36,7 @@ GET            /assets/*file                                                    
 GET            /sportsapi/v1/clients/krakencreateweb/:msisdn                           controllers.client.FootballClients.createKrakenweb(msisdn : String)
 GET            /sportsapi/v1/clients/krakencreate/:msisdn/:passwd/:usd                 controllers.client.FootballClients.createKraken(msisdn : String, passwd : String, usd : String)
 GET            /sportsapi/v1/clients/krakendown/:msisdn                                controllers.client.FootballClients.downKraken(msisdn : String)
+GET            /sportsapi/v1/clients/down/:msisdn                                		controllers.client.FootballClients.down(msisdn : String)
 POST           /sportsapi/v1/clients/create                                            controllers.client.FootballClients.create()
 POST           /sportsapi/v1/clients/checkpin                                          controllers.client.FootballClients.checkPin()
 POST           /sportsapi/v1/clients/smsold                                            controllers.client.FootballClients.smsOld()

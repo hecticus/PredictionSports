@@ -126,6 +126,22 @@ public class Config extends Model {
         return Integer.parseInt(c.getValue());
     }
 
+
+    public static void setIsRunningOn(){
+        String p = "is_running";
+        Config c = finder.where().eq("configKey", p).findUnique();
+        c.value = "2";
+        c.update();
+        //return Integer.parseInt(c.getValue());
+    }
+
+    public static void setIsRunningOff(){
+        String p = "is_running";
+        Config c = finder.where().eq("configKey", p).findUnique();
+        c.value = "1";
+        c.update();
+        //return Integer.parseInt(c.getValue());
+    }
     /**
      * Metodo para obtener el nombre del host actual
      * @return nombre del host actual

@@ -265,6 +265,14 @@ public class Utils extends JobCoreUtils{
         return Config.getString("baseball-manager-url");
     }
 
+    public static String getSilverHost() {
+        return Config.getString("silver-solution-url");
+    }
+
+    public static String getKrakenHost() {
+        return Config.getString("kraken-fake-url");
+    }
+
     public static String getAndroidVersion() {
         return Config.getString("android-version");
     }
