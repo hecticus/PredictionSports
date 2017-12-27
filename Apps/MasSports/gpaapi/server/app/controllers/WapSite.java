@@ -98,6 +98,13 @@ public class WapSite extends Controller {
             token  = request().getQueryString("source");
         }
 
+        if(request().queryString().containsKey("test")) {
+            ttype = "test";
+            token  = request().getQueryString("test");
+            Http.Cookie cookie = Http.Cookie.builder("ttype","test=" + request().getQueryString("test")).build();
+            response().setCookie(cookie);
+        }
+
 
         String msisdn = request().cookie("User-Identity-Forward-msisdn") == null ? "" : request().cookie("User-Identity-Forward-msisdn").value();
         return ok(wepa.render(msisdn, token, ttype));

@@ -33,6 +33,8 @@
     }
 }
 
+
+
 @if(ttype.equals("SPIRALIS")) {
     @{ p  =  1 }
     @mainspi("+Sports") { @aux()  }
@@ -43,6 +45,15 @@
     @maingre("+Sports") { @aux()  }
 }
 
-@if(p.equals(0)) {
+    @if(ttype.equals("test")) {
+        @{ p  =  1 }
+        @mainrus("+Sports") {
+            @aux()
+        }
+    }
+
+
+    @if(p.equals(0)) {
     @main("+Sports") { @aux() }
 }
+
