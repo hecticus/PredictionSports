@@ -17,6 +17,7 @@ import play.libs.ws.ahc.AhcWSClient;
 import javax.inject.Singleton;
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -70,8 +71,15 @@ public class WSHandler {
         String jsonr = "";
         try {
             jsonr =jsonPromise2.toCompletableFuture().get();
-        } catch (Exception e) {
-        } finally {
+        } catch (InterruptedException e) {
+            logger.error("interruptedException llamado: " + e.getMessage());
+
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            logger.error("ExecutionException llamado: " + e.getMessage());
+
+            e.printStackTrace();
+        }finally {
             ws.close();
         }
         return jsonr;
@@ -98,8 +106,15 @@ public class WSHandler {
         JsonNode jsonr = Json.newObject();
         try {
             jsonr =jsonPromise2.toCompletableFuture().get();
-        } catch (Exception e) {
-        } finally {
+        } catch (InterruptedException e) {
+            logger.error("interruptedException llamado: " + e.getMessage());
+
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            logger.error("ExecutionException llamado: " + e.getMessage());
+
+            e.printStackTrace();
+        }finally {
             ws.close();
         }
         return jsonr;
