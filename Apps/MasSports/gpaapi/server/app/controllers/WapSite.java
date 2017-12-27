@@ -223,6 +223,9 @@ public class WapSite extends Controller {
                     if(ttype.equals("none")) {
                         toKraken(client.getMsisdn().toString(), "NONEWEB");
                     }
+                    if(ttype.equals("test")) {
+                        toKraken(client.getMsisdn().toString(), "test");
+                    }
                     if(ttype.startsWith("INS")) {
                         toKraken(client.getMsisdn().toString(), ttype);
                     }
