@@ -22,6 +22,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.*;
 import utils.Response;
+import utils.WSHandler;
 import views.html.*;
 
 import java.io.IOException;
@@ -154,35 +155,12 @@ public class WapSite extends Controller {
     {
         ObjectNode event = Json.newObject();
         event.put("msisdn", msisdn);
-
-
-        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
-                .setMaxRequestRetry(0)
-                .setShutdownQuietPeriod(0)
-                .setShutdownTimeout(0).build();
-
-        String name = "wsclient";
-        ActorSystem system = ActorSystem.create(name);
-        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
-        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
-
-        WSClient ws = new AhcWSClient(config, materializer);
-        String wsr =  "http://plussports.hecticus.com/checkmsisdn";
-
-        JsonNode p;
-        try {
-            CompletionStage<JsonNode> jsonPromise = ws.url(wsr).post(event)
-                    .thenApply(response -> response.asJson());
-            p = jsonPromise.toCompletableFuture().get();
-            if(p.get("response").has("client"))
-                return p.get("response").get("client").get("status").asInt() == 1;
-            //return p.get("response").has("client");
-        } catch (Exception e) {
-        } finally {
-            ws.close();
-            system.shutdown();
-        }
+        String url = "http://plussports.hecticus.com/checkmsisdn";
+        JsonNode p =  WSHandler.instance().MakePostJson(url, event);
+        if(p.get("response").has("client"))
+            return p.get("response").get("client").get("status").asInt() == 1;
         return false;
+
     }
 
     ///Para llamar a Silver el pimer paso
@@ -197,30 +175,8 @@ public class WapSite extends Controller {
         event.put("productoId", ser.getProductIdentifier());
         event.put("texto", ser.getSms());
 
-        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
-                .setMaxRequestRetry(0)
-                .setShutdownQuietPeriod(0)
-                .setShutdownTimeout(0).build();
-
-        String name = "wsclient";
-        ActorSystem system = ActorSystem.create(name);
-        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
-        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
-
-        WSClient ws = new AhcWSClient(config, materializer);
-        String wsr =  Config.getString("silver-api-url") + "api/v1/user/generarPin";
-
-        JsonNode p;
-        try {
-            CompletionStage<JsonNode> jsonPromise = ws.url(wsr).post(event)
-                    .thenApply(response -> response.asJson());
-            p = jsonPromise.toCompletableFuture().get();
-        } catch (Exception e) {
-        } finally {
-            ws.close();
-            system.shutdown();
-
-        }
+        String url = Config.getString("silver-api-url") + "api/v1/user/generarPin";
+        WSHandler.instance().MakePostJson(url, event);
     }
 
     public Result confirm() throws IOException {
@@ -282,193 +238,41 @@ public class WapSite extends Controller {
         event.put("pin",  pin);
         boolean response = false;
 
-        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
-                .setMaxRequestRetry(0)
-                .setShutdownQuietPeriod(0)
-                .setShutdownTimeout(0).build();
-
-        String name = "wsclient";
-        ActorSystem system = ActorSystem.create(name);
-        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
-        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
-
-        WSClient ws = new AhcWSClient(config, materializer);
-        CompletionStage<JsonNode> jsonPromise2 = ws.url(Config.getString("silver-api-url") + "api/v1/user/confirmarPin").post(event)
-                .thenApply(WSResponse::asJson);
-        try {
-            response = (jsonPromise2.toCompletableFuture().get().get("response").get("code").asText() == "0");
-        } catch (Exception e) {
-        } finally {
-            ws.close();
-            system.shutdown();
-
-        }
+        String url = Config.getString("silver-api-url") + "api/v1/user/confirmarPin";
+        response = (WSHandler.instance().MakePostJson(url, event).get("response").get("code").asText() == "0");
         return response;
     }
 
     public void CallWithTokenGlobality(String token) throws IOException {
-        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
-                .setMaxRequestRetry(0)
-                .setShutdownQuietPeriod(0)
-                .setShutdownTimeout(0).build();
-
-        String name = "wsclient";
-        ActorSystem system = ActorSystem.create(name);
-        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
-        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
-
-        WSClient ws = new AhcWSClient(config, materializer);
-        CompletionStage<String> jsonPromise = ws.url(Config.getString("globality-url") + token).get()
-                .thenApply(WSResponse::getBody);
-//        JsonNode aux = Json.newObject();
-        String aux = "";
-        try {
-           aux = jsonPromise.toCompletableFuture().get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            ws.close();
-            system.shutdown();
-
-        }
+        String url = Config.getString("globality-url") + token;
+        WSHandler.instance().MakeGet(url);
     }
 
 
     public void CallWithTokenMobrain(String token) throws IOException {
-        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
-                .setMaxRequestRetry(0)
-                .setShutdownQuietPeriod(0)
-                .setShutdownTimeout(0).build();
-
-        String name = "wsclient";
-        ActorSystem system = ActorSystem.create(name);
-        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
-        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
-
-        WSClient ws = new AhcWSClient(config, materializer);
-        CompletionStage<String> jsonPromise = ws.url(Config.getString("mobrain-url")  + token + "?token=" + Config.getString("mobrain-token") ).get()
-                .thenApply(WSResponse::getBody);
-//        JsonNode aux = Json.newObject();
-        String aux = "";
-        try {
-            aux = jsonPromise.toCompletableFuture().get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            ws.close();
-            system.shutdown();
-
-        }
+        String url = Config.getString("mobrain-url")  + token + "?token=" + Config.getString("mobrain-token");
+        WSHandler.instance().MakeGet(url);
     }
 
     public void CallWithTokenGeneric(String routeget, String token) throws IOException {
-        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
-                .setMaxRequestRetry(0)
-                .setShutdownQuietPeriod(0)
-                .setShutdownTimeout(0).build();
-
-        String name = "wsclient";
-        ActorSystem system = ActorSystem.create(name);
-        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
-        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
-
-        WSClient ws = new AhcWSClient(config, materializer);
-        CompletionStage<String> jsonPromise = ws.url(Config.getString(routeget) + token).get()
-                .thenApply(WSResponse::getBody);
-//        JsonNode aux = Json.newObject();
-        String aux = "";
-        try {
-            aux = jsonPromise.toCompletableFuture().get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            ws.close();
-        }
+        String url = Config.getString(routeget) + token;
+        WSHandler.instance().MakeGet(url);
     }
 
     public void CallWithTokenSpiralis(String token) throws IOException {
-        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
-                .setMaxRequestRetry(0)
-                .setShutdownQuietPeriod(0)
-                .setShutdownTimeout(0).build();
-
-        String name = "wsclient";
-        ActorSystem system = ActorSystem.create(name);
-        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
-        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
-
-        WSClient ws = new AhcWSClient(config, materializer);
-        CompletionStage<String> jsonPromise = ws.url(Config.getString("spiralis-url") + token).get()
-                .thenApply(WSResponse::getBody);
-//        JsonNode aux = Json.newObject();
-        String aux = "";
-        try {
-            aux = jsonPromise.toCompletableFuture().get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            ws.close();
-            system.shutdown();
-
-        }
+        String url = Config.getString("spiralis-url") + token;
+        WSHandler.instance().MakeGet(url);
     }
 
     public void toKraken(String msisdn) throws IOException {
         // http://02.kapp.hecticus.com/ws/receiveMO.php?source=50765070490&destination=9090&service_type=pacws&msg=GLOBALWEB&received_time=20151118170000
-
-        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
-                .setMaxRequestRetry(0)
-                .setShutdownQuietPeriod(0)
-                .setShutdownTimeout(0).build();
-
-        String name = "wsclient";
-        ActorSystem system = ActorSystem.create(name);
-        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
-        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
-
-        WSClient ws = new AhcWSClient(config, materializer);
-
-        String durl = "http://02.kapp.hecticus.com/ws/receiveMO.php?source=" + msisdn + "&destination=9090&service_type=pacws&msg=GLOBALWEB&received_time=20151118170000" ;
-        CompletionStage<String> jsonPromise2 = ws.url(durl).get()
-                .thenApply(WSResponse::getBody);
-        String jsonr = "";
-        try {
-            jsonr =jsonPromise2.toCompletableFuture().get();
-        } catch (Exception e) {
-        } finally {
-            ws.close();
-            system.shutdown();
-
-        }
+        String url = "http://02.kapp.hecticus.com/ws/receiveMO.php?source=" + msisdn + "&destination=9090&service_type=pacws&msg=GLOBALWEB&received_time=20151118170000" ;
+        WSHandler.instance().MakeGet(url);
     }
 
     public void toKraken(String msisdn, String msg) throws IOException {
         // http://02.kapp.hecticus.com/ws/receiveMO.php?source=50765070490&destination=9090&service_type=pacws&msg=GLOBALWEB&received_time=20151118170000
-
-        AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
-                .setMaxRequestRetry(0)
-                .setShutdownQuietPeriod(0)
-                .setShutdownTimeout(0).build();
-
-        String name = "wsclient";
-        ActorSystem system = ActorSystem.create(name);
-        ActorMaterializerSettings settings = ActorMaterializerSettings.create(system);
-        ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
-
-        WSClient ws = new AhcWSClient(config, materializer);
-
-        String durl = "http://02.kapp.hecticus.com/ws/receiveMO.php?source=" + msisdn + "&destination=9090&service_type=pacws&msg="+ msg +"&received_time=20151118170000" ;
-        CompletionStage<String> jsonPromise2 = ws.url(durl).get()
-                .thenApply(WSResponse::getBody);
-        String jsonr = "";
-        try {
-            jsonr =jsonPromise2.toCompletableFuture().get();
-        } catch (Exception e) {
-        } finally {
-            ws.close();
-            system.shutdown();
-
-        }
+        WSHandler.instance().MakeGet("http://02.kapp.hecticus.com/ws/receiveMO.php?source=" + msisdn + "&destination=9090&service_type=pacws&msg="+ msg +"&received_time=20151118170000" );
     }
     /**Creado por Erick Subero
      * Esto genera un nuevo UUID.
