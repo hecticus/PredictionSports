@@ -164,8 +164,10 @@ public class WapSite extends Controller {
         event.put("msisdn", msisdn);
         String url = "http://plussports.hecticus.com/checkmsisdn";
         JsonNode p =  WSHandler.instance().MakePostJson(url, event);
-        if(p.get("response").has("client"))
-            return p.get("response").get("client").get("status").asInt() == 1;
+        if(p.has("response")) {
+            if (p.get("response").has("client"))
+                return p.get("response").get("client").get("status").asInt() == 1;
+        }
         return false;
 
     }
@@ -224,7 +226,7 @@ public class WapSite extends Controller {
                         toKraken(client.getMsisdn().toString(), "NONEWEB");
                     }
                     if(ttype.equals("test")) {
-                        toKraken(client.getMsisdn().toString(), "test");
+                        toKraken(client.getMsisdn().toString(), "NONEWEB");
                     }
                     if(ttype.startsWith("INS")) {
                         toKraken(client.getMsisdn().toString(), ttype);
