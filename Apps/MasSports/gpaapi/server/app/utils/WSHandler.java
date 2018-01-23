@@ -50,7 +50,7 @@ public class WSHandler {
                 .setMaxRequestRetry(0)
                 .setShutdownQuietPeriod(0)
                 .setShutdownTimeout(0).build();
-        AsyncHttpClient asyncHttpClient = new DefaultAsyncHttpClient(asyncHttpClientConfig);
+        //AsyncHttpClient asyncHttpClient = new DefaultAsyncHttpClient(asyncHttpClientConfig);
 
         return new AhcWSClient(asyncHttpClientConfig, materializer);
     }
