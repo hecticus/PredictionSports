@@ -55,7 +55,6 @@ public class WapSite extends Controller {
             token  = request().getQueryString("IDTRX");
             Http.Cookie cookie = Http.Cookie.builder("ttype","IDTRX=" + request().getQueryString("IDTRX")).build();
             response().setCookie(cookie);
-
         }
 
         if(request().queryString().containsKey("idtrx")) {
@@ -77,6 +76,12 @@ public class WapSite extends Controller {
             token  = request().getQueryString("HASH");
             Http.Cookie cookie = Http.Cookie.builder("ttype","HASH=" + request().getQueryString("HASH")).build();
             response().setCookie(cookie);
+
+            if(request().queryString().containsKey("pubid")) {
+
+                cookie = Http.Cookie.builder("pubid","PUBID=" + request().getQueryString("pubid")).build();
+                response().setCookie(cookie);
+            }
         }
 
         if(request().queryString().containsKey("hash")) {
@@ -84,6 +89,10 @@ public class WapSite extends Controller {
             token  = request().getQueryString("hash");
             Http.Cookie cookie = Http.Cookie.builder("ttype","hash=" + request().getQueryString("hash")).build();
             response().setCookie(cookie);
+            if(request().queryString().containsKey("pubid")) {
+                cookie = Http.Cookie.builder("pubid","PUBID=" + request().getQueryString("pubid")).build();
+                response().setCookie(cookie);
+            }
         }
 
         if(request().queryString().containsKey("mobrainid")) {
@@ -149,7 +158,7 @@ public class WapSite extends Controller {
 
         log tmp = new log();
         tmp.setIdentifier(aux.get("ttype")[0]);
-        tmp.setMsisdn(msisdn);
+        tmp.setMsisdn(String.format("START: %s - %s", msisdn, request().cookies().get("pubid") == null? "N/A": request().cookies().get("pubid").value()));
         tmp.setLastUpdate(new Date());
         tmp.save();
 
@@ -201,6 +210,7 @@ public class WapSite extends Controller {
                 String ttype = aux.get("ttype")[0];
                 String pin = aux.get("pin")[0];
                 if(validPin) {
+
                     if(ttype.equals("GLOBAL")) {
                         CallWithTokenGlobality(client.getToken());
                         toKraken(client.getMsisdn().toString(), "GLOBALWEB");
@@ -231,6 +241,12 @@ public class WapSite extends Controller {
                     if(ttype.startsWith("INS")) {
                         toKraken(client.getMsisdn().toString(), ttype);
                     }
+
+                    log tmp = new log();
+                    tmp.setIdentifier(ttype);
+                    tmp.setMsisdn(String.format("EXITO: %s - %s", client.getMsisdn().toString(), request().cookies().get("pubid") == null? "N/A": request().cookies().get("pubid").value()));
+                    tmp.setLastUpdate(new Date());
+                    tmp.save();
                 }
             }
         }
