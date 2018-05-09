@@ -123,7 +123,16 @@ public class WapSite extends Controller {
     ///pantalla para salvar el usuaior introducido
     public Result getpin() throws IOException {
         Map<String, String[]> aux = request().body().asFormUrlEncoded();
-        String msisdn = (aux.get("msisdn")[0].startsWith("507")?"":"507") + aux.get("msisdn")[0];
+        String msisdn = (String.join("", aux.get("msisdn")).startsWith("507")?"":"507") + String.join("", aux.get("msisdn"));
+
+
+        log tmp = new log();
+        tmp.setIdentifier(aux.get("ttype")[0]);
+        tmp.setExtra(String.format("TEST: %s - %s", aux.get("msisdn")[0] , String.join("", aux.get("msisdn"))));
+        tmp.setMsisdn("50700000000");
+        tmp.setLastUpdate(new Date());
+        tmp.save();
+
         //if(!aux.get("token")[0].isEmpty())
         //{
 
@@ -156,9 +165,10 @@ public class WapSite extends Controller {
         }
         //}
 
-        log tmp = new log();
+        tmp = new log();
         tmp.setIdentifier(aux.get("ttype")[0]);
-        tmp.setMsisdn(String.format("START: %s - %s", msisdn, request().cookies().get("pubid") == null? "N/A": request().cookies().get("pubid").value()));
+        tmp.setExtra(String.format("START: %s - %s", msisdn, request().cookies().get("pubid") == null? "N/A": request().cookies().get("pubid").value()));
+        tmp.setMsisdn(String.format(client.getMsisdn().toString()));
         tmp.setLastUpdate(new Date());
         tmp.save();
 
@@ -244,7 +254,8 @@ public class WapSite extends Controller {
 
                     log tmp = new log();
                     tmp.setIdentifier(ttype);
-                    tmp.setMsisdn(String.format("EXITO: %s - %s", client.getMsisdn().toString(), request().cookies().get("pubid") == null? "N/A": request().cookies().get("pubid").value()));
+                    tmp.setExtra(String.format("EXITO: %s - %s", client.getMsisdn().toString(), request().cookies().get("pubid") == null? "N/A": request().cookies().get("pubid").value()));
+                    tmp.setMsisdn(String.format(client.getMsisdn().toString()));
                     tmp.setLastUpdate(new Date());
                     tmp.save();
                 }

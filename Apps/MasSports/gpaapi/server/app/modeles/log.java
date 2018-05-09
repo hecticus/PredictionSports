@@ -25,13 +25,18 @@ public class log extends Model  {
         this.id = id;
     }
 
-    @Constraints.MaxLength(400)
+    @Constraints.MaxLength(16)
     @Column(length = 16, nullable = false)
     protected String msisdn;
 
     @Constraints.MaxLength(16)
     @Column(length = 16, nullable = false)
     protected String identifier;
+
+    @Constraints.MaxLength(400)
+    @Column(length = 16, nullable = false)
+    protected String extra;
+
 
     @Constraints.Required
     @Formats.DateTime(pattern = "yyyy/MM/dd hh:mm")
@@ -65,5 +70,13 @@ public class log extends Model  {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
     }
 }
