@@ -125,13 +125,12 @@ public class WapSite extends Controller {
         Map<String, String[]> aux = request().body().asFormUrlEncoded();
         String msisdn = (String.join("", aux.get("msisdn")).startsWith("507")?"":"507") + String.join("", aux.get("msisdn"));
 
-
         log tmp = new log();
-        tmp.setIdentifier(aux.get("ttype")[0]);
-        tmp.setExtra(String.format("TEST: %s - %s", aux.get("msisdn")[0] , String.join("", aux.get("msisdn"))));
-        tmp.setMsisdn("50700000000");
-        tmp.setLastUpdate(new Date());
-        tmp.save();
+//        tmp.setIdentifier(aux.get("ttype")[0]);
+//        tmp.setExtra(String.format("TEST: %s - %s", aux.get("msisdn")[0] , String.join("", aux.get("msisdn"))));
+//        tmp.setMsisdn("50700000000");
+//        tmp.setLastUpdate(new Date());
+//        tmp.save();
 
         //if(!aux.get("token")[0].isEmpty())
         //{
@@ -179,6 +178,10 @@ public class WapSite extends Controller {
 
     public boolean checkMD(String msisdn) throws IOException
     {
+        if(msisdn.equals("507"))
+        {
+            return false;
+        }
         ObjectNode event = Json.newObject();
         event.put("msisdn", msisdn);
         String url = "http://plussports.hecticus.com/checkmsisdn";
