@@ -175,7 +175,6 @@ public class WapSite extends Controller {
         return ok(wepaget.render(msisdn, aux.get("ttype")[0]));
     }
 
-
     public boolean checkMD(String msisdn) throws IOException
     {
         if(msisdn.equals("507"))

@@ -1637,6 +1637,12 @@ public class FootballClients extends Clients {
         }
     }
 
+    public static Result GetFIFA()
+    {
+        F.Promise<WSResponse> result = WS.url("https://es.fifa.com/rss/index.xml").get();
+        return ok(result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asByteArray());
+    }
+
     public static Result verifyPin(String msisdn, String pin) {
         if (!msisdn.isEmpty() && !pin.isEmpty()) {
             boolean isPinConfirmed = SilverAPI.confirmPin(msisdn, pin);

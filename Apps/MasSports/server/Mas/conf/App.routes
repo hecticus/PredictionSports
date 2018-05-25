@@ -17,6 +17,7 @@ GET            /login                                                           
 POST           /login/password                                                            controllers.Wap.getPassword()
 POST           /login/create                                                              controllers.Wap.createClient()
 POST           /checkmsisdn                                                               controllers.client.FootballClients.checkMsisdn()
+GET            /fifa                                                                       controllers.client.FootballClients.GetFIFA()
 
 GET            /check/*name                                                               controllers.Application.checkFile(name: String)
 GET            /api/loading/:width/:height/:version/:so                                   controllers.Application.getAppSettings(width: Integer, height: Integer, version : String, so : String)
