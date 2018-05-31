@@ -1022,7 +1022,9 @@ public class FootballClients extends Clients {
                                 dataFixture.add(round);
                                 orderedFixtures.clear();
                                 orderedFixtures.add(gameMatch);
-                                pivot = gameMatch.get("date").asText().substring(0, 8);
+                                SimpleDateFormat format1 = new SimpleDateFormat("yyyyMMdd");
+                                String formatted = format1.format(matchDate.getTime());
+                                pivot = formatted;
                                 pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd", TimeZone.getTimeZone("UTC")));
                                 maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
                             }
