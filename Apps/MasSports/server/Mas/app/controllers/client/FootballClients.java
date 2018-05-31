@@ -1023,6 +1023,7 @@ public class FootballClients extends Clients {
                                 orderedFixtures.clear();
                                 orderedFixtures.add(gameMatch);
                                 SimpleDateFormat format1 = new SimpleDateFormat("yyyyMMdd");
+                                matchDate.add(Calendar.HOUR, 5);
                                 String formatted = format1.format(matchDate.getTime());
                                 pivot = formatted;
                                 pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd", TimeZone.getTimeZone("UTC")));
