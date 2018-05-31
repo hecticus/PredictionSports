@@ -1014,18 +1014,19 @@ public class FootballClients extends Clients {
                             Calendar matchDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
                             matchDate.setTime(DateAndTime.getDate(gameMatch.get("date").asText(), "yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")));
                             matchDate.add(Calendar.HOUR, 5);
+                            matchDate.add(Calendar.MINUTE, 1);
                             if (matchDate.before(maximumDate)) {
                                 orderedFixtures.add(gameMatch);
                             } else {
                                 ObjectNode round = Json.newObject();
-                                round.put("date", pivot);
-                                round.put("matches", Json.toJson(orderedFixtures));
                                 dataFixture.add(round);
                                 orderedFixtures.clear();
                                 orderedFixtures.add(gameMatch);
                                 SimpleDateFormat format1 = new SimpleDateFormat("yyyyMMdd");
                                 String formatted = format1.format(matchDate.getTime());
                                 pivot = formatted;
+                                round.put("date", pivot);
+                                round.put("matches", Json.toJson(orderedFixtures));
                                 pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd", TimeZone.getTimeZone("UTC")));
                                 maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
                             }
