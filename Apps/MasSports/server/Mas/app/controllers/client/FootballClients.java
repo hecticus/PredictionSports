@@ -1014,7 +1014,7 @@ public class FootballClients extends Clients {
                             Calendar matchDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
                             matchDate.setTime(DateAndTime.getDate(gameMatch.get("date").asText(), "yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")));
                             matchDate.add(Calendar.HOUR, 5);
-                            matchDate.add(Calendar.MINUTE, 1);
+                            matchDate.add(Calendar.MINUTE, 30);
                             if (matchDate.before(maximumDate)) {
                                 orderedFixtures.add(gameMatch);
                             } else {
