@@ -1019,14 +1019,12 @@ public class FootballClients extends Clients {
                                 orderedFixtures.add(gameMatch);
                             } else {
                                 ObjectNode round = Json.newObject();
+                                round.put("date", pivot);
+                                round.put("matches", Json.toJson(orderedFixtures));
                                 dataFixture.add(round);
                                 orderedFixtures.clear();
                                 orderedFixtures.add(gameMatch);
-                                SimpleDateFormat format1 = new SimpleDateFormat("yyyyMMdd");
-                                String formatted = format1.format(matchDate.getTime());
-                                pivot = formatted;
-                                round.put("date", pivot);
-                                round.put("matches", Json.toJson(orderedFixtures));
+                                pivot = gameMatch.get("date").asText().substring(0, 8);
                                 pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd", TimeZone.getTimeZone("UTC")));
                                 maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
                             }
