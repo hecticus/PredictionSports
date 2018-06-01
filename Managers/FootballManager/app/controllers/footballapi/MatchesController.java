@@ -402,7 +402,7 @@ public class MatchesController extends HecticusController {
                     return badRequest(buildBasicResponse(1, "Es necesario pasar un timezone"));
                 }
                 Calendar today = new GregorianCalendar(timeZone);
-                String date = DateAndTime.getMinimumDate(today, timezoneName, "yyyMMddhhmmss");
+                String date = DateAndTime.getMinimumDate(today, timezoneName, "yyyMMddHHmmss");
                 ArrayList<ObjectNode> data = new ArrayList();
                 Competition competition = app.getCompetition(idCompetition);
                 if (competition != null) {
@@ -416,7 +416,7 @@ public class MatchesController extends HecticusController {
                         Calendar maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate);
                         Calendar matchDate = null;
                         Calendar pivotDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
-                        pivotDate.setTime(DateAndTime.getDate(gameMatches.get(0).getDate(), gameMatches.get(0).getDate().length()==8?"yyyyMMdd":"yyyyMMddhHHmss", TimeZone.getTimeZone("UTC")));
+                        pivotDate.setTime(DateAndTime.getDate(gameMatches.get(0).getDate(), gameMatches.get(0).getDate().length()==8?"yyyyMMdd":"yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")));
                         SimpleDateFormat tzFormatter = new SimpleDateFormat("yyyyMMdd");
                         tzFormatter.setTimeZone(timeZone);
                         for (GameMatch gameMatch : gameMatches) {
