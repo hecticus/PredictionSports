@@ -476,7 +476,7 @@ public class GameMatch extends FootballModel {
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
         df.setTimeZone(timeZone);
         Calendar gameMatchDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
-        gameMatchDate.setTime(DateAndTime.getDate(date, date.length()==8?"yyyyMMdd":"yyyyMMddhhmmss", TimeZone.getTimeZone("UTC")));
+        gameMatchDate.setTime(DateAndTime.getDate(date, date.length()==8?"yyyyMMdd":"yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")));
         json.put("date",df.format(gameMatchDate.getTime()));
         if(homeTeam == null){
             ObjectNode obj = Json.newObject();
