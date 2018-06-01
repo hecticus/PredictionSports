@@ -416,7 +416,7 @@ public class MatchesController extends HecticusController {
                         Calendar maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate);
                         Calendar matchDate = null;
                         Calendar pivotDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
-                        pivotDate.setTime(DateAndTime.getDate(gameMatches.get(0).getDate(), gameMatches.get(0).getDate().length()==8?"yyyyMMdd":"yyyyMMddhhmmss", TimeZone.getTimeZone("UTC")));
+                        pivotDate.setTime(DateAndTime.getDate(gameMatches.get(0).getDate(), gameMatches.get(0).getDate().length()==8?"yyyyMMdd":"yyyyMMddhHHmss", TimeZone.getTimeZone("UTC")));
                         SimpleDateFormat tzFormatter = new SimpleDateFormat("yyyyMMdd");
                         tzFormatter.setTimeZone(timeZone);
                         for (GameMatch gameMatch : gameMatches) {
@@ -432,7 +432,7 @@ public class MatchesController extends HecticusController {
                                 fixtures.clear();
                                 fixtures.add(gameMatch.toJsonSimple(timeZone));
                                 pivot = gameMatch.getDate().substring(0, 8);
-                                pivotDate.setTime(DateAndTime.getDate(gameMatch.getDate(), gameMatch.getDate().length()==8?"yyyyMMdd":"yyyyMMddhhmmss", TimeZone.getTimeZone("UTC")));
+                                pivotDate.setTime(DateAndTime.getDate(gameMatch.getDate(), gameMatch.getDate().length()==8?"yyyyMMdd":"yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")));
                                 pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd", TimeZone.getTimeZone("UTC")));
                                 maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate);
                             }
