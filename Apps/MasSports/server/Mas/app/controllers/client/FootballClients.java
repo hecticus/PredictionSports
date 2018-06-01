@@ -1012,9 +1012,8 @@ public class FootballClients extends Clients {
                         Calendar maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
                         for (ObjectNode gameMatch : modifiedFixtures) {
                             Calendar matchDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
-                            matchDate.setTime(DateAndTime.getDate(gameMatch.get("date").asText(), "yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")));
+                            matchDate.setTime(DateAndTime.getDate(gameMatch.get("date").asText(), "yyyyMMddHHmmss", TimeZone.getTimeZone(timezoneName)));
                             matchDate.add(Calendar.HOUR, 5);
-                            matchDate.add(Calendar.MINUTE, 30);
                             if (matchDate.before(maximumDate)) {
                                 orderedFixtures.add(gameMatch);
                             } else {
@@ -1024,7 +1023,9 @@ public class FootballClients extends Clients {
                                 dataFixture.add(round);
                                 orderedFixtures.clear();
                                 orderedFixtures.add(gameMatch);
-                                pivot = gameMatch.get("date").asText().substring(0, 8);
+
+                                SimpleDateFormat format1 = new SimpleDateFormat("yyyyMMdd");
+                                pivot = format1.format(matchDate.getTime());
                                 pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd", TimeZone.getTimeZone("UTC")));
                                 maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
                             }
