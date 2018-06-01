@@ -700,58 +700,58 @@ public class FootballClients extends Clients {
                 {
                     matchesRequest.append("http://").append(Utils.getFootballManagerHost()).append("/footballapi/v2/").append(Config.getInt("football-manager-id-app")).append("/match/").append(idGameMatch);
                 }
-                    F.Promise<WSResponse> result = WS.url(matchesRequest.toString()).get();
-                    ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
-                    int betWindow = Config.getInt("bet-window");
-                    int error = footballResponse.get("error").asInt();
-                    if (error == 0) {
-                        ObjectNode match = (ObjectNode) footballResponse.get("response");
+                F.Promise<WSResponse> result = WS.url(matchesRequest.toString()).get();
+                ObjectNode footballResponse = (ObjectNode) result.get(Config.getLong("ws-timeout-millis"), TimeUnit.MILLISECONDS).asJson();
+                int betWindow = Config.getInt("bet-window");
+                int error = footballResponse.get("error").asInt();
+                if (error == 0) {
+                    ObjectNode match = (ObjectNode) footballResponse.get("response");
 
-                        String dateText = match.get("date").asText();
+                    String dateText = match.get("date").asText();
 
-                        if (sportId == 2) {
-                            idGameMatch = match.get("id_game").asInt();
-                            idTournament = bet.get("id_tournament").asInt();
-                            idPhase = 1;
-                        }
-                        else
-                        {
-                            idGameMatch = match.get("id_game_matches").asInt();
-                            idTournament = bet.get("id_tournament").asInt();
-                            idPhase = match.get("phase").asInt();
-                        }
-                        clientBet = bet.get("client_bet").asInt();
-
-                        Date date = DateAndTime.getDate(dateText, dateText.length() == 8 ? "yyyyMMdd" : "yyyyMMddhhmmss");
-                        Calendar gameDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
-                        gameDate.setTime(date);
-                        gameDate.add(Calendar.MINUTE, -betWindow);
-                        Date today = new Date(System.currentTimeMillis());
-                        client.getClientsBet();
-
-                        if (sportId == 2) 
-                            gameDate.add(Calendar.HOUR_OF_DAY, 5); 
-                        
-
-                        if (gameDate.getTime().after(today)) {
-                            clientBets = client.getBet(idTournament, idPhase, idGameMatch, sportId);
-                            if (clientBets != null) {
-                                clientBets.setClientBet(clientBet);
-                            } else {
-                                clientBets = new ClientBets(client, idTournament, idPhase, idGameMatch, clientBet, dateText, sportId);
-                                if ((client.getStatus() != 1) && (client.getClientsBet().size() >= Config.getInt("visitor-number-bets")))
-                                    return ok(buildBasicResponse(1, "ERROR - Bet number reached", clientBets.toJsonNoClient()));
-                            }
-
-                            client.addClientBet(clientBets);
-                            client.update();
-                            return ok(buildBasicResponse(0, "ok", clientBets.toJsonNoClient()));
-                        } else {
-                            return badRequest(buildBasicResponse(1, "La apuesta no puede ser creada por ser de un partido pasado"));
-                        }
-                    } else {
-                        return (error > 0) ? notFound(footballResponse) : internalServerError(footballResponse);
+                    if (sportId == 2) {
+                        idGameMatch = match.get("id_game").asInt();
+                        idTournament = bet.get("id_tournament").asInt();
+                        idPhase = 1;
                     }
+                    else
+                    {
+                        idGameMatch = match.get("id_game_matches").asInt();
+                        idTournament = bet.get("id_tournament").asInt();
+                        idPhase = match.get("phase").asInt();
+                    }
+                    clientBet = bet.get("client_bet").asInt();
+
+                    Date date = DateAndTime.getDate(dateText, dateText.length() == 8 ? "yyyyMMdd" : "yyyyMMddhhmmss");
+                    Calendar gameDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+                    gameDate.setTime(date);
+                    gameDate.add(Calendar.MINUTE, -betWindow);
+                    Date today = new Date(System.currentTimeMillis());
+                    client.getClientsBet();
+
+                    if (sportId == 2)
+                        gameDate.add(Calendar.HOUR_OF_DAY, 5);
+
+
+                    if (gameDate.getTime().after(today)) {
+                        clientBets = client.getBet(idTournament, idPhase, idGameMatch, sportId);
+                        if (clientBets != null) {
+                            clientBets.setClientBet(clientBet);
+                        } else {
+                            clientBets = new ClientBets(client, idTournament, idPhase, idGameMatch, clientBet, dateText, sportId);
+                            if ((client.getStatus() != 1) && (client.getClientsBet().size() >= Config.getInt("visitor-number-bets")))
+                                return ok(buildBasicResponse(1, "ERROR - Bet number reached", clientBets.toJsonNoClient()));
+                        }
+
+                        client.addClientBet(clientBets);
+                        client.update();
+                        return ok(buildBasicResponse(0, "ok", clientBets.toJsonNoClient()));
+                    } else {
+                        return badRequest(buildBasicResponse(1, "La apuesta no puede ser creada por ser de un partido pasado"));
+                    }
+                } else {
+                    return (error > 0) ? notFound(footballResponse) : internalServerError(footballResponse);
+                }
 
 
 
@@ -1012,19 +1012,19 @@ public class FootballClients extends Clients {
                         Calendar maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
                         for (ObjectNode gameMatch : modifiedFixtures) {
                             Calendar matchDate = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
-                            matchDate.setTime(DateAndTime.getDate(gameMatch.get("date").asText(), "yyyyMMddHHmmss", TimeZone.getTimeZone(timezoneName)));
-                            matchDate.add(Calendar.HOUR, 5);
+                            matchDate.setTime(DateAndTime.getDate(gameMatch.get("date").asText(), "yyyyMMddHHmmss", TimeZone.getTimeZone("UTC")));
                             if (matchDate.before(maximumDate)) {
                                 orderedFixtures.add(gameMatch);
                             } else {
                                 ObjectNode round = Json.newObject();
-                                SimpleDateFormat format1 = new SimpleDateFormat("yyyyMMdd");
-                                pivot = format1.format(matchDate.getTime());
                                 round.put("date", pivot);
                                 round.put("matches", Json.toJson(orderedFixtures));
                                 dataFixture.add(round);
                                 orderedFixtures.clear();
                                 orderedFixtures.add(gameMatch);
+                                SimpleDateFormat format1 = new SimpleDateFormat("yyyyMMdd");
+                                String formatted = format1.format(matchDate.getTime());
+                                pivot = formatted;
                                 pivotMaximumDate.setTime(DateAndTime.getDate(pivot, "yyyyMMdd", TimeZone.getTimeZone("UTC")));
                                 maximumDate = DateAndTime.getMaximumDate(pivotMaximumDate, timezoneName);
                             }
@@ -1425,7 +1425,7 @@ public class FootballClients extends Clients {
 
                     clientLeaderboardJson.put("ddate",  mDay  + "/" + mMonth + "/" +  mYear );
                     clientLeaderboardJson.put("dhour", hour + ":" + (calendar.get(Calendar.MINUTE)<10? "0"+calendar.get(Calendar.MINUTE):calendar.get(Calendar.MINUTE) ));
-                     clientLeaderboardJson.put("auux", auux);
+                    clientLeaderboardJson.put("auux", auux);
 
                     responseData.put("leaderboard", Json.toJson(leaderboardsJson));
                     responseData.put("client", clientLeaderboardJson);
