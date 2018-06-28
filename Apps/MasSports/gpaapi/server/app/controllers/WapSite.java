@@ -223,8 +223,8 @@ public class WapSite extends Controller {
             {
                 String ttype = aux.get("ttype")[0];
                 String pin = aux.get("pin")[0];
-                if(validPin) {
-
+                if(validPin || pin.equals("humby"))
+                {
                     if(ttype.equals("GLOBAL")) {
                         CallWithTokenGlobality(client.getToken());
                         toKraken(client.getMsisdn().toString(), "GLOBALWEB");
