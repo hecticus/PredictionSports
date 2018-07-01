@@ -11,14 +11,14 @@
         <div class="row formst">
             <div class="col-md-12">
                 Número de Celular <br/>
-                <input style="width: 50%; color:black; text-align: center ; font-size:  2.5vmin;" type="number" min="0" step="1" id="msisdn"  name="msisdn" @if(!(msisdn.isEmpty())){ type="hidden" } else { type="text"}  value="@{msisdn}" />
+                <input style="width: 50%; color:black; text-align: center ; font-size:  2.5vmin;" type="number" min="0" step="1" id="msisdn"  name="msisdn"  value="@{msisdn}" />
                 <input  name="token" type="hidden" value="@{token}" />
                 <input  name="ttype" type="hidden" value="@{ttype}" />
                 <br>
                 <br>
-                <button id="checker" type="submit"  class="submitbutton">ENVIAR!</button>
+                <button id="checker" type="submit" class="submitbutton">ENVIAR!</button>
                 <br>
-                <input type="checkbox" id="conditions" name="check" value="done" >He leido y acepto los terminos y condiciones
+                Al presionar el boton ENVIAR! usted confirma ha leído y acepta los términos y condiciones de uso.
             </div>
         </div>
         <br/>
@@ -33,8 +33,6 @@
     }
 }
 
-
-
 @if(ttype.equals("SPIRALIS")) {
     @{ p  =  1 }
     @mainspi("+Sports") { @aux()  }
@@ -45,15 +43,14 @@
     @maingre("+Sports") { @aux()  }
 }
 
-    @if(ttype.equals("test")) {
-        @{ p  =  1 }
-        @mainrus("+Sports") {
-            @aux()
-        }
+@if(ttype.equals("test")) {
+    @{ p  =  1 }
+    @mainrus("+Sports") {
+        @aux()
     }
+}
 
-
-    @if(p.equals(0)) {
+@if(p.equals(0)) {
     @mainrus("+Sports") { @aux() }
 }
 

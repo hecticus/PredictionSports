@@ -129,7 +129,7 @@ public class WapSite extends Controller {
         }
 
 
-        String msisdn = request().cookie("User-Identity-Forward-msisdn") == null ? "" : request().cookie("User-Identity-Forward-msisdn").value();
+        String msisdn = "";
         return ok(wepa.render(msisdn, token, ttype));
     }
 
