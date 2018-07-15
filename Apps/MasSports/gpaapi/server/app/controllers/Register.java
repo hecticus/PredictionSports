@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import modeles.Clients;
 import modeles.Config;
 import modeles.Services;
+import modeles.log;
 import org.asynchttpclient.AsyncHttpClientConfig;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
 //import scala.util.parsing.json.JSONArray;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import play.libs.ws.ahc.AhcWSClient;
 import play.libs.ws.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -276,6 +278,16 @@ public class Register extends Controller {
         return ok();
     }
 
+    public Result Test()
+    {
+        log tmp = new log();
+        tmp.setIdentifier("TEST");
+        tmp.setExtra(String.format("TEST: %s", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())));
+        tmp.setMsisdn("353805");
+        tmp.setLastUpdate(new Date());
+        tmp.insert();
+        return ok();
+    }
 
     public void ReturnPixels(Clients client)
     {

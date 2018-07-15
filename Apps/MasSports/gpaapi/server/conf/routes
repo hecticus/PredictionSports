@@ -16,5 +16,6 @@ POST    /client/getpin               controllers.Register.GetPin()
 POST    /client/confirm              controllers.Register.confirmPin()
 GET     /header                      controllers.Register.CheckHeader()
 GET     /pal/config                  controllers.Register.Config
+GET     /pal/test                    controllers.Register.Test
 
 #GET     /user/findByEmail/:email    controllers.Users.findByEmail(email: String)
