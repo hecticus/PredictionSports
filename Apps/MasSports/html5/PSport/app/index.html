@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/sport.css">
+    <!-- endbuild -->
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+  </head>
+  <body ng-app="psportApp">
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <div class="holder">
+        <div class="container" id="banner">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center">
+                <img src="images/logo.png" class="img-responsive logoger" alt="+Sport Logo"><br>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- Add your site or application content here -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" id="topnavbar">
+      
+        <div class="navbar-header">
+          <!-- small screen nav toggle -->
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+
+        <!-- nav links -->
+        <div class="collapse navbar-collapse collapse navver" id="navbar" >          
+          <ul class="nav navbar-nav" style="font-style: italic;">
+            <li ><a ng-href="#/">Inicio</a></li>
+            <li ><a ng-href="#/how">Cómo Participar</a></li>
+            <li><a ng-href="#/price">Premios</a></li>
+            <li><a ng-href="#/promo">Bases de la Promoción</a></li>
+            <li><a ng-href="#/qa">Preguntas Frecuentes</a></li>
+          </ul> 
+        </div><!-- /.navbar-collapse -->
+
+      <!-- container-fluid -->
+   </nav>
+
+    <div class="container">
+    <div ng-view=""></div>
+    </div>
+
+    <div class="holder">
+        <footer class="footer">
+          <div class="container">
+            <p class="myfooter">
+              Promoción válida del 1 de septiembre 31 de diciembre de 2018. Mientras el cliente esté suscrito se le realizarán dos (2) cobros diarios con costo B/.0.50, por cada cobro efectivo el usuario acumula 100 puntos. El cliente podrá incrementar su puntuación enviando MAS al 9091 respondiendo trivias en donde acumulará 100 puntos por cada mensaje enviado, cuyo costo será de B/.0.50 cada uno.  Por cada acierto que realice en el app de +Sports con los pronósticos deportivos el cliente recibe 50 puntos. Los tres usuarios que acumulen más puntos durante la promoción resultarán ganadores de B/.10,000.00 en efectivo cada uno.  Para darse de baja el usuario debe enviar BAJA MAS al 9090.  
+            </footer>
+    </div>
+
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+
+
+    </script>
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/qa.js"></script>
+    <script src="scripts/controllers/old.js"></script>
+    <script src="scripts/controllers/about.js"></script>
+    <script src="scripts/controllers/how.js"></script>
+    <script src="scripts/controllers/price.js"></script>
+    <script src="scripts/controllers/win.js"></script>
+    <script src="scripts/controllers/promo.js"></script>
+    <script src="scripts/backstretch.js"></script>
+    
+
+    <!-- endbuild -->
+</body>
+</html>
