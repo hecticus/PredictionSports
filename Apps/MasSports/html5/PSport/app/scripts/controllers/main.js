@@ -13,7 +13,7 @@ angular.module('psportApp')
 
   	function init()
   	{
-  		$.backstretch("images/bckgrnd.jpg");
+  		//$.backstretch("images/bckgrnd.jpg");
   		focusAndClear("input[type=number]"); 
 	    $("#pin").hide();
 	    $("#inputpin").hide();

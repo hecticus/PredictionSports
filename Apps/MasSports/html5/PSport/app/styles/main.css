@@ -59,6 +59,26 @@ body {
   margin-top: 28px;
 }
 
+#mainimage{
+  background: no-repeat url('images/bckgrnd.jpg') 50% / 100%;
+}
+#mainimage img{
+  vertical-align: top;
+  width: 100%; /* max width */
+  opacity: 0;  /* make it transparent */
+}
+
+
+.mainimage2
+{
+  vertical-align: top;
+  width: 100%; /* max width */
+  opacity: 0;  
+  background-image: url('images/main/bckgrnd.jpg');
+  background-size: cover;
+  height: 600px,
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
