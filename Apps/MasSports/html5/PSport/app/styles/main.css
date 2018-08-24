@@ -79,6 +79,17 @@ body {
   height: 600px,
 }
 
+
+.navbar-default
+{
+  background-color: #f31435 !important;
+}
+
+.navbar-default li a
+{
+  color: white !important;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
