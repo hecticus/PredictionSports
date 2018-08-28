@@ -1,119 +1,64 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/sport.css">
-    <!-- endbuild -->
-    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
-  </head>
-  <body ng-app="psportApp">
-    <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-    <div class="holder">
-        <div class="container" id="banner">
-          <div class="row">
-            <div class="col-md-8 col-md-offset-2 text-center">
-                <img src="images/logo.png" class="img-responsive logoger" alt="+Sport Logo"><br>
-            </div>
-          </div>
-        </div>
-    </div>
-
-    <!-- Add your site or application content here -->
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" id="topnavbar">
-      
-        <div class="navbar-header">
-          <!-- small screen nav toggle -->
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-
-        <!-- nav links -->
-        <div class="collapse navbar-collapse collapse navver" id="navbar" >          
-          <ul class="nav navbar-nav" style="font-style: italic;">
-            <li ><a ng-href="#/">Inicio</a></li>
-            <li ><a ng-href="#!/how">Cómo Participar</a></li>
-            <li><a ng-href="#!/price">Premios</a></li>
-            <li><a ng-href="#!/promo">Bases de la Promoción</a></li>
-            <li><a ng-href="#!/qa">Preguntas Frecuentes</a></li>
-          </ul> 
-        </div><!-- /.navbar-collapse -->
-
-      <!-- container-fluid -->
-   </nav>
-
-    <div class="container">
-    <div ng-view=""></div>
-    </div>
-
-    <div class="holder">
-        <footer class="footer">
-          <div class="container">
-            <p class="myfooter">
-              Promoción válida del 1 de septiembre 31 de diciembre de 2018. Mientras el cliente esté suscrito se le realizarán dos (2) cobros diarios con costo B/.0.50, por cada cobro efectivo el usuario acumula 100 puntos. El cliente podrá incrementar su puntuación enviando MAS al 9091 respondiendo trivias en donde acumulará 100 puntos por cada mensaje enviado, cuyo costo será de B/.0.50 cada uno.  Por cada acierto que realice en el app de +Sports con los pronósticos deportivos el cliente recibe 50 puntos. Los tres usuarios que acumulen más puntos durante la promoción resultarán ganadores de B/.10,000.00 en efectivo cada uno.  Para darse de baja el usuario debe enviar BAJA MAS al 9090.  
-            </footer>
-    </div>
 
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+<div ng-app="psportApp" ng-controller="PromoCtrl">
+	<div class="container" id="banner italicker">
+	  	<div class="row">
+	        <div class="col-md-12 text-center" style="    text-align: justify;  text-justify: inter-word;">
+				<br />
+				
+		<p>
+				Promoción válida del 1 de septiembre al 31 de diciembre de 2018. Para clientes +Móvil prepago y postpago que mantengan su cuenta al día y sean mayores de 18 años.
+		</p>
+		<p>
+				Se podrá participar de 3 formas:
+		</p>
+		<ol>
+			<li>
+				Enviando un mensaje de texto con la palabra MAS al 9090 en donde el cliente recibirá la información del servicio y deberá confirmar la suscripción enviando ALTA MAS al 9090.
+			</li>
 
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
+			<li>
+				Descargando el app <a href="https://play.google.com/store/apps/details?id=com.hecticus.massports">https://play.google.com/store/apps/details?id=com.hecticus.massports</a> donde el cliente deberá seguir los pasos necesarios para procesar la suscripción (disponible para celulares con sistemas operativos Android).
+			</li>
+
+			<li>
+				Ingresando desde el browser de tu móvil a <a href="http://massports.hecticus.com">http://massports.hecticus.com</a>.  Y seguir los pasos.
+			</li>
+
+		</ol>
+		<p>
+			Si el cliente decide suscribirse a través de alguno de los métodos anteriormente descritos se le realizarán dos (2) cobros diarios con un costo de B/.0.50 por cada mensaje recibido y acumulará 100 puntos por cada cobro efectivo.  El cliente podrá incrementar su puntuación enviando MAS al 9091 respondiendo trivias en donde acumulará 100 puntos por cada mensaje enviado, cuyo costo será de B/.0.50 cada uno.  El cliente a través del app podrá hacer pronósticos deportivos de diferentes competiciones del momento.  Por cada acierto que realice en el app recibirá 50 puntos.
+		</p>	
+		<p>
+				Para darse de baja el cliente deberá enviar gratis la palabra BAJA MAS al 9090, cancelando su participación en la promoción para la escogencia de los premios. Al darse de Baja, la aplicación podrá mantenerse dentro del móvil del cliente y conservará los puntos acumulados hasta ese momento; sin embargo, no tendrá capacidad de optar por el premio. Estos puntos serán reactivados inmediatamente con afiliarse nuevamente a la promoción.
+			</p>	
+			<p>
+				Serán elegidos tres (3) ganadores durante la promoción. Premios finales: Los ganadores serán los usuarios que más puntos acumulen durante el periodo de la promoción, del 1 de septiembre de 2018 al 31 de diciembre de 2018. Los ganadores  recibirán B/.10,000.00 en efectivo cada uno.
+			</p>	
+			<p>
+				La escogencia de los ganadores será el día 2 de enero de 2019.  Las posiciones mostradas en el ranking de la aplicación se reflejarán  de acuerdo al puntaje de la  última actualización del sistema, la cual se realiza durante el día, cada dos (2) horas; por lo cual, es posible que la suma total de los puntos no se reflejen inmediatamente. Los ganadores se escogerán de acuerdo a la última actualización del sistema y +Móvil se reserva hasta un (1) mes para validar el puntaje de las líneas participantes y contactar a los ganadores.
+			</p>	
+			<p>
+				Los ganadores serán contactados y citados a través de su línea móvil para la entrega de los premios que se realizará en Vía España, Plaza Internacional, edificio Torre BANCONAL (Banco Nacional de Panamá) por lo que los ganadores deberán estar presente bajo sus propios medios. Los ganadores deberán portar el celular participante y presentar copia de su cédula o pasaporte, vigentes al momento de retirar el premio. Para las líneas Prepago, los cobros en todos los casos se harán de la cuenta principal, para las líneas postpago individual (consumer), esté deberá estar al día en su cuenta de telefonía celular al día del cierre de la promoción y además al momento de recibir el premio.
+			</p>	
+			<p>
+				No podrá resultar ganador en la promoción vigente del 1 septiembre al 31 de diciembre de 2018, clientes o líneas celulares que hayan resultado ganadores en la temporada del 1 enero al 15 abril 2018 y en la temporada del 16 abril al 31 agosto 2018. Es responsabilidad de los usuarios mantener la aplicación actualizada.
+			</p>	
+			<p>
+				 Si existiera sospecha que los mensajes están siendo registrados como resultado de actividades fraudulentas, deshonestas, ilegales o en forma que intente influenciar injustamente el proceso de participación, CWP se reserva el derecho a su absoluta discreción de descalificar dichos mensajes fraudulentos.
+				</p>	
+				<p>
+				No participan los colaboradores pertenecientes a las empresas: Sistemas Móviles, S.A., Cable & Wireless Panamá, S.A., Agencia Publicitaria, ni tampoco los colaboradores de las empresas: Aydesa, Estratego, People Outsourcing, Royal Pro ni Sonitel, S.A. No participan cuentas pyme, corporativos, gobierno y Key Account.
+			</p>	
 
 
-    </script>
+	        </div>
+	        
 
-    <!-- build:js(.) scripts/vendor.js --> 
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+	    </div>
+	</div>
+
+</div>
 
 
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/qa.js"></script>
-    <script src="scripts/controllers/old.js"></script>
-    <script src="scripts/controllers/about.js"></script>
-    <script src="scripts/controllers/how.js"></script>
-    <script src="scripts/controllers/price.js"></script>
-    <script src="scripts/controllers/win.js"></script>
-    <script src="scripts/controllers/promo.js"></script>
-    <script src="scripts/backstretch.js"></script>
-    
 
-    <!-- endbuild -->
-</body>
-</html>
