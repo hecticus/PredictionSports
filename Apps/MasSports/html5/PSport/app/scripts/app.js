@@ -61,6 +61,6 @@ angular
         controllerAs: 'old'
       })
       .otherwise({
-        redirectTo: '/views/promo.html'
+        redirectTo: '/'
       });
   });
