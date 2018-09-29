@@ -1,0 +1,70 @@
+@media screen 
+  and (max-device-width: 119px) 
+  and (orientation: portrait) { 
+    #background {
+        background-image:url("../img/dl_res/screen_ldpi.png");
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size:cover;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+    }
+
+}
+
+@media screen
+  and (min-device-width: 120px) 
+  and (max-device-width: 359px) 
+  and (orientation: portrait) { 
+    #background {
+        background-image:url("../img/dl_res/screen_mdpi.png");
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size:cover;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+    }
+
+}
+
+@media screen
+  and (min-device-width: 360px) 
+  and (max-device-width: 799px) 
+  and (orientation: portrait) { 
+    #background {
+        background-image:url("../img/dl_res/screen_hdpi.png");
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size:cover;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+    }
+
+}
+
+@media screen 
+  and (min-device-width: 800px) 
+  and (orientation: portrait) { 
+    #background {
+        background-image:url("../img/dl_res/screen_xhdpi.png");
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size:cover;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+    }
+
+}
+

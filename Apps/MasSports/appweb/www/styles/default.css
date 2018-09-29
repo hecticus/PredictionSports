@@ -1,0 +1,1515 @@
+row:not(input):not(textarea) {
+    -webkit-user-select: none; /* disable selection/Copy of UIWebView */
+    -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
+}
+
+/*changed font family by fer and audel*/
+* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
+html { -ms-touch-action: none; font-family: 'Open Sans', sans-serif; }
+body,ul,li { padding: 0 !important; margin: 0 !important; 
+  border: 0 !important; 
+  width: 100%; height: 100%; 
+  color:#002878; 
+  background:#f5efd5 !important; 
+  font-size: 62.5% important;}
+
+
+.footer-section{color: #f5efd5 !important; text-decoration: none  !important; }
+.footer-section:link {color: #f5efd5 !important; text-decoration: none  !important; }
+.footer-section:visited {color: #f5efd5 !important; text-decoration: none  !important; }
+.footer-section:hover {color: #f5efd5 !important; text-decoration: none  !important; }
+.footer-section:active { color: #f5efd5 !important; text-decoration: none  !important; }
+
+#wrapper, #wrapperM, #wrapperL,.wrapper {
+    position: absolute;
+    z-index: 1;
+    top: 50px;
+    bottom: 50px;
+    left: 0;
+    width: 100%;
+    background:#f5efd5;
+}
+
+.wrapper {
+  top: 35px;
+  bottom: 0;
+  }
+
+#wrapper2,
+#wrapper3 {
+    position: absolute;
+    z-index: 6;
+    top: 50px;
+    bottom: 50px;
+    left: 0;
+    width: 100%;
+    background:#f5efd5;
+}
+
+/*Cambiado por audel para probar new colors*/
+header, footer {
+    position: absolute;
+    z-index: 100;
+    left:0;
+    right:0;
+    width: 100%;
+    height: 50px;
+    background-color: #f5efd5;
+    padding: 0 !important;
+    margin:0 !important;
+    border: 0;
+}
+
+/*cambiado por audel para nuevo color de header*/
+header {
+    /*background: rgb(44,156,211);*/
+    background: rgb(245, 239, 213);
+}
+
+/*cambiado por audel*/
+footer {
+    bottom: 0;
+    background: #0377b4;
+    z-index: 10;
+}
+
+footer .option {
+    text-align: center;
+    height: 50px;
+}
+
+
+
+footer *[class *= 'glyphicon'],
+footer *[class *= 'icon-material'],
+footer *[class *= 'mdi-'],
+footer *[class *= 'icon-'] {
+    font-size:2em;
+    display:block;
+    font-weight:normal !important;
+    padding-top:2px;
+}
+
+.mdi-action-alarm {
+  font-size:2.7em !important;
+}
+
+
+
+
+footer .glyphicon-class {
+    display: block;
+    word-wrap: break-word;
+}
+
+/*cambiado por audel para nuevos colores de diseño*/
+footer .option.active {
+    background-color: #0196d0;
+}
+
+footer .option.active span {
+  color: #ffffff !important;
+}
+
+header .section {
+    text-shadow: -1px 1px 1px rgba(0,0,0,0.5);
+    color: #f5efd5;
+}
+
+header .section.active {
+    text-shadow: -1px 1px 1px rgba(0,0,0,0.5);
+    /*color: #FFDE00;*/
+    color: #DC143C;
+}
+
+footer .section {
+    display: none;
+}
+
+footer .section .active {
+    display:block;
+}
+
+
+
+body.content-match #wrapper .scroller .container .row .competition {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    border-bottom: solid 1pt #2B2B2B !important;
+}
+
+table,
+table *{
+  margin: 0 !important;
+  border:0 !important;
+  text-align: center;
+}
+
+table tr th {
+  text-align: center;
+}
+
+table tbody tr td.active {
+  background: #fed100 !important;
+  color: #002878 !important;
+}
+
+table tbody tr td span.active,
+table tbody tr td img.active{
+  background: rgb(254,209,0) !important;
+  color: #002878 !important;
+}
+
+
+
+.content-leaderboard table tbody tr,
+.content-leaderboard table tbody tr td,
+.content-friends table tbody tr,
+.content-friends table tbody tr td,
+.content-scorers table tbody tr,
+.content-scorers table tbody tr td,
+.content-standings table tbody tr,
+.content-standings table tbody tr td,
+.content-points table tbody tr,
+.content-points table tbody tr td,
+ {
+  height: 25px;
+  border:0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  padding:5px !important;
+}
+
+
+div.header {
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    left:0;
+    right:0;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    background-color: rgb(122,184,0);
+    padding: 0 !important;
+    margin:0 !important;
+    border: 0;
+    color:#f5efd5;
+}
+
+div.header .caption {
+    text-align: center;
+    font-weight: bold;
+}
+
+div.header .left {
+    text-align: right;
+}
+
+div.header .center {
+    text-align: center;
+    font-weight: bold;
+}
+
+div.header .right {
+    text-align: left;
+}
+
+.error {
+    position: relative;
+    margin: 0 auto;
+    text-align:center;
+    color: #9D9D9D;
+    width: 100%;
+    height:auto;
+    left: 0;
+    top: 25%;
+    bottom: 0;
+    right: 0;
+    z-index: 8;
+}
+
+/*.loading {
+    position: absolute;
+    margin: 0 auto;
+    text-align:center;
+    width: 100%;
+    height:auto;
+    left: 0;
+    top: 45%;
+    bottom: 0;
+    right: 0;
+    z-index: 8;
+}*/
+
+
+body.content-match .competition,
+body.content-scorers .competition {
+    text-transform:uppercase;
+    display:none;
+}
+
+body.content-match .competition.active,
+body.content-scorers .competition.active{
+    display:block;
+}
+
+
+/*Audel deberia cambiar esto*/
+div.header {
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    left:0;
+    right:0;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    background-color: rgb(122,184,0);
+    padding: 0 !important;
+    margin:0 !important;
+    border: 0;
+    color:#f5efd5;
+}
+
+div.header .caption {
+    text-align: center;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+
+div.header .left {
+    text-align: right;
+}
+
+div.header .center {
+    text-align: center;
+    font-weight: bold;
+}
+
+div.header .right {
+    text-align: left;
+}
+
+.error {
+    position: relative;
+    margin: 0 auto;
+    text-align:center;
+    color: #9D9D9D;
+    width: 100%;
+    height:auto;
+    left: 0;
+    top: 25%;
+    bottom: 0;
+    right: 0;
+    z-index: 9;
+}
+
+/*
+.loading {
+    position: absolute;
+    margin: 0 auto;
+    text-align:center;
+    width: 100%;
+    height:auto;
+    left: 0;
+    top: 45%;
+    bottom: 0;
+    right: 0;
+    z-index: 9;
+}*/
+
+#wrapperH {
+    position: absolute;
+    z-index: 1;
+    top: 50px;
+    bottom: 50px;
+    left: 0;
+    width: 100%;
+    background:  #f5efd5;
+   overflow: hidden;
+}
+
+#wrapperM {
+    position: absolute;
+    z-index:20;
+    top: 50px;
+    bottom: 0;
+}
+
+
+#wrapperH #scroller {
+    position: absolute;
+    z-index: 2;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    height: 100%;
+    background-color: #f5efd5;
+   /*-webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -o-text-size-adjust: none;
+    text-size-adjust: none;*/
+}
+
+#wrapperH #scroller ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+#wrapperH #scroller li {
+    position: relative;
+    display: block;
+    float: left;
+    height: 100%;
+    border-right: 1px solid #ccc;
+    background-color: #f5efd5;
+}
+
+
+.row-back {
+    position: absolute;
+    z-index: 9;
+    top: 0;
+    left:0;
+    right:0;
+    width: 100%;
+    height: 35px;
+    line-height: 50px;
+    background-color: #f5efd5;
+    color: #000000;
+    padding: 0 !important;
+    margin:0 !important;
+    border: 0;
+}
+
+body.content-mtm .row-back {
+    background-color: rgb(227,114,34);
+    color: #f5efd5 !important;
+}
+
+
+.row-back.border {
+    border-bottom: solid 1pt #000000 !important;
+}
+
+.row-scoreboard {
+    position: absolute;
+    z-index: 4;
+    top: -100px;
+    left:0;
+    right:0;
+    width: 100%;
+    height: 100px;
+    background-color: #f5efd5;
+    color: #000000;
+    padding: 0 !important;
+    margin:0 !important;
+    border: 0;
+    color: rgb(0,40,120);
+}
+.row-scoreboard figure {
+  margin-top : 10px;
+}
+
+
+.wrapper,
+.wrapper .scroller,
+.wrapper .scroller .container,
+.wrapper .scroller .container div {
+    padding: 0 !important;
+    margin: 0 !important;
+    background-color: #f5efd5;
+}
+
+
+.status {
+    color:#000000;
+    font-weight: bold;
+    font-size:1.4em;
+
+ }
+
+
+
+
+
+
+/* From ext/bootstrap.css */
+.col-xs-15,
+.col-sm-15,
+.col-md-15,
+.col-lg-15 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+    float: left;
+}
+.col-xs-15 {
+    width: 20%;
+}
+@media (min-width: 768px) {
+    .col-sm-15 {
+        width: 20%;
+    }
+}
+@media (min-width: 992px) {
+    .col-md-15 {
+        width: 20%;
+    }
+}
+@media (min-width: 1200px) {
+    .col-lg-15 {
+        width: 20%;
+    }
+}
+
+/*menu*/
+
+/*cambiado por audel*/
+.content-menu,
+.content-sub-menu {
+  background:#f5efd5; 
+  height: 50px; 
+  line-height:50px; 
+  /*color:#134985; */
+  color: #0196d0;
+  margin-left: 32px;}
+
+.content-menu div.col-xs-8,
+.content-sub-menu div.col-xs-8{
+  /*border-bottom: solid 1pt #ffca00;*/
+  border-bottom: solid 1pt #0196d0;
+  padding-left:0 !important;
+}
+
+.content-menu span:last-child {
+  text-transform:uppercase;
+}
+
+/*also cahnged by audel*/
+.content-sub-menu div.col-xs-8 {
+  /*border-bottom: solid 1pt #134985;*/
+  border-bottom: solid 1pt #0196d0;
+  padding-left:0 !important;
+}
+
+@media (max-height: 540px) {
+    .content-sub-menu {
+        display: none !important;
+    }
+}
+
+/*menu*/
+
+.team-info{
+    display: inline-block;
+}
+
+.team-logo{
+    /*display: inline-block;*/
+}
+
+.btn-delete-item {
+    border-radius: 100%;
+    padding: 6px;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    line-height: 10px;
+    position: absolute;
+    top: -12px;
+    right: 16px;
+}
+
+/*Audel INICIO*/
+.username-form {
+  margin-right: 26px !important;
+  border-style: solid !important;
+  height: 35px !important;
+  padding-left: 10px !important;
+}
+
+.btn.btn-fab {
+  box-shadow: none !important;
+  margin-bottom: 10px !important;
+}
+
+.panel {
+  box-shadow: none !important;
+  border-bottom: 1px rgba(0, 0, 0, 0.12);
+  background-color: #f5efd5;
+}
+
+.panels {
+  box-shadow: none !important;
+  border-bottom: 1px rgba(0, 0, 0, 0.12);
+}
+
+.panel-title {
+  text-align: left !important;
+  padding-left: 10px !important;
+}
+
+hr {
+  margin-bottom: 5px !important;
+  margin-top: 5px !important;
+}
+
+.screen-tittle{
+  text-align: center;
+  font-size: 18px;
+  background-color: #0377b4;
+  color: #ffffff;
+  height: 45px;
+  border-radius: 3px;
+  line-height: 40px;
+}
+
+.subh-general{
+  background: #e31e30;
+  color: #f5efd5;
+}
+
+.now-black{
+  color: #0377b4;
+}
+
+.letogglecolor{
+  color: #e31e30 !important; 
+  background-color: rgba(227,30,48,0.2) !important;
+}
+
+/*Audel FIN*/
+
+/*Drawer*/
+.mdi-navigation-more-vert,
+.drawer-icon {
+    vertical-align: middle;
+}
+
+/*.drawer-title{
+    vertical-align: middle;
+    color: #FFF;
+    font-weight: bold;
+    text-transform:uppercase;
+}*/
+
+.drawer-app-logo {
+    width: auto;
+    height: 30px;
+    position: relative;
+    vertical-align: middle;
+}
+
+.icon-white {
+    color: #FFF;
+}
+
+.icon-refresh-animate {
+    -webkit-animation-name: rotateThis;
+    animation-name: rotateThis;
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+}
+
+@-webkit-keyframes rotateThis {
+    from { -webkit-transform: scale( 1 ) rotate( 0deg ); transform: scale( 1 ) rotate( 0deg );  transform-origin: 50% 47%;}
+    to   { -webkit-transform: scale( 1 ) rotate( 360deg ); transform: scale( 1 ) rotate( 360deg ); transform-origin: 50% 47%;}
+}
+
+@keyframes rotateThis {
+    from { -webkit-transform: scale( 1 ) rotate( 0deg ); transform: scale( 1 ) rotate( 0deg );   }
+    to   { -webkit-transform: scale( 1 ) rotate( 360deg ); transform: scale( 1 ) rotate( 360deg ); }
+}
+
+/*cambiado por audel*/
+.btn-orange {
+    background-color: #e31e30 !important;
+    color: #FFF !important;
+    border-radius: 25px;
+    width: 70%;
+    padding: 8px;
+}
+
+/*agregado color negro por audel*/
+.text-center-vertical{
+    vertical-align: middle;
+    color: #000000;
+}
+
+.navbar{
+    margin-bottom: 0;
+}
+
+/*Sections*/
+
+.section-header {
+    line-height: 35px;
+    background-color: rgb(122,184,0);
+    color: #FFF;
+}
+
+.section-header .caption{
+    font-weight: bold;
+}
+
+
+/*Search Lists (Team/Language Selection)*/
+
+.search-bar {
+    margin-bottom: 0 !important;
+}
+
+.search-list-item {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+.search-list-pager {
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+}
+
+.search-list-pager li span {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.23), 0 3px 10px rgba(0, 0, 0, 0.16);
+    margin: 10px !important;
+
+}
+
+.page .search-list-pager li span {
+ box-shadow:none !important;
+}
+
+/*Settings*/
+
+.settings-wrapper {
+    top: 65px !important;
+    background-color: transparent !important;
+}
+
+/*Settings Language*/
+
+.lang-tag {
+    font-weight: bold;
+    font-style: normal;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 100%;
+    text-align: center;
+    line-height: 56px;
+    color: white;
+    width: 56px;
+    height: 56px;
+    font-size: 2em;
+}
+
+.lang-name {
+    font-weight: 400;
+    margin-top: 16px;
+}
+
+
+/*Standings*/
+
+.row-standings-header {
+    position: absolute;
+    z-index: 4;
+    top: 50px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 40px;
+    line-height: 35px;
+    background-color: #fed100;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0;
+    color: #002878 !important;
+    font-weight: bold;
+}
+
+/*No Content "Component"*/
+
+.no-content-panel {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 8;
+  width: 100%;
+  height: 100%;
+  color: #777 !important ;
+  padding: 24px !important;
+  text-align:center;
+  vertical-align:middle;
+  font-size:2.5em;
+}
+
+
+.no-content-panel .no-content-panel-title{
+    position: relative;
+    text-align: center;
+}
+
+/*Lists*/
+/*.row-list-item{
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    border-bottom: solid 1pt #2B2B2B !important;
+}*/
+
+/*Leaderboars*/
+
+.row-header {
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #f5efd5;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0;
+    color: #f5efd5;
+    font-weight: bold;
+}
+
+.row-header-primary {
+    background-color: #2196F3;
+}
+
+  .content-scorers
+  .row-header {
+    height: 55px;
+  }
+
+  .content-scorers
+  .row-header-competition {
+    height: 55px;
+  }
+
+  .content-leaderboard
+  .row-header-competition {
+    height: 55px;
+  }
+
+  .content-friends
+  .row-header-competition {
+    height: 55px;
+  }
+
+
+  .row-header-live {
+      background-color: rgb(227,114,34);
+  }
+
+  .row-header .title {
+      text-align: center;
+      padding: 8px;
+  }
+
+
+.scroller {
+    position: absolute;
+    width: 100%;
+}
+
+.own-player {
+    font-weight: bold;
+    background-color: #2196F3 !important;
+}
+
+.own-player td {
+    background-color: #2196F3 !important;
+}
+
+/*tambien cambiado por audel*/
+.list-item {
+    padding: 12px !important;
+    /*color: #3F78FC !important;*/
+    color: #000000 !important;
+    font-size: 0.5em;
+}
+
+/*cambiado por audel*/
+.full-separator {
+    /*margin-top: 10px;*/
+    /*margin-bottom: 10px;*/
+    width: 100%;
+    border-bottom: 1px solid #f5efd5;
+}
+
+/*
+  Allow angular.js to be loaded in body, hiding cloaked elements until
+  templates compile.  The !important is important given that there may be
+  other selectors that are more specific or come later and might alter display.
+ */
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none !important;
+}
+.client {
+  color:#ff5722 !important;
+  font-weight: bold;
+}
+
+h6.team-name {
+  height:20px;
+  height-line:10px;
+ }
+
+
+
+
+    /*<v2>*/
+
+
+    .h-header {
+      position:relative;
+      text-align: center;
+      height:35px !important;
+      line-height: 35px !important;
+      font-weight:normal !important;
+      z-index: 10;
+      font-size: 1.6em;
+      padding-top: 0px !important;
+      padding-bottom: 0px !important;
+    }
+
+    /*cambiado por audel: estilo del header de perdicciones (ya no es verde)*/
+    .h-header.green {
+      background: #0196d0;
+      color: #ffffff;
+    }
+
+      /*cambiado por audel*/
+    .h-header.yellow {
+      /*background: rgb(0,116,207);*/
+      /*color: rgb(255,255,255);*/
+      background: #b81515;
+      color: rgb(255,255,255);
+    }
+
+    /*cambiado por audel*/
+    .h-header.blue {
+      background: rgb(0,40,120);
+      color: #ffffff;
+    }
+
+    /*cambiado por audel: header de cada item de las predicciones*/
+    .h-header.light-blue {
+      /*background: rgb(44,156,211);*/
+      /*color: #f5efd5;*/
+      background: #b81515;
+      color: #ffffff;
+    }
+
+    /*cambiado por audel: header secundario en predicciones*/
+    .h-header.red {
+      /*background: rgb(227,114,34);*/
+      background: #e31e30;
+      color: #f5efd5;
+    }
+
+    .h-list {
+      padding: 0 20px !important;
+    }
+
+    .content-prediction
+    .h-list {
+      padding: 0 0px !important;
+      background-color: rgb(245, 239, 213);
+    }
+
+
+    .h-list *[class *= 'col-'] {
+      text-align: left;
+      min-height:50px;
+      line-height: 50px;
+      background-color: rgb(245, 239, 213);
+      border-bottom: solid 1pt rgb(0,0,0);
+    }
+
+    .h-list.news *[class *= 'col-'] {
+       line-height: 1;
+       padding: 15px;
+    }
+
+    .content-news .h-headline {
+      font-size:1.2em;
+      font-weight: bold;
+    }
+    .content-news #wrapper2 .h-headline  {
+      font-size:1.6em;
+    }
+
+
+    .content-news .h-moment {
+      font-size:1.2em;
+      /*font-weight:bold;*/
+      color: rgb(44,156,211);
+    }
+
+    .content-news .h-body {
+      margin-top: 10px !important;
+      font-size: 1.3em;
+    }
+
+    /*@media(max-width: 720px) {
+      .content-standings .h-headline {font-weight:bold;}
+      .content-news .h-headline {font-weight:bold;}
+      .content-news #wrapper2 .h-headline {}
+    }*/
+
+
+    .h-list *[class *= 'col-']:last-child {
+      border: 0 !important;
+    }
+
+    .content-news #wrapper,
+    .content-news #wrapper2,
+    .content-standings #wrapper,
+    .content-standings #wrapper2,
+    .content-standings #wrapper3{
+      top: 50px;
+    }
+
+    .content-leaderboard .wrapper,
+    .content-friends .wrapper {
+      top: 5px;
+    }
+
+    .content-scorers .wrapper {
+      top: 35px;
+    }
+
+    .content-init #wrapper {
+      top: 50px;
+    }
+
+    .content-mtm #wrapper {
+      top: 85px;
+    }
+
+    #wrapper2.page,
+    #wrapper3.page {
+      left: 100%;
+      z-index: 1;
+    }
+
+    .content-points #wrapper {
+      top: 225px;
+    }
+
+    .content-match .wrapper {
+      top: 35px;
+    }
+
+    .content-prediction .wrapper { top: 70px; }
+    tr.h-match { border-bottom: 1.5px rgb(44,156,211) solid !important; }
+    tr.h-match:last-child { border: 0 !important; }
+    tr.h-match td { height: auto;} /*vertical-align:middle;*/
+    tr.h-match td .h-name-team {display:block; height: auto; }
+    tr.h-match td .h-goal-team {height: auto;}
+
+    tr.h-points { border-bottom: 1pt rgb(44,156,211) solid !important; }
+    tr.h-points:last-child { border: 0 !important; color: rgb(227,114,34);}
+
+    .content-mtm #wrapper2 {
+      top: 185px;
+      bottom: 50px;
+      z-index: 10;
+    }
+
+
+
+    .h-logo {
+      height: auto;
+    }
+
+    .h-logo.login {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    .h-logo.menu {
+      width: 75px;
+      margin-top: 10px;
+    }
+
+    /*cambiado por audel: logo que va en el appbar o toolbar*/
+    header .h-logo {
+      /*width: 55px;*/
+      width: 215px;
+      vertical-align:middle;
+      margin-right: 5px;
+    }
+
+    .content-mtm #wrapper2,
+    .content-mtm #wrapper2 .scroller,
+    .content-mtm #wrapper2 .scroller .container,
+    .content-mtm #wrapper2 .scroller .container div {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .content-mtm .row-header {
+      top: -135px;
+    }
+
+
+    .content-standings #wrapper3,
+    .content-standings #wrapper3 .scroller,
+    .content-standings #wrapper3 .scroller .container,
+    .content-standings #wrapper3 .scroller .container div {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+      /*cambiado por audel*/
+    .panel-danger > .panel-heading,
+    .panel-warning  > .panel-heading,
+    .panel-primary  > .panel-heading,
+    .panel-success  > .panel-heading,
+    .panel-info > .panel-heading {
+      /*background  : rgb(44,156,211);*/
+      background: rgb(245, 239, 213);
+      color: rgb(3, 119, 180);
+      text-align: center;
+    }
+
+      /*cambiado por audel*/
+    .btn-primary:not(.btn-link):not(.btn-flat),
+    .btn-success:not(.btn-link):not(.btn-flat) {
+      /*background  : rgb(44,156,211);*/
+      background: rgb(245,245,245);
+      border-style: solid;
+      border-width: 1px;
+      border-color: #CD182F;
+      color: #CD102F;
+    }
+
+    .btn-facebook {
+      background  : #dc3847 !important;
+      border-radius: 15px;
+    }
+
+    .btn-facebook.btn-info {
+      background  : rgb(59,89,152) !important;
+      padding: 8px 1px;
+    }
+
+    .btn-facebook.btn-warning {
+      background  : rgb(254,209,0) !important;
+    }
+
+    .btn-facebook.btn-success {
+       background  : rgb(227,114,34) !important;
+       border-radius: 25px;
+    }
+
+    .h-ellipsis {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+
+    .h-ellipsis-truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+
+    #screen-block,
+    #screen-block-landscape {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      text-align:center;
+     }
+
+     #screen-block-landscape {
+        z-index: 100 !important;
+     }
+
+    .h-center {
+      position: absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      margin: auto;
+      width: 50px;
+      height: auto;
+    }
+
+  .status._1 { color: rgb(227,114,34); }     /*Played*/
+  .status._2 { color: rgb(122,184,0);  }     /*Playing*/
+  .status._3 { color: rgb(0,40,120); }       /*Fixture*/
+  .status._4 { color: rgb(227,114,34);  }    /*Cancelled*/
+  .status._5 { color: rgb(254,209,0);  }     /*Postponed*/
+  .status._6 { color: rgb(254,209,0);  }     /*Suspended*/
+
+
+  .status.period { background: rgb(0,40,120);
+                         color: #f5efd5;}
+
+  .status.period._9 {background: rgb(122,184,0);
+                          color: #f5efd5; }
+
+  .status.period._8 {   background: rgb(254,209,0);
+                           color: rgb(0,40,120); }
+
+
+    .h-event{
+      border-bottom: solid 1pt  rgb(44,156,211) !important;
+    }
+
+    .h-event:last-child {
+          border-bottom: 0 !important;
+    }
+
+    /*cambiado por audel*/
+    header .h-title {
+      font-size: 2em !important;
+      color: #0073CF;
+      /*color: #f5efd5;*/
+      font-weight:bold;
+      vertical-align: middle;
+    }
+
+    /*cambiado por audel iconos del appbar o toolbar*/
+    header *[class *= 'glyphicon'],
+    header *[class *= 'icon-material'],
+    header *[class *= 'mdi-'],
+    header *[class *= 'icon-'],
+    .content-news *[class *= 'mdi-'],
+    .no-content-panel  *[class *= 'mdi-'] {
+        font-size:2em;
+        color: #0377b4;
+        /*color: #f5efd5;*/
+        font-weight:bold;
+        vertical-align:middle;
+    }
+
+    .no-content-panel  *[class *= 'mdi-'] {
+      color: #777 !important ;
+    }
+
+    .content-news #wrapper *[class *= 'mdi-'],
+    .content-news #wrapper2 *[class *= 'mdi-']{
+      font-size:1.2em;
+      font-weight:bold;
+      color: rgb(44,156,211);
+    }
+
+    /*cambiado por audel: iconos del menu lateral (navigation drawer)*/
+    .content-menu *[class *= 'mdi-'],
+    .content-menu *[class *= 'icon-'] {
+      font-size:2em;
+      vertical-align: middle;
+      /*color:  rgb(0,40,120);*/
+      color: #0377b4;
+    }
+
+    .content-menu *[class *= 'icon-'] {
+      font-size:1.6em;
+    }
+
+    .content-menu .h-title {
+      font-size: 1.8em;
+      font-weight:bold;
+    }
+
+    .content-sub-menu .h-title {
+      font-size: 1.6em;
+    }
+
+    .h-name-team {
+      font-size:1.4em !important;
+      /*font-weight: bold;*/
+      text-align: center;
+      width: 100%;
+    }
+
+    .h-goal-team {
+      font-size:2em !important;
+      text-align: center;
+    }
+
+    .content-mtm #wrapper2 .h-goal-team  {
+      font-size:3em !important;
+    }
+
+    .h-time {
+      font-size:1.6em !important;
+    }
+
+    .h-minute-match {
+      font-size:1.6em !important;
+    }
+
+    .h-event-match {
+      font-size:1.6em !important;
+    }
+
+    .content-standings .h-list .h-headline,
+    .content-prediction .h-list .h-headline,
+    .content-team-selection .h-list .h-headline {
+      font-size:1.5em;
+    }
+
+    .h-table tbody tr td {
+        font-size:1.4em;
+    }
+
+    .h-header.left {
+        text-align:left !important;
+    }
+
+    /*cambiado por audel*/
+    .control-label {
+      font-size:1.0em;
+      color: #CD172E !important;
+      text-align: left !important;
+      margin-left: 50px;
+    }
+
+    .h-login-button {
+      font-size:1.6em;
+    }
+
+    .h-name-push {
+      font-size:1.6em;
+    }
+
+    .content-tutorial #wrapperH li {
+      background-color: rgba(0,0,0,0.7) !important;
+      color: #f5efd5  !important;
+      border: 0 !important;
+    }
+
+    .h-img-tutorial {
+      position:relative;
+      width:auto;
+      max-width:720px;
+      height:80%;
+      max-height:1280px;
+      text-align:center;
+      top:20px;
+      bottom:0;
+      left:0;
+      right:0;
+    }
+
+    .content-tutorial footer {
+      display:none;
+    }
+
+    .content-tutorial #wrapperH {
+      bottom: 0;
+    }
+
+    .content-tutorial .mdi-toggle-radio-button-off,
+    .content-tutorial .mdi-toggle-radio-button-on {
+      color: #f5efd5;
+    }
+
+    .content-tutorial .mdi-navigation-chevron-left,
+    .content-tutorial .mdi-navigation-chevron-right {
+      color: #f5efd5;
+      font-size:5em;
+    }
+
+    .hidden {
+      display:none;
+    }
+
+    img.h-skip {
+      width:40%;
+      height:auto;
+      min-width:40px;
+      min-height:40px;
+      max-width:126px;
+      max-height:126px;
+    }
+
+    .content-team-selection .form-horizontal,
+    .content-team-selection .form-group {
+      margin: 0 !important;
+      color: #3F78FC !important;
+      /*margin-left: 80px*/
+    }
+
+    .content-team-selection #wrapperL {
+      top: 80px;
+      bottom: 0;
+    }
+
+    .content-team-selection #wrapper2 {
+      bottom: 0;
+    }
+
+    .content-language-selection #wrapper {
+      top: 150px;
+    }
+
+    /*cambiado por audel*/
+    .badge {
+      /*background: rgb(44,156,211);*/
+      background: #b81515;
+      padding: 5px 15px;
+      font-size:
+      1em;
+      /*color: #f5efd5;*/
+    }
+
+    .badge.disabled {
+       /*background: rgb(44,156,211);*/
+       color: #f5efd5;
+        opacity: 0.7;
+        filter: alpha(opacity=70);
+    }
+
+
+    .modal-dialog {font-family: 'Open Sans', sans-serif !important;}
+    .modal-dialog .mdi-alert-warning {font-size: 1.6em !important;}
+    .modal-dialog .modal-title {font-size: 2.2em !important;}
+    .modal-dialog .text-warning {font-size: 1.8em!important; vertical-align:middle;}
+    .modal-dialog .text-muted {font-size: 1.4em!important;}
+    .footer .row.notistats,
+    .footer .row.bets {
+      margin: 0 !important;
+    }
+
+
+
+  .h-circle.yellow {
+    border-radius: 50%;
+    display: inline-block;
+    background: rgb(254,209,0);
+    color: rgb(0,40,120);
+    width:100px;
+    height: 100px;
+    position: relative;
+    line-height: 20px;
+  }
+
+  /*changed by Fer and Audel*/
+  h1,h2,h3,h4,h5,h6 {
+    /*font-family: TeutonNormal !important;*/
+    font-family: 'Open Sans', sans-serif !important;
+  }
+
+
+  img.h-shield {
+    width: 40px;
+    height: auto;
+  }
+
+  img.h-shield.h-tree {
+    width: 20px;
+    height: auto;
+  }
+
+  .row-scoreboard img.h-shield {
+      width: 60px;
+      height: auto;
+  }
+
+
+  .list-group-item-heading {
+    color:  rgb(0,40,120) !important;
+  }
+
+  .btn {
+    font-size: 100%;
+    margin: 0 auto;
+  }
+
+
+  .content-dashboard #wrapper {
+      top: 225px;
+      color: #f5efd5 !important;
+      background:transparent;
+  }
+
+  .content-prediction #wrapper {
+    top: 225px;
+  }
+
+  content-prediction #wrapper *{
+    background: #f5efd5 !important;
+  }
+
+   .content-dashboard  img.h-shield.h-match {
+      width: 50px;
+      height: auto;
+      background-color: white;
+      border-radius: 50%;
+      padding: 5px;
+   }
+
+  #estadio {
+    height: 225px; 
+    background-size: cover;
+    background-image: url("../img/back-pts.jpg") ;
+  }
+  .content-dashboard  tr.h-match {border-bottom: 1.5px #f5efd5 solid !important;}
+
+  .content-friends li:first-child .wrapper,
+  .content-leaderboard li:first-child .wrapper {
+    top: -30px;
+  }
+
+#toppal-layer {
+    position: fixed;
+    color: red;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    opacity: 0.7;
+    background-color: gray;
+    z-index: 99999;
+}
+
+.loginf
+{
+  background-color: #f5efd5; 
+}
+
+  /*</v2>*/
+
+

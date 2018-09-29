@@ -1,0 +1,362 @@
+<div class="row">
+
+    <div id="wrapper" class="page">
+      <div class="scroller">
+        <div class="container">
+
+          <div class="row h-list" ng-show="hasCompetitions" >
+            <div class="col-xs-12 h-ellipsis-truncate" 
+                 ng-repeat="competition in item.competitions"
+                 ng-click="showContentPhases(competition)"
+                 data-news="{{ competition.id_competitions }}" on-last-repeat>
+              <img class="h-shield" ng-src="{{getCompetitionShield(competition.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+              <span class="h-headline ">{{competition.competiton_type.name}}</span>
+            </div>
+
+
+             <div class="col-xs-12 h-ellipsis-truncate" 
+                 
+                 ng-click="showContentleagye()"
+                 data-news="{{ competition.id_competitions }}" on-last-repeat>
+              <img class="h-shield" ng-src="{{getCompetitionShield('https://60ac25aefd0138457403-24ce2c2816d82aabdbec37bcb70c7e95.ssl.cf1.rackcdn.com/res_leagues/mlb_logo')}}" onerror="this.src='img/shield-1.png'">
+              <span class="h-headline ">MLB</span>
+            </div>
+
+
+            
+          </div>
+
+
+          <div class="row" ng-hide="hasCompetitions">
+            <div class="col-xs-12">
+              <div class="no-content-panel" style="margin-top: 120px !important;">
+                <i class="mdi-action-info-outline"></i>
+                <div class="no-content-panel-title" translate>
+                  EMPTY_STATES.STANDINGS.NO_COMPETITIONS
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+    <div id="wrapper2" class="page wrapper">
+      <div class="scroller">
+        <div class="container">
+
+          <div class="row" ng-hide="showbaseballleague">
+            <div class="col-xs-12 h-header green h-ellipsis-truncate">
+              <img class="h-shield h-tree" ng-src="{{getCompetitionShield(item.competition.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+              <span class="h-headline" ng-bind="item.competition.competiton_type.name"></span>
+            </div>
+          </div>
+
+          <div class="row h-list" ng-show="hasPhases" ng-hide="showbaseballleague">
+            <div class="col-xs-12 h-ellipsis-truncate" ng-repeat="phase in item.phases"
+                 ng-click="showContentRanking(item.competition.id_competitions
+                        , phase.id_phases)">
+              <i class="mdi-action-bookmark h-headline"></i>
+              <span class="h-headline" ng-bind="phase.global_name"></span>
+            </div>
+          </div>
+
+          <div class="row" ng-hide="hasPhases || showbaseballleague">
+            <div class="col-xs-12">
+              <div class="no-content-panel" style="margin-top: 120px !important;">
+                <i class="mdi-action-info-outline"></i>
+                <div class="no-content-panel-title" translate>
+                  EMPTY_STATES.STANDINGS.NO_PHASES
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" ng-show="showbaseballleague">
+            <div class="col-xs-12 h-header green h-ellipsis-truncate">
+               <img class="h-shield h-tree" ng-src="{{getCompetitionShield('https://60ac25aefd0138457403-24ce2c2816d82aabdbec37bcb70c7e95.ssl.cf1.rackcdn.com/res_leagues/mlb_logo')}}" onerror="this.src='img/shield-1.png'">
+              <span class="h-headline">MLB</span>
+            </div>
+          </div>
+
+          <div class="row h-list" ng-show="showbaseballleague">
+          <div class="col-xs-12 h-ellipsis-truncate" 
+                 ng-repeat="competition in itembase.competitions | filter:{'show':0}"
+                 ng-click="showContentPhasesBase(competition)"
+                 data-news="{{ competition.id_competitions }}" on-last-repeat>
+                 
+                  <i class="mdi-action-bookmark h-headline"></i>
+              <span class="h-headline ">{{competition.competiton_type.name}}</span>
+            </div>
+            </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+    <div id="wrapper3" class="page wrapper">
+      <div class="scroller">
+        <div class="container">
+
+          <div class="row">
+            <div class="col-xs-12 h-header red h-ellipsis-truncate">
+              <img class="h-shield h-tree" ng-src="{{getCompetitionShield(item.competition.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+              <span class="h-headline" ng-bind="item.competition.competiton_type.name"></span>
+              <span>-</span>
+              <span ng-bind="item.phase.global_name"></span>
+            </div>
+          </div>
+
+          <div class="row" ng-show="hasRankings">
+            <div class="col-xs-12">
+              <div ng-if="!!item.isTree">
+                <div class="row" ng-repeat="rankings in item.ranking">
+                  <div class="col-xs-12"
+                       ng-repeat="ranking in rankings.ranking">
+                    <table class="table">
+                      <thead>
+                      <tr>
+                        <th colspan="8" class="h-header light-blue">
+                          <span>{{fromNow(ranking.date)}}</span>
+                        </th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr class="h-match">
+                        <td class="col-xs-4" style="width: 33% !important; vertical-align:middle;">
+                          <figure>
+                            <img class="h-shield" ng-src="{{ranking.homeTeam.team_logo}}" onerror="this.src='img/shield-1.png'">
+                            <figcaption>
+                              <span ng-bind="ranking.homeTeam.name" class="h-name-team"></span>
+                            </figcaption>
+                          </figure>
+                        </td>
+                        <td class="col-xs-4" style="width: 33% !important; vertical-align:middle;">
+                            <span ng-bind="ranking.home_team_goals" class="h-goal-team"></span>
+                            <span class="h-goal-team">-</span>
+                            <span ng-bind="ranking.away_team_goals" class="h-goal-team"></span>
+                            <br />
+                            <span class="status _{{ranking.status.id_status}}" >
+                              {{ranking.status.name | translate}}
+                            </span>
+
+                        </td>
+                        <td class="col-xs-4" style="width: 33% !important; vertical-align:middle;">
+                          <figure>
+                            <img class="h-shield" ng-src="{{ranking.awayTeam.team_logo}}" onerror="this.src='img/shield-2.png'">
+                            <figcaption>
+                              <span ng-bind="ranking.awayTeam.name" class="h-name-team"></span>
+                            </figcaption>
+                          </figure>
+                        </td>
+                      </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- commented by audel, no news source for now -->
+                <!-- <div class="row h-source" style="border-top: solid 1pt rgb(254,209,0);">
+                  <div class="col-xs-12" style="padding: 15px  !important; text-align:left; ">
+                    {{'NEWS.SOURCE' | translate}} <span>: Perform Group</span>
+                  </div>
+                </div> -->
+
+              </div>
+
+              <div ng-if="!item.isTree" ng-hide="isbaseball">
+                <div class="row" ng-repeat="rankings in item.ranking">
+                  <div class="col-xs-12">
+                    <table class="table h-table">
+                      <thead>
+                      <tr>
+                        <th colspan="8" class="h-header green">
+                          <span ng-bind="rankings.group_name"></span>
+                        </th>
+                      </tr>
+                      <tr>
+                        <th class="h-header light-blue"></th>
+                        <th class="h-header light-blue" style="text-align: left;" translate>
+                          STANDINGS.TEAM
+                        </th>
+                        <th class="h-header light-blue" translate>
+                          STANDINGS.TABLE.POINTS
+                        </th>
+                        <th class="h-header light-blue" translate>
+                          STANDINGS.TABLE.MATCHES
+                        </th>
+                        <th class="h-header light-blue" translate>
+                          STANDINGS.TABLE.MATCHES_WON
+                        </th>
+                        <th class="h-header light-blue" translate>
+                          STANDINGS.TABLE.MATCHES_DRAWN
+                        </th>
+                        <th class="h-header light-blue" translate>
+                          STANDINGS.TABLE.MATCHES_LOST
+                        </th>
+                        <th class="h-header light-blue" translate>
+                          STANDINGS.TABLE.GOALS_FOR
+                        </th>
+                      </tr>
+                      </thead>
+                      <tbody>
+
+                      <tr ng-class="{'active' : $odd}"
+                          ng-repeat="ranking in rankings.ranking">
+                        <td >
+                          <span ng-bind="$index+1"
+                                class="text-center-vertical" style="font-weight:bold;"></span>
+                        </td>
+                        <td class="text-left" >
+                          <img class="h-shield h-tree" ng-src="{{ranking.team.team_logo}}" onerror="this.src='img/shield-1.png'">
+                          <span ng-bind="ranking.team.short_name"
+                                class="text-center-vertical"></span>
+                        </td>
+                        <td >
+                          <span ng-bind="ranking.points"
+                                class="text-center-vertical" style="font-weight:bold;"></span>
+                        </td>
+                        <td >
+                                                <span ng-bind="ranking.matches"
+                                                      class="text-center-vertical"></span>
+                        </td>
+                        <td >
+                                                <span ng-bind="ranking.matches_won"
+                                                      class="text-center-vertical"></span>
+                        </td>
+                        <td >
+                                                <span ng-bind="ranking.matches_drawn"
+                                                      class="text-center-vertical"></span>
+                        </td>
+                        <td >
+                                                <span ng-bind="ranking.matches_lost"
+                                                      class="text-center-vertical"></span>
+                        </td>
+                        <td >
+                                                <span ng-bind="ranking.goals_for"
+                                                      class="text-center-vertical"></span>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- commented by audel, no news source for now -->
+                <!-- <div class="row h-source" ng-show="showSource" style="border-top: solid 1pt rgb(254,209,0);">
+                  <div class="col-xs-12" style="padding: 15px  !important; text-align:left; ">
+                    {{'NEWS.SOURCE' | translate}} <span>: Perform Group</span>
+                  </div>
+                </div> -->
+
+              </div>
+
+
+
+
+              <div ng-if="!item.isTree" ng-show="isbaseball">
+                <div class="row" ng-repeat="rankings in item.ranking">
+                  <div class="col-xs-12">
+                    <table class="table h-table">
+                      <thead>
+                      <tr>
+                        <th colspan="8" class="h-header green">
+                          <span ng-bind="rankings.group_name"></span>
+                        </th>
+                      </tr>
+                      <tr>
+                        <th class="h-header light-blue"></th>
+                        <th class="h-header light-blue" style="text-align: left;" translate>
+                          STANDINGS.TEAM
+                        </th>
+                        
+                        <th class="h-header light-blue" translate>
+                          STANDINGS.TABLE.MATCHES_WON
+                        </th>
+                        
+                        <th class="h-header light-blue" translate>
+                          STANDINGS.TABLE.MATCHES_LOST
+                        </th>
+                        <th class="h-header light-blue" >
+                          PCT
+                        </th>
+                        <th class="h-header light-blue" >
+                          GB
+                        </th>
+                      </tr>
+                      </thead>
+                      <tbody>
+
+                      <tr ng-class="{'active' : $odd}"
+                          ng-repeat="ranking in rankings.ranking">
+                        <td >
+                          <span ng-bind="$index+1"
+                                class="text-center-vertical" style="font-weight:bold;"></span>
+                        </td>
+                        <td class="text-left" >
+                          <img class="h-shield h-tree" ng-src="{{ranking.team.team_logo}}" onerror="this.src='img/shield-1.png'">
+                          <span ng-bind="ranking.team.short_name"
+                                class="text-center-vertical"></span>
+                        </td>
+                        <td >
+                                                <span ng-bind="ranking.matches_won"
+                                                      class="text-center-vertical"></span>
+                        </td>
+                        
+                        <td >
+                                                <span ng-bind="ranking.matches_lost"
+                                                      class="text-center-vertical"></span>
+                        </td>
+                        <td >
+                                                <span ng-bind="ranking.pct"
+                                                      class="text-center-vertical"></span>
+                        </td>
+                   <td >
+                                                <span ng-bind="ranking.gb"
+                                                      class="text-center-vertical"></span>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- commented by audel, no news source for now -->
+                <!-- <div class="row h-source" ng-show="showSource" style="border-top: solid 1pt rgb(254,209,0);">
+                  <div class="col-xs-12" style="padding: 15px  !important; text-align:left; ">
+                    {{'NEWS.SOURCE' | translate}} <span>: Perform Group</span>
+                  </div>
+                </div> -->
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row" ng-hide="hasRankings">
+            <div class="col-xs-12">
+              <div class="no-content-panel" style="margin-top: 120px !important;">
+                <i class="mdi-action-info-outline"></i>
+                <div class="no-content-panel-title" translate>
+                  EMPTY_STATES.STANDINGS.NO_PHASES
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+</div>
+
+
+
+
+

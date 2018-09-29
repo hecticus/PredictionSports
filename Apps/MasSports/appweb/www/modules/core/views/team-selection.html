@@ -1,0 +1,99 @@
+<div id="wrapper" class="page">
+  <div class="scroller">
+    <div class="container">
+      <div class="row h-list"  >
+        <div class="col-xs-12 h-ellipsis-truncate"
+             ng-repeat="league in leagues track by league.id_competitions"
+             ng-click="showContentTeams(league)" >
+          <img class="h-shield" ng-src="{{getCompetitionShield(league.competiton_type.competition_logo)}}" onerror="this.src='img/shield-1.png'">
+          <span class="h-headline">{{league.competiton_type.name}}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="wrapper2" class="page" style="left: 100%;">
+
+
+
+
+  <div class="row">
+    <div class="col-xs-12">
+      <form class="form-horizontal" style="position: absolute; z-index: 2;">
+        <div class="form-group well search-bar">
+          <div class="input-group">
+
+
+            <input type="text" class="form-control"
+                   placeholder="{{'SETTINGS.TEAM_SEARCH_HELPER' | translate}}"
+                   ng-model="search.name">
+
+                    <span class="input-group-addon">
+                        <i class="icon mdi-action-search" ></i>
+                    </span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row" ng-show="hasTeams">
+    <div id="wrapperL" class="search-list-wrapper">
+      <div class="scroller">
+        <div class="list-group">
+
+          <div class="list-group-item"
+               ng-repeat="team in filtered = teams | filter:search | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit"
+               ng-click="teamSelected(team)">
+
+            <div class="row-content">
+              <img class="h-shield" ng-src="{{team.team_logo}}" onerror="this.src='img/shield-1.png'">
+              <span class="list-group-item-heading" ng-bind="team.short_name" style="display:inline; vertical-align:middle; font-size:1.5em;"></span>
+            </div>
+
+          </div>
+
+          <div class="list-group-separator"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <ul class="pager search-list-pager">
+    <pager total-items="totalItems" page="currentPage" items-per-page="entryLimit" ng-click="refreshScroll()" ></pager>
+    <!--pagination page="currentPage" max-size="noOfPages" total-items="totalItems" items-per-page="entryLimit"></pagination-->
+  </ul>
+
+  <div class="row" ng-hide="hasTeams">
+    <div class="col-xs-12">
+      <div class="no-content-panel" style="margin-top: 120px !important;">
+        <i class="mdi-action-info-outline"></i>
+        <div class="no-content-panel-title" translate>EMPTY_STATES.TEAMS</div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+

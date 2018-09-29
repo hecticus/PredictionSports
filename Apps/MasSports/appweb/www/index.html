@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>+Sports</title>
+
+    <meta name="description" content="">
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes.
+    See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="user-scalable=0, initial-scale=1, maximum-scale=1, minimum-scale=1
+      , width=device-width, height=device-height" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <!-- build:css styles/vendor.css -->
+    <!-- injector:bowercss -->
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="lib/bootstrap-material-design/dist/css/material.css">
+    <link rel="stylesheet" href="lib/bootstrap-material-design/dist/css/ripples.css">
+    <!-- endinjector -->
+    <!-- endbuild -->
+
+    <!-- build:css styles/custom.css -->
+    <!-- injector:css -->
+    <link rel="stylesheet" href="styles/animate.css">
+    <link rel="stylesheet" href="styles/default.css">
+    <link rel="stylesheet" href="styles/dl.css">
+    <link rel="stylesheet" href="styles/fontello.css">
+    <link rel="stylesheet" href="styles/iconvault-preview.css">
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/media-orientation.css">
+    <link rel="stylesheet" href="styles/transition.css">
+    <!-- endinjector -->
+    <!-- endbuild -->
+
+    <script src="cordova.js"></script>
+
+    <style type="text/css" media="screen">
+
+    body {
+       font-family: 'Open Sans', sans-serif !important;
+      }
+
+    </style>
+
+    <!-- previus font used and changed by fer and audel -->
+    <!-- <style type="text/css" media="screen">
+
+      @font-face {
+        font-family: TeutonNormal;
+        src: url(font/teutonnormal-webfont.woff);
+      }
+
+      body {
+        font-family: TeutonNormal !important;
+      }
+
+    </style> -->
+
+
+</head>
+
+<body class="{{ contentClass }}"
+      ng-controller="MainCtrl"
+      ng-swipe-right="prevPage()"
+      ng-swipe-left="nextPage()"
+      ng-click="hideToast()"
+      style="position: fixed !important;">
+
+
+<div id="fb-root"></div>
+
+<div class="container">
+    <div class="row">
+        <nav class="navbar navbar-default">
+            <div class="navbar-header">
+                <header>
+                    <div class="col-xs-2 text-left" style="height:50px; line-height:50px; ">
+                        <i id="menuIcon"
+                            class="drawer-title"
+                            ng-hide="hideMenuIcon()"
+                            ng-class="getDrawerIcon()"
+                            ng-click="onMenuButtonPressed()"></i>
+                    </div>
+                    <div class="col-xs-8 text-center h-ellipsis-truncate" style="height:50px; line-height:50px; ">
+                        <img class="h-logo" src="img/logo.svg" onerror="this.src='img/logo.png'" >
+                        <!-- <span class="h-title" ng-cloak ng-bind="sectionTranslation"> -->
+                        </span>
+                    </div>
+                    <div class="col-xs-2" style="height:50px; line-height:50px; ">
+
+                      <i
+                         ng-class="getFavoritesClass()"
+                         ng-hide="hideMenuFavorites()"
+                         ng-click="toggleFavorites()" ></i>
+
+                      <i class="mdi-navigation-arrow-forward"
+                       ng-show="showMenuForward()"
+                       ng-click="onMain()" ></i>
+
+                    </div>
+                </header>
+            </div>
+        </nav>
+    </div>
+
+    <div ui-view ></div>
+
+    <loading></loading>
+
+    <!--div id="screen-block-landscape" >
+      <div style="position:absolute; width:100%; top:5%; color:#ffffff;">
+        <i class="mdi-device-screen-lock-rotation" style="font-size:4em;"></i>
+        <h3 translate>MSG_UNAVAILABLE_ORIENTATION</h3>
+      </div>
+    </div-->
+
+
+    <h-menu>
+
+      <menu-item section="prediction" icon="mdi-action-event">
+        {{'SECTIONS.BETS' | translate}}
+      </menu-item>
+
+      <menu-sub-item section="prediction" >
+        {{'SECTIONS.BETS.PREDICTIONS' | translate}}
+      </menu-sub-item>
+      <menu-sub-item section="leaderboard" >
+        {{'SECTIONS.BETS.LEADERBOARDS' | translate}}
+      </menu-sub-item>
+      <menu-sub-item section="news" >
+        Noticias
+      </menu-sub-item>
+      <menu-sub-item section="points" >
+        {{'SECTIONS.BETS.POINTS' | translate}}
+      </menu-sub-item>
+
+      <!-- <menu-item section="news" icon="icon-noticias">
+          {{'SECTIONS.NOTISTATS' | translate}}
+      </menu-item> -->
+      <menu-item section="match" icon="icon-noticias">
+          {{'SECTIONS.NOTISTATS' | translate}}
+      </menu-item>
+      <menu-sub-item section="match" >
+          {{'SECTIONS.NOTISTATS.MATCHES' | translate}}
+      </menu-sub-item>
+      <menu-sub-item section="standings" >
+          {{'SECTIONS.NOTISTATS.STANDINGS' | translate}}
+      </menu-sub-item>
+      <!-- hidden using style="display: none;" cuz we dont have ews -->
+      <menu-sub-item section="news" style="display: none;">
+          {{'SECTIONS.NOTISTATS.NEWS' | translate}}
+      </menu-sub-item>
+      <menu-sub-item section="scorers">
+          {{'SECTIONS.NOTISTATS.SCORERS' | translate}}
+      </menu-sub-item>
+      <menu-sub-item section="mtm">
+          {{'SECTIONS.NOTISTATS.LIVE' | translate}}
+      </menu-sub-item>
+
+      <menu-item section="settings" icon="mdi-action-settings">
+          {{'SECTIONS.SETTINGS' | translate}}
+      </menu-item>
+
+      <menu-item action="logout" icon="mdi-navigation-cancel">
+          {{'LOGOUT' | translate}}
+      </menu-item>
+      <br />
+      <br />
+      <br />
+    </h-menu>
+
+
+    <ng-include src="'modules/core/views/templates/update-modal.html'"></ng-include>
+    <ng-include src="'modules/core/views/templates/share-modal.html'"></ng-include>
+    <ng-include src="'modules/core/views/templates/info-modal.html'"></ng-include>
+
+
+        <footer class="footer" ng-hide="isOnUtilitySection()">
+            <div data-section="notistats" class="row notistats"
+                 ng-class="{active: getSection() === 'notistats', hide: getSection() !== 'notistats'}">
+                <div class="col-xs-3 option" ui-sref-active="active">
+                    <a ui-sref="match" class="footer-section">
+                        <span class="icon-balon"></span>
+                        <span translate>SECTIONS.NOTISTATS.MATCHES</span>
+                    </a>
+                </div>
+                <div class="col-xs-3 option" ui-sref-active="active">
+                    <a ui-sref="standings" class="footer-section">
+                        <span class="icon-tabela"></span>
+                        <span translate>SECTIONS.NOTISTATS.STANDINGS</span>
+                    </a>
+                </div>
+                <!-- ocultado usando style="display: none;" porque en esta version no se debe ver -->
+                
+                <div class="col-xs-3 option" ui-sref-active="active" >
+                    <a ui-sref="scorers" class="footer-section">
+                        <span class="icon-artilharia"></span>
+                        <span translate>SECTIONS.NOTISTATS.SCORERS</span>
+                    </a>
+                </div>
+                <div class="col-xs-3 option" ui-sref-active="active" >
+                    <a ui-sref="mtm" class="footer-section">
+                        <span class="mdi-action-alarm" ></span>
+                        <span translate>SECTIONS.NOTISTATS.LIVE</span>
+                    </a>
+                </div>
+            </div>
+
+            <div data-section="bets" class="row bets"
+                 ng-class="{active: getSection() === 'dashboard' || getSection() === 'bets', hide: getSection() !== 'bets' &&  getSection() !== 'dashboard'}">
+
+                <div class="col-xs-3 option" ui-sref-active="active">
+                    <a ui-sref="prediction" class="footer-section">
+                        <span class="icon-balon"></span>
+                        <span translate>SECTIONS.BETS.PREDICTIONS</span>
+                    </a>
+                </div>
+                <div class="col-xs-3 option" ui-sref-active="active" >
+                    <a ui-sref="leaderboard" class="footer-section">
+                        <span class="icon-tabela"></span>
+                        <span translate>SECTIONS.BETS.LEADERBOARDS</span>
+                    </a>
+                </div>
+                <div class="col-xs-3 option" style="display: none;" ui-sref-active="active" >
+                    <a ui-sref="friends" class="footer-section">
+                        <span class="icon-artilharia"></span>
+                        <span translate>SECTIONS.BETS.FRIENDS</span>
+                    </a>
+                </div>
+                <div  class="col-xs-3 option" ui-sref-active="active" >
+                    <a ui-sref="news" class="footer-section">
+                        <span class="icon-noticias"></span>
+                        <span translate>SECTIONS.NOTISTATS.NEWS</span>
+                    </a>
+                </div>
+                <div class="col-xs-3 option" ui-sref-active="active" >
+                    <a ui-sref="points" class="footer-section">
+                        <span class="icon-puntos"></span>
+                        <span translate>SECTIONS.BETS.POINTS</span>
+                    </a>
+                </div>
+            </div>
+        </footer>
+
+</div>
+
+<!-- build:js scripts/vendor.js -->
+<!-- injector:bowerjs -->
+<script src="lib/jquery/dist/jquery.js"></script>
+<script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="lib/angular/angular.js"></script>
+<script src="lib/angular-resource/angular-resource.js"></script>
+<script src="lib/angular-mocks/angular-mocks.js"></script>
+<script src="lib/angular-cookies/angular-cookies.js"></script>
+<script src="lib/angular-animate/angular-animate.js"></script>
+<script src="lib/angular-touch/angular-touch.js"></script>
+<script src="lib/angular-sanitize/angular-sanitize.js"></script>
+<script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="lib/angular-ui-utils/ui-utils.js"></script>
+<script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="lib/ngstorage/ngStorage.js"></script>
+<script src="lib/moment/moment.js"></script>
+<script src="lib/bootstrap-material-design/dist/js/material.js"></script>
+<script src="lib/bootstrap-material-design/dist/js/ripples.js"></script>
+<script src="lib/angular-translate/angular-translate.js"></script>
+<script src="lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+<script src="lib/angular-socialsharing/dist/angular-socialsharing.js"></script>
+<script src="lib/angular-translate-loader-url/angular-translate-loader-url.js"></script>
+<script src="lib/iscroll/build/iscroll-probe.js"></script>
+<script src="lib/Flowtype.js/flowtype.js"></script>
+<script src="lib/angular-google-analytics/dist/angular-google-analytics.min.js"></script>
+<script src="lib/angular-easyfb/angular-easyfb.js"></script>
+<!-- endinjector -->
+<!-- endbuild -->
+
+<!-- build:js scripts/custom.js -->
+<!-- injector:js -->
+<script src="js/pt.js"></script>
+<script src="js/es.js"></script>
+<script src="js/en.js"></script>
+<script src="js/config.js"></script>
+<script src="js/application.js"></script>
+<script src="js/Toast.js"></script>
+<script src="js/xml2json.js"></script>
+<script src="modules/core/core.js"></script>
+<script src="modules/core/config/routes.js"></script>
+<script src="modules/core/services/analytics.js"></script>
+<script src="modules/core/services/app.js"></script>
+<script src="modules/core/services/bets.js"></script>
+<script src="modules/core/services/client-manager.js"></script>
+<script src="modules/core/services/client.js"></script>
+<script src="modules/core/services/competitions.js"></script>
+<script src="modules/core/services/cordova-app.js"></script>
+<script src="modules/core/services/cordova-device.js"></script>
+<script src="modules/core/services/domain.js"></script>
+<script src="modules/core/services/facebook-manager.js"></script>
+<script src="modules/core/services/i-scroll.js"></script>
+<script src="modules/core/services/i18n.js"></script>
+<script src="modules/core/services/moment.js"></script>
+<script src="modules/core/services/news.js"></script>
+<script src="modules/core/services/notification.js"></script>
+<script src="modules/core/services/push-manager.js"></script>
+<script src="modules/core/services/settings.js"></script>
+<script src="modules/core/services/social-apps-manager.js"></script>
+<script src="modules/core/services/teams-manager.js"></script>
+<script src="modules/core/services/update.js"></script>
+<script src="modules/core/services/upstream.js"></script>
+<script src="modules/core/services/utilities.js"></script>
+<script src="modules/core/services/web-manager.js"></script>
+<script src="modules/core/directives/error.js"></script>
+<script src="modules/core/directives/loading.js"></script>
+<script src="modules/core/directives/menu-item.js"></script>
+<script src="modules/core/directives/menu-sub-item.js"></script>
+<script src="modules/core/directives/menu.js"></script>
+<script src="modules/core/directives/my-scroll.js"></script>
+<script src="modules/core/directives/on-last-repeat.js"></script>
+<script src="modules/core/controllers/dashboard.js"></script>
+<script src="modules/core/controllers/how-does-it-work.js"></script>
+<script src="modules/core/controllers/language-selection.js"></script>
+<script src="modules/core/controllers/leaderboard.js"></script>
+<script src="modules/core/controllers/login.js"></script>
+<script src="modules/core/controllers/main.js"></script>
+<script src="modules/core/controllers/match.js"></script>
+<script src="modules/core/controllers/mtm.js"></script>
+<script src="modules/core/controllers/news.js"></script>
+<script src="modules/core/controllers/points.js"></script>
+<script src="modules/core/controllers/prediction.js"></script>
+<script src="modules/core/controllers/scorers.js"></script>
+<script src="modules/core/controllers/settings.js"></script>
+<script src="modules/core/controllers/standings.js"></script>
+<script src="modules/core/controllers/team-selection.js"></script>
+<script src="modules/core/controllers/terms.js"></script>
+<script src="modules/core/controllers/tutorial.js"></script>
+
+</body>
+</html>

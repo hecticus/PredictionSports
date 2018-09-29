@@ -1,0 +1,45 @@
+{
+  "name": "angular-phonegap-push-notification",
+  "version": "0.0.2",
+  "homepage": "https://github.com/PatrickHeneise/angular-phonegap-push-notification",
+  "authors": [
+    "Patrick Heneise <mail@patrickheneise.com>"
+  ],
+  "description": "AngularJS module for Android and iOS push notification services",
+  "main": "push.js",
+  "keywords": [
+    "angularjs",
+    "phonegap",
+    "push",
+    "notification",
+    "android",
+    "ios",
+    "iphone",
+    "ipad",
+    "pushnotification",
+    "gcm",
+    "apn"
+  ],
+  "dependencies": {
+    "angular": "~1.0.5",
+    "angular-phonegap-ready": "~0.0.1"
+  },
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "0.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.2",
+    "commit": "73c3485f4fde57205b6bf4ee398e1505aa9038c2"
+  },
+  "_source": "https://github.com/PatrickHeneise/angular-phonegap-push-notification.git",
+  "_target": "^0.0.2",
+  "_originalSource": "angular-phonegap-push-notification",
+  "_direct": true
+}
