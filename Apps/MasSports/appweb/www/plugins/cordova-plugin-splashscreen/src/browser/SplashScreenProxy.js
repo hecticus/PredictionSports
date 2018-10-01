@@ -61,21 +61,21 @@ var SplashScreen = {
         }
     },
     show: function () {
-        if(!localSplash) {
-            window.addEventListener("resize", onResize, false);
-            localSplash = document.createElement("div");
-            localSplash.style.backgroundColor = bgColor;
-            localSplash.style.position = "absolute";
+        // if(!localSplash) {
+        //     window.addEventListener("resize", onResize, false);
+        //     localSplash = document.createElement("div");
+        //     localSplash.style.backgroundColor = bgColor;
+        //     localSplash.style.position = "absolute";
 
-            localSplashImage = document.createElement("img");
-            localSplashImage.src = imageSrc;
-            localSplashImage.style.position = "absolute";
+        //     localSplashImage = document.createElement("img");
+        //     localSplashImage.src = imageSrc;
+        //     localSplashImage.style.position = "absolute";
 
-            updateImageLocation();
+        //     updateImageLocation();
 
-            localSplash.appendChild(localSplashImage);
-            document.body.appendChild(localSplash);
-        }
+        //     //localSplash.appendChild(localSplashImage);
+        //     //document.body.appendChild(localSplash);
+        // }
     },
     hide: function () {
         if(localSplash) {
