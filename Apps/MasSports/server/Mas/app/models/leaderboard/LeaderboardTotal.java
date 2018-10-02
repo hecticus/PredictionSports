@@ -64,7 +64,7 @@ public class LeaderboardTotal extends HecticusModel {
     }
 
     public Integer getScore() {
-        return score;
+        return (score == null?0:score);
     }
 
     public void setScore(Integer score) {
@@ -72,7 +72,7 @@ public class LeaderboardTotal extends HecticusModel {
     }
 
     public Integer getCorrectBets() {
-        return correctBets;
+        return (correctBets == null?0:correctBets);
     }
 
     public void setCorrectBets(Integer correctBets) {
