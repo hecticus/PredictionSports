@@ -100,8 +100,8 @@ public class LeaderboardTotal extends HecticusModel {
 
     public ObjectNode toJsonClean() {
         ObjectNode objNode = Json.newObject();
-        objNode.put("score", score + smsscore);
-        objNode.put("hits", correctBets);
+        objNode.put("score", GetScore() + smsscore);
+        objNode.put("hits", GetcorrectBets());
         return objNode;
     }
 
@@ -110,8 +110,18 @@ public class LeaderboardTotal extends HecticusModel {
         objNode.put("id_client", client.getIdClient());
         String nickname = client.getNickname();
         objNode.put("client", nickname==null?"Jugador Anónimo":nickname);
-        objNode.put("score", (score == null?0:score) + smsscore);
-        objNode.put("hits", correctBets);
+        objNode.put("score", GetScore() + smsscore);
+        objNode.put("hits", GetcorrectBets());
         return objNode;
+    }
+
+    private Integer GetScore()
+    {
+      return (score == null?0:score);
+    }
+
+    private Integer GetcorrectBets()
+    {
+      return (correctBets == null?0:correctBets);
     }
 }
