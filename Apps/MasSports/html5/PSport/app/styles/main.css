@@ -80,14 +80,21 @@ body {
 }
 
 
+.navbar
+{
+  box-shadow: 0 6px 6px -4px #999;
+}
+
 .navbar-default
 {
-  background-color: #f31435 !important;
+  background-color: #fff !important;
+  color:#333;
+  border-color: #e7e7e7 !important;
 }
 
 .navbar-default li a
 {
-  color: white !important;
+  color: black !important;
 }
 
 /* Responsive: Portrait tablets and up */
@@ -102,6 +109,7 @@ body {
   .footer {
     padding-left: 0;
     padding-right: 0;
+    background-color: #57585a;
   }
   /* Space out the masthead */
   .header {

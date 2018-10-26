@@ -2,12 +2,31 @@
         display: inline-block;
         float: none;
         vertical-align: top;
+
     }
 
     .navbar .navbar-collapse {
         text-align: center;
     }
 
+    nav .navbar-nav > .active > a
+    {
+      background-color: #fa4515 !important;
+      color: #fff  !important;
+    }
+
+    nav .navbar-nav > li > a:hover
+    {
+      background-color: #fa4515 !important;
+      color: #fff  !important;
+    }
+
+ 
+body
+{
+  font-family: 'Open Sans', sans-serif;
+}
+  
 .logoger
 {
 
@@ -18,10 +37,9 @@
 {
   margin: 10px;
   padding-bottom: 10px;
-  color: #f31435;
-  font-style: italic;
-    text-align: justify;
-    text-justify: inter-word;
+  color: #fff;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .holder
@@ -32,15 +50,15 @@
 
 .titleses
 {
-  font-style: italic;
-  color: #f31435;
-  line-height: 150%;
+  color: #fa4515;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .titlesesb
 {
-  font-style: italic;
-  line-height: 150%;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .titlesesc
@@ -48,6 +66,18 @@
   font-style: italic;
   line-height: 120%;
   font-size: 80%;
+  font-family: 'Open Sans', sans-serif;
+}
+
+a
+{
+  color: #fa4515;
+  font-family: 'Open Sans', sans-serif;
+}
+
+a:hover
+{
+  color: #fa4515;
 
 }
 
@@ -59,7 +89,8 @@
 
 .italicker
 {
-  font-style: italic;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .imgheight
