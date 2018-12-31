@@ -20,7 +20,7 @@ angular
   ])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/main', {
+      .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
         controllerAs: 'main'
@@ -45,7 +45,7 @@ angular
         controller: 'WinCtrl',
         controllerAs: 'win'
       })
-      .when('/', {
+      .when('/promo', {
         templateUrl: 'views/promo.html',
         controller: 'PromoCtrl',
         controllerAs: 'promo'

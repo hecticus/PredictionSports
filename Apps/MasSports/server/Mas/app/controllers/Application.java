@@ -43,6 +43,11 @@ public class Application extends Controller {
         return ok(index.render("Your new application is ready."));
     }
 
+    public static Result tyc() {
+        return ok(tyc.render());
+    }
+
+
     public static Result checkFile(String name){
         File file = new File(name);
         //Logger.info("nameFile "+name+", path "+file.getAbsolutePath());
