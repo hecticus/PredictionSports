@@ -21,7 +21,7 @@ GET            /fifa                                                            
 
 GET            /check/*name                                                               controllers.Application.checkFile(name: String)
 GET            /api/loading/:width/:height/:version/:so                                   controllers.Application.getAppSettings(width: Integer, height: Integer, version : String, so : String)
-GET            /tyc                                                                       controllers.Application.tyc()
+#GET            /tyc                                                                       controllers.Application.tyc()
 # Home page
 
 #GET     /                      		                                                                        controllers.Application.index()

@@ -6,6 +6,7 @@
 #GET    /                           controllers.Application.index
 GET     /                           controllers.WapSite.index
 POST    /getpin                     controllers.WapSite.getpin
+POST    /tyc                        controllers.WapSite.tyc
 POST    /confirm                    controllers.WapSite.confirm
 GET     /externalconfirm            controllers.WapSite.confirmExternal
 # Map static resources from the /public folder to the /assets URL path

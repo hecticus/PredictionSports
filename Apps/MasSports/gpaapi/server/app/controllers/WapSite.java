@@ -392,4 +392,8 @@ public class WapSite extends Controller {
         }
         return ok(wepaconfirm.render(true,""));
     }
+
+    public Result tyc() throws IOException {
+        return ok(tyc.render());
+    }
 }
