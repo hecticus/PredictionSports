@@ -1,138 +1,152 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/main2.css">
-    <link rel="stylesheet" href="styles/sport.css">
-    <!-- endbuild -->
-  </head>
-  <body ng-app="psportApp">
-    <!--[if lte IE 8]>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/main2.css">
+  <link rel="stylesheet" href="styles/sport.css">
+  <!-- endbuild -->
+</head>
+
+<body ng-app="psportApp">
+  <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <div class="holder">
-        <div class="container" id="banner">
-          <div class="row">
-            <div class="col-md-8 col-md-offset-2 text-center">
-                <img src="images/logo.png" class="img-responsive logoger" alt="+Sport Logo"><br>
-            </div>
-          </div>
+  <div class="holder">
+    <div class="container" id="banner">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2 text-center">
+          <img src="images/logo.png" class="img-responsive logoger" alt="+Sport Logo"><br>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add your site or application content here -->
+  <nav class="navbar navbar-default navbar-static-top" role="navigation" id="topnavbar">
+
+    <div class="navbar-header">
+      <!-- small screen nav toggle -->
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+        aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
     </div>
 
-    <!-- Add your site or application content here -->
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" id="topnavbar">
-      
-        <div class="navbar-header">
-          <!-- small screen nav toggle -->
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
+    <!-- nav links -->
+    <div class="collapse navbar-collapse collapse navver" id="navbar">
+      <ul class="nav navbar-nav">
+        <li><a ng-href="/main">Inicio</a></li>
+        <li><a ng-href="/how">Cómo Participar</a></li>
+        <li><a ng-href="/price">Premios</a></li>
+        <li><a ng-href="#!/promo">Bases de la Promoción</a></li>
+        <li><a ng-href="/qa">Preguntas Frecuentes</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
 
-        <!-- nav links -->
-        <div class="collapse navbar-collapse collapse navver" id="navbar" >          
-          <ul class="nav navbar-nav">
-            <li ><a ng-href="/main">Inicio</a></li>
-            <li ><a ng-href="/how">Cómo Participar</a></li>
-            <li><a ng-href="/price">Premios</a></li>
-            <li><a ng-href="#!/promo">Bases de la Promoción</a></li>
-            <li><a ng-href="/qa">Preguntas Frecuentes</a></li>
-          </ul> 
-        </div><!-- /.navbar-collapse -->
+    <!-- container-fluid -->
+  </nav>
 
-      <!-- container-fluid -->
-   </nav>
-
-    <div class="container">
+  <div class="container">
     <div ng-view=""></div>
-    </div>
+  </div>
 
-    <div class="holder" style="background-color: #777">
-        <footer class="footer">
-          <div class="container">
-            <p class="myfooter">
-                  Promoción válida del 1 de enero hasta el 30 de abril de 2019. Para clientes +Móvil prepago y postpago que
-                  mantengan su cuenta al día y sean mayores de 18 años. Mientras el cliente esté suscrito se le realizarán 
-                  dos (2) cobros diarios con costo B/.0.50, por cada cobro efectivo el usuario acumula 100 puntos.
-                  El cliente podrá incrementar su puntuación enviando un mensaje de texto con la palabra MAS al 9091 
-                  respondiendo trivias en donde acumulará 100 puntos por cada mensaje enviado, cuyo costo será de B/.0.50 cada uno.
-                  Por cada acierto que realice en el app de +Sports con los pronósticos deportivos el cliente recibirá 50 puntos. 
-                  Los ganadores serán los usuarios que más puntos acumulen durante los periodos de la promoción: 
-                  1er periodo del 1 ene – 31 ene 2019, 2do periodo del 1 feb – 28 feb de 2019, 3er periodo del 1 mar – 31 mar de 2019,
-                  4to periodo del 1 abr – 30 abr de 2019. Serán ocho (8) ganadores en total, dos (2) ganadores en cada periodo que recibirán B/.3,000.00 
-                  en efectivo (Primer lugar) y B/.2,000.00 en efectivo (Segundo lugar). 
-                  Para darse de baja el usuario debe enviar la palabra BAJA MAS al 9090, este mensaje no tendrá costo. 
-                  La escogencia de ganadores serán los días 1 de febrero, 1 de marzo, 1 de abril y 2 de mayo de 2019. 
-                  +Móvil se reserva hasta un (1) mes para validar el puntaje de las líneas participantes y contactar a los ganadores. 
-                  No podrá resultar ganador en la promoción, clientes o líneas celulares que hayan resultado ganadores en la temporada del 16 de abril al 31 de agosto 2018
-                  y en la temporada del 1 de septiembre al 31 de diciembre de 2018.  No participan los colaboradores pertenecientes a las empresas:
-                  Sistemas Móviles, S.A., Cable & Wireless Panamá, S.A., Agencia Publicitaria, ni tampoco los colaboradores de las empresas:
-                  Aydesa, Estratego, People Outsourcing, Royal Pro ni Sonitel, S.A. No participan cuentas pyme, corporativos, gobierno y Key Account. 
-                  <br/>
-                  <br/>
-                  Para más información visita: <a href="http://deportesmasmovil.com/#!/promo">http://deportesmasmovil.com/</a>
-              </footer>
-    </div>
+  <div class="holder" style="background-color: #777">
+    <footer class="footer">
+      <div class="container">
+        <p class="myfooter">
+          Promoción válida del 1 de enero hasta el 30 de abril de 2019. Para clientes +Móvil prepago y postpago que
+          mantengan su cuenta al día y sean mayores de 18 años. Mientras el cliente esté suscrito se le realizarán
+          dos (2) cobros diarios con costo B/.0.50, por cada cobro efectivo el usuario acumula 100 puntos.
+          El cliente podrá incrementar su puntuación enviando un mensaje de texto con la palabra MAS al 9091
+          respondiendo trivias en donde acumulará 100 puntos por cada mensaje enviado, cuyo costo será de B/.0.50 cada
+          uno.
+          Por cada acierto que realice en el app de +Sports con los pronósticos deportivos el cliente recibirá 50
+          puntos.
+          Los ganadores serán los usuarios que más puntos acumulen durante los periodos de la promoción:
+          1er periodo del 1 ene – 31 ene 2019, 2do periodo del 1 feb – 28 feb de 2019, 3er periodo del 1 mar – 31 mar
+          de 2019,
+          4to periodo del 1 abr – 30 abr de 2019. Serán ocho (8) ganadores en total, dos (2) ganadores en cada periodo
+          que recibirán B/.3,000.00
+          en efectivo (Primer lugar) y B/.2,000.00 en efectivo (Segundo lugar).
+          Para darse de baja el usuario debe enviar la palabra BAJA MAS al 9090, este mensaje no tendrá costo.
+          La escogencia de ganadores serán los días 1 de febrero, 1 de marzo, 1 de abril y 2 de mayo de 2019.
+          +Móvil se reserva hasta un (1) mes para validar el puntaje de las líneas participantes y contactar a los
+          ganadores.
+          No podrá resultar ganador en la promoción, clientes o líneas celulares que hayan resultado ganadores en la
+          temporada del 16 de abril al 31 de agosto 2018
+          y en la temporada del 1 de septiembre al 31 de diciembre de 2018. No participan los colaboradores
+          pertenecientes a las empresas:
+          Sistemas Móviles, S.A., Cable & Wireless Panamá, S.A., Agencia Publicitaria, ni tampoco los colaboradores de
+          las empresas:
+          Aydesa, Estratego, People Outsourcing, Royal Pro ni Sonitel, S.A. No participan cuentas pyme, corporativos,
+          gobierno y Key Account.
+          <br />
+          <br />
+          Para más información visita: <a href="http://deportesmasmovil.com/#!/promo">http://deportesmasmovil.com/</a>
+    </footer>
+  </div>
 
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-    <script>
-    !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-    (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-    r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-    }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+  <script>
+    ! function (A, n, g, u, l, a, r) {
+      A.GoogleAnalyticsObject = l, A[l] = A[l] || function () {
+          (A[l].q = A[l].q || []).push(arguments)
+        }, A[l].l = +new Date, a = n.createElement(g),
+        r = n.getElementsByTagName(g)[0], a.src = u, r.parentNode.insertBefore(a, r)
+    }(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-XXXXX-X');
     ga('send', 'pageview');
 
+  </script>
 
-    </script>
-
-    <!-- build:js(.) scripts/vendor.js --> 
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+  <!-- build:js(.) scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-messages/angular-messages.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-touch/angular-touch.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
 
 
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/qa.js"></script>
-    <script src="scripts/controllers/old.js"></script>
-    <script src="scripts/controllers/about.js"></script>
-    <script src="scripts/controllers/how.js"></script>
-    <script src="scripts/controllers/price.js"></script>
-    <script src="scripts/controllers/win.js"></script>
-    <script src="scripts/controllers/promo.js"></script>
-    <script src="scripts/backstretch.js"></script>
-    
+  <!-- build:js({.tmp,app}) scripts/scripts.js -->
+  <script src="scripts/app.js"></script>
+  <script src="scripts/controllers/main.js"></script>
+  <script src="scripts/controllers/qa.js"></script>
+  <script src="scripts/controllers/old.js"></script>
+  <script src="scripts/controllers/about.js"></script>
+  <script src="scripts/controllers/how.js"></script>
+  <script src="scripts/controllers/price.js"></script>
+  <script src="scripts/controllers/win.js"></script>
+  <script src="scripts/controllers/promo.js"></script>
+  <script src="scripts/backstretch.js"></script>
 
-    <!-- endbuild -->
+
+  <!-- endbuild -->
 </body>
+
 </html>
