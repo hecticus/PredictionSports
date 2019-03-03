@@ -14,7 +14,7 @@ libraryDependencies ++= Seq(
   cache,
   javaWs,
   specs2 % Test,
-  "mysql" % "mysql-connector-java" % "5.1.38",
+  "mysql" % "mysql-connector-java" % "5.1.47",
   "org.modelmapper" % "modelmapper" % "0.7.7",
   "com.typesafe.play" % "play-mailer_2.11" % "5.0.0",
   filters
