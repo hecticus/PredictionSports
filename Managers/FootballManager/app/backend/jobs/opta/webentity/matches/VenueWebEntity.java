@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "longName",
     "shortName"
 })
-public class Venue {
+public class VenueWebEntity {
 
     @JsonProperty("id")
     private String id;

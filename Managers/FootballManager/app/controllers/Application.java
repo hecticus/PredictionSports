@@ -1,5 +1,6 @@
 package controllers;
 
+import backend.jobs.opta.OptaProcess;
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -21,6 +22,8 @@ import views.html.*;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class Application extends Controller {
@@ -121,5 +124,11 @@ public class Application extends Controller {
 
     public static String formatTimestamp(final long t) {
         return new SimpleDateFormat("yyyy-dd-MM HH:mm:ss").format(new Date(t));
+    }
+
+    public static Result develop(){
+        OptaProcess opta = new OptaProcess();
+        opta.process(new HashMap<String,String>());
+        return ok();
     }
 }

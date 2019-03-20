@@ -1,30 +1,18 @@
 package backend.jobs.opta.service;
 
-import backend.jobs.opta.mapper.CompetitionEntityToCompetitionType;
-import backend.jobs.opta.mapper.Mapper;
-import backend.jobs.opta.repository.OptaRepositoryImpl;
-import backend.jobs.opta.repository.OptaTournamentCalendarRepositoryImpl;
-import backend.jobs.opta.webentity.tournamentcalendar.CompetitionWebEntity;
-import backend.jobs.opta.webentity.tournamentcalendar.TournamentCalendarRequest;
-import models.Language;
-import models.football.CompetitionType;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class OptaServiceImpl {
 
 //    AppServiceImpl appService;
-//    OptaRepositoryImpl repo;
+//    OptaRepository repo;
 //    OptaTournamentCalendarRepositoryImpl optaTournamentCalendarRepositoryImpl;
 //
 //    public OptaServiceImpl() {
-//        repo = new OptaRepositoryImpl();
+//        repo = new OptaRepository();
 //        optaTournamentCalendarRepositoryImpl = new OptaTournamentCalendarRepositoryImpl();
 //    }
 //
 //    public OptaServiceImpl(AppServiceImpl appServiceImpl) {
-//        repo = new OptaRepositoryImpl();
+//        repo = new OptaRepository();
 //        optaTournamentCalendarRepositoryImpl = new OptaTournamentCalendarRepositoryImpl();
 //        this.appService = appService;
 //    }

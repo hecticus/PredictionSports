@@ -27,7 +27,7 @@ public class OptasportsScraper extends HecticusThread {
 
     protected Language language;
     protected Apps app;
-    //variables para cargar la config de opta
+    //variables para cargar la config de optaRepository
     protected String optaUserName = "upstream",
             optaAuthKey ="8277e0910d750195b448797616e091ad";
     private final String ID = "#ID#";

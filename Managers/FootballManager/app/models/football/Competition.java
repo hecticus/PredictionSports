@@ -60,6 +60,9 @@ public class Competition  extends FootballModel {
     @OrderBy("goals desc")
     private List<Scorer> scorers;
 
+    @Column(name="uuid")
+    private Integer UUID;
+
     public Competition(String name, Long extId, Apps idApp, CompetitionType type) {
         this.name = name;
         this.extId = extId;
@@ -255,6 +258,14 @@ public class Competition  extends FootballModel {
             tr = null;
         }
         return tr;
+    }
+
+    public Integer getUUID() {
+        return UUID;
+    }
+
+    public void setUUID(Integer UUID) {
+        this.UUID = UUID;
     }
 
     public void validate(Language language){

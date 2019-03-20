@@ -30,7 +30,6 @@ public class GameMatch extends FootballModel {
     public static final short SUSPENDED = 4;
     public static final short NOSTARTED = 5;
 
-
     @Id
     private Long idGameMatches;
     @ManyToOne

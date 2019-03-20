@@ -13,6 +13,8 @@ public class MatchWebEntity {
 
     @JsonProperty("matchInfo")
     private MatchInfo matchInfo;
+    @JsonProperty("liveData")
+    private LiveData liveData;
 
     @JsonProperty("matchInfo")
     public MatchInfo getMatchInfo() {
@@ -24,4 +26,13 @@ public class MatchWebEntity {
         this.matchInfo = matchInfo;
     }
 
+    @JsonProperty("liveData")
+    public LiveData getLiveData() {
+        return liveData;
+    }
+
+    @JsonProperty("liveData")
+    public void setLiveData(LiveData liveData) {
+        this.liveData = liveData;
+    }
 }

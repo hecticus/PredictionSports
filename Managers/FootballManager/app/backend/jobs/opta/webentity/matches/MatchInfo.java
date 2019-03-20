@@ -2,6 +2,8 @@
 package backend.jobs.opta.webentity.matches;
 
 import java.util.List;
+
+import backend.jobs.opta.webentity.table.StageWebEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -49,7 +51,7 @@ public class MatchInfo {
     @JsonProperty("contestant")
     private List<Contestant> contestant = null;
     @JsonProperty("venue")
-    private Venue venue;
+    private VenueWebEntity venue;
 
     @JsonProperty("id")
     public String getId() {
@@ -172,12 +174,12 @@ public class MatchInfo {
     }
 
     @JsonProperty("venue")
-    public Venue getVenue() {
+    public VenueWebEntity getVenue() {
         return venue;
     }
 
     @JsonProperty("venue")
-    public void setVenue(Venue venue) {
+    public void setVenue(VenueWebEntity venue) {
         this.venue = venue;
     }
 

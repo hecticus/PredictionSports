@@ -1,5 +1,5 @@
 
-package backend.jobs.opta.webentity.matches;
+package backend.jobs.opta.webentity.table;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,17 +8,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "id",
-    "formatId",
     "startDate",
     "endDate",
     "name"
 })
-public class StageWebEntity {
+public class TournamentCalendar {
 
     @JsonProperty("id")
     private String id;
-    @JsonProperty("formatId")
-    private String formatId;
     @JsonProperty("startDate")
     private String startDate;
     @JsonProperty("endDate")
@@ -34,16 +31,6 @@ public class StageWebEntity {
     @JsonProperty("id")
     public void setId(String id) {
         this.id = id;
-    }
-
-    @JsonProperty("formatId")
-    public String getFormatId() {
-        return formatId;
-    }
-
-    @JsonProperty("formatId")
-    public void setFormatId(String formatId) {
-        this.formatId = formatId;
     }
 
     @JsonProperty("startDate")
