@@ -6,6 +6,7 @@ OPTIONS        /*url                                                            
 
 GET            /check/*name                                                                                    controllers.Application.checkFile(name: String)
 GET            /perform                                                                                        controllers.Application.checkPerformNews()
+GET            /process                                                                                        controllers.Application.develop()
 
 # Home page
 GET            /                                                                                               controllers.Application.index()

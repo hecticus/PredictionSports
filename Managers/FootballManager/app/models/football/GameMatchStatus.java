@@ -17,12 +17,16 @@ import java.util.NoSuchElementException;
  * Created by plesse on 1/20/15.
  */
 @Entity
-@Table(name="game_match_status", uniqueConstraints = @UniqueConstraint(columnNames = {"extId"}))
+@Table(name="game_match_status", uniqueConstraints = @UniqueConstraint(columnNames = {"ext_id"}))
 public class GameMatchStatus extends FootballModel {
 
     @Id
     private Integer idGameMatchStatus;
+
+    @Column()
     private String name;
+
+    @Column()
     private Integer extId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "status", cascade = CascadeType.ALL)

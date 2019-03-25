@@ -1,0 +1,86 @@
+<div id="wrapper" class="page">
+    <div class="scroller">
+        <div class="container">
+
+          <div class="row h-list news">
+
+            <div class="col-xs-12"
+                 ng-repeat="item in news track by item.guid"
+                 ng-show="hasNews"
+                 on-last-repeat ng-click="showContentNews(item)">
+
+              <div class="col-xs-12" style="border:0; padding:0;" ng-show="$index === 0">
+                <img class="img-responsive" src="{{'https:' + item.enclosure._url}}" onerror="this.src='img/img-alternative.png'" alt="icon">
+              </div>
+
+              <div class="col-xs-12" style="border:0; padding:0;" ng-show="$index === 0">
+                <br />
+                <span class="h-headline h-ellipsis" style="font-weight:normal !important;">{{item.title}}</span>
+                <br />
+                <i class="mdi-device-access-time"></i>
+                <span class="h-moment">{{item.pubDate}}</span>
+                <br/><br/><span>Noticia de </span><a href="http://es.fifa.com/">FIFA.com</a>
+              </div>
+              <div class="col-xs-4" style="border:0; padding:0;" ng-show="$index !== 0">
+                <img class="img-thumbnail" style="width:85%; height: auto; min-height:70px;" src="{{'https:' + item.enclosure._url}}" onerror="this.src='img/logo-120x120.png'" alt="icon">
+              </div>
+              <div class="col-xs-8" style="border:0; padding:0;" ng-show="$index !== 0">
+                <span class="h-headline h-ellipsis" style="font-weight:normal !important;">{{item.title}}</span>
+                <br />
+                <i class="mdi-device-access-time"></i>
+                <span class="h-moment">{{item.pubDate}}</span>
+                <br/><span>Noticia de </span><a href="http://es.fifa.com/">FIFA.com</a>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="wrapper2" class="page" style="left: 100%;" >
+    <div class="scroller">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-xs-12">
+                  <br />
+                  <img src="{{'https:' + contentNewsImg}}" alt="{{contentNews.title}}" class="img-responsive"   onerror="this.src='img/img-alternative.png'">
+
+                </div>
+                <div class="col-xs-12">
+                  <br />
+                  <h2 class="h-headline">{{contentNews.title}}</h2>
+                  <br />
+                  <i class="mdi-device-access-time"></i>
+                  <span class="h-moment">{{contentNews.pubDate}}</span>
+                </div>
+                <div class="col-xs-12">
+                  <p class="h-body" ng-bind-html="contentNews.body"></p>
+                </div>
+
+
+
+            </div>
+            
+          </div>
+          <div class="col-xs-12" ><span>Ver mas en: </span><a href="{{contentNews.link}}">FIFA page</a>
+            </div>
+            <div class="col-xs-12" style="margin: 15px auto; " >
+              <span>Noticia de </span><a href="http://es.fifa.com/">FIFA.com</a>
+            </div>
+          </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<div class="no-content-panel h-horizontal" ng-hide="hasNews">
+  <div class="h-vertical">
+    <i class="mdi-action-info-outline"></i>
+    <div class="no-content-panel-title" translate>EMPTY_STATES.NEWS</div>
+  </div>
+</div>

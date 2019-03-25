@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.hecticus.massports" version="1.8.7" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://cordova.apache.org/ns/1.0">
+    <feature name="Device">
+        <param name="browser-package" value="Device" />
+    </feature>
+    <feature name="FacebookConnectPlugin">
+        <param name="browser-package" value="FacebookConnectPluginBrowser" />
+        <param name="onload" value="true" />
+    </feature>
+    <plugin name="FacebookConnectPlugin" value="FacebookConnectPlugin" />
+    <access origin="https://m.facebook.com" />
+    <access origin="https://connect.facebook.net" />
+    <access origin="https://graph.facebook.com" />
+    <access origin="https://api.facebook.com" />
+    <access origin="https://*.fbcdn.net" />
+    <access origin="https://*.akamaihd.net" />
+    <name>+Sports</name>
+    <description>
+        +Sports App.
+	  </description>
+    <author email="contact@hecticus.com" href="http://www.hecticus.com">
+		Hecticus Software Inc
+	</author>
+    <content src="index.html" />
+    <allow-navigation href="*" />
+    <allow-intent href="*" />
+    <access origin="*" />
+    <splash src="res/screen.png" />
+    <gap:config-file parent="UIStatusBarHidden" platform="ios">
+        <true />
+    </gap:config-file>
+    <gap:config-file parent="UIViewControllerBasedStatusBarAppearance" platform="ios">
+        <false />
+    </gap:config-file>
+    <preference name="fullscreen" value="false" />
+    <preference name="orientation" value="portrait" />
+    <preference name="target-device" value="universal" />
+    <preference name="prerendered-icon" value="true" />
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+    <preference name="android-installLocation" value="auto" />
+    <preference name="AllowInlineMediaPlayback" value="false" />
+    <preference name="BackupWebStorage" value="local" />
+    <preference name="DisallowOverscroll" value="false" />
+    <preference name="EnableViewportScale" value="false" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="true" />
+    <preference name="MediaPlaybackRequiresUserAction" value="false" />
+    <preference name="SuppressesIncrementalRendering" value="false" />
+    <preference name="TopActivityIndicator" value="gray" />
+    <preference name="GapBetweenPages" value="0" />
+    <preference name="PageLength" value="0" />
+    <preference name="PaginationBreakingMode" value="page" />
+    <preference name="PaginationMode" value="unpaginated" />
+    <preference name="permissions" value="none" />
+    <preference name="useBrowserHistory" value="true" />
+    <preference name="webviewbounce" value="true" />
+    <preference name="stay-in-webview" value="false" />
+    <preference name="ios-statusbarstyle" value="black-opaque" />
+    <preference name="detect-data-types" value="true" />
+    <preference name="exit-on-suspend" value="false" />
+    <preference name="show-splash-screen-spinner" value="true" />
+    <preference name="auto-hide-splash-screen" value="true" />
+    <preference name="disable-cursor" value="false" />
+    <preference name="load-url-timeout" value="100000" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="10000" />
+</widget>

@@ -20,7 +20,7 @@
 
 @if(ttype.equals("MOBUSI")) {
     @{ p  =  1 }
-    @mainmob("+Sports") {
+    @mainrus("+Sports") {
         @aux()
     }
 }
@@ -35,6 +35,15 @@
     @maingre("+Sports") { @aux()  }
 }
 
-@if(p.equals(0)) {
-    @main("+Sports") { @aux() }
+@if(ttype.equals("test")) {
+    @{ p  =  1 }
+    @mainrus("+Sports") {
+        @aux()
+    }
 }
+
+
+@if(p.equals(0)) {
+    @mainrus("+Sports") { @aux() }
+}
+

@@ -118,7 +118,7 @@ html, body {
     text-align: center;
     font-size: 7vmin;
     font-style: italic;
-    color: #F6FF00;
+    color: #FFFFFF;
 }
 
 .mtexto
@@ -129,4 +129,9 @@ html, body {
     font-style: italic;
     color: white;
       text-transform: uppercase;
+}
+
+.selector{
+    background-size: cover;
+    background: url('../images/square.png')
 }
