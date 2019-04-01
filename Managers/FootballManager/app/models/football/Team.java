@@ -202,6 +202,7 @@ public class Team extends FootballModel {
                 this.save();
             }
         }catch (Exception ex){
+            System.out.print(ex.getMessage());
            //do nothing
         }
     }

@@ -144,12 +144,11 @@ public class OptaProcess extends ProcessAbstract {
 
     private long GenerateHash(String hashable) {
         return UUID.nameUUIDFromBytes(hashable.getBytes()).getMostSignificantBits();
-
     }
 
     private Team ProcessTeamFromMatch(Competition competition, Contestant local) {
         Countries countryLocal = GetCountry(local.getCountry().getName());
-        Team localTeam = new Team(local.getName(), local.getId(), countryLocal);
+        Team localTeam = new Team(local.getName(), String.valueOf(GenerateHash(local.getId())), countryLocal);
         localTeam.validateTeam(competition);
         return localTeam;
     }
@@ -165,15 +164,16 @@ public class OptaProcess extends ProcessAbstract {
     public Team ContestantWebEntityToTeam(ContestantWebEntity contestantWebEntity) {
         Countries country = GetCountry(contestantWebEntity.getCountry());
         return new Team(contestantWebEntity.getName(),
-                country, contestantWebEntity.getId(),
+                country, String.valueOf(GenerateHash(contestantWebEntity.getId())),
                 contestantWebEntity.getOfficialName(),
                 contestantWebEntity.getShortName(),
                 contestantWebEntity.getCode());
     }
 
     public Phase StageWebEntityToPhase(StageWebEntity stageWebEntity, Competition competition) {
+
         Phase phase = new Phase(competition, stageWebEntity.getName(), stageWebEntity.getName(),
-                stageWebEntity.getStartDate(), stageWebEntity.getEndDate(), stageWebEntity.getId(), 0, 0, 0, 1);
+                stageWebEntity.getStartDate().replace("-", "").replace("Z", ""), stageWebEntity.getEndDate().replace("-", "").replace("Z", "")uid, String.valueOf(GenerateHash(stageWebEntity.getId())), 0, 0, 0, 1);
         return phase;
     }
 
