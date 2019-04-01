@@ -1,6 +1,7 @@
 package backend.jobs.scrapers.perform;
 
 import backend.HecticusThread;
+import backend.jobs.opta.OptaProcess;
 import exceptions.BadConfigException;
 import models.Apps;
 import models.Config;
@@ -70,7 +71,9 @@ public class OptasportsScraper extends HecticusThread {
                 optaAuthKey = (String) args.get("token");
             }
             //read data from ws
-            initProcess();
+            //initProcess();
+            OptaProcess opta = new OptaProcess();
+            opta.process(new HashMap<String,String>());
         } catch (BadConfigException ex){
             Utils.printToLog(OptasportsScraper.class,
                     "Error en OptasportsScraper",

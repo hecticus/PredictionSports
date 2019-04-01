@@ -15,6 +15,7 @@ libraryDependencies ++= Seq(
   javaEbean,
   cache,
   javaWs,
+  "mysql" % "mysql-connector-java" % "5.1.12",
   "com.jolbox" % "bonecp-spring" % "0.8.0.RELEASE",
   "bouncycastle" % "bcprov-jdk15" % "140",
   "commons-net" % "commons-net" % "3.3",

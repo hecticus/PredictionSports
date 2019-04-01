@@ -12,6 +12,7 @@ import backend.jobs.opta.webentity.team.TeamRequest;
 import backend.jobs.opta.webentity.tournamentcalendar.CompetitionWebEntity;
 import backend.jobs.opta.webentity.tournamentcalendar.TournamentCalendarRequest;
 import backend.jobs.opta.webentity.tournamentcalendar.TournamentCalendarWebEntity;
+import models.Language;
 import models.football.*;
 import models.football.Competition;
 import models.football.Venue;
@@ -32,6 +33,7 @@ public class OptaProcess extends ProcessAbstract {
 
     public void process(Map args) {
         super.process(args);
+        language = Language.getByID(300);
         TournamentCalendarRequest tournamentCalendarRequest = optaRepository.GetTournamentCalendar();
         List<CompetitionWebEntity> competitionWebEntities = tournamentCalendarRequest.getCompetition();
 
@@ -108,8 +110,11 @@ public class OptaProcess extends ProcessAbstract {
         }
 
         MatchInfo matchInfo = matchWebEntity.getMatchInfo();
+        String foramttedDate = matchInfo.getDate().replace("-","").replace("Z","");
+        foramttedDate += matchInfo.getTime().replace(":","").replace("Z","");
+
         GameMatch gameMatch = new GameMatch(phase, localTeam, awayTeam, venue, localTeam.getName(),
-                awayTeam.getName(), localScore, awayScore, matchInfo.getDate(), status,
+                awayTeam.getName(), localScore, awayScore, foramttedDate, status,
                 GenerateHash(matchInfo.getId()), competition);
         gameMatch.validateGame();
 

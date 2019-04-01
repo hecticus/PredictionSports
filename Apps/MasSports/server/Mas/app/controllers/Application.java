@@ -44,7 +44,7 @@ public class Application extends Controller {
     }
 
     public static Result tyc() {
-        return ok(tyc.render());
+        return ok();
     }
 
 
