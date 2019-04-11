@@ -173,7 +173,7 @@ public class OptaProcess extends ProcessAbstract {
     public Phase StageWebEntityToPhase(StageWebEntity stageWebEntity, Competition competition) {
 
         Phase phase = new Phase(competition, stageWebEntity.getName(), stageWebEntity.getName(),
-                stageWebEntity.getStartDate().replace("-", "").replace("Z", ""), stageWebEntity.getEndDate().replace("-", "").replace("Z", "")uid, String.valueOf(GenerateHash(stageWebEntity.getId())), 0, 0, 0, 1);
+                stageWebEntity.getStartDate().replace("-", "").replace("Z", ""), stageWebEntity.getEndDate().replace("-", "").replace("Z", ""), String.valueOf(GenerateHash(stageWebEntity.getId())), 0, 0, 0, 1);
         return phase;
     }
 
