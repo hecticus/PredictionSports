@@ -12,10 +12,12 @@ import backend.jobs.opta.webentity.team.TeamRequest;
 import backend.jobs.opta.webentity.tournamentcalendar.CompetitionWebEntity;
 import backend.jobs.opta.webentity.tournamentcalendar.TournamentCalendarRequest;
 import backend.jobs.opta.webentity.tournamentcalendar.TournamentCalendarWebEntity;
+import models.Config;
 import models.Language;
 import models.football.*;
 import models.football.Competition;
 import models.football.Venue;
+import utils.Utils;
 
 import java.util.List;
 import java.util.Map;
@@ -38,9 +40,13 @@ public class OptaProcess extends ProcessAbstract {
         List<CompetitionWebEntity> competitionWebEntities = tournamentCalendarRequest.getCompetition();
 
         for (CompetitionWebEntity competitionWebEntity : competitionWebEntities) {
-            CompetitionType competitionType = CompetitionWebEntityToCompetitionType(competitionWebEntity);
-            competitionType.validate(language);
-            ProcessCompetitions(competitionWebEntity, competitionType);
+            try {
+                CompetitionType competitionType = CompetitionWebEntityToCompetitionType(competitionWebEntity);
+                competitionType.validate(language);
+                ProcessCompetitions(competitionWebEntity, competitionType);
+            } catch (Exception e) {
+                Utils.printToLog(Utils.class, "", "Error en OPTA PALENGE", true, e, "", Config.LOGGER_ERROR);
+            }
         }
     }
 
