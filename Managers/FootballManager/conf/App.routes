@@ -104,7 +104,7 @@ GET            /footballapi/v1/ranking/get/:id                                  
 GET            /footballapi/v1/ranking/get/ext/:id                                                             controllers.footballapi.AfpFutbolWs.getRankingByIdPhase(id : String, ext : Boolean = true )
 GET            /footballapi/v1/ranking/get/global/:id                                                          controllers.footballapi.AfpFutbolWs.getGlobalRanking(id : Long)
 
-GET            /footballapi/v1/matches/get/ids/:idApp                                                          controllers.footballapi.MatchesController.getFixturesByIDs(idApp : Integer)
+GET            /footballapi/v1/matches/get/ids/:idApp                                                          controllers.footballapi.MatchesController.getFixturesByIDs(idApp : Long)
 GET            /footballapi/v1/matches/finished/get/:idCompetition                                             controllers.footballapi.MatchesController.getTodayFinished(idCompetition : Long)
 GET            /footballapi/v1/matches/finished/get/:idCompetition/:date                                       controllers.footballapi.MatchesController.getFinishedByDate(idCompetition : Long, date : String)
 GET            /footballapi/v1/matches/date/get/:idApp/:date                                                   controllers.footballapi.MatchesController.getFixturesDate(idApp : Integer, date : String, idLanguage : Integer?=405, timezoneName : String ?= "")
@@ -193,7 +193,7 @@ GET            /api/v1/calendar/get/:idApp/:idCompetition                       
 #V2 RESTify routes
 
 #Matches
-GET            /footballapi/v2/:idApp/match/:idGameMatch                                                       controllers.footballapi.MatchesController.getFixturesByID(idApp : Integer, idGameMatch : Integer)
+GET            /footballapi/v2/:idApp/match/:idGameMatch                                                       controllers.footballapi.MatchesController.getFixturesByID(idApp : Integer, idGameMatch : Long)
 
 
 #Teams

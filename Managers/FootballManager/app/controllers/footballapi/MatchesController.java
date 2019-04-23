@@ -619,7 +619,7 @@ public class MatchesController extends HecticusController {
         }
     }
 
-    public static Result getFixturesByIDs(Integer idApp){
+    public static Result getFixturesByIDs(Long idApp){
         try {
             String[] matches = getFromQueryString("match[]");
             ArrayList<Long> matchesIDs = new ArrayList<>();
@@ -643,7 +643,7 @@ public class MatchesController extends HecticusController {
         }
     }
 
-    public static Result getFixturesByID(Integer idApp, Integer idGameMatch){
+    public static Result getFixturesByID(Integer idApp, Long idGameMatch){
         try {
             Apps app = Apps.findId(idApp);
             if(app != null){
