@@ -47,9 +47,10 @@ public class TeamsSynchronizer extends HecticusThread {
 
     @Override
     public void process(Map args) {
+        int id = 0;
         try {
             PushAlerts lastTeamAlert = PushAlerts.getLastTeamAlert(1);
-            int id = lastTeamAlert != null ? lastTeamAlert.getIdExt() : 0;
+            id = lastTeamAlert != null ? lastTeamAlert.getIdExt() : 0;
             synchTeams(id);
             lastTeamAlert = PushAlerts.getLastTeamAlert(1);
             id = lastTeamAlert != null ? lastTeamAlert.getIdExt() : 0;
