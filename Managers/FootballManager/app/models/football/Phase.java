@@ -273,7 +273,7 @@ public class Phase extends FootballModel {
     }
 
     public static Phase findByExtId(String idExt){
-        return finder.where().eq("extId",idExt).findUnique();
+        return finder.where().like("extId",idExt).findList().get(0);
     }
 
     public static List<Phase> findByNivel(Competition competition, int nivel){
