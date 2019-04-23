@@ -55,7 +55,7 @@ public class TeamsSynchronizer extends HecticusThread {
             id = lastTeamAlert != null ? lastTeamAlert.getIdExt() : 0;
             synchTeamsBaseball(id);
         } catch (Exception ex) {
-            Utils.printToLog(TeamsSynchronizer.class, "Error sincronizando equipos", "Error sincronizando equipos", true, ex, "support-level-1", Config.LOGGER_ERROR);
+            Utils.printToLog(TeamsSynchronizer.class, "Error sincronizando equipos", "Error sincronizando equipos " + id, true, ex, "support-level-1", Config.LOGGER_ERROR);
         }
     }
 
