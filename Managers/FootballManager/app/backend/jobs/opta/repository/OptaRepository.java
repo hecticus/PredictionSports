@@ -21,14 +21,14 @@ public class OptaRepository {
 
     public TournamentCalendarRequest GetTournamentCalendar() {
         WSRequestHolder holder = WS.url(generateRoute("tournamentcalendar") + "active/authorized?_rt=b&_fmt=json");
-        String json = holder.get().get(15000).getBody();
+        String json = holder.setTimeout(25000).get().get(15000).getBody();
         TournamentCalendarRequest data = new Gson().fromJson(json, TournamentCalendarRequest.class);
         return data;
     }
 
     public TeamRequest GetTeams(TournamentCalendarWebEntity competitionWebEntity) {
         WSRequestHolder holder = WS.url(generateRoute("team") + "?_rt=b&_fmt=json&detailed=yes&tmcl=" + competitionWebEntity.getId());
-        String json = holder.get().get(15000).getBody();
+        String json = holder.setTimeout(25000).get().get(15000).getBody();
         return  new Gson().fromJson(json, TeamRequest.class);
     }
 
@@ -58,7 +58,7 @@ public class OptaRepository {
 
     public TableRequest GetTables(String competitionType) {
         WSRequestHolder holder = WS.url(generateRoute("standings") + "?_fmt=json&_rt=b&tmcl=" + competitionType);
-        String json = holder.get().get(15000).getBody();
+        String json = holder.setTimeout(25000).get().get(15000).getBody();
         return  new Gson().fromJson(json, TableRequest.class);
     }
 
