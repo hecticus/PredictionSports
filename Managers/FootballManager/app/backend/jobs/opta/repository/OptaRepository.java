@@ -46,7 +46,7 @@ public class OptaRepository {
 
         String route = generateRoute("match");
         WSRequestHolder holder = WS.url(route);
-        holder = holder.setTimeout(1000)
+        holder = holder.setTimeout(25000)
                 .setQueryParameter("_fmt", "json")
                 .setQueryParameter("live", "yes")
                 .setQueryParameter("_rt", "b")
