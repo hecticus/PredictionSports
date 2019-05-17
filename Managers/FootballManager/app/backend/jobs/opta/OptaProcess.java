@@ -70,8 +70,10 @@ public class OptaProcess extends ProcessAbstract {
 
     public void ProcessMatches(Competition competition, TournamentCalendarWebEntity competitionWebEntity) {
         MatchesRequest matchesRequest = optaRepository.GetMatches(competitionWebEntity);
-        for (MatchWebEntity matchWebEntity : matchesRequest.getMatch()) {
-            ProcessGameMatch(matchWebEntity, competition);
+        if (matchesRequest.getMatch() != null) {
+            for (MatchWebEntity matchWebEntity : matchesRequest.getMatch()) {
+                ProcessGameMatch(matchWebEntity, competition);
+            }
         }
     }
 
@@ -116,8 +118,8 @@ public class OptaProcess extends ProcessAbstract {
         }
 
         MatchInfo matchInfo = matchWebEntity.getMatchInfo();
-        String foramttedDate = matchInfo.getDate().replace("-","").replace("Z","");
-        foramttedDate += matchInfo.getTime().replace(":","").replace("Z","");
+        String foramttedDate = matchInfo.getDate().replace("-", "").replace("Z", "");
+        foramttedDate += matchInfo.getTime().replace(":", "").replace("Z", "");
 
         GameMatch gameMatch = new GameMatch(phase, localTeam, awayTeam, venue, localTeam.getName(),
                 awayTeam.getName(), localScore, awayScore, foramttedDate, status,

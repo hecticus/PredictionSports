@@ -35,8 +35,6 @@ public class OptaRepository {
     public MatchesRequest GetMatches(TournamentCalendarWebEntity competitionWebEntity) {
 
         Calendar cal = Calendar.getInstance();
-
-
         SimpleDateFormat sdf;
         sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         cal.add(Calendar.DAY_OF_MONTH, -5);
