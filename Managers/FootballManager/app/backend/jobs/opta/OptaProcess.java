@@ -36,18 +36,25 @@ public class OptaProcess extends ProcessAbstract {
     public void process(Map args) {
         super.process(args);
         language = Language.getByID(300);
-        TournamentCalendarRequest tournamentCalendarRequest = optaRepository.GetTournamentCalendar();
-        List<CompetitionWebEntity> competitionWebEntities = tournamentCalendarRequest.getCompetition();
 
-        for (CompetitionWebEntity competitionWebEntity : competitionWebEntities) {
-            try {
-                CompetitionType competitionType = CompetitionWebEntityToCompetitionType(competitionWebEntity);
-                competitionType.validate(language);
-                ProcessCompetitions(competitionWebEntity, competitionType);
-            } catch (Exception e) {
-                Utils.printToLog(Utils.class, "", "Error en OPTA PALENGE", true, e, "support-level-1", Config.LOGGER_ERROR);
+        TournamentCalendarRequest tournamentCalendarRequest = null;
+        tournamentCalendarRequest = optaRepository.GetTournamentCalendar();
+
+
+        if (tournamentCalendarRequest != null) {
+            List<CompetitionWebEntity> competitionWebEntities = tournamentCalendarRequest.getCompetition();
+            for (CompetitionWebEntity competitionWebEntity : competitionWebEntities) {
+                try {
+                    CompetitionType competitionType = CompetitionWebEntityToCompetitionType(competitionWebEntity);
+                    competitionType.validate(language);
+                    ProcessCompetitions(competitionWebEntity, competitionType);
+                } catch (Exception e) {
+                    Utils.printToLog(Utils.class, "", "Error en OPTA PALENGE", true, e, "support-level-1", Config.LOGGER_ERROR);
+                }
             }
         }
+
+        System.out.println("Proceso finalizo Correctamente");
     }
 
     private void ProcessCompetitions(CompetitionWebEntity competitionWebEntity, CompetitionType competitionType) {
@@ -62,15 +69,18 @@ public class OptaProcess extends ProcessAbstract {
 
     private void ProcessTeams(Competition competition, TournamentCalendarWebEntity competitionEntity) {
         TeamRequest teamRequest = optaRepository.GetTeams(competitionEntity);
-        for (ContestantWebEntity contestantWebEntity : teamRequest.getContestant()) {
-            Team team = ContestantWebEntityToTeam(contestantWebEntity);
-            team.validateTeam(competition);
+
+        if (teamRequest != null) {
+            for (ContestantWebEntity contestantWebEntity : teamRequest.getContestant()) {
+                Team team = ContestantWebEntityToTeam(contestantWebEntity);
+                team.validateTeam(competition);
+            }
         }
     }
 
     public void ProcessMatches(Competition competition, TournamentCalendarWebEntity competitionWebEntity) {
         MatchesRequest matchesRequest = optaRepository.GetMatches(competitionWebEntity);
-        if (matchesRequest.getMatch() != null) {
+        if (matchesRequest != null && matchesRequest.getMatch() != null) {
             for (MatchWebEntity matchWebEntity : matchesRequest.getMatch()) {
                 ProcessGameMatch(matchWebEntity, competition);
             }
@@ -80,16 +90,18 @@ public class OptaProcess extends ProcessAbstract {
     public void ProcessTables(Competition competition, TournamentCalendarWebEntity competitionEntity) {
         TableRequest tableRequest = optaRepository.GetTables(competitionEntity.getId());
 
-        for (StageWebEntity stageWebEntity : tableRequest.getStage()) {
-            Phase phase = ProcessPhases(competition, stageWebEntity);
-            List<Ranking> rankings = stageWebEntity.getDivision().get(0).getRanking();
+        if (tableRequest != null) {
+            for (StageWebEntity stageWebEntity : tableRequest.getStage()) {
+                Phase phase = ProcessPhases(competition, stageWebEntity);
+                List<Ranking> rankings = stageWebEntity.getDivision().get(0).getRanking();
 
-            for (Ranking ranking : rankings) {
-                Group group = new Group(competition, "-");
-                Team team = Team.findByExtId(ranking.getContestantId());
-                Rank currentRank = new Rank(phase, team, group, ranking.getMatchesPlayed(), ranking.getMatchesWon(),
-                        ranking.getMatchesDrawn(), ranking.getMatchesLost(), ranking.getPoints(), ranking.getGoalsFor(), ranking.getGoalsAgainst());
-                currentRank.validateRank();
+                for (Ranking ranking : rankings) {
+                    Group group = new Group(competition, "-");
+                    Team team = Team.findByExtId(ranking.getContestantId());
+                    Rank currentRank = new Rank(phase, team, group, ranking.getMatchesPlayed(), ranking.getMatchesWon(),
+                            ranking.getMatchesDrawn(), ranking.getMatchesLost(), ranking.getPoints(), ranking.getGoalsFor(), ranking.getGoalsAgainst());
+                    currentRank.validateRank();
+                }
             }
         }
     }
