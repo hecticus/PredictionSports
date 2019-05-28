@@ -1,57 +1,187 @@
-<div class="container" id="banner">
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1 text-center">
-      <h2 class="titleses">¡Participar en la promoción es muy fácil! <br />
-        Hay tres formas de hacerlo:</h2>
-    </div>
-  </div>
-</div>
-<div ng-app="psportApp" ng-controller="HowCtrl">
-  <br />
-  <br />
-  <div class="container" id="banner italicker">
-    <div class="row">
-      <div class="col-md-4 text-center">
-        <div style="height: 200px;  top: 50%;">
-          <img src="images/how/icon_1.png" class="img-responsive imgheight center-block" alt="+Sport Logo"><br>
-        </div>
-        <div class="italicker">
-          SMS al <b> <span ng-bind="shortcode"></span> </b>
-        </div>
-        <br />
-        <div class="italicker">
-          Enviando un mensaje de texto con la palabra MAS al <b> <span ng-bind="shortcode"></span> </b> para
-          suscribirse.
-        </div>
-      </div>
-      <div class="col-md-4 text-center">
-        <img src="images/how/icon_2.png" class="img-responsive imgheight center-block" alt="+Sport Logo"><br>
-        <div class="italicker">
-          APP
-        </div>
-        <br />
-        <div class="italicker">
-          Descargando el app +Sports en Google Play.
-        </div>
-        <br />
-        <div>
-          <a href="https://play.google.com/store/apps/details?id=com.hecticus.massports"><img src="images/main/google.png"
-              id="play" class="img-responsive center-block" alt="+Sport Logo"></a>
-        </div>
+<html>
 
-      </div>
-      <div class="col-md-4 text-center">
-        <img src="images/how/icon_3.png" class="img-responsive imgheight center-block" alt="+Sport Logo"><br>
-        <div class="italicker">
-          PORTAL HTML
-        </div>
-        <br />
-        <div class="italicker">
-          Ingresando desde el browser de tu móvil a <a href="http://massports.hecticus.com">http://massports.hecticus.com</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br />
-  <br />
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 14 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Segoe UI";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
+	{mso-style-link:"Texto comentario Car";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:"Calibri","sans-serif";}
+a:link, span.MsoHyperlink
+	{color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:#954F72;
+	text-decoration:underline;}
+p
+	{margin-right:0cm;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";}
+p.MsoCommentSubject, li.MsoCommentSubject, div.MsoCommentSubject
+	{mso-style-link:"Asunto del comentario Car";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:"Calibri","sans-serif";
+	font-weight:bold;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-link:"Texto de globo Car";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:9.0pt;
+	font-family:"Segoe UI","sans-serif";}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:36.0pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:36.0pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+span.apple-converted-space
+	{mso-style-name:apple-converted-space;}
+p.Default, li.Default, div.Default
+	{mso-style-name:Default;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-autospace:none;
+	font-size:12.0pt;
+	font-family:"Arial","sans-serif";
+	color:black;}
+span.TextocomentarioCar
+	{mso-style-name:"Texto comentario Car";
+	mso-style-link:"Texto comentario";
+	font-family:"Calibri","sans-serif";}
+span.AsuntodelcomentarioCar
+	{mso-style-name:"Asunto del comentario Car";
+	mso-style-link:"Asunto del comentario";
+	font-family:"Calibri","sans-serif";
+	font-weight:bold;}
+span.TextodegloboCar
+	{mso-style-name:"Texto de globo Car";
+	mso-style-link:"Texto de globo";
+	font-family:"Segoe UI","sans-serif";}
+.MsoChpDefault
+	{font-family:"Calibri","sans-serif";}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:107%;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=ES-VE link="#0563C1" vlink="#954F72">
+
+<div class=WordSection1>
+
+<p class=MsoNormal style='text-align:justify'><i><span lang=ES-PA>Promoci�n
+v�lida del 1 de mayo al 31 de agosto de 2019. Participan clientes +m�vil postpago
+y prepago, mayores de 18 a�os. Premio: </span></i><i><span lang=ES-PA>dos (2)
+ganadores de <b>SALARIO POR UN A�O</b>. El monto de cada salario corresponde a <b>B/.
+800.00 en efectivo mensuales por un a�o</b>; en donde resultar�n ganadores los
+dos (2) clientes en acumular la mayor cantidad de puntos en el periodo
+establecido de la promoci�n. Se puede participar de cuatro (4) formas: (1)
+Enviando un mensaje de texto con la palabra MAS al 9090 y luego confirmar la
+suscripci�n enviando ALTA MAS al 9090. </span></i><i><span lang=ES-PA>Costo por
+suscripci�n: dos cobros diarios de B/.0.50 por cada mensaje recibido que otorga
+100 puntos por cada cobro efectivo; (2) A trav�s de la APP +Sport, la cual no
+tiene costo de descarga, en donde el cliente debe completar el proceso de
+suscripci�n (disponible para celulares con sistemas operativos Android). (3) Enviando
+un mensaje de texto con la palabra MAS al 9091 en donde el cliente responde
+trivias, por cada acierto o desacierto se otorga 100 puntos, en caso de acierto
+se otorga 50 puntos adicionales, costo por cada mensaje enviado es de B/.0.50.
+(4) El cliente podr� realizar pron�sticos deportivos </span></i><i><span
+lang=ES-PA>en el APP +Sport, en donde por cada acierto que realice recibir� 50 puntos.
+</span></i><i><span lang=ES-PA>Si no desea recibir mensajes, puede enviar
+gratis la palabra BAJA MAS al 9090 cancelando su participaci�n en la promoci�n.</span></i><i><span
+lang=ES-PA> </span></i><i><span lang=ES-PA>La escogencia de ganadores ser� el
+d�a 2 de septiembre de 2019, l</span></i><i><span lang=ES-PA>os premios se
+entregar�n los primeros 5 d�as h�biles de cada mes a partir de la fecha de
+escogencia del ganador </span></i><i><span lang=ES-PA>en las oficinas de Silver
+Solutions, El Dorado, Plaza Camino de Cruces, Planta Baja, Local #16, por lo
+que los ganadores deber�n estar presente bajo sus propios medios. +M�vil se
+reserva hasta un (1) mes para validar el puntaje de las l�neas participantes y
+contactar a los ganadores. No podr� resultar ganador en la promoci�n, clientes
+o l�neas celulares que hayan resultado ganadores en la temporada
+correspondiente al periodo comprendido entre 1 de septiembre al 31 de diciembre
+de 2018 y 1 de enero hasta el 30 de abril de 2019. No participan los
+colaboradores pertenecientes a las empresas: Sistemas M�viles, S.A., Cable
+&amp; Wireless Panam�, S.A., Agencia Publicitaria a cargo de esta promoci�n, ni
+tampoco los colaboradores de las empresas: Aydesa, Estratego, People
+Outsourcing, Royal Pro ni Sonitel, S.A. No participan cuentas pyme,
+corporativos, gobierno y Key Account.</span></i></p>
+
+<p class=MsoNormal style='text-align:justify'><i><span lang=ES-PA>Para m�s
+detalles de formas de participaci�n, fechas de selecci�n y comunicaci�n de
+ganadores, limitaciones, restricciones y dem�s visita</span></i><i><span
+lang=ES-PA>: </span></i><span lang=EN-US><a href="http://deportesmasmovil.com/"><i><span
+lang=ES-PA style='color:windowtext'>http://deportesmasmovil.com/</span></i></a></span></p>
+
+<p class=MsoNormal style='text-align:justify'><i><span lang=ES-PA>&nbsp;</span></i></p>
+
 </div>
+
+</body>
+
+</html>
