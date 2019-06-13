@@ -143,6 +143,11 @@ public class OptaProcess extends ProcessAbstract {
 
     private Phase ProcessPhases(Competition competition, StageWebEntity stageWebEntity) {
         Phase phase = StageWebEntityToPhase(stageWebEntity, competition);
+        
+        if(phase == null) {
+            return null;
+        }
+        
         phase.validate(language);
         return phase;
     }
