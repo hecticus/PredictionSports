@@ -75,7 +75,7 @@ public class Status extends Model  {
                 aux.setIdStatus(2l);
                 break;
             default:
-                aux.setName("Jugando");
+                aux.setName("Programado");
                 aux.setIdStatus(2l);
                 break;
 
