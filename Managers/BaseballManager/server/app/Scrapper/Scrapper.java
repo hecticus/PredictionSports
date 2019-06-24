@@ -164,18 +164,16 @@ public class Scrapper {
                 ;
 
 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm");
-                Date convertedCurrentDate = sdf.parse(obj.get("time_date").asText());
-
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm a");
+                Date convertedCurrentDate = sdf.parse(obj.get("time_date").asText() + " " + obj.get("ampm").asText());
 
                 Calendar cal2 = Calendar.getInstance(); // creates calendar
 
-
                 cal2.setTime(convertedCurrentDate); // sets calendar time/date
-                cal2.add(Calendar.HOUR_OF_DAY, (obj.get("ampm").asText().equals("PM") ? 12 : 0)); // pone doce horas adicionales si es pm
+//                cal2.add(Calendar.HOUR_OF_DAY, (obj.get("ampm").asText().equals("PM") ? 12 : 0)); // pone doce horas adicionales si es pm
 
                 //esto cuadra las horas para ser exacto and stuff
-                cal2 = calcRightDate(cal2, obj.get("time_date").asText());
+                cal2 = calcRightDate(cal2, obj.get("time_zone").asText());
 //                cal2.add(Calendar.HOUR_OF_DAY, calcRightDate()); // adds one hour
 
 //                cal2.add(Calendar.HOUR_OF_DAY, Config.getInt("hour_diff")); // adds one hour
@@ -274,7 +272,7 @@ public class Scrapper {
         }
 
         int save = Config.getInt("saving_hour");
-        date.add(Calendar.HOUR, total + save);
+        date.add(Calendar.HOUR_OF_DAY, total + save);
         return date;
 
 //        PT	Pacific Time	UTC -8:00 / -7:00	lun, 11:40:48
