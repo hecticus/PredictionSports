@@ -257,16 +257,16 @@ public class Scrapper {
         int total = -4;
         switch (timezone) {
             case "PT":
-                total = -7;
+                total = -3;
                 break;
             case "MT":
-                total = -6;
+                total = -2;
                 break;
             case "CT":
-                total = -5;
+                total = -1;
                 break;
             case "ET":
-                total = -4;
+                total = -0;
                 break;
         }
 
