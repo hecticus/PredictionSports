@@ -161,8 +161,6 @@ public class Scrapper {
                 current_game.setAwayTeam(TeamHandler.CheckAndInsert(obj.get("away_team_id").asLong(), obj.get("away_team_name").asText(), obj.get("away_code").asText(), obj.get("away_team_city").asText(), LeagueHandler.CheckAndInsert(laux[0] + obj.get("away_division").asText())));
 
                 current_game.setStatus(StatusHandler.CheckAndInsert(obj.get("status").get("status").asText()));
-                ;
-
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm a");
                 Date convertedCurrentDate = sdf.parse(obj.get("time_date").asText() + " " + obj.get("ampm").asText());
@@ -204,6 +202,7 @@ public class Scrapper {
                     e.printStackTrace();
 
                 }
+
                 if (GameHandler.CheckExist(obj.get("id").asText()))
                     current_game.update();
                 else
