@@ -48,16 +48,15 @@ public class Scrapper {
     public void ScrapperDays() throws IOException {
 
         int daysAfter = Config.getInt("days_after");
-        if(  Config.getInt("file_master") ==  1)
+        if (Config.getInt("file_master") == 1)
             new File(System.getProperty("user.home") + "/master.mlb").createNewFile();
 
-        if(!new File(System.getProperty("user.home") + "/master.mlb").exists()) return;
+        if (!new File(System.getProperty("user.home") + "/master.mlb").exists()) return;
         //Mailer.SendError("pal Ejecutando scrapper" + daysAfter,"se inica el scrapper");
         //Scrapper(DateUtil(0));
         Long startTime = System.currentTimeMillis();
-        for (int i = 0 ; i< daysAfter; i++)
-        {
-                Scrapper(DateUtil(i));
+        for (int i = 0; i < daysAfter; i++) {
+            Scrapper(DateUtil(i));
         }
 
         //Mailer.SendError("pal Ejecutando Ranking","Otro Ranking");
@@ -69,25 +68,23 @@ public class Scrapper {
         Logger.info("Finalizo el Scrapper duraccion en millis" + (stopTime - startTime));
 
 
-
     }
 
 
-    public Date DateUtil(int offset)
-    {
+    public Date DateUtil(int offset) {
         int daysBefore = Config.getInt("days_before");
 
-        java.util.Date date= new Date();
+        java.util.Date date = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.add(Calendar.HOUR,  24 * offset);
-        cal.add(Calendar.HOUR,  -24 * daysBefore);
+        cal.add(Calendar.HOUR, 24 * offset);
+        cal.add(Calendar.HOUR, -24 * daysBefore);
         //cal.add(Calendar.MONTH, 2);
         return cal.getTime();
         //int month = cal.get(Calendar.MONTH);
     }
 
-    public void  Scrapper(Date date) throws IOException {
+    public void Scrapper(Date date) throws IOException {
 
         AsyncHttpClientConfig config = new DefaultAsyncHttpClientConfig.Builder()
                 .setMaxRequestRetry(0)
@@ -100,8 +97,7 @@ public class Scrapper {
         ActorMaterializer materializer = ActorMaterializer.create(settings, system, name);
 
         WSClient ws = new AhcWSClient(config, materializer);
-        try
-        {
+        try {
             JsonNode data = null;
             JsonNode games = null;
             JsonNode game = null;
@@ -111,8 +107,8 @@ public class Scrapper {
 
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            System.out.println("http://gd2.mlb.com/components/game/mlb/year_"+ cal.get(Calendar.YEAR) + "/month_" + (cal.get(Calendar.MONTH+1) < 10? "0" + (cal.get(Calendar.MONTH)+1): cal.get(Calendar.MONTH)+1) + "/day_" + (cal.get(Calendar.DAY_OF_MONTH) < 10? "0" + cal.get(Calendar.DAY_OF_MONTH): cal.get(Calendar.DAY_OF_MONTH)) + "/master_scoreboard.json");
-            CompletionStage<JsonNode> jsonPromise2 = ws.url("http://gd2.mlb.com/components/game/mlb/year_"+ cal.get(Calendar.YEAR) + "/month_" + ((cal.get(Calendar.MONTH)+1) < 10? "0" + (cal.get(Calendar.MONTH)+1): cal.get(Calendar.MONTH)+1) + "/day_" + (cal.get(Calendar.DAY_OF_MONTH) < 10? "0" + cal.get(Calendar.DAY_OF_MONTH): cal.get(Calendar.DAY_OF_MONTH)) + "/master_scoreboard.json").get()
+            System.out.println("http://gd2.mlb.com/components/game/mlb/year_" + cal.get(Calendar.YEAR) + "/month_" + (cal.get(Calendar.MONTH + 1) < 10 ? "0" + (cal.get(Calendar.MONTH) + 1) : cal.get(Calendar.MONTH) + 1) + "/day_" + (cal.get(Calendar.DAY_OF_MONTH) < 10 ? "0" + cal.get(Calendar.DAY_OF_MONTH) : cal.get(Calendar.DAY_OF_MONTH)) + "/master_scoreboard.json");
+            CompletionStage<JsonNode> jsonPromise2 = ws.url("http://gd2.mlb.com/components/game/mlb/year_" + cal.get(Calendar.YEAR) + "/month_" + ((cal.get(Calendar.MONTH) + 1) < 10 ? "0" + (cal.get(Calendar.MONTH) + 1) : cal.get(Calendar.MONTH) + 1) + "/day_" + (cal.get(Calendar.DAY_OF_MONTH) < 10 ? "0" + cal.get(Calendar.DAY_OF_MONTH) : cal.get(Calendar.DAY_OF_MONTH)) + "/master_scoreboard.json").get()
                     .thenApply(WSResponse::asJson);
 
             //JsonNode p = jsonPromise2.toCompletableFuture().get(1000, TimeUnit.DAYS);
@@ -122,69 +118,74 @@ public class Scrapper {
             //JsonNode p = e.get();
             data = p.get("data");
             games = data.get("games");
-            game =  games.get("game");
+            game = games.get("game");
             JsonNode obj;
             JsonNode lineScore;
             JsonNode Innings;
             JsonNode Inn;
-            if(game == null) { System.out.println("Dia " + cal.getTime() + " No tiene partidos"); ws.close();             system.terminate();
-;                return; }
-            for(int x=0 ; x< game.size();x++ ){
+            if (game == null) {
+                System.out.println("Dia " + cal.getTime() + " No tiene partidos");
+                ws.close();
+                system.terminate();
+                ;
+                return;
+            }
+            for (int x = 0; x < game.size(); x++) {
                 //Game current_game = new Game();
 
                 if (game.isArray())
-                    obj  = game.get(x);
+                    obj = game.get(x);
                 else {
-                    obj  = game;
-                    x    = 999999;
+                    obj = game;
+                    x = 999999;
                 }
 
 
                 //Verificamos que el partido aun no exista
                 //if(GameHandler.CheckExist(obj.get("id").asText())) continue;
-                Game current_game =  GameHandler.CheckAndGet(obj.get("id").asText());
+                Game current_game = GameHandler.CheckAndGet(obj.get("id").asText());
                 current_game.setIdentifier(obj.get("id").asText());
                 // Obterner y/o obtener Liga
                 //current_game.setLeague(LeagueHandler.CheckAndInsert(obj.get("league").asText())) ;
-                current_game.setLeague(LeagueHandler.CheckAndInsert("MLB")) ;
+                current_game.setLeague(LeagueHandler.CheckAndInsert("MLB"));
 
                 String[] laux = obj.get("league").asText().split("");
 
                 /// Obterner y/o obtener el Estadio el Venue
-                current_game.setVenue(VenueHandler.CheckAndInsert(obj.get("venue_id").asLong(), obj.get("venue").asText())) ;
+                current_game.setVenue(VenueHandler.CheckAndInsert(obj.get("venue_id").asLong(), obj.get("venue").asText()));
 
                 /// Obterner y/o obtener el Equipo de casa
-                current_game.setHomeTeam(TeamHandler.CheckAndInsert(obj.get("home_team_id").asLong(), obj.get("home_team_name").asText(), obj.get("home_code").asText(), obj.get("home_team_city").asText(),LeagueHandler.CheckAndInsert(laux[1] + obj.get("home_division").asText())));
+                current_game.setHomeTeam(TeamHandler.CheckAndInsert(obj.get("home_team_id").asLong(), obj.get("home_team_name").asText(), obj.get("home_code").asText(), obj.get("home_team_city").asText(), LeagueHandler.CheckAndInsert(laux[1] + obj.get("home_division").asText())));
 
                 /// Obterner y/o obtener el Equipo visitante
                 current_game.setAwayTeam(TeamHandler.CheckAndInsert(obj.get("away_team_id").asLong(), obj.get("away_team_name").asText(), obj.get("away_code").asText(), obj.get("away_team_city").asText(), LeagueHandler.CheckAndInsert(laux[0] + obj.get("away_division").asText())));
 
-                current_game.setStatus(StatusHandler.CheckAndInsert(obj.get("status").get("status").asText())); ;
-
+                current_game.setStatus(StatusHandler.CheckAndInsert(obj.get("status").get("status").asText()));
+                ;
 
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm");
                 Date convertedCurrentDate = sdf.parse(obj.get("time_date").asText());
 
 
-
-
                 Calendar cal2 = Calendar.getInstance(); // creates calendar
 
 
-
                 cal2.setTime(convertedCurrentDate); // sets calendar time/date
-                cal2.add(Calendar.HOUR_OF_DAY, (obj.get("ampm").asText().equals("PM")?12:0) ); // pone doce horas adicionales si es pm
+                cal2.add(Calendar.HOUR_OF_DAY, (obj.get("ampm").asText().equals("PM") ? 12 : 0)); // pone doce horas adicionales si es pm
 
                 //esto cuadra las horas para ser exacto and stuff
-                cal2.add(Calendar.HOUR_OF_DAY, Config.getInt("hour_diff")); // adds one hour
-                cal2.add(Calendar.MINUTE, Config.getInt("minute_diff")); // adds one hour
+                cal2 = calcRightDate(cal2, obj.get("time_date").asText());
+//                cal2.add(Calendar.HOUR_OF_DAY, calcRightDate()); // adds one hour
+
+//                cal2.add(Calendar.HOUR_OF_DAY, Config.getInt("hour_diff")); // adds one hour
+//                cal2.add(Calendar.MINUTE, Config.getInt("minute_diff")); // adds one hour
 
 
                 current_game.setDate(cal2.getTime());
                 //if(current_game.getStatus().getIdStatus() > 1  && (current_game.getStatus().getIdStatus() < 4)) {
                 try {
-                    if(obj.hasNonNull("linescore")) {
+                    if (obj.hasNonNull("linescore")) {
                         lineScore = obj.get("linescore");
 
                         current_game.setHr(new LineScoreHandler(lineScore.get("hr")));
@@ -194,19 +195,18 @@ public class Scrapper {
                         current_game.setH(new LineScoreHandler(lineScore.get("h")));
                     }
                     //}
-                }catch(Exception e)
-                {
+                } catch (Exception e) {
                     StringWriter sw = new StringWriter();
                     e.printStackTrace(new PrintWriter(sw));
                     //String exceptionAsString = sw.toString();
-                    Logger.info("Error Realizando linescore "  + sw.toString());
+                    Logger.info("Error Realizando linescore " + sw.toString());
 
 //                    Mailer.SendError("Error Realizando linescore",e.getCause().getMessage());
                     Logger.info("Error Realizando linescore " + e.getCause().getMessage());
                     e.printStackTrace();
 
                 }
-                if(GameHandler.CheckExist(obj.get("id").asText()))
+                if (GameHandler.CheckExist(obj.get("id").asText()))
                     current_game.update();
                 else
                     current_game.save();
@@ -234,15 +234,11 @@ public class Scrapper {
                 */
 
 
-
-
-                    //chequeamos los eventow de este partido en particular
-                    //evt.Scrapper(current_game);
+                //chequeamos los eventow de este partido en particular
+                //evt.Scrapper(current_game);
 
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw));
             //String exceptionAsString = sw.toString();
@@ -257,5 +253,33 @@ public class Scrapper {
         system.terminate();
 
         //ws.close();
+    }
+
+
+    public Calendar calcRightDate(Calendar date, String timezone) {
+        int total = -4;
+        switch (timezone) {
+            case "PT":
+                total = -7;
+                break;
+            case "MT":
+                total = -6;
+                break;
+            case "CT":
+                total = -5;
+                break;
+            case "ET":
+                total = -4;
+                break;
+        }
+
+        int save = Config.getInt("saving_hour");
+        date.add(Calendar.HOUR, total + save);
+        return date;
+
+//        PT	Pacific Time	UTC -8:00 / -7:00	lun, 11:40:48
+//        MT	Mountain Time	UTC -7:00 / -6:00	lun, 12:40:48
+//        CT	Central Time	UTC -6:00 / -5:00	lun, 13:40:48
+//        ET	Eastern Time	UTC -5:00 / -4:00
     }
 }
