@@ -685,28 +685,36 @@ public class MatchesController extends HecticusController {
                     teams = Team.finder.where().in("idTeams", favorites).findList();
                 }
                 List<Competition> competitionsByApp = null;
+
                 if (teams != null && !teams.isEmpty()) {
                     competitionsByApp = Competition.getActiveCompetitionsByAppAndTeams(app, teams);
                     teams.clear();
                 } else {
                     competitionsByApp = app.getCompetitions();
                 }
+
                 Collections.sort(competitionsByApp, new CompetitionsSortComparator());
                 ArrayList competitions = null;
+
                 if (ids) {
                     competitions = new ArrayList<Long>(competitionsByApp.size());
                 } else {
                     competitions = new ArrayList<ObjectNode>(competitionsByApp.size());
                 }
+
                 for (Competition competition : competitionsByApp) {
-                    try{
-                    ObjectNode tmp = competition.toJsonNoPhases(requestLanguage, app.getLanguage(), closestMatch, timeZone);
-                    competitions.add(ids ? competition.getIdCompetitions() : tmp);}
-                    catch(NullPointerException e) {        }
+                    try {
+                        ObjectNode tmp = competition.toJsonNoPhases(requestLanguage, app.getLanguage(), closestMatch, timeZone);
+                        competitions.add(ids ? competition.getIdCompetitions() : tmp);
+                    } catch(NullPointerException e) {
+                        Utils.printToLog(MatchesController.class, "PALENGEXXX", "Error PALENGE PALENGE", true, e, "support-level-1", Config.LOGGER_ERROR);
+                    }
                 }
+
                 if(!ids && closestMatch){
                     Collections.sort(competitions, new CompetitionsNextMatch());
                 }
+
                 response = hecticusResponse(0, "ok", ids ? "ids" : "competitions", competitions);
                 competitions.clear();
                 return ok(response);
