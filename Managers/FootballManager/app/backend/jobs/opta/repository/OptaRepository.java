@@ -61,7 +61,7 @@ public class OptaRepository {
             sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
             cal.add(Calendar.DAY_OF_MONTH, 40); // -5
             String start = sdf.format(cal.getTime());
-            cal.add(Calendar.DAY_OF_MONTH, 58);
+            cal.add(Calendar.DAY_OF_MONTH, 18);
             String end = sdf.format(cal.getTime());
 
             String route = generateRoute("match");
