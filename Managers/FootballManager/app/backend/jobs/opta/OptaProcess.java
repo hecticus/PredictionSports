@@ -49,7 +49,7 @@ public class OptaProcess extends ProcessAbstract {
                     competitionType.validate(language);
                     ProcessCompetitions(competitionWebEntity, competitionType);
                 } catch (Exception e) {
-                    Utils.printToLog(Utils.class, "", "Error en OPTA PALENGE", true, e, "support-level-1", Config.LOGGER_ERROR);
+                    Utils.printToLog(Utils.class, "", "Error en OPTA PALENGE" + e.getMessage() + e.getStackTrace(), true, e, "support-level-1", Config.LOGGER_ERROR);
                 }
             }
         }
