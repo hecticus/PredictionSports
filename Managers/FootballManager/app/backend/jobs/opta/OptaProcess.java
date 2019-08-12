@@ -157,7 +157,7 @@ public class OptaProcess extends ProcessAbstract {
         VenueWebEntity venueWebEntity = matchWebEntity.getMatchInfo().getVenue();
         Countries country = GetCountry(matchWebEntity.getMatchInfo().getCompetition().getCountry().getName());
 
-        if (matchWebEntity != null) {
+        if (matchWebEntity != null && venueWebEntity) {
 
             long hash = GenerateHash(venueWebEntity.getId());
             gameVenue = new Venue(hash, venueWebEntity.getLongName(), venueWebEntity.getLongName(), country);
