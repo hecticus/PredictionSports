@@ -24,7 +24,7 @@ public class RenderLoginController extends Controller {
 
     public Result GetLogin() throws IOException {
         Map<String, String[]> token = request().queryString();
-        RenderLogin login = new RenderLogin(token.get("msisdn")[0]);
+        RenderLogin login = new RenderLogin(token.get("msisdn")[0], token.get("business")[0]);
         login.insert();
         return ok(login.toString());
     }

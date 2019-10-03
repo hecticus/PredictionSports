@@ -34,6 +34,7 @@ create table render_login (
   id                            bigint auto_increment not null,
   fecha                         datetime(6),
   msisdn                        varchar(255),
+  club                          varchar(255),
   constraint pk_render_login primary key (id)
 );
 

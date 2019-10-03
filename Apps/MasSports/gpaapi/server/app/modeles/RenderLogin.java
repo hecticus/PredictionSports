@@ -15,6 +15,8 @@ public class RenderLogin extends Model {
     private Date fecha;
     @Column()
     private String msisdn;
+    @Column()
+    private String club;
 
     public RenderLogin() {
     }
@@ -25,7 +27,8 @@ public class RenderLogin extends Model {
         this.msisdn = msisdn;
     }
 
-    public RenderLogin(String msisdn) {
+    public RenderLogin(String msisdn, String club) {
+        this.club = club;
         this.fecha =  new Date();
         this.msisdn = msisdn;
     }
@@ -54,12 +57,21 @@ public class RenderLogin extends Model {
         this.msisdn = msisdn;
     }
 
+    public String getClub() {
+        return club;
+    }
+
+    public void setClub(String club) {
+        this.club = club;
+    }
+
     @Override
     public String toString() {
         return "RenderLogin{" +
                 "id=" + id +
-                ", fecha=" + fecha.toString() +
+                ", fecha=" + fecha +
                 ", msisdn='" + msisdn + '\'' +
+                ", club='" + club + '\'' +
                 '}';
     }
 }
