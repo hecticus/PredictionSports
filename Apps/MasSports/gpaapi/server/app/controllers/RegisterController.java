@@ -4,7 +4,6 @@ import akka.actor.ActorSystem;
 import akka.stream.ActorMaterializer;
 import akka.stream.ActorMaterializerSettings;
 import com.fasterxml.jackson.databind.JsonNode;
-//import com.google.inject.Inject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import modeles.Clients;
 import modeles.Config;
@@ -12,32 +11,25 @@ import modeles.Services;
 import modeles.log;
 import org.asynchttpclient.AsyncHttpClientConfig;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
-//import scala.util.parsing.json.JSONArray;
-//import scala.util.parsing.json.JSONObject;
-
-import java.io.IOException;
-
-import play.libs.ws.ahc.AhcWSClient;
-import play.libs.ws.*;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.CompletionStage;
-
-//import play.api.libs.ws.WS;
-//import play.api.libs.ws.WSClient;
 import play.libs.Json;
+import play.libs.ws.WSClient;
+import play.libs.ws.WSResponse;
+import play.libs.ws.ahc.AhcWSClient;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import utils.Response;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.concurrent.CompletionStage;
+
 /**
  * Created by palenge on 10/3/16.
  */
-public class Register extends Controller {
+public class RegisterController extends Controller {
 
 
     public Result CheckHeader() throws IOException {
@@ -69,8 +61,6 @@ public class Register extends Controller {
 
     public Result GetPin() throws IOException {
         JsonNode json = request().body().asJson();
-
-
 
         Services ser =  new Services();
         ser = ser.getServiceByName(json.get("product").asText());

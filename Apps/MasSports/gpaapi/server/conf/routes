@@ -12,11 +12,15 @@ GET     /externalconfirm             controllers.WapSite.confirmExternal
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                controllers.Assets.at(path="/public", file)
 
-POST    /client/getPin               controllers.Register.GetPin()
-POST    /client/getpin               controllers.Register.GetPin()
-POST    /client/confirm              controllers.Register.confirmPin()
-GET     /header                      controllers.Register.CheckHeader()
-GET     /pal/config                  controllers.Register.Config
-GET     /pal/test                    controllers.Register.Test
+POST    /client/getPin               controllers.RegisterController.GetPin()
+POST    /client/getpin               controllers.RegisterController.GetPin()
+POST    /client/confirm              controllers.RegisterController.confirmPin()
+GET     /header                      controllers.RegisterController.CheckHeader()
+GET     /pal/config                  controllers.RegisterController.Config
+GET     /pal/test                    controllers.RegisterController.Test
+
+
+GET     /promotion                   controllers.PromocionesController.CheckPromotion
+GET     /login-render                controllers.RenderLoginController.GetLogin
 
 #GET     /user/findByEmail/:email    controllers.Users.findByEmail(email: String)

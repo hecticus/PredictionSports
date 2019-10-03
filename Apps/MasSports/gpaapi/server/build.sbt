@@ -17,6 +17,7 @@ libraryDependencies ++= Seq(
   "mysql" % "mysql-connector-java" % "5.1.47",
   "org.modelmapper" % "modelmapper" % "0.7.7",
   "com.typesafe.play" % "play-mailer_2.11" % "5.0.0",
+  "com.google.code.gson" % "gson" % "2.2.4",
   filters
 )
 
