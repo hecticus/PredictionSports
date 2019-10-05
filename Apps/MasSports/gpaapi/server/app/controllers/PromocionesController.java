@@ -22,11 +22,15 @@ public class PromocionesController extends Controller {
     }
 
     public Result CheckPromotion() throws IOException {
-        Map<String, String[]> token = request().queryString();
-        Alta alta = new Alta(token.get("clickid")[0], token.get("pid")[0], token.get("msisdn")[0]);
-        alta.insert();
-        krakenServicio.CrearAlta(alta.getMsisdn(), "9090", "SILVERWEB");
-        silverServicio.CrearAlta(alta.getClickid(), alta.getPid());
-        return ok(alta.toString());
+        try {
+            Map<String, String[]> token = request().queryString();
+            Alta alta = new Alta(token.get("clickid")[0], token.get("pid")[0], token.get("msisdn")[0]);
+            alta.insert();
+            krakenServicio.CrearAlta(alta.getMsisdn(), "9090", "SILVERWEB");
+            silverServicio.CrearAlta(alta.getClickid(), alta.getPid());
+            return ok("{\"status\": 1}");
+        } catch (Exception e) {
+            return ok("{\"status\": 0}");
+        }
     }
 }
