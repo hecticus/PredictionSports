@@ -23,4 +23,6 @@ GET     /pal/test                    controllers.RegisterController.Test
 GET     /promotion                   controllers.PromocionesController.CheckPromotion
 GET     /login-render                controllers.RenderLoginController.GetLogin
 
+GET     /manhattan/confirmurl        controllers.ManhattanController.CheckPromotion
+
 #GET     /user/findByEmail/:email    controllers.Users.findByEmail(email: String)

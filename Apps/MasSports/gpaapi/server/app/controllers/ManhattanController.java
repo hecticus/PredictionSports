@@ -4,30 +4,32 @@ import modeles.Alta;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.kraken_servicio.KrakenServicio;
+import services.silver_servicio.ManhattanServicio;
 import services.silver_servicio.SilverServicio;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Map;
 
-public class PromocionesController extends Controller {
+public class ManhattanController extends Controller {
 
     private KrakenServicio krakenServicio;
-    private SilverServicio silverServicio;
+    private ManhattanServicio manhattanServicio;
 
     @Inject
-    public PromocionesController(KrakenServicio krakenServicio, SilverServicio silverServicio) {
+    public ManhattanController(KrakenServicio krakenServicio, ManhattanServicio manhattanServicio) {
         this.krakenServicio = krakenServicio;
-        this.silverServicio = silverServicio;
+        this.manhattanServicio = manhattanServicio;
     }
 
     public Result CheckPromotion() throws IOException {
         try {
             Map<String, String[]> token = request().queryString();
-            Alta alta = new Alta("PROMO", token.get("clickid")[0], token.get("pid")[0], token.get("msisdn")[0]);
+            Alta alta = new Alta("MANHATTAN", token.get("sub_id")[0], token.get("status")[0], token.get("msisdn")[0]);
+            // String modo, String clickid, String pid, String msisdn
             alta.insert();
-            krakenServicio.CrearAlta(alta.getMsisdn(), "9090", "SILVERWEB");
-            silverServicio.CrearAlta(alta.getClickid(), alta.getPid());
+            krakenServicio.CrearAlta(alta.getMsisdn(), "9090", "MANWEB");
+            manhattanServicio.CrearAlta(alta.getClickid(), alta.getPid(), alta.getMsisdn());
             return ok("{\"status\": 1}");
         } catch (Exception e) {
             return ok("{\"status\": 0}");

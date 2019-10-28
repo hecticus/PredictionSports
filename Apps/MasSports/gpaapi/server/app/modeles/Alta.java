@@ -11,6 +11,8 @@ public class Alta extends Model {
     @Id
     private Long id;
     @Column()
+    private String modo;
+    @Column()
     private String clickid;
     @Column()
     private String pid;
@@ -20,7 +22,8 @@ public class Alta extends Model {
     public Alta() {
     }
 
-    public Alta(String clickid, String pid, String msisdn) {
+    public Alta(String modo, String clickid, String pid, String msisdn) {
+        this.modo = modo;
         this.clickid = clickid;
         this.pid = pid;
         this.msisdn = msisdn;
@@ -50,13 +53,22 @@ public class Alta extends Model {
         this.msisdn = msisdn;
     }
 
+    public String getModo() {
+        return modo;
+    }
+
+    public void setModo(String modo) {
+        this.modo = modo;
+    }
+
     @Override
     public String toString() {
         return "Alta{" +
-            "id=" + id +
-            ", clickid='" + clickid + '\'' +
-            ", pid='" + pid + '\'' +
-            ", msisdn='" + msisdn + '\'' +
-            '}';
+                "id=" + id +
+                ", modo='" + modo + '\'' +
+                ", clickid='" + clickid + '\'' +
+                ", pid='" + pid + '\'' +
+                ", msisdn='" + msisdn + '\'' +
+                '}';
     }
 }
