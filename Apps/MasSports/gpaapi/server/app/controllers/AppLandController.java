@@ -1,0 +1,73 @@
+package controllers;
+
+import com.google.gson.Gson;
+import modeles.ClienteRender;
+import services.client_externo_servicio.ClienteExternoServicio;
+import services.dto.ClienteExternoWebEntity;
+import play.mvc.Controller;
+import play.mvc.Result;
+import services.appland.AppLandServicio;
+import services.dto.GetStatusRespuestaDto;
+import services.kraken_servicio.KrakenServicio;
+import views.html.extapi;
+import views.html.recover_password;
+
+import javax.inject.Inject;
+import java.io.IOException;
+import java.util.Map;
+
+public class AppLandController extends Controller {
+
+    private KrakenServicio krakenServicio;
+    private AppLandServicio applandServicio;
+    private ClienteExternoServicio clienteExternoServicio;
+
+    @Inject
+    public AppLandController(KrakenServicio krakenServicio, AppLandServicio applandServicio, ClienteExternoServicio clienteExternoServicio) {
+        this.krakenServicio = krakenServicio;
+        this.applandServicio = applandServicio;
+        this.clienteExternoServicio = clienteExternoServicio;
+    }
+
+    public Result Login() {
+        return ok(extapi.render(false));
+    }
+
+    public Result LoginPost() throws IOException {
+        Map<String, String[]> aux = request().body().asFormUrlEncoded();
+        String msisdn = aux.get("msisdn")[0];
+        String contrasena = aux.get("contrasena")[0];
+
+        ClienteRender clienteRender = clienteExternoServicio.obtenerClienteRenderSincronizadoConKraken(msisdn);
+        if(clienteRender != null) {
+            if(clienteRender.password.equals(contrasena)) {
+                String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteRender.msisdn);
+                return redirect(rutaRedirect);
+            }
+        }
+        return ok(extapi.render(true));
+    }
+
+    public Result GetStatus(String subscripcionId, String userId) throws Exception {
+        GetStatusRespuestaDto statusRespuesta = this.applandServicio.generarRespuestaStatus(userId);
+        Gson gson = new Gson();
+        String tokenParsed = gson.toJson(statusRespuesta);
+        return ok(tokenParsed);
+    }
+
+    public Result RecoverPassword() {
+        return ok(recover_password.render());
+    }
+
+    public Result checkUser() throws IOException {
+        try {
+            Map<String, String[]> token = request().queryString();
+            ClienteExternoWebEntity clienteExterno = krakenServicio.obtenerUsuario("4142431600","10","9","6");
+            return ok("{\"status\": 1}");
+        } catch (Exception e) {
+            return ok("{\"status\": 0}");
+        }
+    }
+}
+
+

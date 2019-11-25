@@ -1,0 +1,33 @@
+@(myError: Boolean)
+<head>
+    <title>login</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/extapi.css")">
+</head>
+
+        <!------ Include the above in your HEAD tag ---------->
+
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+                <!-- Login Form -->
+            <form action="/extapi/login" method="post" id="wepa">
+                <p class="titulo">Indique su numero de telefono y cotrasena para disfrutar de la plataforma</p>
+                @if(myError){
+                    <p style="color:red">Datos erroneos intente nuevamente</p>
+                }
+                <input type="text" id="msisdn" class="fadeIn second" name="msisdn" placeholder="Numero Telefono">
+                <input type="text" id="password" class="fadeIn third" name="contrasena" placeholder="contraseña">
+                <input type="submit" class="fadeIn fourth" value="acceder">
+            </form>
+
+                <!-- Remind Passowrd -->
+            <div id="formFooter">
+                <a class="underlineHover" href="/extapi/recover-password">Recuperar contraseña</a>
+            </div>
+
+        </div>
+    </div>
+

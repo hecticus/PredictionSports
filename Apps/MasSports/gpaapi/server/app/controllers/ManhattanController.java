@@ -5,7 +5,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import services.kraken_servicio.KrakenServicio;
 import services.silver_servicio.ManhattanServicio;
-import services.silver_servicio.SilverServicio;
 
 import javax.inject.Inject;
 import java.io.IOException;

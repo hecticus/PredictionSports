@@ -1,7 +1,5 @@
 package controllers;
 
-import com.google.gson.Gson;
-import modeles.Alta;
 import modeles.RenderLogin;
 import play.mvc.Controller;
 import play.mvc.Result;

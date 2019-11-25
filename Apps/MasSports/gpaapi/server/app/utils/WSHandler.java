@@ -70,7 +70,7 @@ public class WSHandler {
                 .thenApply(WSResponse::getBody);
         String jsonr = "";
         try {
-            jsonr =jsonPromise2.toCompletableFuture().get();
+            jsonr = jsonPromise2.toCompletableFuture().get();
         } catch (InterruptedException e) {
             logger.error("interruptedException llamado: " + e.getMessage());
 
@@ -100,6 +100,27 @@ public class WSHandler {
     }
 
     public JsonNode MakePostJson(String url, ObjectNode objectNode) throws IOException {
+        WSClient ws = getWS();
+        CompletionStage<JsonNode> jsonPromise2 = ws.url(url).post(objectNode)
+                .thenApply(WSResponse::asJson);
+        JsonNode jsonr = Json.newObject();
+        try {
+            jsonr =jsonPromise2.toCompletableFuture().get();
+        } catch (InterruptedException e) {
+            logger.error("interruptedException llamado: " + e.getMessage());
+
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            logger.error("ExecutionException llamado: " + e.getMessage());
+
+            e.printStackTrace();
+        }finally {
+            ws.close();
+        }
+        return jsonr;
+    }
+
+    public JsonNode MakePostJson(String url, String objectNode) throws IOException {
         WSClient ws = getWS();
         CompletionStage<JsonNode> jsonPromise2 = ws.url(url).post(objectNode)
                 .thenApply(WSResponse::asJson);

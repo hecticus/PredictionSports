@@ -5,6 +5,7 @@
 
 create table alta (
   id                            bigint auto_increment not null,
+  modo                          varchar(255),
   clickid                       varchar(255),
   pid                           varchar(255),
   msisdn                        varchar(255),
