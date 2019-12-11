@@ -6,6 +6,8 @@ import play.mvc.Result;
 import services.kraken_servicio.KrakenServicio;
 import services.silver_servicio.ManhattanServicio;
 import services.silver_servicio.SilverServicio;
+import views.html.okmanhattan;
+import views.html.okmanhattan_Scope0;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -30,7 +32,8 @@ public class ManhattanController extends Controller {
             alta.insert();
             krakenServicio.CrearAlta(alta.getMsisdn(), "9090", "MANWEB");
             manhattanServicio.CrearAlta(alta.getClickid(), alta.getPid(), alta.getMsisdn());
-            return ok("{\"status\": 1}");
+            return ok(okmanhattan.render());
+            // return ok("{\"status\": 1}");
         } catch (Exception e) {
             return ok("{\"status\": 0}");
         }
