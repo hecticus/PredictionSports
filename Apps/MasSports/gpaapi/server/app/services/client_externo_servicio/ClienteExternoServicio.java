@@ -1,7 +1,7 @@
 package services.client_externo_servicio;
 
 import com.avaje.ebean.Model;
-import modeles.ClienteRender;
+import modeles.ClienteAppland;
 import services.dto.ClienteExternoWebEntity;
 import services.kraken_servicio.KrakenServicio;
 
@@ -13,7 +13,7 @@ import java.util.UUID;
 @Singleton
 public class ClienteExternoServicio {
 
-    private Model.Finder<Long, ClienteRender> finder = new Model.Finder<Long, ClienteRender>(ClienteRender.class);
+    private Model.Finder<Long, ClienteAppland> finder = new Model.Finder<Long, ClienteAppland>(ClienteAppland.class);
     private KrakenServicio krakenServicio;
     private ClientExternalWebEntityToClienteRender mapper;
 
@@ -23,7 +23,7 @@ public class ClienteExternoServicio {
         mapper = new ClientExternalWebEntityToClienteRender();
     }
 
-    public ClienteRender crearCliente(ClienteRender clienteExterno) {
+    public ClienteAppland crearCliente(ClienteAppland clienteExterno) {
         try {
             clienteExterno.insert();
             return clienteExterno;
@@ -33,7 +33,7 @@ public class ClienteExternoServicio {
         }
     }
 
-    public ClienteRender actualizarCliente(ClienteRender clienteExterno) {
+    public ClienteAppland actualizarCliente(ClienteAppland clienteExterno) {
         try {
             clienteExterno.update();
             return clienteExterno;
@@ -43,33 +43,39 @@ public class ClienteExternoServicio {
         }
     }
 
-    public ClienteRender obtenerClienteRenderPorMsisdn(String msisdn) {
+    public ClienteAppland obtenerClienteRenderPorMsisdn(String msisdn) {
         try {
-            ClienteRender clienteRender = finder.query().where().eq("msisdn", msisdn).findUnique();
-            return clienteRender;
+            ClienteAppland clienteAppland = finder.query().where().eq("msisdn", msisdn).findUnique();
+            return clienteAppland;
         } catch (Exception e) {
             System.out.println("Error insertando Cliente Externo");
             return null;
         }
     }
 
-    public ClienteRender obtenerClienteRenderSincronizadoConKraken(String msisdn) {
+    public ClienteAppland obtenerClienteRenderSincronizadoConKraken(String msisdn) {
         try {
             ClienteExternoWebEntity cliente = this.krakenServicio.obtenerUsuario(msisdn);
-            ClienteRender clienteRender = obtenerClienteRenderPorMsisdn(msisdn);
+            ClienteAppland clienteAppland = obtenerClienteRenderPorMsisdn(msisdn);
 
-            if (clienteRender == null) {
-                clienteRender = mapper.MapTo(cliente);
-                clienteRender.identifier = generarIdentificador();
-                clienteRender = crearCliente(clienteRender);
-            } else {
-                clienteRender.status = cliente.status;
-                clienteRender.password = cliente.password;
-                clienteRender = actualizarCliente(clienteRender);
+            if (cliente == null) {
+                throw new Exception();
             }
 
-            return clienteRender;
-        } catch (IOException e) {
+            cliente.msisdn = msisdn;
+
+            if (clienteAppland == null) {
+                clienteAppland = mapper.MapTo(cliente);
+                clienteAppland.identifier = generarIdentificador();
+                clienteAppland = crearCliente(clienteAppland);
+            } else {
+                clienteAppland.status = cliente.status;
+                clienteAppland.password = cliente.password;
+                clienteAppland = actualizarCliente(clienteAppland);
+            }
+
+            return clienteAppland;
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

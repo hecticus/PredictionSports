@@ -3,9 +3,11 @@ package modeles;
 import com.avaje.ebean.Model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
-public class ClienteRender extends Model {
+@Entity
+public class ClienteAppland extends Model {
     @Id
     public Long id;
 

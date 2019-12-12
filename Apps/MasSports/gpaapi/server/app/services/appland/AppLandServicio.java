@@ -8,11 +8,13 @@ import services.dto.PushStatusClientAppLand;
 import services.kraken_servicio.KrakenServicio;
 import services.utils.ManejadorDeContrasenas;
 import utils.WSHandler;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Base64;
@@ -38,11 +40,19 @@ public class AppLandServicio {
 
     public void comunicarStatus(String metodo, String subscripcionId, PushStatusClientAppLand payload){
         long timestamp = obtenerTimeStamp();
-        String parsedPayload = gson.toJson(payload);
-        String message = metodo + "\r\n" + subscriptionId + "\r\n" + timestamp + "\r\n" + parsedPayload;
+        //payload.nextRenewal = timestamp  + 86400;
+//        timestamp = 1574801566;
+//        payload.nextRenewal = 1574831566;
+        payload.numberOfProfiles = 4;
+        payload.numberOfConcurrentSessions = 4;
+        String parsedPayload = gson.toJson(payload).replace(":", ": ").replace(",", ", ");
+        // String parsedPayload = "{\"isEligible\": true, \"event\": \"SUBSCRIBE\", \"user\": \"c6f4d0fb-c2bd-4b6a-8393-b638b2620a14\", \"nextRenewal\": 1574831566, \"numberOfProfiles\": 4, \"numberOfConcurrentSessions\": 4}";
+
+        String message = metodo.toUpperCase() + "\r\n" + subscriptionId  + "\r\n" + timestamp + "\r\n" + parsedPayload;
+        System.out.println(message);
         ManejadorEncriptacion ec = new ManejadorEncriptacion();
-        String encripted = ec.encriptar(serviceSecret, message);
-        String url = "https://api.appland.se/api/subscription/events/" + subscriptionId + "?key=" + serviceKey + "&time=" + timestamp + "&signature=" + timestamp;
+        String str = ec.encriptar(serviceSecret, message);
+        String url = "https://api.appland.se/api/subscription/events/" + subscriptionId + "?key=" + serviceKey + "&time=" + timestamp + "&signature=" + str;
         try {
             WSHandler.instance().MakePostJson(url, parsedPayload);
         } catch (IOException e) {
@@ -55,9 +65,7 @@ public class AppLandServicio {
         String msisdn = this.manejadorDeEncriptacion.decrypt(usuarioEncriptado);
         ClienteExternoWebEntity clienteExterno = krakenServicio.obtenerUsuario(msisdn);
 
-        Date fechaUltimoCobro = new SimpleDateFormat("yyyymmdd", Locale.ENGLISH).parse(clienteExterno.last_billed);
-        Date manana = new Date(fechaUltimoCobro.getTime() + (1000 * 60 * 60 * 24));
-        long timeStamp = manana.getTime() / 1000L;
+        long timeStamp = getTimeStamp(clienteExterno);
         //long nestBill = clienteExterno.
         GetStatusRespuestaDto respuesta = new GetStatusRespuestaDto();
         respuesta.setUser(usuarioEncriptado);
@@ -68,14 +76,16 @@ public class AppLandServicio {
         return respuesta;
     }
 
-    public String obternerRutaDeRedirect(String usuario) {
-        try {
-            usuario = this.manejadorDeEncriptacion.encrypt(usuario);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private long getTimeStamp(ClienteExternoWebEntity clienteExterno) throws ParseException {
+        Date fechaUltimoCobro = new SimpleDateFormat("yyyymmdd", Locale.ENGLISH).parse(clienteExterno.last_billed);
+        Date manana = new Date(fechaUltimoCobro.getTime() + (1000 * 60 * 60 * 24));
+        return manana.getTime() / 1000L;
+    }
+
+    public String obternerRutaDeRedirect(String usuario, String rutaOpcional) {
+        String currentRuta = "https://api.appland.se/api/subscription/onsubscribe/";
         String token = this.crearTokenAppland(usuario);
-        return  "https://api.appland.se/api/subscription/onsubscribe/" + subscriptionId + "?token=" + token;
+        return  rutaOpcional == null? currentRuta: rutaOpcional  + subscriptionId + "?token=" + token;
     }
 
     private String crearTokenAppland(String usuario) {
@@ -109,8 +119,7 @@ public class AppLandServicio {
     private String crearFirma(String usuario, long timestamp) {
         String firma = usuario  + "\r\n" + timestamp;
         ManejadorEncriptacion manejador = new ManejadorEncriptacion();
-        String firmarEncriptada = manejador.encriptar(serviceSecret, firma);
-        String firmaBase64 = Base64.getEncoder().encodeToString(firmarEncriptada.getBytes(StandardCharsets.UTF_8));
+        String firmaBase64 = manejador.encriptar(serviceSecret, firma);
         return firmaBase64;
     }
 }

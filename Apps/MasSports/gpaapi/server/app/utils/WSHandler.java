@@ -120,13 +120,13 @@ public class WSHandler {
         return jsonr;
     }
 
-    public JsonNode MakePostJson(String url, String objectNode) throws IOException {
+    public String MakePostJson(String url, String objectNode) throws IOException {
         WSClient ws = getWS();
-        CompletionStage<JsonNode> jsonPromise2 = ws.url(url).post(objectNode)
-                .thenApply(WSResponse::asJson);
-        JsonNode jsonr = Json.newObject();
+        CompletionStage<String> jsonPromise2 = ws.url(url).setHeader("Content-Type", "application/json").post(objectNode)
+                .thenApply(WSResponse::getBody);
+        String jsonr = "";
         try {
-            jsonr =jsonPromise2.toCompletableFuture().get();
+            jsonr = jsonPromise2.toCompletableFuture().get();
         } catch (InterruptedException e) {
             logger.error("interruptedException llamado: " + e.getMessage());
 
@@ -138,6 +138,10 @@ public class WSHandler {
         }finally {
             ws.close();
         }
+        System.out.println(url);
+        System.out.println(objectNode);
+        System.out.println(jsonr);
+
         return jsonr;
     }
 }
