@@ -90,7 +90,7 @@ public class AppLandServicio {
     public String obternerRutaDeRedirect(String usuario, String rutaOpcional) {
         String currentRuta = "https://api.appland.se/api/subscription/onsubscribe/";
         String token = this.crearTokenAppland(usuario);
-        return  rutaOpcional == null? currentRuta: rutaOpcional  + subscriptionId + "?token=" + token;
+        return  (rutaOpcional == null? currentRuta: rutaOpcional)  + subscriptionId + "?token=" + token;
     }
 
     private String crearTokenAppland(String usuario) {
