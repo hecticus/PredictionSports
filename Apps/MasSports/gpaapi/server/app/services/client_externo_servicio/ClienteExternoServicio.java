@@ -53,6 +53,16 @@ public class ClienteExternoServicio {
         }
     }
 
+    public ClienteAppland obtenerClienteRenderPorIdentificador(String identificador) {
+        try {
+            ClienteAppland clienteAppland = finder.query().where().eq("identifier", identificador).findUnique();
+            return clienteAppland;
+        } catch (Exception e) {
+            System.out.println("Error insertando Cliente Externo");
+            return null;
+        }
+    }
+
     public ClienteAppland obtenerClienteRenderSincronizadoConKraken(String msisdn) {
         try {
             ClienteExternoWebEntity cliente = this.krakenServicio.obtenerUsuario(msisdn);

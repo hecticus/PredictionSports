@@ -24,6 +24,8 @@ GET     /promotion                   controllers.PromocionesController.CheckProm
 GET     /login-render                controllers.RenderLoginController.GetLogin
 
 GET     /manhattan/confirmurl        controllers.ManhattanController.CheckPromotion
+
+
 GET     /extapi/login                controllers.AppLandController.Login
 GET     /extapi/check-user           controllers.AppLandController.checkUser
 POST    /extapi/login                controllers.AppLandController.LoginPost

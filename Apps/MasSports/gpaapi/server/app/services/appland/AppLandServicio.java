@@ -1,6 +1,8 @@
 package services.appland;
 
 import com.google.gson.Gson;
+import modeles.ClienteAppland;
+import services.client_externo_servicio.ClienteExternoServicio;
 import services.dto.ClienteExternoWebEntity;
 import services.dto.ApplandTokenDto;
 import services.dto.GetStatusRespuestaDto;
@@ -30,12 +32,14 @@ public class AppLandServicio {
 
     private ManejadorDeContrasenas manejadorDeEncriptacion;
     private KrakenServicio krakenServicio;
+    private ClienteExternoServicio clienteExternoServicio;
     private Gson gson = new Gson();
 
     @Inject
-    public AppLandServicio(ManejadorDeContrasenas manejadorDeEncriptacion, KrakenServicio krakenServicio){
+    public AppLandServicio(ManejadorDeContrasenas manejadorDeEncriptacion, KrakenServicio krakenServicio, ClienteExternoServicio clienteExternoServicio){
         this.manejadorDeEncriptacion = manejadorDeEncriptacion;
         this.krakenServicio = krakenServicio;
+        this.clienteExternoServicio = clienteExternoServicio;
     }
 
     public void comunicarStatus(String metodo, String subscripcionId, PushStatusClientAppLand payload){
@@ -62,8 +66,9 @@ public class AppLandServicio {
     }
 
     public GetStatusRespuestaDto generarRespuestaStatus(String usuarioEncriptado) throws Exception {
-        String msisdn = this.manejadorDeEncriptacion.decrypt(usuarioEncriptado);
-        ClienteExternoWebEntity clienteExterno = krakenServicio.obtenerUsuario(msisdn);
+        ClienteAppland cliente = this.clienteExternoServicio.obtenerClienteRenderPorIdentificador(usuarioEncriptado);
+        if(cliente == null || cliente.status != 1) return null;
+        ClienteExternoWebEntity clienteExterno = krakenServicio.obtenerUsuario(cliente.msisdn);
 
         long timeStamp = getTimeStamp(clienteExterno);
         //long nestBill = clienteExterno.

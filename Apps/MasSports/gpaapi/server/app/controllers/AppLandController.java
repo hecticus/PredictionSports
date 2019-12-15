@@ -68,6 +68,7 @@ public class AppLandController extends Controller {
 
     public Result GetStatus(String subscripcionId, String userId) throws Exception {
         GetStatusRespuestaDto statusRespuesta = this.applandServicio.generarRespuestaStatus(userId);
+        if(statusRespuesta == null) return notFound();
         Gson gson = new Gson();
         String tokenParsed = gson.toJson(statusRespuesta);
         return ok(tokenParsed);
