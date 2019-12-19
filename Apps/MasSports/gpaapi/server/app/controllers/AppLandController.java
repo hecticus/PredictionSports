@@ -34,6 +34,14 @@ public class AppLandController extends Controller {
     }
 
     public Result Login() {
+        if(request().queryString().containsKey("callback")) {
+            response().setCookie(Http.Cookie.builder("callback",  request().getQueryString("callback") ).withMaxAge(15).build());
+        }
+
+        if(request().queryString().containsKey("ott")) {
+            response().setCookie(Http.Cookie.builder("ott",  request().getQueryString("ott") ).withMaxAge(15).build());
+        }
+
         return ok(extapi.render(false));
     }
 
@@ -46,13 +54,16 @@ public class AppLandController extends Controller {
         if(clienteAppland != null) {
             if(clienteAppland.password.equals(contrasena)) {
                 String rutaOpcional = null;
+                String extra = "";
 
-                if(request().queryString().containsKey("callback")) {
-                    rutaOpcional  = request().getQueryString("callback");
+                if(request().cookie("callback")!= null) {
+                    extra = request().cookie("ott") != null? "&ott=" + request().cookie("ott").value(): "";
+                    rutaOpcional  = request().cookie("callback").value() ;
                 }
 
-                String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteAppland.identifier, rutaOpcional);
 
+                String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteAppland.identifier, rutaOpcional);
+                rutaRedirect = rutaRedirect + extra;
                 PushStatusClientAppLand payload = new PushStatusClientAppLand();
                 payload.event =  "SUBSCRIBE";
                 payload.isEligible = true;
