@@ -1,5 +1,7 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import modeles.ClienteAppland;
 import play.mvc.Http;
@@ -71,7 +73,10 @@ public class AppLandController extends Controller {
         if(statusRespuesta == null) return notFound();
         Gson gson = new Gson();
         String tokenParsed = gson.toJson(statusRespuesta);
-        return ok(tokenParsed);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree(tokenParsed);
+        // return ok(tokenParsed).as("application/json");
+        return ok(jsonNode);
     }
 
     public Result createPush() {
