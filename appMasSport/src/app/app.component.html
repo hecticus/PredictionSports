@@ -1,0 +1,50 @@
+<ion-app>
+  <ion-menu side="start"
+          menuId="menuprincipal"
+          contentId="content">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Menú</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+          <ion-list-header >
+            <ion-label color="primary" class="menu-header">Predicciones</ion-label>
+          </ion-list-header>
+          <ion-menu-toggle *ngFor="let opt of predictions" >
+            <ion-item  [routerLink]="opt.url">
+              <ion-icon [name]="opt.icon" color="primary"></ion-icon>
+              <ion-label color="primary">{{opt.title}}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+        <ion-list>
+          <ion-list-header >
+            <ion-label color="primary" class="menu-header">Estadisticas</ion-label>
+          </ion-list-header>
+           <ion-menu-toggle *ngFor="let st of statistics" >
+            <ion-item [routerLink]="st.url">
+              <ion-icon color="primary" [name]="st.icon"></ion-icon>
+              <ion-label color="primary">{{st.title}}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+        <ion-list>
+          <ion-menu-toggle>
+            <ion-item routerLink="/configurations">
+              <ion-icon color="primary" name="settings"></ion-icon>
+              <ion-label color="primary" class="menu-header">Configuraciones</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item (click)="logOut()">
+              <ion-icon color="primary" name="close-circle-outline"></ion-icon>
+              <ion-label color="primary" class="menu-header">Cerrar Sesion</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="content" main></ion-router-outlet>
+</ion-app>

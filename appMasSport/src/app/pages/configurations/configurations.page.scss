@@ -1,0 +1,68 @@
+.center{
+    margin: 0 auto;
+    text-align: center;
+}
+.text-size-s{
+    font-size: 0.6em;
+    text-align: center;
+    margin-top: 10px;
+}
+.icon-xl {
+    font-size: 45px;
+}
+.icon-m {
+    font-size: 25px;
+}
+.toolbar-div {
+  margin: 16px;
+  width: 90%;
+  height: 60px;
+  background-color: #0377B4;
+}
+.title {
+  padding-top: 16px;
+  text-align: center;
+  color: #ffffff;
+ }
+.img-size-s{
+    width: 50px;
+    height: 50px;
+ }
+.div{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100%;
+   border: none;
+}
+.text-size-m{
+    font-size: 15px;
+    width: 100%;
+    float: right;
+    size: 0.3em;
+}
+.text-size-l{
+    font-size: 20px;
+    width: 100%;
+    float: right;
+    size: 0.3em;
+    color: #002878;
+}
+.arrow-back {
+  text-align: center;
+  float: left;
+  margin-left: 15px;
+}
+.remove {
+  float: right;
+  width: 20px;
+  height: 20px;
+}
+.team {
+  height: 50px;
+  width: 50px;
+}
+.div_team{
+  width: 250px;
+  text-align: left;
+}

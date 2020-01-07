@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button *ngIf="tab === 0" color="primary" menu="menuprincipal"></ion-menu-button>
+      <ion-icon *ngIf="tab !== 0" name="arrow-round-back" class="arrow-back" color="primary" size="large" (click)="prevPage()" ></ion-icon>
+    </ion-buttons>
+    <div class="center">
+      <img src="./assets/img/logo.png" height="30" />
+    </div>
+  </ion-toolbar>
+</ion-header>
+<ion-content  *ngIf="tab === 0">
+  <ion-list *ngFor="let item of dataUp,let i= index">
+    <ion-item (click)="viewInfo(i)">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" *ngIf="i === 0 ">
+            <div class="div">
+              <img width="400px" height="300px" *ngIf="item.enclosure !== undefined"
+                src="https:{{item.enclosure._attributes.url}}">
+              <img width="400px" height="300px" *ngIf="item.enclosure === undefined"
+                src="./assets/img/img-alternative.png">
+            </div>
+          </ion-col>
+          <ion-col size="12" *ngIf="i === 0 ">
+            <div class="div">
+              <ion-label>
+                <p class="text-size-m">{{item.title._cdata}}</p>
+                <h5 class="text-size-s"><ion-icon name="time"></ion-icon> {{' '}} {{item.pubDate._text}}</h5>
+                <h6 class="text-size-xs">Noticia de <a href="https://es.fifa.com/" class="link" rel=”nofollow” target="_parent"> {{infoUp}}</a></h6>
+              </ion-label>
+            </div>
+          </ion-col>
+          <ion-col size="12" *ngIf="i !== 0 ">
+            <div class="div">
+              <img class="img-size-m" width="100px" height="100px" *ngIf=" item.enclosure !== undefined"
+                src="https:{{item.enclosure._attributes.url}}">
+              <img class="img-size-m" width="100px" height="100px" *ngIf="item.enclosure === undefined"
+                src="./assets/img/img-alternative.png">
+                <ion-label>
+                <p class="text-size-m" maxlength="4">{{item.title._cdata}}</p>
+                <h5 class="text-size-s"><ion-icon name="time"></ion-icon> {{' '}}{{item.pubDate._text}}</h5>
+                <h6 class="text-size-xs" >Noticia de <a href="https://es.fifa.com/" class="link" rel=”nofollow” target="_parent"> {{infoUp}}</a></h6>
+              </ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-content  *ngIf="tab !== 0">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <div class="div">
+              <img width="400px" height="400px" *ngIf="test.enclosure !== undefined"
+                src="https:{{test.enclosure._attributes.url}}">
+              <img width="400px" height="400px" *ngIf="test.enclosure === undefined"
+                src="./assets/img/img-alternative.png">
+            </div>
+          </ion-col>
+          <ion-col size="12" >
+            <div class="div">
+              <ion-label>
+                <strong><p class="text-size-m">{{test.title._cdata}}</p></strong>
+                <h5 class="text-size-s"><ion-icon name="time"></ion-icon> {{' '}}{{test.pubDate._text}}</h5>
+                <h6 class="text-size-xs">Ver más en: <a href="{{test.link._text}}" class="link" rel=”nofollow” target="_parent"> FIFA page</a></h6>
+                <h6 class="text-size-xs">Noticia de <a href="https://es.fifa.com/" class="link" rel=”nofollow” target="_parent"> {{infoUp}}</a></h6>
+              </ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+</ion-content>

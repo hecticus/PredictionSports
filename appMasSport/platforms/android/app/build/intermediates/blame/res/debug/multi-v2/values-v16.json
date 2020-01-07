@@ -1,0 +1,38 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/brayan/appMasSport/platforms/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "/home/brayan/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/9cb54ddc7de39027e55b12add97ab2c0/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "121",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "289"
+                    }
+                },
+                {
+                    "source": "/home/brayan/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/78c60ea2eb0c3c547accce5a1ca0161c/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                }
+            ]
+        }
+    ]
+}

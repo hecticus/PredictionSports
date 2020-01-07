@@ -1,0 +1,7 @@
+{
+  "name": "MasSports",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

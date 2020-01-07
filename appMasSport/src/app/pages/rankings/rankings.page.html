@@ -1,0 +1,151 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary" menu="menuprincipal"></ion-menu-button>
+    </ion-buttons>
+    <div class="center">
+      <img src="assets/img/logo.png" height="30"/>
+    </div>
+  </ion-toolbar>
+</ion-header>
+ <ion-item color="new" *ngIf="tab === -1">
+      <ion-icon name="arrow-round-back" class="arrow-back" size="large" (click)="prevPage()" *ngIf="tab !== -1"></ion-icon>
+      <ion-label class="text-size-g">Actualizado al {{date}}</ion-label>
+      <ion-icon name="arrow-round-forward" class="arrow-next" size="large" (click)="nextPage()" *ngIf="count < countMax"></ion-icon>
+  </ion-item>
+<ion-content *ngIf="tab === -1">
+  <ion-item color="danger">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3">
+          <ion-label class="text-size-m">##</ion-label>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label class="text-size-m">Jugador</ion-label>
+        </ion-col>
+        <ion-col size="3">
+            <ion-label class="text-size-m">Puntos</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+   <ion-item >
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3">
+          <ion-label class="text-size-bold">{{index}}</ion-label>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label class="text-size-bold">{{nickname}}</ion-label>
+        </ion-col>
+        <ion-col size="3">
+            <ion-label class="text-size-bold">{{score}}</ion-label>
+        </ion-col>
+         <ion-col size="3">
+            <ion-label class="text-size-m">...</ion-label>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label class="text-size-m">...</ion-label>
+        </ion-col>
+        <ion-col size="3">
+          <ion-label class="text-size-m">...</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <ion-list  *ngFor="let item of ranking; let i = index">
+    <ion-item>
+      <ion-grid>
+          <ion-row>
+            <ion-col size="3">
+              <ion-label class="text-size-m">{{i+1}}</ion-label>
+            </ion-col>
+            <ion-col size="6">
+              <ion-label class="text-size-m">{{item.client}}</ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label class="text-size-m">{{item.score}}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-item color="new" *ngIf="tab !== -1">
+      <ion-icon name="arrow-round-back" class="arrow-back" size="large" (click)="prevPage()" *ngIf="tab !== -1 "></ion-icon>
+      <ion-label class="text-size-g">{{name_league}}{{' '}}{{date}}</ion-label>
+      <ion-icon name="arrow-round-forward" class="arrow-next" size="large" (click)="nextPage()" *ngIf="count < countMax"></ion-icon>
+  </ion-item>
+<ion-content *ngIf="tab !== -1">
+  <ion-item color="danger">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2">
+        </ion-col>  
+        <ion-col size="2">
+        </ion-col> 
+        <ion-col size="8">
+          <div class="center-text">
+            <ion-button  shape="round" size="small" [color]="myColor" class="btn-league" (click)="tournament()">Torneo</ion-button>
+            <ion-button shape="round" size="small" [color]="myColor2" class="btn-league" (click)="getPhase()">Jornada</ion-button>
+          </div>
+        </ion-col> 
+      </ion-row>
+      <ion-row>
+        <ion-col size="3">
+          <ion-label class="text-size-m">##</ion-label>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label class="text-size-m">Jugador</ion-label>
+        </ion-col>
+        <ion-col size="3">
+          <ion-label class="text-size-m">Puntos</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <ion-item  *ngIf="positionClient >= 10">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3">
+          <ion-label class="text-size-bold">{{positionClient + 1}}</ion-label>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label class="text-size-bold">{{nickname}}</ion-label>
+        </ion-col>
+        <ion-col size="3">
+          <ion-label class="text-size-bold">{{score}}</ion-label>
+        </ion-col>
+         <ion-col size="3">
+            <ion-label class="text-size-m">...</ion-label>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label class="text-size-m">...</ion-label>
+        </ion-col>
+        <ion-col size="3">
+          <ion-label class="text-size-m">...</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <ion-list  *ngFor="let item of matchs; let i = index">
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="3">
+            <ion-label class="text-size-m" *ngIf="item.id_client == clientId"><strong >{{i+1}}</strong></ion-label>
+            <ion-label class="text-size-m"  *ngIf="item.id_client != clientId">{{i+1}}</ion-label>
+          </ion-col>
+          <ion-col size="6">
+          <ion-label class="text-size-m" *ngIf="item.id_client == clientId"><strong >{{item.client}}</strong></ion-label>
+              <ion-label class="text-size-m" *ngIf="item.id_client != clientId">{{item.client}}</ion-label>
+          </ion-col>
+          <ion-col size="3">
+            <ion-label class="text-size-m" *ngIf="item.id_client == clientId"><strong >{{item.score}}</strong></ion-label>
+            <ion-label class="text-size-m" *ngIf="item.id_client != clientId">{{item.score}}</ion-label>
+          </ion-col>
+        </ion-row>
+        </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>

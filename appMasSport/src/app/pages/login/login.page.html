@@ -1,0 +1,37 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <div class="center">
+      <img src="assets/img/logo.png" height="30"/>
+    </div>
+  </ion-toolbar>
+</ion-header>
+<ion-content >
+    <div class="toolbar-div">
+    <ion-title class="title">¿Ya estás suscrito?</ion-title>
+  </div>
+  <ion-label position="stacked" class="title_label" color="danger-primary">Número de teléfono</ion-label>
+  <ion-item class="item">
+    <ion-label>+507 </ion-label>
+    <ion-input class="input_login" type="tel" placeholder="#12345678" [(ngModel)]="msisdn"></ion-input>
+  </ion-item>
+  <ion-label class="title_label" position="stacked" color="danger-primary">Contraseña</ion-label>
+  <ion-item class="item">
+    <ion-input placeholder="Ingrese el código recibido por SMS." type="password" [(ngModel)]="password"></ion-input>
+  </ion-item>
+  <div class="padding-left-right">
+    <div class="padding-top-m">
+      <ion-button shape="round" size="default" color="danger" expand="block" [disabled]="(msisdn !== undefined && password !== undefined) ? false : true" (click)="createOrUpdateClient()">
+      Iniciar sesion
+    </ion-button>
+    </div>
+    <div class="padding-top-xs">
+      <ion-button routerLink='/get-password' shape="round" size="default" color="danger" expand="block">Obtener Contraseña</ion-button>
+    </div>
+    <div class="padding-top-xs padding-botton-m">
+      <ion-button (click)="loginSessionInvited()" shape="round" size="default" color="danger" expand="block">Entrar como invitado</ion-button>
+    </div>
+    <div class="center">
+      <a class="text-size-s" href="http://www.masmovil.com.pa/">Términos y Condiciones</a>
+    </div>
+  </div>
+</ion-content>

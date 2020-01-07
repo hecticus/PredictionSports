@@ -1,0 +1,17 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <div class="center">
+      <img src="assets/img/logo.png" height="30"/>
+    </div>
+  </ion-toolbar>
+</ion-header>
+<ion-content color="medium">
+    <ion-slides pager="true">
+      <ion-slide *ngFor="let slide of slides">
+        <div class="slide-padding">
+          <img [src]="slide.img">
+        </div> 
+      </ion-slide>
+    </ion-slides>
+    <img class="tutorial "src="assets/img/tutorial/es/skip.png"  (click)="tabPredictions()" >
+</ion-content>

@@ -1,0 +1,314 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="tab === 0 ">
+      <ion-menu-button color="primary" menu="menuprincipal"></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="start" *ngIf="tab !== 0 ">
+      <ion-icon name="arrow-round-back" color="primary" class="arrow-back" size="large" (click)="mainPage()"></ion-icon>
+    </ion-buttons>
+    <div class="center">
+      <img src="assets/img/logo.png" height="30" />
+    </div>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="tab === 0">
+  <div class="background">
+    <ion-label class="white margin-top-m"></ion-label>
+    <div style="position:absolute; top: 95px; background: #ffffff; width: 100%; height:2px;"></div>
+    <ion-label class="white margin-top-m text-size-g">{{nickname}}</ion-label>
+    <div class="circle-red">
+      <div class="white margin-top-m">
+        <ion-label class="white margin-top-m text-size-m">{{points}}</ion-label>
+        <ion-label class="white margin-top-s text-size-s">{{date}}</ion-label>
+        <ion-label class="white margin-top-s text-size-s">{{hour}}</ion-label>
+      </div>
+    </div>
+  </div>
+  <ion-item color="danger">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-label class="text-size-m">Torneo</ion-label>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label class="text-size-m white-right">Próximo Juego</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <ion-list *ngFor="let data of competitionsFootball; let i= index">
+    <ion-item *ngIf="data.show === 1 && data.orderby !== 99"
+      (click)="openBetsMatch(data.id_competitions, data.sport_id, i)">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="2">
+            <img class="img-size-s" src="{{data.competiton_type.competition_logo}}.svg">
+          </ion-col>
+          <ion-col size="5">
+            <div class="div">
+              <ion-label class="text-size-s">{{data.competiton_type.name}}</ion-label>
+            </div>
+          </ion-col>
+          <ion-col size="5">
+            <div *ngIf="data.match !== null" class="div right div-width">
+              <span class="text-size-r right" [innerHTML]="dateMatchsLeagues(data.match.date)"></span>
+              <ion-icon name="arrow-dropright" color="primary"></ion-icon>
+            </div>
+            <div *ngIf="data.match === null" class="div right div-width">
+              <span class="text-size-r right">Temporada finalizada</span>
+              <ion-icon name="arrow-dropright" color="primary"></ion-icon>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-content *ngIf="tab !== 0">
+  <ion-item color="new">
+    <ion-icon name="arrow-round-back" class="arrow-back" size="large" (click)="prevPage()" *ngIf="index !== 0">
+    </ion-icon>
+    <ion-label class="text-size-g">{{league}} </ion-label>
+    <ion-icon name="arrow-round-forward" class="arrow-next" size="large" (click)="nextPage()"
+      *ngIf="index >= 0 && info !== undefined "></ion-icon>
+  </ion-item>
+  <ion-item color="danger">
+    <ion-label class="text-size-m">{{bets}} Predicciones / {{matchs}} Partidos</ion-label>
+  </ion-item>
+  <ion-list class="prediction" *ngFor="let item of fixtures">
+    <ion-item color="danger-primary">
+      <div class="center-text">
+        <span class="text-size-m" [innerHTML]="matchDate(item.date)"></span>
+      </div>
+    </ion-item>
+    <ion-list class="prediction-top" *ngFor="let data of item.matches; let i= index">
+      <ion-item class="item-grid" *ngIf="sport_id === 1" lines="full">
+        <ion-grid class="padding">
+          <ion-row>
+            <ion-col class="padding-col" size="4"
+              (click)="selectedPredictionHome(data.id_game_matches,i,data.status.id_status,data.date)">
+              <div class="center-text-selected" *ngIf="data_league !== 'Serie A 2019/2020'  && data.bet !== undefined"
+                [style.background-color]="data.bet.client_bet === 0 ? mycolorHome : ''">
+                <img class="img-size-s" src="{{data.home_team.team_logo}}">
+                <ion-label class="text-size-m-color">
+                  {{data.home_team.short_name}}
+                </ion-label>
+              </div>
+              <div class="center-text-selected" *ngIf="data_league !== 'Serie A 2019/2020' && data.bet === undefined">
+                <img class="img-size-s" src="{{data.home_team.team_logo}}">
+                <ion-label class="text-size-m-color">
+                  {{data.home_team.short_name}}
+                </ion-label>
+              </div>
+              <div class="center-text-selected" *ngIf="data_league === 'Serie A 2019/2020' && data.bet !== undefined"
+                [style.background-color]="data.bet.client_bet === 0 ? mycolorHome : ''">
+                <img class="img-size-s" src="./assets/img/favicon.png">
+                <ion-label class="text-size-m-color">{{data.home_team.short_name}}</ion-label>
+              </div>
+              <div class="center-text-selected" *ngIf="data_league === 'Serie A 2019/2020' && data.bet === undefined">
+                <img class="img-size-s" src="./assets/img/favicon.png">
+                <ion-label class="text-size-m-color">{{data.home_team.short_name}}</ion-label>
+              </div>
+            </ion-col>
+            <ion-col class="padding-col" size="4"
+              (click)="selectedPredictionEqual(data.id_game_matches,i,data.status.id_status,data.date)">
+              <div class="center-text-selected" *ngIf="data.bet !== undefined"
+                [style.background-color]="data.bet.client_bet === 1 ? mycolorHome : ''">
+                <ion-label class="text-size-g-color" *ngIf="data.status.id_status === 1 || data.status.id_status === 2">
+                  {{data.home_team_goals}} - {{data.away_team_goals}}
+                </ion-label>
+                <div class="center">
+                  <span class="text-size-m-color" [innerHTML]="matchTime(data.date)"></span>
+                </div>
+                <div *ngIf="data.status.id_status === 1">
+                  <ion-label class="text-size-status" [style.color]="status_color1">
+                    <strong [innerHTML]="macthStatus(data.status.id_status)"></strong>
+                  </ion-label>
+                </div>
+                <div *ngIf="data.status.id_status === 2">
+                  <ion-label class="text-size-status" [style.color]="status_color2">
+                    <strong [innerHTML]="macthStatus(data.status.id_status)"></strong>
+                  </ion-label>
+                </div>
+                <div *ngIf="data.status.id_status === 3">
+                  <ion-label class="text-size-status" [style.color]="status_color3">
+                    <strong [innerHTML]="macthStatus(data.status.id_status)"></strong>
+                  </ion-label>
+                </div>
+              </div>
+              <div class="center-text-selected" *ngIf="data.bet === undefined">
+                <ion-label class="text-size-g-color" *ngIf="data.status.id_status === 1 || data.status.id_status === 2">
+                  {{data.home_team_goals}} - {{data.away_team_goals}}
+                </ion-label>
+                <div class="center">
+                  <span class="text-size-m-color" [innerHTML]="matchTime(data.date)"></span>
+                </div>
+                <div *ngIf="data.status.id_status === 1">
+                  <ion-label class="text-size-status" [style.color]="status_color1">
+                    <strong [innerHTML]="macthStatus(data.status.id_status)"></strong>
+                  </ion-label>
+                </div>
+                <div *ngIf="data.status.id_status === 2">
+                  <ion-label class="text-size-status" [style.color]="status_color2">
+                    <strong [innerHTML]="macthStatus(data.status.id_status)"></strong>
+                  </ion-label>
+                </div>
+                <div *ngIf="data.status.id_status === 3">
+                  <ion-label class="text-size-status" [style.color]="status_color3">
+                    <strong [innerHTML]="macthStatus(data.status.id_status)"></strong>
+                  </ion-label>
+                </div>
+              </div>
+            </ion-col>
+            <ion-col class="padding-col" size="4"
+              (click)="selectedPredictionAway(data.id_game_matches,i,data.status.id_status,data.date)">
+              <div class="center-text-selected"
+                *ngIf="data_league !== 'Serie A 2019/2020'  && data.bet !== undefined"
+                [style.background-color]="data.bet.client_bet === 2 ? mycolorHome : ''">
+                <img class="img-size-s" src="{{data.away_team.team_logo}}">
+                <ion-label class="text-size-m-color">
+                  {{data.away_team.short_name}}
+                </ion-label>
+              </div>
+              <div class="center-text-selected"
+                *ngIf="data_league !== 'Serie A 2019/2020' && data.bet === undefined">
+                <img class="img-size-s" src="{{data.away_team.team_logo}}">
+                <ion-label class="text-size-m-color">
+                  {{data.away_team.short_name}}
+                </ion-label>
+              </div>
+              <div class="center-text-selected"
+                *ngIf="data_league === 'Serie A 2019/2020' && data.bet !== undefined"
+                [style.background-color]="data.bet.client_bet === 2 ? mycolorHome : ''">
+                <img class="img-size-s" src="./assets/img/favicon.png">
+                <ion-label class="text-size-m-color">{{data.away_team.short_name}}</ion-label>
+              </div>
+              <div class="center-text-selected"
+                *ngIf="data_league === 'Serie A 2019/2020' && data.bet === undefined">
+                <img class="img-size-s" src="./assets/img/favicon.png">
+                <ion-label class="text-size-m-color">{{data.away_team.short_name}}</ion-label>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item class="item-grid" *ngIf="sport_id !== 1">
+        <ion-grid class="padding">
+          <ion-row>
+            <ion-col class="padding-col" size="4"
+              (click)="selectedPredictionHome(data.id_game,i,data.status.id_status,data.date)">
+              <div class="center-text-selected" *ngIf="data_league !== 'Serie A 2019/2020'  && data.bet !== undefined"
+                [style.background-color]="data.bet.client_bet === 0 ? mycolorHome : ''">
+                <img class="img-size-s" src="{{data.home_team.team_logo}}">
+                <ion-label class="text-size-m-color">
+                  {{data.home_team.short_name}}
+                </ion-label>
+              </div>
+              <div class="center-text-selected" *ngIf="data_league !== 'Serie A 2019/2020' && data.bet === undefined">
+                <img class="img-size-s" src="{{data.home_team.team_logo}}">
+                <ion-label class="text-size-m-color">
+                  {{data.home_team.short_name}}
+                </ion-label>
+              </div>
+              <div class="center-text-selected" *ngIf="data_league === 'Serie A 2019/2020' && data.bet !== undefined"
+                [style.background-color]="data.bet.client_bet === 0 ? mycolorHome : ''">
+                <img class="img-size-s" src="./assets/img/favicon.png">
+                <ion-label class="text-size-m-color">{{data.home_team.short_name}}</ion-label>
+              </div>
+              <div class="center-text-selected" *ngIf="data_league === 'Serie A 2019/2020' && data.bet === undefined">
+                <img class="img-size-s" src="./assets/img/favicon.png">
+                <ion-label class="text-size-m-color">{{data.home_team.short_name}}</ion-label>
+              </div>
+            </ion-col>
+            <ion-col class="padding-col" size="4">
+              <div class="center-text-selected" *ngIf="data.bet !== undefined"
+                [style.background-color]="data.bet.client_bet === 1 ? mycolorHome : ''">
+                <ion-label class="text-size-g-color" *ngIf="data.status.id_status === 1 || data.status.id_status === 2">
+                  {{data.home_team_goals}} - {{data.away_team_goals}}
+                </ion-label>
+                <div class="center">
+                  <span class="text-size-m-color" [innerHTML]="matchTime(data.date)"></span>
+                </div>
+                <div *ngIf="data.status.id_status === 1">
+                  <ion-label class="text-size-status" [style.color]="status_color1">
+                    <strong [innerHTML]="macthStatus(data.status.id_status)"></strong>
+                  </ion-label>
+                </div>
+                <div *ngIf="data.status.id_status === 2">
+                  <ion-label class="text-size-status" [style.color]="status_color2">
+                    <strong [innerHTML]="macthStatus(data.status.id_status)"></strong>
+                  </ion-label>
+                </div>
+                <div *ngIf="data.status.id_status === 3">
+                  <ion-label class="text-size-status" [style.color]="status_color3">
+                    <strong [innerHTML]="macthStatus(data.status.id_status)"></strong>
+                  </ion-label>
+                </div>
+              </div>
+              <div class="center-text-selected" *ngIf="data.bet === undefined">
+                <ion-label class="text-size-g-color" *ngIf="data.status.id_status === 1 || data.status.id_status === 2">
+                  {{data.home_team_goals}} - {{data.away_team_goals}}
+                </ion-label>
+                <div class="center">
+                  <span class="text-size-m-color" [innerHTML]="matchTime(data.date)"></span>
+                </div>
+                <div *ngIf="data.status.id_status === 1">
+                  <ion-label class="text-size-status" [style.color]="status_color1">
+                    <strong [innerHTML]="macthStatus(data.status.id_status)"></strong>
+                  </ion-label>
+                </div>
+                <div *ngIf="data.status.id_status === 2">
+                  <ion-label class="text-size-status" [style.color]="status_color2">
+                    <strong [innerHTML]="macthStatus(data.status.id_status)"></strong>
+                  </ion-label>
+                </div>
+                <div *ngIf="data.status.id_status === 3">
+                  <ion-label class="text-size-status" [style.color]="status_color3">
+                    <strong [innerHTML]="macthStatus(data.status.id_status)"></strong>
+                  </ion-label>
+                </div>
+              </div>
+            </ion-col>
+            <ion-col class="padding-col" size="4"
+              (click)="selectedPredictionAway(data.id_game,i,data.status.id_status,data.date)">
+              <div class="center-text-selected"
+                *ngIf="data_league !== 'Serie A 2019/2020'  && data.bet !== undefined"
+                [style.background-color]="data.bet.client_bet === 2 ? mycolorHome : ''">
+                <img class="img-size-s" src="{{data.away_team.team_logo}}">
+                <ion-label class="text-size-m-color">
+                  {{data.away_team.short_name}}
+                </ion-label>
+              </div>
+              <div class="center-text-selected"
+                *ngIf="data_league !== 'Serie A 2019/2020' && data.bet === undefined">
+                <img class="img-size-s" src="{{data.away_team.team_logo}}">
+                <ion-label class="text-size-m-color">
+                  {{data.away_team.short_name}}
+                </ion-label>
+              </div>
+              <div class="center-text-selected"
+                *ngIf="data_league === 'Serie A 2019/2020' && data.bet !== undefined"
+                [style.background-color]="data.bet.client_bet === 2 ? mycolorHome : ''">
+                <img class="img-size-s" src="./assets/img/favicon.png">
+                <ion-label class="text-size-m-color">{{data.away_team.short_name}}</ion-label>
+              </div>
+              <div class="center-text-selected"
+                *ngIf="data_league === 'Serie A 2019/2020' && data.bet === undefined">
+                <img class="img-size-s" src="./assets/img/favicon.png">
+                <ion-label class="text-size-m-color">{{data.away_team.short_name}}</ion-label>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-list>
+  <ion-content *ngIf="sizeData === 0">
+    <div class="div-alert">
+      <ion-icon name="information-circle-outline" class="icon-alert"></ion-icon>
+    </div>
+    <div class="div-alert">
+      Todavía no has hecho predicciones o no se han Jugado los partidos.
+    </div>
+  </ion-content>
+</ion-content>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c90d326f-2519-4f80-a617-050601abed03" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/common.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/common.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/default~live-live-module~matches-matches-module~my-points-my-points-module~news-news-module~pages-co~10eb30f5.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/default~live-live-module~matches-matches-module~my-points-my-points-module~news-news-module~pages-co~10eb30f5.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/default~live-live-module~matches-matches-module~my-points-my-points-module~news-news-module~pages-co~10eb30f5.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/default~live-live-module~matches-matches-module~my-points-my-points-module~news-news-module~pages-co~10eb30f5.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/es2015-polyfills.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/es2015-polyfills.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/live-live-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/live-live-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/live-live-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/live-live-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/main.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/main.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/matches-matches-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/matches-matches-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/matches-matches-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/matches-matches-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/my-points-my-points-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/my-points-my-points-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/my-points-my-points-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/my-points-my-points-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/news-news-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/news-news-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/news-news-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/news-news-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-configurations-configurations-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-configurations-configurations-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-configurations-configurations-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-configurations-configurations-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-get-password-get-password-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-get-password-get-password-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-get-password-get-password-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-get-password-get-password-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-login-login-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-login-login-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-login-login-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-login-login-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-tabs-statistics-tabs-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-tabs-statistics-tabs-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-tabs-statistics-tabs-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-tabs-statistics-tabs-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-tabs-tabs-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-tabs-tabs-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-tabs-tabs-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-tabs-tabs-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-tutorial-tutorial-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-tutorial-tutorial-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-tutorial-tutorial-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/pages-tutorial-tutorial-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/polyfills.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/polyfills.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/predictions-predictions-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/predictions-predictions-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/predictions-predictions-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/predictions-predictions-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/rankings-rankings-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/rankings-rankings-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/rankings-rankings-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/rankings-rankings-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/runtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/runtime.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/runtime.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/runtime.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/styles.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/styles.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/vendor.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/vendor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/vendor.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/vendor.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/common.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/common.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/cordova.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/cordova.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/default~live-live-module~matches-matches-module~my-points-my-points-module~news-news-module~pages-co~10eb30f5.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/default~live-live-module~matches-matches-module~my-points-my-points-module~news-news-module~pages-co~10eb30f5.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/default~live-live-module~matches-matches-module~my-points-my-points-module~news-news-module~pages-co~10eb30f5.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/default~live-live-module~matches-matches-module~my-points-my-points-module~news-news-module~pages-co~10eb30f5.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/es2015-polyfills.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/es2015-polyfills.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/live-live-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/live-live-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/live-live-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/live-live-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/main.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/main.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/matches-matches-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/matches-matches-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/matches-matches-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/matches-matches-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/my-points-my-points-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/my-points-my-points-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/my-points-my-points-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/my-points-my-points-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/news-news-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/news-news-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/news-news-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/news-news-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages-configurations-configurations-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages-configurations-configurations-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages-configurations-configurations-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages-configurations-configurations-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages-get-password-get-password-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages-get-password-get-password-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages-get-password-get-password-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages-get-password-get-password-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages-login-login-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages-login-login-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages-login-login-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages-login-login-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages-tabs-statistics-tabs-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages-tabs-statistics-tabs-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages-tabs-statistics-tabs-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages-tabs-statistics-tabs-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages-tabs-tabs-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages-tabs-tabs-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages-tabs-tabs-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages-tabs-tabs-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages-tutorial-tutorial-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages-tutorial-tutorial-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/pages-tutorial-tutorial-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/pages-tutorial-tutorial-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/polyfills.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/polyfills.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/predictions-predictions-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/predictions-predictions-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/predictions-predictions-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/predictions-predictions-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/rankings-rankings-module.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/rankings-rankings-module.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/rankings-rankings-module.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/rankings-rankings-module.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/runtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/runtime.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/runtime.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/runtime.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/styles.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/styles.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/vendor.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/vendor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/vendor.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/www/vendor.js.map" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="10" />
+    <option name="y" value="20" />
+    <option name="width" value="1346" />
+    <option name="height" value="688" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c90d326f-2519-4f80-a617-050601abed03" name="Default Changelist" comment="" />
+      <created>1575314411203</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1575314411203</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="-1" width="1366" height="728" extended-state="6" />
+    <layout>
+      <window_info id="Captures" order="0" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="1" weight="0.3290566" />
+      <window_info id="Structure" order="2" side_tool="true" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Designer" order="4" />
+      <window_info id="Resources Explorer" order="5" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info id="Favorites" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="TODO" order="1" />
+      <window_info anchor="bottom" id="Terminal" order="2" />
+      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" order="0" />
+      <window_info anchor="right" id="Theme Preview" order="1" />
+      <window_info anchor="right" id="Assistant" order="2" weight="0.3351227" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+    </layout>
+  </component>
+</project>

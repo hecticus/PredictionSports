@@ -1,0 +1,212 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start" *ngIf="tab === 0 && login !== 'guest'">
+        <ion-icon name="arrow-round-back" class="arrow-back" size="large"  color="primary" (click)="goBack()"></ion-icon>
+      </ion-buttons>
+       <ion-buttons slot="start" *ngIf="tab !== 0 && login !== 'guest'">
+         <ion-icon name="arrow-round-back" class="arrow-back" size="large"  color="primary" (click)="prevPage()"></ion-icon>
+      </ion-buttons>
+      <ion-title>
+        <div class="center">
+          <img src="assets/img/logo.png" height="30"/>
+        </div>
+    </ion-title> 
+    <ion-buttons slot="end" >
+     <ion-icon name="arrow-round-forward" color="primary" class="arrow-next" size="large" (click)="nextPagePredictions()" 
+      *ngIf="login === 'guest' "></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="tab === 0" class="padding">
+  <div class="toolbar-div">
+    <ion-title class="title">Configuraciones</ion-title>
+  </div>
+  <div>
+      <ion-chip color="light">
+        <ion-avatar>
+          <ion-icon class="icon-m" name="person" color="primary"></ion-icon>
+        </ion-avatar>
+        <ion-label color="primary">Apodo</ion-label>
+      </ion-chip>
+      <ion-grid>
+      <ion-row >
+      <ion-col size="9">
+        <ion-input type="text" size="6" placeholder="Introduzca su apodo" [(ngModel)]="nickname" 
+        [disabled]=" mydisabled" *ngIf="login !=='guest'"></ion-input>
+        <ion-input type="text" size="6" placeholder="Introduzca su apodo" [(ngModel)]="nickname" 
+        [disabled]="disabled_invited" *ngIf="login ==='guest'"></ion-input>
+      </ion-col>
+       <ion-col size="3">
+          <ion-button fill="outline" color="danger" size="default" *ngIf="mydisabled === true && login !== 'guest'" 
+            (click)="setDisabled()"><ion-icon size="large" name="create" ></ion-icon></ion-button>
+          <ion-button fill="outline" color="danger" size="default" *ngIf="mydisabled === false && login !== 'guest'" 
+            (click)="setName()"><ion-icon size="large" name="save"></ion-icon></ion-button>
+          <ion-button fill="outline" color="danger" size="default" 
+            *ngIf="login === 'guest' && disabled_invited === false" 
+            (click)="setName()">
+          <ion-icon size="large" name="save"></ion-icon>
+          </ion-button>
+          <ion-button fill="outline" color="danger" size="default" 
+            *ngIf="disabled_invited === true && login === 'guest'" 
+            (click)="setDisabled()"><ion-icon size="large" name="create" ></ion-icon>
+          </ion-button>
+       </ion-col>
+        </ion-row>
+      </ion-grid>
+  </div>
+   <div >
+      <ion-chip color="light">
+          <ion-avatar>
+            <ion-icon class="icon-m" name="star" color="primary"></ion-icon>
+          </ion-avatar>
+          <ion-label color="primary">Mis Equipos Favoritos</ion-label>
+        </ion-chip>
+    </div>
+      <div >
+        <ion-grid>
+          <ion-row >
+            <ion-col class="center" size="4" *ngIf="team_logo1 === undefined">
+              <ion-icon src="assets/img/add.svg" color="danger" class="icon-xl" (click)="selectLeagues()" ></ion-icon>
+            <div class="center">
+              <ion-label class="text-size-s" color="dark">Agregar Equipo</ion-label>
+            </div>
+            </ion-col>
+            <ion-col class="center" size="4" *ngIf="team_logo1 !== undefined" >
+              <div class="center">
+                <ion-icon name="close-circle" class="remove" color="primary" (click)="removeTeam(id_team1)"></ion-icon>
+                <img [src]="team_logo1" class="team"/>
+              </div>
+              <div class="center">
+                <ion-label class="text-size-s" color="dark">{{name_team1}}</ion-label>
+              </div> 
+            </ion-col>
+             <ion-col class="center" size="4" *ngIf="team_logo2 === undefined">
+              <ion-icon src="assets/img/add.svg" color="danger" class="icon-xl" (click)="selectLeagues()" ></ion-icon>
+              <div class="center">
+                <ion-label class="text-size-s" color="dark">Agregar Equipo</ion-label>
+            </div>
+            </ion-col>
+            <ion-col class="center" size="4" *ngIf="team_logo2 !== undefined">
+              <div class="center">
+                <ion-icon name="close-circle" class="remove" color="primary" (click)="removeTeam(id_team2)"></ion-icon>
+                <img [src]="team_logo2" class="team"/>
+              </div>
+              <div class="center">
+                <ion-label class="text-size-s" color="dark">{{name_team2}}</ion-label>
+              </div> 
+            </ion-col>
+             <ion-col  class="center" size="4" *ngIf="team_logo3 === undefined">
+              <ion-icon src="assets/img/add.svg" color="danger" class="icon-xl" (click)="selectLeagues()"></ion-icon>
+            <div class="center">
+              <ion-label class="text-size-s" color="dark">Agregar Equipo</ion-label>
+            </div>
+            </ion-col>
+            <ion-col class="center" size="4" *ngIf="name_team3 !== undefined">
+              <div class="center">
+                <ion-icon name="close-circle" class="remove" color="primary" (click)="removeTeam(id_team3)"></ion-icon>
+                <img [src]="team_logo3" class="team"/>
+              </div>
+              <div class="center">
+                <ion-label class="text-size-s" color="dark">{{name_team3}}</ion-label>
+              </div>  
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    </div>
+    <div>
+      <ion-chip color="light">
+        <ion-avatar>
+          <ion-icon class="icon-m" name="notifications" color="primary"></ion-icon>
+        </ion-avatar>
+        <ion-label color="primary">Notificaciones</ion-label>
+      </ion-chip>
+       <ion-row >
+      <ion-col>
+        <ion-item>
+            <ion-label>Predicciones</ion-label>
+            <ion-toggle slot="start" color="danger"></ion-toggle>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row >
+        <ion-col>
+          <ion-item>
+              <ion-label>En Vivo</ion-label>
+              <ion-toggle slot="start" color="danger"></ion-toggle>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </div>
+    <div >
+      <ion-chip color="light">
+        <ion-avatar>
+          <ion-icon class="icon-m" name="contacts" color="primary"></ion-icon>
+        </ion-avatar>
+        <ion-label color="primary">Redes Sociales</ion-label>
+      </ion-chip>
+    <ion-row >
+      <ion-col size="12">
+        <ion-button  *ngIf="isLoggedIn === false" shape="round" size="small" color="primary" expand="block" 
+        (click)="fbLogin()">CONECTAR CON FACEBOOK </ion-button>
+      </ion-col>
+       <ion-col size="12">
+        <ion-button *ngIf="isLoggedIn === true" shape="round" size="small" color="danger" expand="block" 
+        (click)="fbLogout()" >CONECTADO CON FACEBOOK, {{users.name}}</ion-button>
+      </ion-col>
+    </ion-row>
+    </div>
+    <div >
+      <ion-chip color="light">
+        <ion-avatar>
+          <ion-icon class="icon-m" name="build" color="primary"></ion-icon>
+        </ion-avatar>
+        <ion-label color="primary">Aplicación</ion-label>
+      </ion-chip>
+      <ion-row >
+        <ion-col size="12">
+          <ion-button fill="outline" color="danger" routerLink="/tutorial"  size="small" expand="block">TUTORIAL</ion-button>
+        </ion-col>
+     
+        <ion-col size="12">
+          <ion-button (click)="downClient()" fill="outline" color="danger"  size="small" expand="block" >BAJA</ion-button>
+        </ion-col>
+      </ion-row>
+    </div>
+</ion-content>
+<ion-content *ngIf="tab === 1" class="padding">
+  <ion-list *ngFor="let item of leagues; let i = index">
+    <ion-item (click)="selectTeam(item.id_competitions,i)"> 
+      <ion-grid>
+        <ion-row>
+           <ion-col size="2">
+            <img class="img-size-s" src="{{item.competiton_type.competition_logo}}.svg">
+          </ion-col>
+          <ion-col size="10">
+            <div class="div">
+            <ion-label class="text-size-m">{{item.competiton_type.name}}</ion-label>
+          </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-content *ngIf="tab === 2" class="padding">
+  <ion-list *ngFor="let item of teams; let i= index">
+    <ion-item (click)="saveTeam(i, item)"> 
+      <ion-grid>
+        <ion-row>
+           <ion-col size="2">
+            <img class="img-size-s" *ngIf="id_league !== 67" src="{{item.team_logo}}">
+            <img class="img-size-s" *ngIf="id_league === 67" src="./assets/img/favicon.png">
+          </ion-col>
+          <ion-col size="10">
+            <div class="div">
+            <ion-label class="text-size-l">{{item.short_name}}</ion-label>
+          </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>

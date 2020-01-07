@@ -1,0 +1,189 @@
+.background-red {
+    padding-top: 5px;
+    padding-block-end: 5px;
+    background: red;
+}
+.white-right {
+    color: white;
+    font-size: 16px;
+    float: right; 
+}
+.text-size-s{
+    font-size: 13px;
+    width: 100%;
+    float: right;
+    size: 0.3em;
+}
+.text-size-r{
+    font-size: 13px;
+    width: 100%;
+    float: right;
+    color: #0377B4;
+}
+.ion-icon {
+    font-size: 64px;
+  }
+
+.white-left{
+    color: white;
+    padding-left: 18px;
+    font-size: 16px;
+}
+.white{
+    color: white;
+}
+.img-size-s{
+    width: 40px;
+    height: 40px;
+    margin-top: 1rem;
+}
+.div{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100%;
+   border: none;
+}
+.div-width{
+    width: 100%;
+    text-align: right;
+}
+.right{
+    float: right;
+}
+.background{
+    text-align: center;
+    height: 190px;
+    background-image: url("../../../assets/img/back-pts.png");
+    background-size: cover;
+    background-position: center;
+}
+.margin-top-m{
+    margin-top: 0.9em;
+}
+.margin-top-s{
+    margin-top: 0.5em;
+}
+.margin-top-xs{
+    margin-top: 0.8em;
+}
+.text-size-l{
+    size: 1em;
+}
+.text-size-m{
+    size: 0.8em;
+    text-align: center;
+}
+.text-size-m-color{
+    font-size: 13px;
+    color: #061259;
+    text-align: center;
+}
+.text-size-g-color{
+    font-size: 18px;
+    color: #061259;
+    text-align: center;
+}
+.text-size-status{
+  font-size: 13px;
+}
+.text-size-g{
+    font-size: 20px;
+    text-align: center;
+}
+.center{
+  margin: 0 auto;
+  padding-top: 20px;
+  text-align: center;
+}
+.circle-red{
+    position:absolute;
+    top: 30px;
+    left:0;
+    right: 0;
+    display:block;
+    width:130px;
+    height: 130px;
+    line-height: 25px;
+    background-color: rgba(227,30,48,0.5)  !important;
+    border-radius: 50%;
+    text-align:center;
+    color: rgb(0,40,120);
+    font-size:1.8em;
+    margin: 0 auto !important;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ffffff;
+}
+.arrow-next {
+  float: right;
+  margin-right: 10px;
+}
+.arrow-back {   
+  float: left;
+  margin-left: 10px;
+}
+.center-text{
+  text-align: center;
+  width: 100%;
+ }
+ .icon-alert{
+  margin-top: 15px;
+  width: 60px;
+  height: 60px;
+  font-size: 35px;
+  font-weight: bold;
+  color: #777777;
+}
+.div-alert{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+   border: none;
+   font-size: 30px;
+   color: #777777;
+   text-align: center;
+}
+.prediction {
+    padding-top: 0rem ;
+}
+.prediction-top {
+    padding-top: 0rem ;
+    padding-bottom: 0rem;
+    padding-left: 0rem;
+    padding-right: 0rem;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+}
+.padding {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    padding-left: 0rem;
+    padding-right: -10px;
+    margin-right: -10px;
+    margin-left: 0rem  ;
+    margin-bottom: 0rem;    
+    margin-top: 0rem;
+}
+.padding-col {
+    padding-top: 0rem;
+    padding-bottom: 0erm;
+    padding-left: 0erm;
+    padding-right: 0erm;
+    margin-right: -10px;
+    margin-left: 0rem;
+    margin-bottom: -5px;
+    margin-top: 0erm;
+}
+.center-text-selected{
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    margin-left: 0rem;
+    margin-right: 0rem;
+}
+.item-grid {
+    margin-left: -20px;
+    margin-right: -35px;
+}

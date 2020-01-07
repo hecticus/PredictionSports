@@ -1,0 +1,172 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="tab === 0 ">
+      <ion-menu-button color="primary" menu="menuprincipal"></ion-menu-button>
+    </ion-buttons>   
+    <ion-buttons slot="start" *ngIf="tab !== 0 ">
+       <ion-icon name="arrow-round-back" color="primary" 
+                 class="arrow-back" size="large" 
+                 (click)="mainPage()"></ion-icon>
+    </ion-buttons>  
+    <div class="center">
+      <img src="assets/img/logo.png" height="30"/>
+    </div>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="sizeData > 0 && tab === 0">
+   <ion-item class="h-header green text-size-g">
+    <ion-label> {{date_day}}  </ion-label>
+  </ion-item>
+  <ion-list *ngFor ="let leagues of data" class="list-padding">
+    <ion-item color="danger">
+      <ion-grid>
+        <ion-row >
+          <ion-col size="12" class="col-m">
+            <img class="img-size-s padding" src="{{leagues.competiton_type.competition_logo}}.svg">
+            <div class="div-title">
+                <ion-label class="text-size-s font">{{leagues.competiton_type.name}}</ion-label>
+            </div>               
+          </ion-col>                        
+        </ion-row>
+      </ion-grid>
+    </ion-item>    
+    <ion-list *ngFor ="let team of leagues.fixtures">
+      <ion-item (click)="detailMatchLive(leagues, team)">          
+        <ion-grid >
+          <ion-row >
+            <ion-col size="4">
+              <div class="center-text">
+                <img class="img-size-s"  *ngIf="leagues.id_competitions !== 67" src="{{team.homeTeam.team_logo}}">
+                 <img class="img-size-s" *ngIf="leagues.id_competitions === 67" src="./assets/img/favicon.png" >
+                <ion-label class="text-size-m-color">
+                    {{team.homeTeam.short_name}}                
+                </ion-label>
+              </div>
+            </ion-col>
+
+            <ion-col size="4" >
+              <div class="center-text">
+                <ion-label class="text-size-g-color" *ngIf="team.id_status === 1 || team.id_status === 2"> 
+                      {{team.home_team_goals}} - {{team.away_team_goals}}
+                </ion-label>
+                <div class="center-text">
+                  <span class="text-size-m-color" [innerHTML]="matchTime(team.date)"></span>
+                </div>
+                <div  *ngIf="team.id_status === 1">
+                  <ion-label class="text-size-status" [style.color]="status_color1">
+                    <strong [innerHTML]="macthStatus(team.id_status)"></strong>
+                  </ion-label>
+                </div>
+                  <div  *ngIf="team.id_status === 2">
+                  <ion-label class="text-size-status" [style.color]="status_color2">
+                    <strong [innerHTML]="macthStatus(team.id_status)"></strong>
+                  </ion-label>
+                </div>
+                  <div *ngIf="team.id_status === 3">
+                  <ion-label class="text-size-status" [style.color]="status_color3">
+                    <strong [innerHTML]="macthStatus(team.id_status)"></strong>
+                  </ion-label>
+                </div>
+              </div>
+            </ion-col>
+
+            <ion-col size="4">
+              <div class="center-text">
+                <img class="img-size-s" *ngIf="leagues.id_competitions !== 67" src="{{team.awayTeam.team_logo}}">
+                <img class="img-size-s" *ngIf="leagues.id_competitions === 67" src="./assets/img/favicon.png" >
+                <ion-label class="text-size-m-color">
+                    {{team.awayTeam.short_name}}
+                </ion-label>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-list>  
+</ion-content>
+<ion-content *ngIf="sizeData === 0">
+  <ion-item class="h-header green text-size-g">
+      <ion-label> {{date_day}}  </ion-label>
+  </ion-item>
+  <div class="div">
+    <ion-icon name="information-circle-outline" class="icon-alert"></ion-icon>
+  </div>
+  <div class="div">
+     No hay juegos programados para hoy. 
+  </div>      
+</ion-content>
+
+<ion-content *ngIf="tab !== 0 && info_match !== undefined ">  
+  <ion-list class="list-padding">
+    <ion-item color="danger">
+      <ion-grid>
+        <ion-row >
+          <ion-col size="11" class="col-m">
+            <img class="img-size-s padding"  src="{{logo_leagues}}.svg">
+            <div class="div-title">
+                <ion-label class="text-size-s font">{{name_leagues}}</ion-label>
+            </div>               
+          </ion-col> 
+           <ion-col size="1" class="col-m refresh"  (click)="refreshGame()"> 
+            <ion-icon ios="ios-refresh" md="md-refresh" size="large"></ion-icon>
+           </ion-col>                       
+        </ion-row>
+      </ion-grid>
+    </ion-item>    
+   <ion-item>          
+        <ion-grid >
+          <ion-row >
+            <ion-col size="4">
+              <div class="center-text">
+                <img class="img-size-s" *ngIf="id_leagues !== 67" src="{{info_match.home_team.team_logo}}">
+                <img class="img-size-s" *ngIf="id_leagues === 67" src="./assets/img/favicon.png" >
+                <ion-label class="text-size-m-color">
+                    {{info_match.home_team.short_name}}                
+                </ion-label>
+              </div>
+            </ion-col>
+            <ion-col size="4" *ngIf="date_match.status">
+              <div class="center-text">
+                <ion-label class="text-size-g-color" 
+                *ngIf="info_match.status?.id_status === 1 || info_match.status?.id_status === 2"> 
+                      {{info_match.home_team_goals}} - {{info_match.away_team_goals}}
+                </ion-label>
+                <ion-label class="text-size-g-color" 
+                *ngIf="info_match.status?.id_status === 3"> 
+                       {{info_match.home_team_goals}} - {{info_match.away_team_goals}}
+                </ion-label>
+                <div class="center-text">
+                  <span class="text-size-m-color"></span>
+                </div>
+                <div  *ngIf="info_match.status?.id_status === 1">
+                  <ion-label class="text-size-status" [style.color]="status_color1">
+                    <strong [innerHTML]="macthStatus(info_match.status?.id_status)"></strong>
+                  </ion-label>
+                </div>
+                  <div  *ngIf="info_match.status?.id_status === 2">
+                  <ion-label class="text-size-status" [style.color]="status_color2">
+                    <strong [innerHTML]="macthStatus(info_match.status?.id_status)"></strong>
+                  </ion-label>
+                </div>
+                  <div *ngIf="info_match.status?.id_status === 3">
+                  <ion-label class="text-size-status" [style.color]="status_color3">
+                    <strong [innerHTML]="macthStatus(info_match.status?.id_status)"></strong>
+                  </ion-label>
+                </div>
+              </div>
+            </ion-col>
+            <ion-col size="4">
+              <div class="center-text">
+                <img class="img-size-s" *ngIf="id_leagues !== 67" src="{{info_match.away_team.team_logo}}">
+                <img class="img-size-s" *ngIf="id_leagues === 67" src="./assets/img/favicon.png" >
+                <ion-label class="text-size-m-color">
+                    {{info_match.away_team.short_name}}
+                </ion-label>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>  
+  </ion-list>
+</ion-content>
