@@ -10,6 +10,7 @@ import models.Config;
 import play.libs.ws.WS;
 import play.libs.ws.WSRequestHolder;
 import utils.Utils;
+import java.io.*;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -26,7 +27,8 @@ public class OptaRepository {
         TournamentCalendarRequest data = null;
 
         try {
-            WSRequestHolder holder = WS.url(generateRoute("tournamentcalendar") + "active/authorized?_rt=b&_fmt=json");
+            String url = generateRoute("tournamentcalendar") + "active/authorized?_rt=b&_fmt=json";
+            WSRequestHolder holder = WS.url(url);
             json = holder.setTimeout(25000).get().get(15000).getBody();
             data = new Gson().fromJson(json, TournamentCalendarRequest.class);
         } catch (Exception e) {
@@ -41,7 +43,8 @@ public class OptaRepository {
         TeamRequest data = null;
 
         try {
-            WSRequestHolder holder = WS.url(generateRoute("team") + "?_rt=b&_fmt=json&detailed=yes&tmcl=" + competitionWebEntity.getId());
+            String url = generateRoute("team") + "?_rt=b&_fmt=json&detailed=yes&tmcl=" + competitionWebEntity.getId();
+            WSRequestHolder holder = WS.url(url);
             json = holder.setTimeout(25000).get().get(15000).getBody();
             data = new Gson().fromJson(json, TeamRequest.class);
         } catch (Exception e) {
@@ -59,7 +62,7 @@ public class OptaRepository {
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat sdf;
             sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-            cal.add(Calendar.DAY_OF_MONTH, -3); // -5
+            cal.add(Calendar.DAY_OF_MONTH, -10); // -5
             String start = sdf.format(cal.getTime());
             cal.add(Calendar.DAY_OF_MONTH, 20);
             String end = sdf.format(cal.getTime());
@@ -86,7 +89,8 @@ public class OptaRepository {
         TableRequest data = null;
 
         try {
-            WSRequestHolder holder = WS.url(generateRoute("standings") + "?_fmt=json&_rt=b&tmcl=" + competitionType);
+            String url = generateRoute("standings") + "?_fmt=json&_rt=b&tmcl=" + competitionType;
+                    WSRequestHolder holder = WS.url(url);
             json = holder.setTimeout(25000).get().get(15000).getBody();
             data = new Gson().fromJson(json, TableRequest.class);
         } catch (Exception e) {
