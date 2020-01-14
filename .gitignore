@@ -7,3 +7,5 @@ Apps/MasSports/server/Mas/public/
 Apps/MasSports/server/Mas/projectFilesBackup/.idea_modules/upstreamAPIConnector.iml
 Apps/MasSports/server/Mas/projectFilesBackup/.idea_modules/root.iml
 Apps/MasSports/server/Mas/projectFilesBackup/.idea_modules/jobCore.iml
+appMasSport/node_modules/
+appMasSport/platforms/
