@@ -62,20 +62,21 @@ public class OptaRepository {
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat sdf;
             sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-            cal.add(Calendar.DAY_OF_MONTH, -10); // -5
+            cal.add(Calendar.DAY_OF_MONTH, -20); // -5
             String start = sdf.format(cal.getTime());
-            cal.add(Calendar.DAY_OF_MONTH, 20);
+            cal.add(Calendar.DAY_OF_MONTH, 3);
             String end = sdf.format(cal.getTime());
 
             String route = generateRoute("match");
             WSRequestHolder holder = WS.url(route);
-            holder = holder.setTimeout(25000)
+            holder = holder
                     .setQueryParameter("_fmt", "json")
                     .setQueryParameter("live", "yes")
                     .setQueryParameter("_rt", "b")
                     .setQueryParameter("tmcl", competitionWebEntity.getId())
                     .setQueryParameter("mt.mDt", "[" + start + " TO " + end + "]");
-            json = holder.get().get(15000).getBody();
+                    // .setQueryParameter("mt.mDt", "[2020-01-11T13:55:59Z TO 2020-01-11T14:00:59Z]");
+            json = holder.get().get(25000).getBody();
             data = new Gson().fromJson(json, MatchesRequest.class);
         } catch (Exception e) {
             Utils.printToLog(Utils.class, "", "Error en OPTA MATCHES: " + json, true, e, "support-level-1", Config.LOGGER_ERROR);
