@@ -31,6 +31,9 @@ public class OptaRepository {
             WSRequestHolder holder = WS.url(url);
             json = holder.setTimeout(25000).get().get(15000).getBody();
             data = new Gson().fromJson(json, TournamentCalendarRequest.class);
+            if (data == null) {
+                throw new Exception();
+            }
         } catch (Exception e) {
             Utils.printToLog(Utils.class, "", "Error en OPTA TOURNAMENTCALENDAR: " + json, true, e, "support-level-1", Config.LOGGER_ERROR);
         }
@@ -47,6 +50,9 @@ public class OptaRepository {
             WSRequestHolder holder = WS.url(url);
             json = holder.setTimeout(25000).get().get(15000).getBody();
             data = new Gson().fromJson(json, TeamRequest.class);
+            if (data == null) {
+                throw new Exception();
+            }
         } catch (Exception e) {
             Utils.printToLog(Utils.class, "", "Error en OPTA TEAMS: " + json, true, e, "support-level-1", Config.LOGGER_ERROR);
         }
@@ -78,6 +84,9 @@ public class OptaRepository {
                     // .setQueryParameter("mt.mDt", "[2020-01-11T13:55:59Z TO 2020-01-11T14:00:59Z]");
             json = holder.get().get(25000).getBody();
             data = new Gson().fromJson(json, MatchesRequest.class);
+            if (data == null) {
+                throw new Exception();
+            }
         } catch (Exception e) {
             Utils.printToLog(Utils.class, "", "Error en OPTA MATCHES: " + json, true, e, "support-level-1", Config.LOGGER_ERROR);
         }
@@ -94,6 +103,9 @@ public class OptaRepository {
                     WSRequestHolder holder = WS.url(url);
             json = holder.setTimeout(25000).get().get(15000).getBody();
             data = new Gson().fromJson(json, TableRequest.class);
+            if (data == null) {
+                throw new Exception();
+            }
         } catch (Exception e) {
             Utils.printToLog(Utils.class, "", "Error en OPTA TABLES: " + json, true, e, "support-level-1", Config.LOGGER_ERROR);
         }

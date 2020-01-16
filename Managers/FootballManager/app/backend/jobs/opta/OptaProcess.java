@@ -75,8 +75,12 @@ public class OptaProcess extends ProcessAbstract {
 
         if (teamRequest != null) {
             for (ContestantWebEntity contestantWebEntity : teamRequest.getContestant()) {
-                Team team = ContestantWebEntityToTeam(contestantWebEntity);
-                team.validateTeam(competition);
+                try{
+                    Team team = ContestantWebEntityToTeam(contestantWebEntity);
+                    team.validateTeam(competition);
+                } catch (Exception e) {
+                    Utils.printToLog(Utils.class, "", "Error enProcessGameMatch" + e.getMessage() + e.getStackTrace(), true, e, "support-level-1", Config.LOGGER_ERROR);
+                }
             }
         }
     }
@@ -85,7 +89,11 @@ public class OptaProcess extends ProcessAbstract {
         MatchesRequest matchesRequest = optaRepository.GetMatches(competitionWebEntity);
         if (matchesRequest != null && matchesRequest.getMatch() != null) {
             for (MatchWebEntity matchWebEntity : matchesRequest.getMatch()) {
-                ProcessGameMatch(matchWebEntity, competition);
+                try{
+                    ProcessGameMatch(matchWebEntity, competition);
+                } catch (Exception e) {
+                    Utils.printToLog(Utils.class, "", "Error en ProcessGameMatch" + e.getMessage() + e.getStackTrace(), true, e, "support-level-1", Config.LOGGER_ERROR);
+                }
             }
         }
     }
@@ -99,11 +107,15 @@ public class OptaProcess extends ProcessAbstract {
                 List<Ranking> rankings = stageWebEntity.getDivision().get(0).getRanking();
 
                 for (Ranking ranking : rankings) {
-                    Group group = new Group(competition, "-");
-                    Team team = Team.findByExtId(ranking.getContestantId());
-                    Rank currentRank = new Rank(phase, team, group, ranking.getMatchesPlayed(), ranking.getMatchesWon(),
-                            ranking.getMatchesDrawn(), ranking.getMatchesLost(), ranking.getPoints(), ranking.getGoalsFor(), ranking.getGoalsAgainst());
-                    currentRank.validateRank();
+                    try {
+                        Group group = new Group(competition, "-");
+                        Team team = Team.findByExtId(ranking.getContestantId());
+                        Rank currentRank = new Rank(phase, team, group, ranking.getMatchesPlayed(), ranking.getMatchesWon(),
+                                ranking.getMatchesDrawn(), ranking.getMatchesLost(), ranking.getPoints(), ranking.getGoalsFor(), ranking.getGoalsAgainst());
+                        currentRank.validateRank();
+                    } catch (Exception e) {
+                        Utils.printToLog(Utils.class, "", "Error currentRank.validateRank();" + e.getMessage() + e.getStackTrace(), true, e, "support-level-1", Config.LOGGER_ERROR);
+                    }
                 }
             }
         }
@@ -140,6 +152,7 @@ public class OptaProcess extends ProcessAbstract {
                 awayTeam.getName(), localScore, awayScore, foramttedDate, status,
                 GenerateHash(matchInfo.getId()), competition);
         gameMatch.validateGame();
+
 
         return gameMatch;
     }
