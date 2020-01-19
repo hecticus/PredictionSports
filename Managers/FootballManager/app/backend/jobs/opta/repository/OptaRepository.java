@@ -81,7 +81,7 @@ public class OptaRepository {
                     .setQueryParameter("live", "yes")
                     .setQueryParameter("_rt", "b")
                     .setQueryParameter("tmcl", competitionWebEntity.getId())
-                    .setQueryParameter("mt.mDt", "[" + start + "T00:00:00Z TO " + start + "23:59:59Z]");
+                    .setQueryParameter("mt.mDt", "[" + start + "T00:00:01Z TO " + start + "T23:59:59Z]");
                     // .setQueryParameter("mt.mDt", "[2020-01-11T13:55:59Z TO 2020-01-11T14:00:59Z]");
             json = holder.get().get(25000).getBody();
             data = new Gson().fromJson(json, MatchesRequest.class);
