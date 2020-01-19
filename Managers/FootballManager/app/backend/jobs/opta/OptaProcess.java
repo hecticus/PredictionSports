@@ -86,7 +86,7 @@ public class OptaProcess extends ProcessAbstract {
     }
 
     public void ProcessMatches(Competition competition, TournamentCalendarWebEntity competitionWebEntity) {
-        for (int j = -5; j < 20 ; j++) {
+        for (int j = -20; j < 5 ; j++) {
             MatchesRequest matchesRequest = optaRepository.GetMatches(competitionWebEntity, j);
             if (matchesRequest != null && matchesRequest.getMatch() != null) {
                 for (MatchWebEntity matchWebEntity : matchesRequest.getMatch()) {
