@@ -75,7 +75,7 @@ public class OptaRepository {
 
             String route = generateRoute("match");
             WSRequestHolder holder = WS.url(route);
-            System.out.println("[" + start + "T00:00:00Z TO " + start + "23:59:59Z]");
+            System.out.println("[" + start + "T00:00:00Z TO " + start + "T23:59:59Z]");
             holder = holder
                     .setQueryParameter("_fmt", "json")
                     .setQueryParameter("live", "yes")
