@@ -103,7 +103,7 @@ public class OptaProcess extends ProcessAbstract {
     public void ProcessTables(Competition competition, TournamentCalendarWebEntity competitionEntity) {
         TableRequest tableRequest = optaRepository.GetTables(competitionEntity.getId());
 
-        if (tableRequest != null) {
+        if (tableRequest != null && tableRequest.getStage()) {
             for (StageWebEntity stageWebEntity : tableRequest.getStage()) {
                 Phase phase = ProcessPhases(competition, stageWebEntity);
                 List<Ranking> rankings = stageWebEntity.getDivision().get(0).getRanking();
