@@ -86,13 +86,15 @@ public class OptaProcess extends ProcessAbstract {
     }
 
     public void ProcessMatches(Competition competition, TournamentCalendarWebEntity competitionWebEntity) {
-        MatchesRequest matchesRequest = optaRepository.GetMatches(competitionWebEntity);
-        if (matchesRequest != null && matchesRequest.getMatch() != null) {
-            for (MatchWebEntity matchWebEntity : matchesRequest.getMatch()) {
-                try{
-                    ProcessGameMatch(matchWebEntity, competition);
-                } catch (Exception e) {
-                    Utils.printToLog(Utils.class, "", "Error en ProcessGameMatch" + e.getMessage() + e.getStackTrace(), true, e, "support-level-1", Config.LOGGER_ERROR);
+        for (int j = -5; j < 20 ; j++) {
+            MatchesRequest matchesRequest = optaRepository.GetMatches(competitionWebEntity, j);
+            if (matchesRequest != null && matchesRequest.getMatch() != null) {
+                for (MatchWebEntity matchWebEntity : matchesRequest.getMatch()) {
+                    try{
+                        ProcessGameMatch(matchWebEntity, competition);
+                    } catch (Exception e) {
+                        Utils.printToLog(Utils.class, "", "Error en ProcessGameMatch" + e.getMessage() + e.getStackTrace(), true, e, "support-level-1", Config.LOGGER_ERROR);
+                    }
                 }
             }
         }

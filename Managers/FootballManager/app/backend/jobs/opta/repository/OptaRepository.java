@@ -60,27 +60,28 @@ public class OptaRepository {
         return data;
     }
 
-    public MatchesRequest GetMatches(TournamentCalendarWebEntity competitionWebEntity) {
+    public MatchesRequest GetMatches(TournamentCalendarWebEntity competitionWebEntity, int day) {
         String json = null;
         MatchesRequest data = null;
 
         try {
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat sdf;
-            sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-            cal.add(Calendar.DAY_OF_MONTH, -20); // -5
+            sdf = new SimpleDateFormat("yyyy-MM-dd");
+            cal.add(Calendar.DAY_OF_MONTH, day); // -5
             String start = sdf.format(cal.getTime());
-            cal.add(Calendar.DAY_OF_MONTH, 3);
-            String end = sdf.format(cal.getTime());
+//            cal.add(Calendar.DAY_OF_MONTH, 1);
+//            String end = sdf.format(cal.getTime());
 
             String route = generateRoute("match");
             WSRequestHolder holder = WS.url(route);
+            System.out.println("[" + start + "T00:00:00Z TO " + start + "23:59:59Z]");
             holder = holder
                     .setQueryParameter("_fmt", "json")
                     .setQueryParameter("live", "yes")
                     .setQueryParameter("_rt", "b")
                     .setQueryParameter("tmcl", competitionWebEntity.getId())
-                    .setQueryParameter("mt.mDt", "[" + start + " TO " + end + "]");
+                    .setQueryParameter("mt.mDt", "[" + start + "T00:00:00Z TO " + start + "23:59:59Z]");
                     // .setQueryParameter("mt.mDt", "[2020-01-11T13:55:59Z TO 2020-01-11T14:00:59Z]");
             json = holder.get().get(25000).getBody();
             data = new Gson().fromJson(json, MatchesRequest.class);
