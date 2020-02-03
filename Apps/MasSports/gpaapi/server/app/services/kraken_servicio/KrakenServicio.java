@@ -41,7 +41,7 @@ public class KrakenServicio {
 
     public ClienteExternoWebEntity obtenerUsuario(String msisdn, String password, int country) throws IOException {
         ClienteExternoWebEntity clienteExterno = new ClienteExternoWebEntity();
-        JsonNode response =  WSHandler.instance().MakeGetJson(URL +  "/" + msisdn +  "/" + country +  "/" + password);
+        JsonNode response =  WSHandler.instance().MakeGetJson(URL +  "-recover/" + msisdn +  "/" + country +  "/" + password);
         ObjectMapper mapper = new ObjectMapper();
         if (response.has("service")) {
             return mapper.readValue(response.get("client").toString(), ClienteExternoWebEntity.class);
