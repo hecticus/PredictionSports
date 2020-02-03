@@ -27,6 +27,7 @@ GET     /manhattan/confirmurl        controllers.ManhattanController.CheckPromot
 
 
 GET     /extapi/login                controllers.AppLandController.Login
+GET     /extapi/tyc                  controllers.AppLandController.TYC
 GET     /extapi/check-user           controllers.AppLandController.checkUser
 POST    /extapi/login                controllers.AppLandController.LoginPost
 GET     /extapi/recover-password     controllers.AppLandController.RecoverPassword

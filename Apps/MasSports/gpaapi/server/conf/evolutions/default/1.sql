@@ -12,6 +12,15 @@ create table alta (
   constraint pk_alta primary key (id)
 );
 
+create table cliente_appland (
+  id                            bigint auto_increment not null,
+  msisdn                        varchar(255) not null,
+  identifier                    varchar(255) not null,
+  password                      varchar(255) not null,
+  status                        bigint not null,
+  constraint pk_cliente_appland primary key (id)
+);
+
 create table clients (
   id                            bigint auto_increment not null,
   identifier                    varchar(255),
@@ -69,6 +78,8 @@ alter table clients drop foreign key fk_clients_service_id;
 drop index ix_clients_service_id on clients;
 
 drop table if exists alta;
+
+drop table if exists cliente_appland;
 
 drop table if exists clients;
 

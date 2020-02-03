@@ -63,15 +63,15 @@ public class ClienteExternoServicio {
         }
     }
 
-    public ClienteAppland obtenerClienteRenderSincronizadoConKraken(String msisdn) {
+    public ClienteAppland obtenerClienteRenderSincronizadoConKraken(String msisdn, String contrasena, int pais) {
         try {
-            ClienteExternoWebEntity cliente = this.krakenServicio.obtenerUsuario(msisdn);
-            ClienteAppland clienteAppland = obtenerClienteRenderPorMsisdn(msisdn);
+            ClienteExternoWebEntity cliente = this.krakenServicio.obtenerUsuario(msisdn, contrasena, pais);
 
             if (cliente == null) {
                 throw new Exception();
             }
 
+            ClienteAppland clienteAppland = obtenerClienteRenderPorMsisdn(msisdn);
             cliente.msisdn = msisdn;
 
             if (clienteAppland == null) {

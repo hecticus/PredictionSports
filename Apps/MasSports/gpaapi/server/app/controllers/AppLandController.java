@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import modeles.ClienteAppland;
+import modeles.Config;
 import play.mvc.Http;
 import services.client_externo_servicio.ClienteExternoServicio;
 import services.dto.ClienteExternoWebEntity;
@@ -50,7 +51,7 @@ public class AppLandController extends Controller {
         String msisdn = aux.get("msisdn")[0];
         String contrasena = aux.get("contrasena")[0];
 
-        ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRenderSincronizadoConKraken(msisdn);
+        ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRenderSincronizadoConKraken(msisdn , contrasena, 6);
         if(clienteAppland != null) {
             if(clienteAppland.password.equals(contrasena)) {
                 String rutaOpcional = null;
@@ -131,6 +132,11 @@ public class AppLandController extends Controller {
              this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload);
          }
          return ok();
+    }
+
+    public Result TYC () {
+        String amount = Config.getString("current-amount");
+        return ok(views.html.tycappland.render(amount));
     }
 }
 
