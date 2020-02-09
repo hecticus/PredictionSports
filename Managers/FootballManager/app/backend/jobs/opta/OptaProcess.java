@@ -37,7 +37,6 @@ public class OptaProcess extends ProcessAbstract {
         super.process(args);
         language = Language.getByID(300);
 
-        Utils.printToLog(Utils.class, "", "Iniicio Proceso OPTA: ", true, null, "support-level-1", Config.LOGGER_ERROR);
 
         TournamentCalendarRequest tournamentCalendarRequest = null;
         tournamentCalendarRequest = optaRepository.GetTournamentCalendar();
@@ -56,7 +55,6 @@ public class OptaProcess extends ProcessAbstract {
             }
         }
 
-        Utils.printToLog(Utils.class, "", "Proceso finalizo Correctamente Proceso OPTA: ", true, null, "support-level-1", Config.LOGGER_ERROR);
         System.out.println("Proceso finalizo Correctamente");
     }
 
