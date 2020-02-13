@@ -43,8 +43,11 @@ public class KrakenServicio {
         ClienteExternoWebEntity clienteExterno = new ClienteExternoWebEntity();
         JsonNode response =  WSHandler.instance().MakeGetJson(URL +  "-recover/" + msisdn +  "/" + country +  "/" + password);
         ObjectMapper mapper = new ObjectMapper();
+        response  = response.get("response");
         if (response.has("service")) {
-            return mapper.readValue(response.get("client").toString(), ClienteExternoWebEntity.class);
+            ClienteExternoWebEntity aux = mapper.readValue(response.get("client").toString(), ClienteExternoWebEntity.class);
+            aux.password = response.get("service").get("password").asText();
+            return aux;
         }
         return null;
     }

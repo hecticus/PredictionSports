@@ -53,7 +53,7 @@ public class AppLandController extends Controller {
 
         ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRenderSincronizadoConKraken(msisdn , contrasena, 6);
         if(clienteAppland != null) {
-            if(clienteAppland.password.equals(contrasena)) {
+            if(contrasena != null && contrasena.equals(clienteAppland.password)) {
                 String rutaOpcional = null;
                 String extra = "";
 
