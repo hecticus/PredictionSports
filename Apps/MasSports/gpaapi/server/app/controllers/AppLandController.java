@@ -136,7 +136,8 @@ public class AppLandController extends Controller {
 
     public Result TYC () {
         String amount = Config.getString("current-amount");
-        return ok(views.html.tycappland.render(amount));
+        String dater = Config.getString("date-amount");
+        return ok(views.html.tycappland.render(amount, dater));
     }
 }
 
