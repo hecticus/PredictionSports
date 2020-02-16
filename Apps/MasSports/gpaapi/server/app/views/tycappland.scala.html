@@ -1,39 +1,83 @@
 @(title: String,dater: String)
 
 <!DOCTYPE html>
-
 <html>
     <head>
-        <title>@title</title>
-
+        <title>tyc</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/extapi.css")">
     </head>
-
     <body>
-¿Qué es MaxGame? <br>
-MaxGame es un servicio de suscripción que le da derecho al usuario que forma parte de él, a
-descargar, instalar y hacer uso de todos los juegos disponibles en el app o en la página web de
-forma ilimitada.<br>
-¿Cómo afiliarse?<br>
-Para ser parte de MaxGame, solo debes enviar un SMS con la palabra MAX al 3030. Recibirás un
-mensaje de confirmación con tus credenciales y un link para descargar el app. Una vez descargada,
-inicia sesión y disfruta sin límite todos los juegos que MaxGame tiene para ti. También puedes
-iniciar sesión desde la página web y descargar los juegos de forma ilimitada. La suscripción tiene
-un costo diario de PMVP BsS. @title con impuestos diarios para usuarios Movistar. Fecha de
-marcaje: @dater .<br>
-¿Cómo usar MaxGame?<br>
-Una vez suscrito, descarga el app e inicia sesión con tus credenciales. También puedes iniciar
-sesión desde la página web. A partir de ese momento, podrás instalar y jugar de forma ilimitada
-todos los juegos que desees mientras estés suscrito al servicio.
-¿Cómo descargar los juegos?<br>
-Puedes instalar un juego desde el app o la página web de MaxGame cuando te hayas suscrito al
-servicio y tengas una conexión a internet a través de Wi-Fi o datos móviles. Abre el app o el link de
-la página web, selecciona un juego y haz clic en Instalar.
-¿Cómo recuperar mi contraseña?<br>
-Si estás suscrito, puedes recuperar tu contraseña enviando la palabra CLAVE al 3030. Recibirás un
-mensaje con tus datos para iniciar sesión en MaxGame. El costo del SMS enviado al 3030 puede
-variar de acuerdo al plan contratado por el usuario.<br>
-¿Cómo desafiliarse?<br>
-Si ya no deseas formar parte de MaxGame, envía BAJAMAX al 3030 y espera el mensaje de
-confirmación de tu baja. Si cancelas la suscripción, ya no podrás usar los juegos instalados.
-Estos términos y condiciones pueden variar sin previo aviso.<br>
-    </body></html>
+        <div class="wrapper fadeInDown">
+            <div class="formContent">
+                <img
+                id="logo" src="@routes.Assets.at("images/logo.png")">
+                    <!-- Login Form -->
+                <span>
+                    <p class="titulo">
+                        <span style="font-weight: bold;">¿Qué es MaxGame?</span>
+                    </p>
+
+                    <p class="subtitulotyc">
+                        MaxGame es un servicio de suscripción que le da derecho al usuario que forma parte de él, a
+                        descargar, instalar y hacer uso de todos los juegos disponibles en el app o en la página web de
+                        forma ilimitada  MaxGame es un servicio de suscripción que le da derecho al usuario que forma parte de él, a
+                        descargar, instalar y hacer uso de todos los juegos disponibles en el app o en la página web de
+                        forma ilimitada.
+                    </p>
+                    <p class="titulo">
+                        <span style="font-weight: bold;">
+                            ¿Cómo afiliarse?</span>
+                    </p>
+                    <p class="subtitulotyc">
+                        Para ser parte de MaxGame, solo debes enviar un SMS con la palabra MAX al 3030. Recibirás un
+                        mensaje de confirmación con tus credenciales y un link para descargar el app. Una vez descargada,
+                        inicia sesión y disfruta sin límite todos los juegos que MaxGame tiene para ti. También puedes
+                        iniciar sesión desde la página web y descargar los juegos de forma ilimitada. La suscripción tiene
+                        un costo diario de PMVP BsS. @title con impuestos diarios para usuarios Movistar. Fecha de
+                        marcaje: @dater .
+                    </p>
+
+                    <p class="titulo">
+                        <span style="font-weight: bold;">
+                            ¿Cómo usar MaxGame?</span>
+                    </p>
+                    <p class="subtitulotyc">
+                        Una vez suscrito, descarga el app e inicia sesión con tus credenciales. También puedes iniciar
+                        sesión desde la página web. A partir de ese momento, podrás instalar y jugar de forma ilimitada
+                        todos los juegos que desees mientras estés suscrito al servicio.
+                        ¿Cómo descargar los juegos?
+                    </p>
+                    <p class="subtitulotyc">
+                        Puedes instalar un juego desde el app o la página web de MaxGame cuando te hayas suscrito al
+                        servicio y tengas una conexión a internet a través de Wi-Fi o datos móviles. Abre el app o el link de
+                        la página web, selecciona un juego y haz clic en Instalar.
+                        ¿Cómo recuperar mi contraseña?
+                    </p>
+
+                    <p class="subtitulotyc">
+                        Si estás suscrito, puedes recuperar tu contraseña enviando la palabra CLAVE al 3030. Recibirás un
+                        mensaje con tus datos para iniciar sesión en MaxGame. El costo del SMS enviado al 3030 puede
+                        variar de acuerdo al plan contratado por el usuario.
+                    </p>
+
+                    <p class="titulo">
+                        <span style="font-weight: bold;">
+                            ¿Cómo desafiliarse?</span>
+                    </p>
+                    <p class="subtitulotyc">
+                        Si ya no deseas formar parte de MaxGame, envía BAJAMAX al 3030 y espera el mensaje de
+                        confirmación de tu baja. Si cancelas la suscripción, ya no podrás usar los juegos instalados.
+                        Estos términos y condiciones pueden variar sin previo aviso.
+                    </p>
+                </span>
+                <div id="formFooter">
+                    <a class="underlineHover" href="/extapi/login">Volver</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

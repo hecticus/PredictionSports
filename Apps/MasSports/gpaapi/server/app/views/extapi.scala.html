@@ -10,24 +10,26 @@
 
         <!------ Include the above in your HEAD tag ---------->
 
-    <div class="wrapper fadeInDown">
-        <div id="formContent">
-                <!-- Login Form -->
-            <form action="/extapi/login" method="post" id="wepa">
-                <p class="titulo">Indique su numero de telefono y cotrasena para disfrutar de la plataforma</p>
-                @if(myError){
-                    <p style="color:red">Datos erroneos intente nuevamente</p>
-                }
-                <input type="text" id="msisdn" class="fadeIn second" name="msisdn" placeholder="Numero Telefono">
-                <input type="text" id="password" class="fadeIn third" name="contrasena" placeholder="contraseña">
-                <input type="submit" class="fadeIn fourth" value="acceder">
-            </form>
-
-                <!-- Remind Passowrd -->
-            <div id="formFooter">
+<div class="wrapper fadeInDown">
+    <div class="formContent">
+        <img id="logo" src="@routes.Assets.at("images/logo.png")">
+            <!-- Login Form -->
+        <form action="/extapi/login" method="post" id="wepa">
+            <p class="titulo">Bienvenido! Indica tu número de teléfono y contraseña para disfrutar de
+                <span style="font-weight: bold;">MAXGAME</span>
+            </p>
+            <input type="text" id="msisdn" class="fadeIn second" name="msisdn" placeholder="Numero Telefono">
+            <input type="text" id="password" class="fadeIn third" name="contrasena" placeholder="contraseña">
+            <input type="submit" class="fadeIn fourth rcorners4" value="acceder">
+            <br>
+            <span class="subtitulo">No estás suscrito y quieres disfrutar de MaxGame?
+                <br>Si eres usuario Movistar haz click
+                <a href="/extapi/sms">AQUI</a>
+                y sigue las instrucciones.</span>
+            <div id="formFooter" style="padding-bottom: 16px;">
                 <a class="underlineHover" href="/extapi/recover-password">Recuperar contraseña</a>
             </div>
-
-        </div>
+        </form>
     </div>
+</div>
 

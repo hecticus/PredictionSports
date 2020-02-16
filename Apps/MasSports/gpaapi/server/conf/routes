@@ -31,6 +31,7 @@ GET     /extapi/tyc                  controllers.AppLandController.TYC
 GET     /extapi/check-user           controllers.AppLandController.checkUser
 POST    /extapi/login                controllers.AppLandController.LoginPost
 GET     /extapi/recover-password     controllers.AppLandController.RecoverPassword
+GET     /extapi/sms                  controllers.AppLandController.Sms
 GET     /extapi/get-status/subscription/:service/:msisdn           controllers.AppLandController.GetStatus(service: String,msisdn: String)
 
 GET     /extapi/internal-status/:msisdn/:status           controllers.AppLandController.SendStatus(msisdn: String, status: Integer)

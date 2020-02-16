@@ -16,6 +16,7 @@ import services.dto.PushStatusClientAppLand;
 import services.kraken_servicio.KrakenServicio;
 import views.html.extapi;
 import views.html.recover_password;
+import views.html.appland_sms;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -106,6 +107,10 @@ public class AppLandController extends Controller {
 
     public Result RecoverPassword() {
         return ok(recover_password.render());
+    }
+
+    public Result Sms() {
+        return ok(appland_sms.render());
     }
 
     public Result checkUser() throws IOException {
