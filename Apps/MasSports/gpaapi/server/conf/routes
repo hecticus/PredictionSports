@@ -9,6 +9,7 @@ POST    /getpin                      controllers.WapSite.getpin
 GET     /tyc                         controllers.WapSite.tyc
 POST    /confirm                     controllers.WapSite.confirm
 GET     /externalconfirm             controllers.WapSite.confirmExternal
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                controllers.Assets.at(path="/public", file)
 
@@ -33,6 +34,7 @@ POST    /extapi/login                controllers.AppLandController.LoginPost
 GET     /extapi/recover-password     controllers.AppLandController.RecoverPassword
 GET     /extapi/sms                  controllers.AppLandController.Sms
 GET     /extapi/get-status/subscription/:service/:msisdn           controllers.AppLandController.GetStatus(service: String,msisdn: String)
+GET     /extapi/check-users-disables        controllers.AppLandController.GetDisabledAppLandClients
 
 GET     /extapi/internal-status/:msisdn/:status           controllers.AppLandController.SendStatus(msisdn: String, status: Integer)
 

@@ -9,6 +9,12 @@ import utils.WSHandler;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
 
 @Singleton
 public class KrakenServicio {
@@ -61,6 +67,30 @@ public class KrakenServicio {
             for (final JsonNode objNode : response.get("response")) {
                 ClienteExternoWebEntity value = mapper.readValue(objNode.toString(), ClienteExternoWebEntity.class);
                 return value;
+            }
+        }
+        return null;
+    }
+
+    public List<ClienteExternoWebEntity> obtenerUsuariosDeshabilitadosPorFecha() throws IOException {
+        ClienteExternoWebEntity clienteExterno = new ClienteExternoWebEntity();
+
+        Instant now = Instant.now(); //current date
+        Instant before = now.minus(Duration.ofDays(1));
+        Date dateBefore = Date.from(before);
+
+        String pattern = "yyyyMMdd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        String date = simpleDateFormat.format(dateBefore);
+        System.out.println(date);
+
+        JsonNode response =  WSHandler.instance().MakeGetJson(URL +  "/disable-list/6/" + date);
+        ObjectMapper mapper = new ObjectMapper();
+        if (response.get("response").isArray()) {
+            if (response.get("response").has("clients")) {
+                ClienteExternoWebEntity[] value = mapper.readValue(response.get("response").get("myList").asText() ,  ClienteExternoWebEntity[].class);
+                return new ArrayList<>(Arrays.asList(value));
             }
         }
         return null;

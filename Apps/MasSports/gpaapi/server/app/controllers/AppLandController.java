@@ -2,9 +2,11 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
 import modeles.ClienteAppland;
 import modeles.Config;
+import play.libs.Json;
 import play.mvc.Http;
 import services.client_externo_servicio.ClienteExternoServicio;
 import services.dto.ClienteExternoWebEntity;
@@ -20,6 +22,7 @@ import views.html.appland_sms;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 public class AppLandController extends Controller {
@@ -143,6 +146,13 @@ public class AppLandController extends Controller {
         String amount = Config.getString("current-amount");
         String dater = Config.getString("date-amount");
         return ok(views.html.tycappland.render(amount, dater));
+    }
+
+    public Result GetDisabledAppLandClients () throws IOException {
+        List<ClienteExternoWebEntity> respuonse = krakenServicio.obtenerUsuariosDeshabilitadosPorFecha();
+        ObjectNode result = Json.newObject();
+        //result.putObject("payload", respuonse);
+        return ok("");
     }
 }
 
