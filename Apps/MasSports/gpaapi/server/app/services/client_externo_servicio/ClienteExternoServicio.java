@@ -8,6 +8,7 @@ import services.kraken_servicio.KrakenServicio;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @Singleton
@@ -45,8 +46,9 @@ public class ClienteExternoServicio {
 
     public ClienteAppland obtenerClienteRenderPorMsisdn(String msisdn) {
         try {
-            ClienteAppland clienteAppland = finder.query().where().eq("msisdn", msisdn).findUnique();
-            return clienteAppland;
+            List<ClienteAppland> clienteAppland = finder.query().where().eq("msisdn", msisdn).findList();
+            if(clienteAppland.size() == 0) return null;
+            return clienteAppland.get(0);
         } catch (Exception e) {
             System.out.println("Error insertando Cliente Externo");
             return null;
