@@ -372,6 +372,11 @@ input[type=text]:placeholder {
     color: #89d236;
 }
 
+.titulo-error {
+    font-size: 55px;
+    padding: 16px;
+    color:red
+}
 
 #logo {
     width: 100%;

@@ -20,6 +20,9 @@
             </p>
             <input type="text" id="msisdn" class="fadeIn second  textboxes" name="msisdn" placeholder="Numero de Teléfono">
             <input type="text" id="password" class="fadeIn third  textboxes" name="contrasena" placeholder="Contraseña">
+            @if(myError) {
+                <p class="titulo-error">usuario o contraseña inválida!</p>
+            }
             <input type="submit" class="fadeIn fourth rcorners4" value="acceder">
             <br>
             <div class="cuadro-info">
