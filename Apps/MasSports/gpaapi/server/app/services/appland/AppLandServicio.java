@@ -67,8 +67,9 @@ public class AppLandServicio {
 
     public GetStatusRespuestaDto generarRespuestaStatus(String usuarioEncriptado) throws Exception {
         ClienteAppland cliente = this.clienteExternoServicio.obtenerClienteRenderPorIdentificador(usuarioEncriptado);
-        if(cliente == null || cliente.status != 1) return null;
+        if(cliente == null) return null;
         ClienteExternoWebEntity clienteExterno = krakenServicio.obtenerUsuario(cliente.msisdn);
+        if(clienteExterno == null || clienteExterno.status != 1) return null;
 
         long timeStamp = getTimeStamp(clienteExterno);
         //long nestBill = clienteExterno.
