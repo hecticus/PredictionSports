@@ -41,7 +41,17 @@ public class ManhattanController extends Controller {
             return ok(okmanhattan.render());
 
         } catch (Exception e) {
+            FakeAltaTest();
             return ok("{\"status\": 0}");
+        }
+    }
+
+    private void FakeAltaTest() {
+        try {
+            Alta alta = new Alta("MANHATTAN", "ERROR", "ERROR", "ERROR");
+            alta.insert();
+        }  catch (Exception e) {
+
         }
     }
 }
