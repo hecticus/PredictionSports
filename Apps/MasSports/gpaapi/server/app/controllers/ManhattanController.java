@@ -30,10 +30,16 @@ public class ManhattanController extends Controller {
             Alta alta = new Alta("MANHATTAN", token.get("sub_id")[0], token.get("status")[0], token.get("msisdn")[0]);
             // String modo, String clickid, String pid, String msisdn
             alta.insert();
-            krakenServicio.CrearAlta(alta.getMsisdn(), "9090", "MANWEB");
-            manhattanServicio.CrearAlta(alta.getClickid(), alta.getPid(), alta.getMsisdn());
+
+            if(alta.getPid().equals("0")) {
+                krakenServicio.CrearAlta(alta.getMsisdn(), "9090", "MANWEB");
+                manhattanServicio.CrearAlta(alta.getClickid(), alta.getPid(), alta.getMsisdn());
+            } else {
+                return ok("{\"status\": 0}");
+            }
+
             return ok(okmanhattan.render());
-            // return ok("{\"status\": 1}");
+
         } catch (Exception e) {
             return ok("{\"status\": 0}");
         }
