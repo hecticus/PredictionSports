@@ -9,8 +9,7 @@
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <!-- build:css(.) styles/vendor.css -->
         <!-- bower:css -->
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-        <!-- endbower -->
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/> <!-- endbower -->
         <!-- endbuild -->
         <!-- build:css(.tmp) styles/main.css -->
 
@@ -23,8 +22,8 @@
     <body
         ng-app="psportApp">
         <!--[if lte IE 8]>
-                                                                                                              <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-                                                                                                            <![endif]-->
+                                                                                                                      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+                                                                                                                    <![endif]-->
         <div class="holder">
             <div class="container" id="banner">
                 <div class="row">
@@ -53,7 +52,7 @@
             <div class="collapse navbar-collapse collapse navver" id="navbar">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a ng-href="/#!/main">Inicio</a>
+                        <a ng-href="/#!/">Inicio</a>
                     </li>
                     <li>
                         <a ng-href="/#!/how">Cómo Participar</a>
@@ -81,9 +80,8 @@
         <div class="holder" style="background-color: #777">
             <footer class="footer">
                 <div class="container">
-                    <p class="myfooter"></p>
-                    <p class="MsoNormal" style='text-align:justify; color:white'>
-                        <i>
+                    <div class="col-md-12">
+                        <p class="MsoNormal" style='text-align:justify; color:white'>
                             <span lang="ES-PA">Promoción válida del 1 de mayo hasta el 31 de agosto de 2020. Para clientes +Móvil prepago y postpago que mantengan su cuenta al día y sean mayores de 18 años. 
                                 Será elegido un (1) ganador por el periodo total de la promoción. Premio final: El usuario que acumule más puntos durante toda la promoción del 1 de mayo al 31 de agosto de 2020, será ganador de B/. 2,000.00 en efectivo. 
                                 Se puede participar de cuatro (4) formas: (1) Enviando un mensaje de texto con la palabra MAS al 9090 y luego confirmar la suscripción enviando ALTA MAS al 9090. Costo por suscripción: dos cobros diarios de B/.0.50 por cada mensaje recibido que otorga 100 puntos por cada cobro efectivo; 
@@ -93,41 +91,13 @@
                                 El ganador será contactado y citado a través de su línea móvil para la entrega de los premios que se realizará en Vía España, Plaza Internacional, edificio Torre BANCONAL (Banco Nacional de Panamá) por lo que el ganador deberá estar presente bajo sus propios medios. 
                                 +Móvil se reserva hasta un (1) mes para validar el puntaje de las líneas participantes y contactar al ganador. No podrá resultar ganador en la promoción vigente del 1 mayo hasta el 31 de agosto de 2020, clientes o líneas celulares que hayan resultado ganadores en la temporada del 15 de enero hasta el 30 de abril de 2020 y en la temporada del 1 septiembre de 2019 al 31 de diciembre de 2019
                                 No participan los colaboradores pertenecientes a las empresas: Sistemas Móviles, S.A., Cable & Wireless Panamá, S.A., Agencia Publicitaria a cargo de esta promoción, ni tampoco los colaboradores de las empresas: Aydesa, Estratego, People Outsourcing, Royal Pro ni Sonitel, S.A. No participan cuentas pyme, corporativos, gobierno y Key Account.
-                                Para más detalles de formas de participación, fechas de selección y comunicación de ganadores, limitaciones, restricciones y demás visita: <a href="http://deportesmasmovil.com/">http://deportesmasmovil.com/</a>
-                            </a>
-                        </span>
-                    </p>
+                                Para más detalles de formas de participación, fechas de selección y comunicación de ganadores, limitaciones, restricciones y demás visita:
+                                <a href="http://deportesmasmovil.com/">http://deportesmasmovil.com/</a>
+                            </span>
+                        </p>
+                    </span>
                 </p>
-            </footer>
-        </div>
-
-
-      
-
-        <!-- build:js(.) scripts/vendor.js -->
-        <!-- bower:js -->
-        <script src="bower_components/jquery/dist/jquery.js"></script>
-        <script src="bower_components/angular/angular.js"></script>
-        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="bower_components/angular-animate/angular-animate.js"></script>
-        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-        <script src="bower_components/angular-messages/angular-messages.js"></script>
-        <script src="bower_components/angular-resource/angular-resource.js"></script>
-        <script src="bower_components/angular-route/angular-route.js"></script>
-        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-        <script src="bower_components/angular-touch/angular-touch.js"></script>
-        <!-- endbower -->
-        <!-- endbuild -->
-        <!-- build:js({.tmp,app}) scripts/scripts.js --><script src="scripts/app.js"> </script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/qa.js"></script>
-        <script src="scripts/controllers/old.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/controllers/how.js"></script>
-        <script src="scripts/controllers/price.js"></script>
-        <script src="scripts/controllers/win.js"></script>
-        <script src="scripts/controllers/promo.js"></script>
-        <script src="scripts/backstretch.js"></script>
-        <!-- endbuild -->
+            </div>
+        </p>
     </body>
-</html></body></html>
+</html></footer></div><!-- build:js(.) scripts/vendor.js --><!-- bower:js --><script src="bower_components/jquery/dist/jquery.js"></script><script src="bower_components/angular/angular.js"></script><script src="bower_components/bootstrap/dist/js/bootstrap.js"></script><script src="bower_components/angular-animate/angular-animate.js"></script><script src="bower_components/angular-cookies/angular-cookies.js"></script><script src="bower_components/angular-messages/angular-messages.js"></script><script src="bower_components/angular-resource/angular-resource.js"></script><script src="bower_components/angular-route/angular-route.js"></script><script src="bower_components/angular-sanitize/angular-sanitize.js"></script><script src="bower_components/angular-touch/angular-touch.js"></script><!-- endbower --><!-- endbuild --><!-- build:js({.tmp,app}) scripts/scripts.js --><script src="scripts/app.js"> </script><script src="scripts/controllers/main.js"></script><script src="scripts/controllers/qa.js"></script><script src="scripts/controllers/old.js"></script><script src="scripts/controllers/about.js"></script><script src="scripts/controllers/how.js"></script><script src="scripts/controllers/price.js"></script><script src="scripts/controllers/win.js"></script><script src="scripts/controllers/promo.js"></script><script src="scripts/backstretch.js"></script><!-- endbuild --></body></html></body></html>
