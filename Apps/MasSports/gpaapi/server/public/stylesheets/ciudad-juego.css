@@ -31,10 +31,6 @@ h2 {
     padding-bottom: 16px;
 }
 
-
-
-/* STRUCTURE */
-
 .wrapper {
     display: flex;
     align-items: center;
@@ -48,7 +44,7 @@ h2 {
 
 @media only screen and (max-width: 1080px) {
     .formContent {
-        background: #0093ed;
+        background: #c0c0c0;
         -webkit-border-radius: 10px 10px 10px 10px;
         border-radius: 10px 10px 10px 10px;
         padding: 30px;
@@ -65,7 +61,7 @@ h2 {
 
 @media only screen and (min-width: 1080px) {
     .formContent {
-        background: #0093ed;
+        background: #c0c0c0;
         -webkit-border-radius: 10px 10px 10px 10px;
         border-radius: 10px 10px 10px 10px;
         padding: 30px;
@@ -88,11 +84,12 @@ h2 {
 }
 
 .cuadro-info {
-    background: -moz-linear-gradient(left, rgba(102,102,102,0) 0%, rgba(102,102,102,0) 1%, rgba(102,102,102,0.8) 15%, rgba(102,102,102,1) 50%, rgba(102,102,102,0.8) 85%, rgba(102,102,102,0) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left, rgba(102,102,102,0) 0%,rgba(102,102,102,0) 1%,rgba(102,102,102,0.8) 15%,rgba(102,102,102,1) 50%,rgba(102,102,102,0.8) 85%,rgba(102,102,102,0) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right, rgba(102,102,102,0) 0%,rgba(102,102,102,0) 1%,rgba(102,102,102,0.8) 15%,rgba(102,102,102,1) 50%,rgba(102,102,102,0.8) 85%,rgba(102,102,102,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00666666', endColorstr='#00666666',GradientType=1 ); /* IE6-9 */
+    margin: 0 -32px 0 -32px;
+    background-color: lightgrey;
     padding: 16px;
+    border-radius: 15px;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
 }
 
 .second {
@@ -118,8 +115,12 @@ h2 {
 }
 
 #formFooter>a {
-    color: #89d236;
+    color: #cd0606;
 }
+
+
+
+/* TABS */
 
 h2.inactive {
     color: #cccccc;
@@ -137,7 +138,6 @@ h2.active {
 input[type=button],
 input[type=submit],
 input[type=reset] {
-
     background-color: #56baed;
     border: none;
     color: white;
@@ -327,7 +327,6 @@ input[type=text]:placeholder {
     width: calc(100% - 128px);
     height: 128px;
     font-size: 32px !important;
-    border: 5px solid white; !important
 }
 
 
@@ -344,19 +343,13 @@ input[type=text]:placeholder {
 .titulo {
     font-size: 55px;
     padding: 16px;
-    color: #fff;
-}
-
-.titulotyc {
-    font-size: 55px;
-    padding: 16px;
-    color: #89d236;
+    color: #666;
 }
 
 .subtitulo {
     font-size: 44px;
     padding: 8px;
-    color: #fff;
+    color: #666;
 }
 
 .subtitulo>a {
@@ -366,7 +359,7 @@ input[type=text]:placeholder {
 .subtitulotyc {
     font-size: 12px;
     padding: 16px;
-    color: #fff;
+    color: #666;
 }
 
 .subtitulotyc>a {
@@ -382,8 +375,7 @@ input[type=text]:placeholder {
 #logo {
     width: 100%;
     padding-left: 32px;
+    top: -150px;
+    margin-top: -64px;
     padding-right: 32px;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    margin-bottom: 16px;
 }
