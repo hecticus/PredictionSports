@@ -13,6 +13,7 @@ import services.dto.ClienteExternoWebEntity;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.appland.AppLandServicio;
+import services.dto.ClienteServicioDisableListResponseDto;
 import services.dto.GetStatusRespuestaDto;
 import services.dto.PushStatusClientAppLand;
 import services.kraken_servicio.KrakenServicio;
@@ -107,7 +108,6 @@ public class AppLandController extends Controller {
         return ok();
     }
 
-
     public Result RecoverPassword() {
         return ok(recover_password.render());
     }
@@ -149,7 +149,22 @@ public class AppLandController extends Controller {
     }
 
     public Result GetDisabledAppLandClients () throws IOException {
-        List<ClienteExternoWebEntity> respuonse = krakenServicio.obtenerUsuariosDeshabilitadosPorFecha();
+        List<ClienteServicioDisableListResponseDto> clientes = krakenServicio.obtenerUsuariosDeshabilitadosPorFecha();
+        for (ClienteServicioDisableListResponseDto cliente : clientes) {
+            ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRenderPorMsisdn(cliente.client.msisdn);
+            if(clienteAppland != null) {
+                PushStatusClientAppLand payload = new PushStatusClientAppLand();
+                payload.event =  "SUBSCRIPTION_END";
+                payload.isEligible = true;
+                payload.nextRenewal = 99999999;
+                payload.numberOfConcurrentSessions = 1;
+                payload.numberOfProfiles = 1;
+                payload.user =  clienteAppland.identifier;
+
+                this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload);
+            }
+        }
+
         ObjectNode result = Json.newObject();
         //result.putObject("payload", respuonse);
         return ok("");

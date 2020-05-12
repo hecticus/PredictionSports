@@ -2,8 +2,10 @@ package services.kraken_servicio;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import services.dto.ClienteExternoWebEntity;
 import play.libs.ws.WSClient;
+import services.dto.ClienteServicioDisableListResponseDto;
 import utils.WSHandler;
 
 import javax.inject.Inject;
@@ -75,11 +77,11 @@ public class KrakenServicio {
         return null;
     }
 
-    public List<ClienteExternoWebEntity> obtenerUsuariosDeshabilitadosPorFecha() throws IOException {
+    public List<ClienteServicioDisableListResponseDto> obtenerUsuariosDeshabilitadosPorFecha() throws IOException {
         ClienteExternoWebEntity clienteExterno = new ClienteExternoWebEntity();
 
         Instant now = Instant.now(); //current date
-        Instant before = now.minus(Duration.ofDays(1));
+        Instant before = now.minus(Duration.ofDays(7));
         Date dateBefore = Date.from(before);
 
         String pattern = "yyyyMMdd";
@@ -90,12 +92,11 @@ public class KrakenServicio {
 
         JsonNode response =  WSHandler.instance().MakeGetJson(URL +  "/disable-list/6/" + date);
         ObjectMapper mapper = new ObjectMapper();
-        if (response.get("response").isArray()) {
-            if (response.get("response").has("clients")) {
-                ClienteExternoWebEntity[] value = mapper.readValue(response.get("response").get("myList").asText() ,  ClienteExternoWebEntity[].class);
-                return new ArrayList<>(Arrays.asList(value));
-            }
+        if (response.get("response")!= null && response.get("response").has("clients")) {
+            Gson gson = new Gson();
+            ClienteServicioDisableListResponseDto[] value = gson.fromJson(response.get("response").get("clients").toString() ,  ClienteServicioDisableListResponseDto[].class);
+            return new ArrayList<>(Arrays.asList(value));
         }
-        return null;
+        return new ArrayList<ClienteServicioDisableListResponseDto>();
     }
 }
