@@ -120,7 +120,9 @@ public class AppLandController extends Controller {
         if(request().queryString().containsKey("ott")) {
             response().setCookie(Http.Cookie.builder("ott",  request().getQueryString("ott") ).withMaxAge(15).build());
         }
-        return ok(appland_sms.render());
+
+        String amount = Config.getString("current-amount");
+        return ok(appland_sms.render(amount));
     }
 
     public Result checkUser() throws IOException {
