@@ -113,6 +113,13 @@ public class AppLandController extends Controller {
     }
 
     public Result Sms() {
+        if(request().queryString().containsKey("callback")) {
+            response().setCookie(Http.Cookie.builder("callback",  request().getQueryString("callback") ).withMaxAge(15).build());
+        }
+
+        if(request().queryString().containsKey("ott")) {
+            response().setCookie(Http.Cookie.builder("ott",  request().getQueryString("ott") ).withMaxAge(15).build());
+        }
         return ok(appland_sms.render());
     }
 

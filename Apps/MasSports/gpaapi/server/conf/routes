@@ -20,41 +20,27 @@ GET     /header                      controllers.RegisterController.CheckHeader(
 GET     /pal/config                  controllers.RegisterController.Config
 GET     /pal/test                    controllers.RegisterController.Test
 
-
 GET     /promotion                   controllers.PromocionesController.CheckPromotion
 GET     /login-render                controllers.RenderLoginController.GetLogin
-
 GET     /manhattan/confirmurl        controllers.ManhattanController.CheckPromotion
 
-
-GET     /extapi/login                controllers.AppLandController.Login
+GET     /extapi/login-form           controllers.AppLandController.Login
 GET     /extapi/tyc                  controllers.AppLandController.TYC
 GET     /extapi/check-user           controllers.AppLandController.checkUser
 POST    /extapi/login                controllers.AppLandController.LoginPost
 GET     /extapi/recover-password     controllers.AppLandController.RecoverPassword
-GET     /extapi/sms                  controllers.AppLandController.Sms
-GET     /extapi/get-status/subscription/:service/:msisdn           controllers.AppLandController.GetStatus(service: String,msisdn: String)
-GET     /extapi/check-users-disables        controllers.AppLandController.GetDisabledAppLandClients
-
-GET     /extapi/login                controllers.AppLandController.Login
-GET     /extapi/tyc                  controllers.AppLandController.TYC
-GET     /extapi/check-user           controllers.AppLandController.checkUser
-POST    /extapi/login                controllers.AppLandController.LoginPost
-GET     /extapi/recover-password     controllers.AppLandController.RecoverPassword
-GET     /extapi/sms                  controllers.AppLandController.Sms
+GET     /extapi/login                  controllers.AppLandController.Sms
 GET     /extapi/get-status/subscription/:service/:msisdn           controllers.AppLandController.GetStatus(service: String,msisdn: String)
 GET     /extapi/check-users-disables        controllers.AppLandController.GetDisabledAppLandClients
 GET     /extapi/internal-status/:msisdn/:status           controllers.AppLandController.SendStatus(msisdn: String, status: Integer)
-GET     /extapi                controllers.AppLandController.Login
 
-GET     /cj/login                controllers.CiudadJuegoApplandController.Login
+GET     /cj/login-form           controllers.CiudadJuegoApplandController.Login
 GET     /cj/tyc                  controllers.CiudadJuegoApplandController.TYC
 GET     /cj/check-user           controllers.CiudadJuegoApplandController.checkUser
 POST    /cj/login                controllers.CiudadJuegoApplandController.LoginPost
 GET     /cj/recover-password     controllers.CiudadJuegoApplandController.RecoverPassword
-GET     /cj/sms                  controllers.CiudadJuegoApplandController.Sms
+GET     /cj/login                controllers.CiudadJuegoApplandController.Sms
 GET     /cj/get-status/subscription/:service/:msisdn           controllers.CiudadJuegoApplandController.GetStatus(service: String,msisdn: String)
 GET     /cj/check-users-disables        controllers.CiudadJuegoApplandController.GetDisabledAppLandClients
-GET     /cj                controllers.CiudadJuegoApplandController.Login
 
 #GET     /user/findByEmail/:email    controllers.Users.findByEmail(email: String)
