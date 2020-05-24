@@ -345,6 +345,18 @@ input[type=text]:placeholder {
     color: #fff;
 }
 
+.titulotyc {
+    font-size: 55px;
+    padding: 16px;
+    color: #89d236 ;
+}
+
+.titulotyc2 {
+    font-size: 44px;
+    padding: 16px;
+    color: #000 ;
+}
+
 .subtitulo {
     font-size: 44px;
     padding: 8px;
@@ -355,8 +367,14 @@ input[type=text]:placeholder {
     color: #89d236;
 }
 
+
+.subtitulotyc2 {
+    font-size: 44px;
+    padding: 16px;
+    color: #000;
+}
 .subtitulotyc {
-    font-size: 12px;
+    font-size: 44px;
     padding: 16px;
     color: #fff;
 }
