@@ -112,7 +112,7 @@ public class CiudadJuegoApplandController extends Controller {
     }
 
     public Result Sms() {
-        if(request().queryString().containsKey("callback")) {
+         if(request().queryString().containsKey("callback")) {
             response().setCookie(Http.Cookie.builder("callback",  request().getQueryString("callback") ).withMaxAge(15).build());
         }
 
