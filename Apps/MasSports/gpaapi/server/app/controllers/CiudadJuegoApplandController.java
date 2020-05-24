@@ -112,7 +112,16 @@ public class CiudadJuegoApplandController extends Controller {
     }
 
     public Result Sms() {
-        return ok(sms.render());
+        if(request().queryString().containsKey("callback")) {
+            response().setCookie(Http.Cookie.builder("callback",  request().getQueryString("callback") ).withMaxAge(15).build());
+        }
+
+        if(request().queryString().containsKey("ott")) {
+            response().setCookie(Http.Cookie.builder("ott",  request().getQueryString("ott") ).withMaxAge(15).build());
+        }
+
+        String amount = Config.getString("current-amount");
+        return ok(sms.render(amount));
     }
 
     public Result checkUser() throws IOException {
@@ -164,7 +173,6 @@ public class CiudadJuegoApplandController extends Controller {
             }
         }
         ObjectNode result = Json.newObject();
-        //result.putObject("payload", respuonse);
         return ok("");
     }
 }

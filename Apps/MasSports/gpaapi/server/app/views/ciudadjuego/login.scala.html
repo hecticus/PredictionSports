@@ -1,31 +1,50 @@
 @(myError: Boolean)
-<head>
-    <title>login</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/ciudad-juego.css")">
-</head>
 
-    <!------ Include the above in your HEAD tag ---------->
-<body>
-    <div class="wrapper fadeInDown">
-        <div class="formContent">
-                <!-- Login Form -->
-            <form action="/cj/login" method="post" id="wepa">
-                <p class="titulo">Bienvenido! Indica tu número de teléfono y contraseña para disfrutar </p>
-                <input type="text" id="msisdn" class="fadeIn second  textboxes" name="msisdn" placeholder="Numero de Teléfono">
-                <input type="text" id="password" class="fadeIn third  textboxes" name="contrasena" placeholder="Contraseña">
-                @if(myError) {
-                    <p class="titulo-error">usuario o contraseña inválida!</p>
-                }
-                <input type="submit" class="fadeIn fourth rcorners4" value="acceder">
-                <br>
-                <div id="formFooter">
-                    <a class="underlineHover" href="/cj/recover-password">Recuperar contraseña</a>
-                </div>
-            </form>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>login</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/ciudad-juego.css")">
+    </head>
+    <body>
+
+        <div class="wrapper fadeInDown">
+            <div class="formContent top">
+                <img id="logo" src="@routes.Assets.at("ciudadjuego/images/logo.png")">
+            </div>
+            <br>
+            <div class="formContent">
+                <form action="/cj/login" method="post" id="wepa">
+                    <p class="titulo">Bienvenido! Indica tu número de teléfono y contraseña para disfrutar de
+                        <span style="font-weight: bold;">CIUDAD JUEGO</span>
+                    </p>
+                    <input type="text" id="msisdn" class="fadeIn second  textboxes" name="msisdn" placeholder="Numero de Teléfono">
+                    <input type="text" id="password" class="fadeIn third  textboxes" name="contrasena" placeholder="Contraseña">
+                    @if(myError) {
+                        <p class="titulo-error">usuario o contraseña inválida!</p>
+                    }
+
+                    <input type="submit" class="fadeIn fourth rcorners4" value="acceder">
+                    <div id="formFooter">
+                        <a class="underlineHover" href="/cj/recover-password">Recuperar contraseña</a>
+                    </div>
+                    <br>
+                    <div class="cuadro-info">
+                        <div class="subtitulo">
+                            ¿No estás suscrito y quieres disfrutar de Ciudad Juego?
+                            Haz click <a href="/cj/sms">AQUI</a>
+                            <br>
+                            (solo usuarios Digitel)
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                </form>
+            </div>
         </div>
-    </div>
-</body>l
+    </body>
+</html>

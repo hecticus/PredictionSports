@@ -1,24 +1,46 @@
-@()
-<head>
-    <title>login</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/ciudad-juego.css")">
-</head>
-<body>
-    <div class="wrapper fadeInDown">
-        <div class="formContent">
-            <div id="wepa" class="second">
-                <p class="titulo reset">
-                    Envía un SMS
-                </p>
+@(amount: String)
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>login</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/ciudad-juego.css")">
+    </head>
+    <body>
+        <div class="wrapper fadeInDown">
+            <div class="formContent top">
+                <img id="logo" src="@routes.Assets.at("ciudadjuego/images/logo.png")">
             </div>
-            <div id="formFooter">
-                <a class="underlineHover" href="/cj/login">Volver</a>
+            <br>
+            <div class="formContent">
+                <div id="wepa" class="second">
+                    <p class="titulo reset">
+                    Afíliate ya y obtendrás acceso a jugar cientos de juegos en tu celular, tableta o computadora!
+                    </p>
+                    <p class="titulo reset">
+                        Solo tienes que enviar un mensaje de texto con la palabra
+                        <span style="font-weight: bold; color: black">JUEGO</span>
+                        al
+                        <span style="font-weight: bold; color: black">7575</span>
+                    </p>
+                    <p class="titulo reset">
+                        (PMVP Bs. @amount con impuestos incluidos).
+                    </p>
+                </div>
+                <div id="formFooter">
+                    <p class="titulo reset">
+                    Si ya estás suscrito presiona
+                    </p>
+
+                    <a class="fadeIn fourth rcorners4 smsbutton" href="/cj/login">AQUI</a>
+                </div>
             </div>
+
         </div>
-    </div>
-</body>
+    </body>
+</html>
 

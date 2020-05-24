@@ -44,7 +44,7 @@ h2 {
 
 @media only screen and (max-width: 1080px) {
     .formContent {
-        background: #c0c0c0;
+        background: #0db5e7;
         -webkit-border-radius: 10px 10px 10px 10px;
         border-radius: 10px 10px 10px 10px;
         padding: 30px;
@@ -61,7 +61,7 @@ h2 {
 
 @media only screen and (min-width: 1080px) {
     .formContent {
-        background: #c0c0c0;
+        background: #0db5e7;
         -webkit-border-radius: 10px 10px 10px 10px;
         border-radius: 10px 10px 10px 10px;
         padding: 30px;
@@ -84,12 +84,11 @@ h2 {
 }
 
 .cuadro-info {
-    margin: 0 -32px 0 -32px;
-    background-color: lightgrey;
-    padding: 16px;
-    border-radius: 15px;
-    -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
-    box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+    background: -moz-linear-gradient(left, rgba(50,80,110,0) 0%, rgba(50,80,110,0) 1%, rgba(50,80,110,0.8) 15%, rgba(50,80,110,1) 50%, rgba(50,80,110,0.8) 85%, rgba(50,80,110,0) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, rgba(50,80,110,0) 0%,rgba(50,80,110,0) 1%,rgba(50,80,110,0.8) 15%,rgba(50,80,110,1) 50%,rgba(50,80,110,0.8) 85%,rgba(50,80,110,0) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, rgba(50,80,110,0) 0%,rgba(50,80,110,0) 1%,rgba(50,80,110,0.8) 15%,rgba(50,80,110,1) 50%,rgba(50,80,110,0.8) 85%,rgba(50,80,110,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
+    padding: 48px;
 }
 
 .second {
@@ -343,13 +342,13 @@ input[type=text]:placeholder {
 .titulo {
     font-size: 55px;
     padding: 16px;
-    color: #666;
+    color: #fff;
 }
 
 .subtitulo {
     font-size: 44px;
     padding: 8px;
-    color: #666;
+    color: #fff;
 }
 
 .subtitulo>a {
@@ -359,7 +358,7 @@ input[type=text]:placeholder {
 .subtitulotyc {
     font-size: 12px;
     padding: 16px;
-    color: #666;
+    color: #fff;
 }
 
 .subtitulotyc>a {
@@ -374,8 +373,18 @@ input[type=text]:placeholder {
 
 #logo {
     width: 100%;
-    padding-left: 32px;
-    top: -150px;
-    margin-top: -64px;
-    padding-right: 32px;
+    padding: 16px;
+}
+
+.top {
+    background-color: white !important;
+    background: white !important;
+}
+
+.smsbutton {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 64px;
+    margin-top: 0 !important;
 }
