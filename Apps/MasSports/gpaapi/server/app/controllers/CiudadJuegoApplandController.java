@@ -57,6 +57,10 @@ public class CiudadJuegoApplandController extends Controller {
         String msisdn = aux.get("msisdn")[0];
         String contrasena = aux.get("contrasena")[0];
 
+        if(msisdn.startsWith("0412") == false){
+            return ok(login.render(true));
+        }
+
         ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRenderSincronizadoConKraken(msisdn, contrasena, 6);
         if (clienteAppland != null) {
             if (contrasena != null && contrasena.equals(clienteAppland.password)) {

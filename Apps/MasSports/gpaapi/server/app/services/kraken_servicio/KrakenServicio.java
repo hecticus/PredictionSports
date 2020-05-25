@@ -35,6 +35,9 @@ public class KrakenServicio {
 
     public ClienteExternoWebEntity obtenerUsuario(String msisdn, String business, String carrier, String country) throws IOException {
         ClienteExternoWebEntity clienteExterno = new ClienteExternoWebEntity();
+        if(msisdn.startsWith("0412")){
+            msisdn.replace("0412", "58412");
+        }
         JsonNode response =  WSHandler.instance().MakeGetJson(URL +  "/" + msisdn +  "/" + business +  "/" + carrier +  "/" + country);
         ObjectMapper mapper = new ObjectMapper();
         if (response.get("response").isArray()) {
@@ -49,6 +52,9 @@ public class KrakenServicio {
 
     public ClienteExternoWebEntity obtenerUsuario(String msisdn, String password, int country) throws IOException {
         ClienteExternoWebEntity clienteExterno = new ClienteExternoWebEntity();
+        if(msisdn.startsWith("0412")){
+            msisdn.replace("0412", "58412");
+        }
         JsonNode response =  WSHandler.instance().MakeGetJson(URL +  "-recover/" + msisdn +  "/" + country +  "/" + password);
         ObjectMapper mapper = new ObjectMapper();
         response  = response.get("response");
@@ -63,6 +69,9 @@ public class KrakenServicio {
 
     public ClienteExternoWebEntity obtenerUsuario(String msisdn) throws IOException {
         ClienteExternoWebEntity clienteExterno = new ClienteExternoWebEntity();
+        if(msisdn.startsWith("0412")){
+            msisdn.replace("0412", "58412");
+        }
         JsonNode response =  WSHandler.instance().MakeGetJson(URL +  "/" + msisdn +  "/6");
         ObjectMapper mapper = new ObjectMapper();
         response  = response.get("response");

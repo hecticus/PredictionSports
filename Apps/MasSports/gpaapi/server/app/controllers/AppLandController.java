@@ -57,6 +57,10 @@ public class AppLandController extends Controller {
         String msisdn = aux.get("msisdn")[0];
         String contrasena = aux.get("contrasena")[0];
 
+        if(!(msisdn.startsWith("0414") || msisdn.startsWith("0424") || msisdn.startsWith("0414"))){
+            return ok(extapi.render(true));
+        }
+
         ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRenderSincronizadoConKraken(msisdn, contrasena, 6);
         if (clienteAppland != null) {
             if (contrasena != null && contrasena.equals(clienteAppland.password)) {
