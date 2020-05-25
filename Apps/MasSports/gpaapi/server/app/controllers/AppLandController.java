@@ -113,12 +113,6 @@ public class AppLandController extends Controller {
     }
 
     public Result Sms() {
-        if (request().queryString().containsKey("subscription")) {
-            String service = request().getQueryString("subscription");
-            if (service.equals("HECTI_CIUDA_U_VE")) {
-                return redirect("/cj/login");
-            }
-        }
 
         if (request().queryString().containsKey("callback")) {
             response().setCookie(Http.Cookie.builder("callback", request().getQueryString("callback")).withMaxAge(15).build());
@@ -126,6 +120,13 @@ public class AppLandController extends Controller {
 
         if (request().queryString().containsKey("ott")) {
             response().setCookie(Http.Cookie.builder("ott", request().getQueryString("ott")).withMaxAge(15).build());
+        }
+
+        if (request().queryString().containsKey("subscription")) {
+            String service = request().getQueryString("subscription");
+            if (service.equals("HECTI_CIUDA_U_VE")) {
+                return redirect("/cj/login");
+            }
         }
 
         String amount = Config.getString("current-amount");
