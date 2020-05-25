@@ -31,6 +31,7 @@ public class CiudadJuegoApplandController extends Controller {
     private KrakenServicio krakenServicio;
     private AppLandServicio applandServicio;
     private ClienteExternoServicio clienteExternoServicio;
+    private String subscriptionId = "HECTI_CIUDA_U_VE";
 
     @Inject
     public CiudadJuegoApplandController(KrakenServicio krakenServicio, AppLandServicio applandServicio, ClienteExternoServicio clienteExternoServicio) {
@@ -68,7 +69,7 @@ public class CiudadJuegoApplandController extends Controller {
                 }
 
 
-                String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteAppland.identifier, rutaOpcional);
+                String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteAppland.identifier, rutaOpcional, subscriptionId);
                 rutaRedirect = rutaRedirect + extra;
                 PushStatusClientAppLand payload = new PushStatusClientAppLand();
                 payload.event = "SUBSCRIBE";
@@ -78,7 +79,7 @@ public class CiudadJuegoApplandController extends Controller {
                 payload.numberOfProfiles = 1;
                 payload.user = clienteAppland.identifier;
 
-                this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload);
+                this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload, subscriptionId);
                 return redirect(rutaRedirect);
             }
         }
@@ -103,7 +104,7 @@ public class CiudadJuegoApplandController extends Controller {
         payload.numberOfConcurrentSessions = 1;
         payload.numberOfProfiles = 1;
         payload.user = "12345678";
-        this.applandServicio.comunicarStatus("POST", "12345678", payload);
+        this.applandServicio.comunicarStatus("POST", "12345678", payload, subscriptionId);
         return ok();
     }
 
@@ -145,7 +146,7 @@ public class CiudadJuegoApplandController extends Controller {
             payload.numberOfProfiles = 1;
             payload.user = clienteAppland.identifier;
 
-            this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload);
+            this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload, subscriptionId);
         }
         return ok();
     }
@@ -169,7 +170,7 @@ public class CiudadJuegoApplandController extends Controller {
                 payload.numberOfProfiles = 1;
                 payload.user = clienteAppland.identifier;
 
-                this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload);
+                this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload, subscriptionId);
             }
         }
         ObjectNode result = Json.newObject();

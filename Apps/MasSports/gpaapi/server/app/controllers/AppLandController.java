@@ -31,6 +31,7 @@ public class AppLandController extends Controller {
     private KrakenServicio krakenServicio;
     private AppLandServicio applandServicio;
     private ClienteExternoServicio clienteExternoServicio;
+    private String SubcriptionId = "HECTI_MOVIS_U_VE";
 
     @Inject
     public AppLandController(KrakenServicio krakenServicio, AppLandServicio applandServicio, ClienteExternoServicio clienteExternoServicio) {
@@ -68,7 +69,7 @@ public class AppLandController extends Controller {
                 }
 
 
-                String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteAppland.identifier, rutaOpcional);
+                String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteAppland.identifier, rutaOpcional,"HECTI_MOVIS_U_VE");
                 rutaRedirect = rutaRedirect + extra;
                 PushStatusClientAppLand payload = new PushStatusClientAppLand();
                 payload.event = "SUBSCRIBE";
@@ -78,7 +79,7 @@ public class AppLandController extends Controller {
                 payload.numberOfProfiles = 1;
                 payload.user = clienteAppland.identifier;
 
-                this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload);
+                this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload, SubcriptionId);
                 return redirect(rutaRedirect);
             }
         }
@@ -104,7 +105,7 @@ public class AppLandController extends Controller {
         payload.numberOfConcurrentSessions = 1;
         payload.numberOfProfiles = 1;
         payload.user = "12345678";
-        this.applandServicio.comunicarStatus("POST", "12345678", payload);
+        this.applandServicio.comunicarStatus("POST", "12345678", payload, SubcriptionId);
         return ok();
     }
 
@@ -154,7 +155,7 @@ public class AppLandController extends Controller {
             payload.numberOfProfiles = 1;
             payload.user = clienteAppland.identifier;
 
-            this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload);
+            this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload, SubcriptionId);
         }
         return ok();
     }
@@ -178,7 +179,7 @@ public class AppLandController extends Controller {
                 payload.numberOfProfiles = 1;
                 payload.user = clienteAppland.identifier;
 
-                this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload);
+                this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload, SubcriptionId);
             }
         }
 

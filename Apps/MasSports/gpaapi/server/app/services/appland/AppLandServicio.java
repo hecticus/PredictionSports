@@ -42,7 +42,7 @@ public class AppLandServicio {
         this.clienteExternoServicio = clienteExternoServicio;
     }
 
-    public void comunicarStatus(String metodo, String subscripcionId, PushStatusClientAppLand payload){
+    public void comunicarStatus(String metodo, String userId, PushStatusClientAppLand payload, String subscriptionId){
         long timestamp = obtenerTimeStamp();
         //payload.nextRenewal = timestamp  + 86400;
 //        timestamp = 1574801566;
@@ -52,7 +52,7 @@ public class AppLandServicio {
         String parsedPayload = gson.toJson(payload).replace(":", ": ").replace(",", ", ");
         // String parsedPayload = "{\"isEligible\": true, \"event\": \"SUBSCRIBE\", \"user\": \"c6f4d0fb-c2bd-4b6a-8393-b638b2620a14\", \"nextRenewal\": 1574831566, \"numberOfProfiles\": 4, \"numberOfConcurrentSessions\": 4}";
 
-        String message = metodo.toUpperCase() + "\r\n" + subscriptionId  + "\r\n" + timestamp + "\r\n" + parsedPayload;
+        String message = metodo.toUpperCase() + "\r\n" + userId  + "\r\n" + timestamp + "\r\n" + parsedPayload;
         System.out.println(message);
         ManejadorEncriptacion ec = new ManejadorEncriptacion();
         String str = ec.encriptar(serviceSecret, message);
@@ -88,7 +88,7 @@ public class AppLandServicio {
         return manana.getTime() / 1000L;
     }
 
-    public String obternerRutaDeRedirect(String usuario, String rutaOpcional) {
+    public String obternerRutaDeRedirect(String usuario, String rutaOpcional, String subscriptionId) {
         String currentRuta = "https://api.appland.se/api/subscription/onsubscribe/";
         String token = this.crearTokenAppland(usuario);
         return  (rutaOpcional == null? currentRuta: rutaOpcional)  + subscriptionId + "?token=" + token;
