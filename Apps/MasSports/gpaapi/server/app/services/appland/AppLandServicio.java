@@ -51,8 +51,8 @@ public class AppLandServicio {
         payload.numberOfConcurrentSessions = 4;
         String parsedPayload = gson.toJson(payload).replace(":", ": ").replace(",", ", ");
         // String parsedPayload = "{\"isEligible\": true, \"event\": \"SUBSCRIBE\", \"user\": \"c6f4d0fb-c2bd-4b6a-8393-b638b2620a14\", \"nextRenewal\": 1574831566, \"numberOfProfiles\": 4, \"numberOfConcurrentSessions\": 4}";
-
-        String message = metodo.toUpperCase() + "\r\n" + userId  + "\r\n" + timestamp + "\r\n" + parsedPayload;
+//                                 {"isEligible": true, "event": "SUBSCRIBE", "user": "c6f4d0fb-c2bd-4b6a-8393-b638b2620a14", "nextRenewal": 99999999, "numberOfProfiles": 4, "numberOfConcurrentSessions": 4}
+        String message = metodo.toUpperCase() + "\r\n" + subscriptionId  + "\r\n" + timestamp + "\r\n" + parsedPayload;
         System.out.println(message);
         ManejadorEncriptacion ec = new ManejadorEncriptacion();
         String str = ec.encriptar(serviceSecret, message);
