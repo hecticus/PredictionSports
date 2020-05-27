@@ -36,13 +36,13 @@ public class AppLandServicio {
     private Gson gson = new Gson();
 
     @Inject
-    public AppLandServicio(ManejadorDeContrasenas manejadorDeEncriptacion, KrakenServicio krakenServicio, ClienteExternoServicio clienteExternoServicio){
+    public AppLandServicio(ManejadorDeContrasenas manejadorDeEncriptacion, KrakenServicio krakenServicio, ClienteExternoServicio clienteExternoServicio) {
         this.manejadorDeEncriptacion = manejadorDeEncriptacion;
         this.krakenServicio = krakenServicio;
         this.clienteExternoServicio = clienteExternoServicio;
     }
 
-    public void comunicarStatus(String metodo, String userId, PushStatusClientAppLand payload, String subscriptionId){
+    public void comunicarStatus(String metodo, String userId, PushStatusClientAppLand payload, String subscriptionId) {
         long timestamp = obtenerTimeStamp();
         //payload.nextRenewal = timestamp  + 86400;
 //        timestamp = 1574801566;
@@ -52,7 +52,7 @@ public class AppLandServicio {
         String parsedPayload = gson.toJson(payload).replace(":", ": ").replace(",", ", ");
         // String parsedPayload = "{\"isEligible\": true, \"event\": \"SUBSCRIBE\", \"user\": \"c6f4d0fb-c2bd-4b6a-8393-b638b2620a14\", \"nextRenewal\": 1574831566, \"numberOfProfiles\": 4, \"numberOfConcurrentSessions\": 4}";
 //                                 {"isEligible": true, "event": "SUBSCRIBE", "user": "c6f4d0fb-c2bd-4b6a-8393-b638b2620a14", "nextRenewal": 99999999, "numberOfProfiles": 4, "numberOfConcurrentSessions": 4}
-        String message = metodo.toUpperCase() + "\r\n" + subscriptionId  + "\r\n" + timestamp + "\r\n" + parsedPayload;
+        String message = metodo.toUpperCase() + "\r\n" + subscriptionId + "\r\n" + timestamp + "\r\n" + parsedPayload;
         System.out.println(message);
         ManejadorEncriptacion ec = new ManejadorEncriptacion();
         String str = ec.encriptar(serviceSecret, message);
@@ -67,9 +67,9 @@ public class AppLandServicio {
 
     public GetStatusRespuestaDto generarRespuestaStatus(String usuarioEncriptado) throws Exception {
         ClienteAppland cliente = this.clienteExternoServicio.obtenerClienteRenderPorIdentificador(usuarioEncriptado);
-        if(cliente == null) return null;
+        if (cliente == null) return null;
         ClienteExternoWebEntity clienteExterno = krakenServicio.obtenerUsuario(cliente.msisdn);
-        if(clienteExterno == null || clienteExterno.status != 1) return null;
+        if (clienteExterno == null || clienteExterno.status != 1) return null;
 
         long timeStamp = getTimeStamp(clienteExterno);
         //long nestBill = clienteExterno.
@@ -91,7 +91,7 @@ public class AppLandServicio {
     public String obternerRutaDeRedirect(String usuario, String rutaOpcional, String subscriptionId) {
         String currentRuta = "https://api.appland.se/api/subscription/onsubscribe/";
         String token = this.crearTokenAppland(usuario);
-        return  (rutaOpcional == null? currentRuta: rutaOpcional)  + subscriptionId + "?token=" + token;
+        return (rutaOpcional == null ? currentRuta : rutaOpcional) + subscriptionId + "?token=" + token;
     }
 
     private String crearTokenAppland(String usuario) {
@@ -112,7 +112,7 @@ public class AppLandServicio {
         return convertirTokenAString(token);
     }
 
-    private String convertirTokenAString(ApplandTokenDto token){
+    private String convertirTokenAString(ApplandTokenDto token) {
         Gson gson = new Gson();
         String tokenParsed = gson.toJson(token);
         return Base64.getEncoder().encodeToString(tokenParsed.getBytes());
@@ -123,7 +123,7 @@ public class AppLandServicio {
     }
 
     private String crearFirma(String usuario, long timestamp) {
-        String firma = usuario  + "\r\n" + timestamp;
+        String firma = usuario + "\r\n" + timestamp;
         ManejadorEncriptacion manejador = new ManejadorEncriptacion();
         String firmaBase64 = manejador.encriptar(serviceSecret, firma);
         return firmaBase64;
