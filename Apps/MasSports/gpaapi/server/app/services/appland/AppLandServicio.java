@@ -3,10 +3,7 @@ package services.appland;
 import com.google.gson.Gson;
 import modeles.ClienteAppland;
 import services.client_externo_servicio.ClienteExternoServicio;
-import services.dto.ClienteExternoWebEntity;
-import services.dto.ApplandTokenDto;
-import services.dto.GetStatusRespuestaDto;
-import services.dto.PushStatusClientAppLand;
+import services.dto.*;
 import services.kraken_servicio.KrakenServicio;
 import services.utils.ManejadorDeContrasenas;
 import utils.WSHandler;
@@ -21,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 @Singleton
@@ -63,6 +61,30 @@ public class AppLandServicio {
             e.printStackTrace();
         }
 
+    }
+
+    public void makeUnsubscribeCall(String SubcriptionId) {
+        List<ClienteServicioDisableListResponseDto> clientes = null;
+        try {
+            clientes = krakenServicio.obtenerUsuariosDeshabilitadosPorFecha();
+
+            for (ClienteServicioDisableListResponseDto cliente : clientes) {
+                ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRenderPorMsisdn(cliente.client.msisdn);
+                if (clienteAppland != null) {
+                    PushStatusClientAppLand payload = new PushStatusClientAppLand();
+                    payload.event = "SUBSCRIPTION_END";
+                    payload.isEligible = true;
+                    payload.nextRenewal = 99999999;
+                    payload.numberOfConcurrentSessions = 1;
+                    payload.numberOfProfiles = 1;
+                    payload.user = clienteAppland.identifier;
+
+                    this.comunicarStatus("POST", clienteAppland.identifier, payload, SubcriptionId);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public GetStatusRespuestaDto generarRespuestaStatus(String usuarioEncriptado) throws Exception {

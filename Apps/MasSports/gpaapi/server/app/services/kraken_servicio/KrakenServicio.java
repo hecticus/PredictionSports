@@ -90,7 +90,7 @@ public class KrakenServicio {
         ClienteExternoWebEntity clienteExterno = new ClienteExternoWebEntity();
 
         Instant now = Instant.now(); //current date
-        Instant before = now.minus(Duration.ofDays(7));
+        Instant before = now.minus(Duration.ofDays(1));
         Date dateBefore = Date.from(before);
 
         String pattern = "yyyyMMdd";
