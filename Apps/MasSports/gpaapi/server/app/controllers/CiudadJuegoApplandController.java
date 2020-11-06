@@ -10,6 +10,8 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
+import play.api.mvc.Cookie;
+import play.api.mvc.DiscardingCookie;
 import services.appland.AppLandServicio;
 import services.client_externo_servicio.ClienteExternoServicio;
 import services.digitel_servicio.DigitelServicio;
@@ -75,7 +77,7 @@ public class CiudadJuegoApplandController extends Controller {
 
     public Result RedirectFromDigitel(String id, String red, String msisdn) {
         //http://gprs.digitel.com.ve/r/100393/reg/1i8p9
-        Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
+
         msisdn = Long.valueOf(msisdn, 36).toString();// Integer.toString(msisdn, 36);
         ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRender(msisdn);
         if (clienteAppland != null) {
@@ -89,6 +91,8 @@ public class CiudadJuegoApplandController extends Controller {
             payload.user = clienteAppland.identifier;
 
             this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload, subscriptionId);
+            Http.Cookie cookie = Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
+            response().setCookie(cookie);
             return redirect(rutaRedirect);
         }
         return ok();
