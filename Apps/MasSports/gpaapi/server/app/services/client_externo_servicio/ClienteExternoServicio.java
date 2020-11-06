@@ -99,6 +99,7 @@ public class ClienteExternoServicio {
             ClienteAppland clienteAppland = obtenerClienteRenderPorMsisdn(msisdn);
 
             if (clienteAppland == null) {
+                clienteAppland = new ClienteAppland();
                 clienteAppland.status = 1;
                 clienteAppland.password = msisdn;
                 clienteAppland.msisdn = msisdn;

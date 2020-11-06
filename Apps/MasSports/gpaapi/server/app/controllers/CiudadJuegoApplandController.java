@@ -62,7 +62,7 @@ public class CiudadJuegoApplandController extends Controller {
         }
 
         if(request().headers().containsKey("msisdn")) {
-            msisdn = request().headers().get("msisdn").toString();
+            msisdn = request().headers().get("msisdn")[0];
             if(digitelServicio.ValidarMsisdn(msisdn)) {
                 return RedirectFromDigitel("", "", msisdn);
             }
