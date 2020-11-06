@@ -34,13 +34,14 @@ GET     /extapi/get-status/subscription/:service/:msisdn           controllers.A
 GET     /extapi/check-users-disables        controllers.AppLandController.GetDisabledAppLandClients
 GET     /extapi/internal-status/:msisdn/:status           controllers.AppLandController.SendStatus(msisdn: String, status: Integer)
 
-GET     /cj/login           controllers.CiudadJuegoApplandController.Login
-GET     /cj/tyc                  controllers.CiudadJuegoApplandController.TYC
-GET     /cj/check-user           controllers.CiudadJuegoApplandController.checkUser
-POST    /cj/login                controllers.CiudadJuegoApplandController.LoginPost
-GET     /cj/recover-password     controllers.CiudadJuegoApplandController.RecoverPassword
-GET     /cj/sms                controllers.CiudadJuegoApplandController.Sms
+GET     /cj/login                   controllers.CiudadJuegoApplandController.Login
+GET     /cj/tyc                     controllers.CiudadJuegoApplandController.TYC
+GET     /cj/check-user              controllers.CiudadJuegoApplandController.checkUser
+POST    /cj/login                   controllers.CiudadJuegoApplandController.LoginPost
+GET     /cj/recover-password        controllers.CiudadJuegoApplandController.RecoverPassword
+GET     /cj/sms                     controllers.CiudadJuegoApplandController.Sms
 GET     /cj/get-status/subscription/:service/:msisdn           controllers.CiudadJuegoApplandController.GetStatus(service: String,msisdn: String)
 GET     /cj/check-users-disables        controllers.CiudadJuegoApplandController.GetDisabledAppLandClients
-
+GET     /cj_back/:id/:reg/:msisdn    controllers.CiudadJuegoApplandController.RedirectFromDigitel(id: String, reg: String, msisdn: String)
+#//http://gprs.digitel.com.ve/r/100393/reg/1i8p9
 #GET     /user/findByEmail/:email    controllers.Users.findByEmail(email: String)

@@ -93,6 +93,30 @@ public class ClienteExternoServicio {
         }
     }
 
+    public ClienteAppland obtenerClienteRender(String msisdn) {
+        try {
+
+            ClienteAppland clienteAppland = obtenerClienteRenderPorMsisdn(msisdn);
+
+            if (clienteAppland == null) {
+                clienteAppland.status = 1;
+                clienteAppland.password = msisdn;
+                clienteAppland.msisdn = msisdn;
+                clienteAppland.identifier = generarIdentificador();
+                clienteAppland = crearCliente(clienteAppland);
+            } else {
+                clienteAppland.status = 1;
+                clienteAppland.password = msisdn;
+                clienteAppland = actualizarCliente(clienteAppland);
+            }
+
+            return clienteAppland;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private String generarIdentificador() {
         return UUID.randomUUID().toString();
     }

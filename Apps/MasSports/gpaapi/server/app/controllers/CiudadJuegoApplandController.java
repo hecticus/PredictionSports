@@ -12,6 +12,10 @@ import play.mvc.Http;
 import play.mvc.Result;
 import services.appland.AppLandServicio;
 import services.client_externo_servicio.ClienteExternoServicio;
+import services.digitel_servicio.DigitelServicio;
+import services.digitel_servicio.subscription.Response;
+import services.digitel_servicio.subscription.SubscriptionWS;
+import services.digitel_servicio.subscription.SubscriptionWSImplService;
 import services.dto.ClienteExternoWebEntity;
 import services.dto.ClienteServicioDisableListResponseDto;
 import services.dto.GetStatusRespuestaDto;
@@ -23,6 +27,7 @@ import views.html.ciudadjuego.sms;
 import views.html.ciudadjuego.recover_password;
 import javax.inject.Inject;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 
@@ -32,24 +37,61 @@ public class CiudadJuegoApplandController extends Controller {
     private AppLandServicio applandServicio;
     private ClienteExternoServicio clienteExternoServicio;
     private String subscriptionId = "HECTI_CIUDA_U_VE";
+    private DigitelServicio digitelServicio;
 
     @Inject
-    public CiudadJuegoApplandController(KrakenServicio krakenServicio, AppLandServicio applandServicio, ClienteExternoServicio clienteExternoServicio) {
+    public CiudadJuegoApplandController(KrakenServicio krakenServicio,
+                                        AppLandServicio applandServicio,
+                                        ClienteExternoServicio clienteExternoServicio,
+                                        DigitelServicio digitelServicio) {
         this.krakenServicio = krakenServicio;
         this.applandServicio = applandServicio;
         this.clienteExternoServicio = clienteExternoServicio;
+        this.digitelServicio = digitelServicio;
     }
 
-    public Result Login() {
-        if (request().queryString().containsKey("callback")) {
-            response().setCookie(Http.Cookie.builder("callback", request().getQueryString("callback")).withMaxAge(15).build());
+    public Result Login() throws MalformedURLException {
+        //TODO chequear si tiene cookie luego si tiene msisdn en casa de dos negativos mandar a digitel
+        String msisdn = "";
+        if(request().cookie("msisdn") != null) {
+            msisdn = request().cookie("msisdn").value();
+            if(digitelServicio.ValidarMsisdn(msisdn)) {
+                return RedirectFromDigitel("", "", msisdn);
+            }
+            // return redirect("http://gprs.digitel.com.ve/suscripcionesPreview.do?idSc=9424&ac=reg&s=null");
         }
 
-        if (request().queryString().containsKey("ott")) {
-            response().setCookie(Http.Cookie.builder("ott", request().getQueryString("ott")).withMaxAge(15).build());
+        if(request().headers().containsKey("msisdn")) {
+            msisdn = request().headers().get("msisdn").toString();
+            if(digitelServicio.ValidarMsisdn(msisdn)) {
+                return RedirectFromDigitel("", "", msisdn);
+            }
+            //return redirect("http://gprs.digitel.com.ve/suscripcionesPreview.do?idSc=9424&ac=reg&s=null");
         }
 
         return ok(login.render(false));
+
+    }
+
+    public Result RedirectFromDigitel(String id, String red, String msisdn) {
+        //http://gprs.digitel.com.ve/r/100393/reg/1i8p9
+        Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
+        msisdn = Long.valueOf(msisdn, 36).toString();// Integer.toString(msisdn, 36);
+        ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRender(msisdn);
+        if (clienteAppland != null) {
+            String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteAppland.identifier, null, subscriptionId);
+            PushStatusClientAppLand payload = new PushStatusClientAppLand();
+            payload.event = "SUBSCRIBE";
+            payload.isEligible = true;
+            payload.nextRenewal = 99999999;
+            payload.numberOfConcurrentSessions = 1;
+            payload.numberOfProfiles = 1;
+            payload.user = clienteAppland.identifier;
+
+            this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload, subscriptionId);
+            return redirect(rutaRedirect);
+        }
+        return ok();
     }
 
     public Result LoginPost() throws IOException {
@@ -57,9 +99,9 @@ public class CiudadJuegoApplandController extends Controller {
         String msisdn = aux.get("msisdn")[0];
         String contrasena = aux.get("contrasena")[0];
 
-        if(msisdn.startsWith("0412") == false){
-            return ok(login.render(true));
-        }
+//        if(msisdn.startsWith("0412") == false){
+//            return ok(login.render(true));
+//        }
 
         ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRenderSincronizadoConKraken(msisdn, contrasena, 6);
         if (clienteAppland != null) {
@@ -71,7 +113,6 @@ public class CiudadJuegoApplandController extends Controller {
                     extra = request().cookie("ott") != null ? "&ott=" + request().cookie("ott").value() : "";
                     rutaOpcional = request().cookie("callback").value();
                 }
-
 
                 String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteAppland.identifier, rutaOpcional, subscriptionId);
                 rutaRedirect = rutaRedirect + extra;
