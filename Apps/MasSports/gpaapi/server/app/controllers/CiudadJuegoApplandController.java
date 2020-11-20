@@ -201,8 +201,8 @@ public class CiudadJuegoApplandController extends Controller {
     }
 
     public Result TYC() {
-        String amount = Config.getString("current-amount");
-        String dater = Config.getString("date-amount");
+        String amount = Config.getString("appland-current-amount");
+        String dater = Config.getString("appland-date-amount");
         return ok(tyc.render(amount, dater));
     }
 

@@ -1,4 +1,4 @@
-@(title: String, dater: String)
+@(amount: String, dater: String)
 
 <!DOCTYPE html>
 <html>
@@ -20,8 +20,7 @@
                 <span>
 
                     <p class="subtitulotyc2">
-                         La suscripción tiene un costo diario de PMVP: Bs. 8000,00 + IVA 16%: Bs. 1280,00 + IVACS
-                        15%: Bs. 1200,00. Monto a pagar: Bs. 10480,00 Fecha de marcaje: 05/2020
+                        La suscripción es diaria y tiene un valor de PMVP: @amount Fecha de marcaje: @dater
                     </p>
                     <p class="subtitulotyc2">
                          El costo de la navegación dependerá del plan contratado.
@@ -33,67 +32,75 @@
                          Al ser parte de Ciudad Juego tendrás derecho a descargar todos los juegos que desees de
                         forma ILIMITADA.
                     </p>
+                    <p class="subtitulotyc2">
+                       Debes tener saldo suficiente en tu línea para poder efectuar las descargas. Si en 90 días no hemos
+                        podido hacerte el cobro correspondiente al valor de la suscripción, el sistema te dará de baja
+                        de forma automática.
+                    </p>
+
+
                     <p class="titulotyc">
                         <span style="font-weight: bold;">¿Qué es Ciudad Juego?</span>
                     </p>
 
                     <p class="subtitulotyc">
-                        Ciudad Juego es un servicio de suscripción que le da derecho al usuario que forma parte de él, a
-                        descargar, instalar y hacer uso de todos los juegos disponibles en el app o en la página web de
-                        forma ilimitada  Ciudad Juego es un servicio de suscripción que le da derecho al usuario que forma parte de él, a
-                        descargar, instalar y hacer uso de todos los juegos disponibles en el app o en la página web de
-                        forma ilimitada.
+                       Ciudad Juego es un servicio de suscripción que le da derecho al usuario que forma parte de él, a
+                        descargar, instalar y hacer uso de todos los juegos disponibles en Ciudad Juego de forma ilimitada.
                     </p>
                     <p class="titulotyc">
                         <span style="font-weight: bold;">
-                            ¿Cómo afiliarse?</span>
+                            Para afiliarse:</span>
                     </p>
                     <p class="subtitulotyc">
-                        Para ser parte de Ciudad Juego, solo debes enviar un SMS con la palabra JUEGO al 7575. Recibirás un
-                        mensaje de confirmación con tus credenciales y un link para descargar el app. Una vez descargada,
-                        inicia sesión y disfruta sin límite todos los juegos que Ciudad Juego tiene para ti. También puedes
-                        iniciar sesión desde la página web y descargar los juegos de forma ilimitada. La suscripción tiene
-                        un costo diario de PMVP BsS. @title con impuestos diarios para usuarios Movistar. Fecha de
-                        marcaje: @dater .
+                        Puede formar parte de Ciudad Juego haciendo clic <a href="http://gprs.digitel.com.ve/suscripcionesPreview.do?idSc=9424&ac=reg&s=null">aquí</a>
+                        ,
+                        ingresando a la <a href="http://gprs.digitel.com.ve/">Tienda Digitel</a> o utilizando
+                        el acceso directo de apps Digitel. Una vez suscrito, podrá instalar y jugar de forma ilimitada
+                        todos los juegos que desee mientras forme parte del servicio.
                     </p>
 
                     <p class="titulotyc">
                         <span style="font-weight: bold;">
-                            ¿Cómo usar Ciudad Juego?</span>
+                            Para descargar:
+                        </span>
                     </p>
                     <p class="subtitulotyc">
-                        Una vez suscrito, descarga el app e inicia sesión con tus credenciales. También puedes iniciar
-                        sesión desde la página web. A partir de ese momento, podrás instalar y jugar de forma ilimitada
-                        todos los juegos que desees mientras estés suscrito al servicio.
+                        Para descargar el contenido y disfrutar del juego deseado, solo debe seleccionar el juego y proceder
+                        a la descarga. Podrá descargar todos los juegos que desee. La cantidad de juegos exhibidos en
+                        el catálogo dependerá del modelo de celular que tenga el usuario.
                     </p>
                     <p class="titulotyc">
                         <span style="font-weight: bold;">
-                            ¿Cómo descargar los juegos?</span>
+                            Para desafiliarse:
+                        </span>
                     </p>
                     <p class="subtitulotyc">
-                        Puedes instalar un juego desde el app o la página web de Ciudad Juego cuando te hayas suscrito al
-                        servicio y tengas una conexión a internet a través de Wi-Fi o datos móviles. Abre el app o el link de
-                        la página web, selecciona un juego y haz clic en Instalar.
+                        Si el usuario ya no desea formar parte de este portal sólo deberá hacer clic
+                        <a href="http://gprs.digitel.com.ve/suscripcionesPreview.do?idSc=9424&ac=eli">aquí</a> También podrá
+                        desafiliarse a través de la <a href="http://gprs.digitel.com.ve/">Tienda Digitel</a>< en Mi Cuenta -> Mis Suscripciones. En ambos casos, el
+                        usuario debe hacerlo utilizando los datos móviles de su celular.
+                    </p>
+                    <p class="subtitulotyc">
+                        Si cancela el servicio antes de la fecha de vencimiento, podrá descargar el contenido hasta que
+                        llegue su fecha de vencimiento.
+                    </p>
+                    <p class="subtitulotyc">
+                        En caso de ser un usuario prepago, debe asegurarse de tener saldo el día del cobro de la
+                        renovación para evitar que se cancele la suscripción automáticamente. Si no se logra realizar
+                        la renovación de la suscripción por falta de saldo el día que corresponde, se realizará un (1)
+                        intento diario por los siguientes noventa (90) días. En caso de no ser exitosa la renovación
+                        en este tiempo, su suscripción será cancelada.
                     </p>
 
                     <p class="titulotyc">
                         <span style="font-weight: bold;">
-                            ¿Cómo recuperar mi contraseña?</span>
+                            SMS de Notificación de renovación
+                        </span>
                     </p>
 
                     <p class="subtitulotyc">
-                        Si estás suscrito, puedes recuperar tu contraseña enviando la palabra CLAVE al 7575. Recibirás un
-                        mensaje con tus datos para iniciar sesión en Ciudad Juego. El costo del SMS enviado al 7575 puede
-                        variar de acuerdo al plan contratado por el usuario.
-                    </p>
-
-                    <p class="titulotyc">
-                        <span style="font-weight: bold;">
-                            ¿Cómo desafiliarse?</span>
-                    </p>
-                    <p class="subtitulotyc">
-                        Si ya no deseas formar parte de Ciudad Juego, envía BAJA al 7575 y espera el mensaje de
-                        confirmación de tu baja. Si cancelas la suscripción, ya no podrás usar los juegos instalados.
+                        La notificación de renovación de la suscripción se recibirá una vez a la semana. Para poder
+                        descargar los contenidos, el usuario debe contar con el saldo suficiente para poder navegar.
                     </p>
                     <p class="subtitulotyc" style="font-weight: bold"> Estos términos y condiciones pueden variar sin previo aviso.</p>
                 </span>
