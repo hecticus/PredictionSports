@@ -55,12 +55,25 @@ public class CiudadJuegoApplandController extends Controller {
     public Result Login() throws MalformedURLException {
         //TODO chequear si tiene cookie luego si tiene msisdn en casa de dos negativos mandar a digitel
         String msisdn = "";
+        if(request().cookie("X-msisdn") != null) {
+            msisdn = request().cookie("X-msisdn").value();
+            if(digitelServicio.ValidarMsisdn(msisdn)) {
+                return RedirectFromDigitel("", "", msisdn);
+            }
+        }
+
+        if(request().headers().containsKey("X-msisdn")) {
+            msisdn = request().headers().get("X-msisdn")[0];
+            if(digitelServicio.ValidarMsisdn(msisdn)) {
+                return RedirectFromDigitel("", "", msisdn);
+            }
+        }
+
         if(request().cookie("msisdn") != null) {
             msisdn = request().cookie("msisdn").value();
             if(digitelServicio.ValidarMsisdn(msisdn)) {
                 return RedirectFromDigitel("", "", msisdn);
             }
-            // return redirect("http://gprs.digitel.com.ve/suscripcionesPreview.do?idSc=9424&ac=reg&s=null");
         }
 
         if(request().headers().containsKey("msisdn")) {
@@ -68,7 +81,6 @@ public class CiudadJuegoApplandController extends Controller {
             if(digitelServicio.ValidarMsisdn(msisdn)) {
                 return RedirectFromDigitel("", "", msisdn);
             }
-            //return redirect("http://gprs.digitel.com.ve/suscripcionesPreview.do?idSc=9424&ac=reg&s=null");
         }
 
         return ok(login.render(false));
