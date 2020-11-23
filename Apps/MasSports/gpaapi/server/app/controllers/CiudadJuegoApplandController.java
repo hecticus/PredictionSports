@@ -2,10 +2,12 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
 import modeles.ClienteAppland;
 import modeles.Config;
+import org.jetbrains.annotations.Nullable;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -27,6 +29,7 @@ import views.html.ciudadjuego.login;
 import views.html.ciudadjuego.tyc;
 import views.html.ciudadjuego.sms;
 import views.html.ciudadjuego.recover_password;
+
 import javax.inject.Inject;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -55,42 +58,50 @@ public class CiudadJuegoApplandController extends Controller {
     public Result Login() throws MalformedURLException {
         //TODO chequear si tiene cookie luego si tiene msisdn en casa de dos negativos mandar a digitel
         String msisdn = "";
-        if(request().cookie("X-msisdn") != null) {
+        if (request().cookie("X-msisdn") != null) {
             msisdn = request().cookie("X-msisdn").value();
-            if(digitelServicio.ValidarMsisdn(msisdn)) {
-                return RedirectFromDigitel("", "", msisdn);
+            if (digitelServicio.ValidarMsisdn(msisdn)) {
+                Result rutaRedirect = getResult(msisdn);
+                if (rutaRedirect != null) return rutaRedirect;
             }
         }
 
-        if(request().headers().containsKey("X-msisdn")) {
+        if (request().headers().containsKey("X-msisdn")) {
             msisdn = request().headers().get("X-msisdn")[0];
-            if(digitelServicio.ValidarMsisdn(msisdn)) {
-                return RedirectFromDigitel("", "", msisdn);
+            if (digitelServicio.ValidarMsisdn(msisdn)) {
+                Result rutaRedirect = getResult(msisdn);
+                if (rutaRedirect != null) return rutaRedirect;
             }
         }
 
-        if(request().cookie("msisdn") != null) {
+        if (request().cookie("msisdn") != null) {
             msisdn = request().cookie("msisdn").value();
-            if(digitelServicio.ValidarMsisdn(msisdn)) {
-                return RedirectFromDigitel("", "", msisdn);
+            if (digitelServicio.ValidarMsisdn(msisdn)) {
+                Result rutaRedirect = getResult(msisdn);
+                if (rutaRedirect != null) return rutaRedirect;
             }
         }
 
-        if(request().headers().containsKey("msisdn")) {
+        if (request().headers().containsKey("msisdn")) {
             msisdn = request().headers().get("msisdn")[0];
-            if(digitelServicio.ValidarMsisdn(msisdn)) {
-                return RedirectFromDigitel("", "", msisdn);
+            if (digitelServicio.ValidarMsisdn(msisdn)) {
+                Result rutaRedirect = getResult(msisdn);
+                if (rutaRedirect != null) return rutaRedirect;
             }
         }
 
         return ok(login.render(false));
-
     }
 
     public Result RedirectFromDigitel(String id, String red, String msisdn) {
-        //http://gprs.digitel.com.ve/r/100393/reg/1i8p9
-
         msisdn = Long.valueOf(msisdn, 36).toString();// Integer.toString(msisdn, 36);
+        Result rutaRedirect = getResult(msisdn);
+        if (rutaRedirect != null) return rutaRedirect;
+        return ok();
+    }
+
+    @Nullable
+    private Result getResult(String msisdn) {
         ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRender(msisdn);
         if (clienteAppland != null) {
             String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteAppland.identifier, null, subscriptionId);
@@ -107,7 +118,7 @@ public class CiudadJuegoApplandController extends Controller {
             response().setCookie(cookie);
             return redirect(rutaRedirect);
         }
-        return ok();
+        return null;
     }
 
     public Result LoginPost() throws IOException {
@@ -174,12 +185,12 @@ public class CiudadJuegoApplandController extends Controller {
     }
 
     public Result Sms() {
-         if(request().queryString().containsKey("callback")) {
-            response().setCookie(Http.Cookie.builder("callback",  request().getQueryString("callback") ).withMaxAge(15).build());
+        if (request().queryString().containsKey("callback")) {
+            response().setCookie(Http.Cookie.builder("callback", request().getQueryString("callback")).withMaxAge(15).build());
         }
 
-        if(request().queryString().containsKey("ott")) {
-            response().setCookie(Http.Cookie.builder("ott",  request().getQueryString("ott") ).withMaxAge(15).build());
+        if (request().queryString().containsKey("ott")) {
+            response().setCookie(Http.Cookie.builder("ott", request().getQueryString("ott")).withMaxAge(15).build());
         }
 
         String amount = Config.getString("current-amount");
@@ -221,6 +232,8 @@ public class CiudadJuegoApplandController extends Controller {
     public Result GetDisabledAppLandClients() throws IOException {
         List<ClienteServicioDisableListResponseDto> clientes = krakenServicio.obtenerUsuariosDeshabilitadosPorFecha();
         for (ClienteServicioDisableListResponseDto cliente : clientes) {
+
+
             ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRenderPorMsisdn(cliente.client.msisdn);
             if (clienteAppland != null) {
                 PushStatusClientAppLand payload = new PushStatusClientAppLand();
@@ -235,7 +248,13 @@ public class CiudadJuegoApplandController extends Controller {
             }
         }
         ObjectNode result = Json.newObject();
-        return ok("");
+
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode array = mapper.valueToTree(clientes);
+
+
+        result.set("Clientes", array);
+        return ok(result);
     }
 }
 
