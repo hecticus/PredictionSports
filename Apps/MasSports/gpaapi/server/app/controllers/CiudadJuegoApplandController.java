@@ -33,6 +33,7 @@ import views.html.ciudadjuego.recover_password;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -231,6 +232,7 @@ public class CiudadJuegoApplandController extends Controller {
 
     public Result GetDisabledAppLandClients() throws IOException {
         List<ClienteServicioDisableListResponseDto> clientes = krakenServicio.obtenerUsuariosDeshabilitadosPorFecha();
+        List<ClienteAppland> clientesapp = new ArrayList<>();
         for (ClienteServicioDisableListResponseDto cliente : clientes) {
 
 
@@ -245,12 +247,13 @@ public class CiudadJuegoApplandController extends Controller {
                 payload.user = clienteAppland.identifier;
 
                 this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload, subscriptionId);
+                clientesapp.add(clienteAppland);
             }
         }
         ObjectNode result = Json.newObject();
 
         ObjectMapper mapper = new ObjectMapper();
-        ArrayNode array = mapper.valueToTree(clientes);
+        ArrayNode array = mapper.valueToTree(clientesapp);
 
 
         result.set("Clientes", array);
