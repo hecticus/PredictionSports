@@ -54,7 +54,7 @@ public class AppLandController extends Controller {
 
     public Result LoginPost() throws IOException {
         Map<String, String[]> aux = request().body().asFormUrlEncoded();
-        String msisdn = aux.get("msisdn")[0];
+        String msisdn = aux.get("X-msisdn")[0];
         String contrasena = aux.get("contrasena")[0];
 
         if(!(msisdn.startsWith("0414") || msisdn.startsWith("0424") || msisdn.startsWith("0434"))){
