@@ -36,7 +36,7 @@ GET     /extapi/internal-status/:msisdn/:status           controllers.AppLandCon
 
 GET     /cj                         controllers.CiudadJuegoApplandController.Login
 GET     /cj/test/:msisdn                         controllers.CiudadJuegoApplandController.LoginTest(msisdn:String)
-GET     /cj/test                         controllers.CiudadJuegoApplandController.LoginTest()
+GET     /cj/test                         controllers.CiudadJuegoApplandController.LoginRedirect()
 GET     /cj/login                   controllers.CiudadJuegoApplandController.Login
 GET     /cj/tyc                     controllers.CiudadJuegoApplandController.TYC
 GET     /cj/check-user              controllers.CiudadJuegoApplandController.checkUser
