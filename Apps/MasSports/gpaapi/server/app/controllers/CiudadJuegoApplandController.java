@@ -63,6 +63,10 @@ public class CiudadJuegoApplandController extends Controller {
         return ok(aux.toString());
     }
 
+    public Result LoginTest() throws MalformedURLException {
+        return ok(login.render(false));
+    }
+
     public Result Login() throws MalformedURLException {
         //TODO chequear si tiene cookie luego si tiene msisdn en casa de dos negativos mandar a digitel
         String msisdn = "";
