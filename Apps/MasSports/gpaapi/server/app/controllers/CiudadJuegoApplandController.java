@@ -64,7 +64,7 @@ public class CiudadJuegoApplandController extends Controller {
     }
 
     public Result LoginTest() throws MalformedURLException {
-        return ok(login.render(false));
+        return redirect("http://gprs.digitel.com.ve/suscripcionesPreview.do?idSc=9424&ac=reg&s=null");
     }
 
     public Result Login() throws MalformedURLException {
