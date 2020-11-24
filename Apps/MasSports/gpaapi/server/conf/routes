@@ -34,6 +34,7 @@ GET     /extapi/get-status/subscription/:service/:msisdn           controllers.A
 GET     /extapi/check-users-disables        controllers.AppLandController.GetDisabledAppLandClients
 GET     /extapi/internal-status/:msisdn/:status           controllers.AppLandController.SendStatus(msisdn: String, status: Integer)
 
+GET     /cj                         controllers.CiudadJuegoApplandController.Login
 GET     /cj/login                   controllers.CiudadJuegoApplandController.Login
 GET     /cj/tyc                     controllers.CiudadJuegoApplandController.TYC
 GET     /cj/check-user              controllers.CiudadJuegoApplandController.checkUser
