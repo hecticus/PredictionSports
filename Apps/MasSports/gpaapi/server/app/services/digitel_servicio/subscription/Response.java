@@ -45,6 +45,17 @@ public class Response {
     protected String subscriptionId;
     protected String transactionId;
 
+    @Override
+    public String toString() {
+        return "Response{" +
+                "errorCode='" + errorCode + '\'' +
+                ", errorMessage='" + errorMessage + '\'' +
+                ", respuesta='" + respuesta + '\'' +
+                ", subscriptionId='" + subscriptionId + '\'' +
+                ", transactionId='" + transactionId + '\'' +
+                '}';
+    }
+
     /**
      * Gets the value of the errorCode property.
      * 

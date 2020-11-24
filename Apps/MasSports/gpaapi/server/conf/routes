@@ -35,7 +35,7 @@ GET     /extapi/check-users-disables        controllers.AppLandController.GetDis
 GET     /extapi/internal-status/:msisdn/:status           controllers.AppLandController.SendStatus(msisdn: String, status: Integer)
 
 GET     /cj                         controllers.CiudadJuegoApplandController.Login
-GET     /cj/test                         controllers.CiudadJuegoApplandController.LoginTest
+GET     /cj/test/:msisdn                         controllers.CiudadJuegoApplandController.LoginTest(msisdn:String)
 GET     /cj/login                   controllers.CiudadJuegoApplandController.Login
 GET     /cj/tyc                     controllers.CiudadJuegoApplandController.TYC
 GET     /cj/check-user              controllers.CiudadJuegoApplandController.checkUser

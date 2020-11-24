@@ -56,8 +56,11 @@ public class CiudadJuegoApplandController extends Controller {
         this.digitelServicio = digitelServicio;
     }
 
-    public Result LoginTest() throws MalformedURLException {
-        return ok(login.render(false));
+    public Result LoginTest(String msisdn) throws MalformedURLException {
+        SubscriptionWSImplService subscriptionWSImplService = new SubscriptionWSImplService();
+        SubscriptionWS subscriptionWS = subscriptionWSImplService.getSubscriptionWSImplPort();
+        Response aux = subscriptionWS.validar(msisdn, "9424");
+        return ok(aux.toString());
     }
 
     public Result Login() throws MalformedURLException {
