@@ -111,6 +111,11 @@ public class CiudadJuegoApplandController extends Controller {
     }
 
     public Result RedirectFromDigitel(String id, String red, String msisdn) {
+
+        if (request().headers().containsKey("tel")) {
+            msisdn = request().headers().get("tel")[0];
+        }
+
         msisdn = Long.valueOf(msisdn, 36).toString();// Integer.toString(msisdn, 36);
         Result rutaRedirect = getResult(msisdn);
         if (rutaRedirect != null) return rutaRedirect;
