@@ -70,6 +70,11 @@ public class CiudadJuegoApplandController extends Controller {
     public Result Login() throws MalformedURLException {
         //TODO chequear si tiene cookie luego si tiene msisdn en casa de dos negativos mandar a digitel
         String msisdn = "";
+        if (request().headers().containsKey("tel")) {
+            msisdn = request().headers().get("tel")[0];
+            return RedirectFromDigitel("","", msisdn);
+        }
+
         if (request().cookie("X-msisdn") != null) {
             msisdn = request().cookie("X-msisdn").value();
             if (digitelServicio.ValidarMsisdn(msisdn)) {
