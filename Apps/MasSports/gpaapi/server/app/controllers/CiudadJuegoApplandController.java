@@ -70,8 +70,8 @@ public class CiudadJuegoApplandController extends Controller {
     public Result Login() throws MalformedURLException {
         //TODO chequear si tiene cookie luego si tiene msisdn en casa de dos negativos mandar a digitel
         String msisdn = "";
-        if (request().headers().containsKey("tel")) {
-            msisdn = request().headers().get("tel")[0];
+        if (request().getQueryString("tel") != null) {
+            msisdn = request().getQueryString("tel");
             return RedirectFromDigitel("","", msisdn);
         }
 
@@ -111,11 +111,6 @@ public class CiudadJuegoApplandController extends Controller {
     }
 
     public Result RedirectFromDigitel(String id, String red, String msisdn) {
-
-        if (request().headers().containsKey("tel")) {
-            msisdn = request().headers().get("tel")[0];
-        }
-
         msisdn = Long.valueOf(msisdn, 36).toString();// Integer.toString(msisdn, 36);
         Result rutaRedirect = getResult(msisdn);
         if (rutaRedirect != null) return rutaRedirect;
