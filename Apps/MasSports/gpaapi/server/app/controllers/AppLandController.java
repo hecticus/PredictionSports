@@ -52,12 +52,21 @@ public class AppLandController extends Controller {
         return ok(extapi.render(false));
     }
 
+    public Result ForceError(String message) throws IOException {
+        if (message != null) {
+            throw new IOException(message);
+        }
+
+        return ok();
+    }
+
     public Result LoginPost() throws IOException {
         Map<String, String[]> aux = request().body().asFormUrlEncoded();
         String msisdn = aux.get("msisdn")[0];
         String contrasena = aux.get("contrasena")[0];
 
         if(!(msisdn.startsWith("0414") || msisdn.startsWith("0424") || msisdn.startsWith("0434"))){
+        if (!(msisdn.startsWith("0414") || msisdn.startsWith("0424") || msisdn.startsWith("0434"))) {
             return ok(extapi.render(true));
         }
 
@@ -73,7 +82,7 @@ public class AppLandController extends Controller {
                 }
 
 
-                String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteAppland.identifier, rutaOpcional,"HECTI_MOVIS_U_VE");
+                String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteAppland.identifier, rutaOpcional, "HECTI_MOVIS_U_VE");
                 rutaRedirect = rutaRedirect + extra;
                 PushStatusClientAppLand payload = new PushStatusClientAppLand();
                 payload.event = "SUBSCRIBE";

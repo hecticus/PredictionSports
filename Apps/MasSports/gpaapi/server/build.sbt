@@ -18,6 +18,7 @@ libraryDependencies ++= Seq(
   "org.modelmapper" % "modelmapper" % "0.7.7",
   "com.typesafe.play" % "play-mailer_2.11" % "5.0.0",
   "com.google.code.gson" % "gson" % "2.2.4",
+  "com.sun.mail" % "javax.mail" % "1.6.2",
   filters
 )
 
