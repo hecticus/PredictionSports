@@ -44,14 +44,13 @@ h2 {
 
 @media only screen and (max-width: 1080px) {
     .formContent {
-        background: #0db5e7;
+        background: #620a8c;
         -webkit-border-radius: 10px 10px 10px 10px;
         border-radius: 10px 10px 10px 10px;
-        padding: 30px;
+        padding: 16px;
         width: 90%;
         max-width: calc(100% - 32px);
         position: relative;
-        padding: 0px;
         -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
         box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
         text-align: center;
@@ -61,15 +60,13 @@ h2 {
 
 @media only screen and (min-width: 1080px) {
     .formContent {
-        background: #0db5e7;
+        background: #620a8c;
         -webkit-border-radius: 10px 10px 10px 10px;
         border-radius: 10px 10px 10px 10px;
-        padding: 30px;
         width: 90%;
-        margin-top: 64px;
         max-width: 960px;
         position: relative;
-        padding: 0px;
+        padding: 16px;
         -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
         box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
         text-align: center;
@@ -79,7 +76,6 @@ h2 {
 
 @media only screen and (orientation: landscape) {
     .formContent {
-        margin-top: 64px;
     }
 }
 
@@ -318,8 +314,8 @@ input[type=text]:placeholder {
 
 .rcorners4 {
     border-radius: 8px !important;
-    background-color: #89d236 !important;
-    color: #424041 !important;
+    background-color: #e4054b !important;
+    color: white !important;
     font-weight: 900;
     margin-bottom: 63px !important;
     margin-top: 63px !important;
@@ -348,7 +344,7 @@ input[type=text]:placeholder {
 .titulotyc {
     font-size: 55px;
     padding: 16px;
-    color: #89d236 ;
+    color: #e4054b ;
 }
 
 .titulotyc2 {
@@ -364,7 +360,7 @@ input[type=text]:placeholder {
 }
 
 .subtitulo>a {
-    color: #89d236;
+    color: #e4054b;
 }
 
 
@@ -380,7 +376,7 @@ input[type=text]:placeholder {
 }
 
 .subtitulotyc>a {
-    color: #89d236;
+    color: #e4054b;
 }
 
 .titulo-error {
@@ -397,6 +393,7 @@ input[type=text]:placeholder {
 .top {
     background-color: white !important;
     background: white !important;
+    margin-top: 64px;
 }
 
 .smsbutton {

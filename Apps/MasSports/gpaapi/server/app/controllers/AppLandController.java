@@ -65,7 +65,6 @@ public class AppLandController extends Controller {
         String msisdn = aux.get("msisdn")[0];
         String contrasena = aux.get("contrasena")[0];
 
-        if(!(msisdn.startsWith("0414") || msisdn.startsWith("0424") || msisdn.startsWith("0434"))){
         if (!(msisdn.startsWith("0414") || msisdn.startsWith("0424") || msisdn.startsWith("0434"))) {
             return ok(extapi.render(true));
         }
