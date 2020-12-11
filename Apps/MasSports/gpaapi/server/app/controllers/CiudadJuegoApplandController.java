@@ -70,10 +70,6 @@ public class CiudadJuegoApplandController extends Controller {
     public Result Login() throws MalformedURLException {
         //TODO chequear si tiene cookie luego si tiene msisdn en casa de dos negativos mandar a digitel
         String msisdn = "";
-        if (request().getQueryString("tel") != null) {
-            msisdn = request().getQueryString("tel");
-            return RedirectFromDigitel("","", msisdn);
-        }
 
         if (request().cookie("X-msisdn") != null) {
             msisdn = request().cookie("X-msisdn").value();
@@ -105,6 +101,11 @@ public class CiudadJuegoApplandController extends Controller {
                 Result rutaRedirect = getResult(msisdn);
                 if (rutaRedirect != null) return rutaRedirect;
             }
+        }
+
+        if (request().getQueryString("tel") != null) {
+            msisdn = request().getQueryString("tel");
+            return RedirectFromDigitel("","", msisdn);
         }
 
         return redirect("http://gprs.digitel.com.ve/suscripcionesPreview.do?idSc=9424&ac=reg&s=null");
