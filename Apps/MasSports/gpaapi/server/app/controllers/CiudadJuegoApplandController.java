@@ -103,7 +103,7 @@ public class CiudadJuegoApplandController extends Controller {
             }
         }
 
-        if (request().getQueryString("tel") != null) {
+        if (request().getQueryString("tel") != null && !request().getQueryString("tel").equals("")) {
             msisdn = request().getQueryString("tel");
             return RedirectFromDigitel("","", msisdn);
         }
