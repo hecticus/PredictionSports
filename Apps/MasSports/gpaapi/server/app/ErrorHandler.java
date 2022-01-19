@@ -17,7 +17,9 @@ public class ErrorHandler implements HttpErrorHandler {
     private MailServicio mailServicio;
 
     public CompletionStage<Result> onClientError(RequestHeader request, int statusCode, String message) {
-        mailServicio.sendMail("Error En CLIENT GPAAPI", message + statusCode + request.uri() + request.path());
+        if(!message.contains("extapi/get-status/events/")) {
+            mailServicio.sendMail("Error En CLIENT GPAAPI", message + statusCode + request.uri() + request.path());
+        }
         return CompletableFuture.completedFuture(
                 Results.status(statusCode, "A client error occurred: " + message)
         );
