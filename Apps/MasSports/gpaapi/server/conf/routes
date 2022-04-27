@@ -13,6 +13,8 @@ GET     /externalconfirm             controllers.WapSite.confirmExternal
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                controllers.Assets.at(path="/public", file)
 
+GET     /learnlive                   controllers.LearnliveController.index
+
 POST    /clienteExterno/getPin               controllers.RegisterController.GetPin()
 POST    /clienteExterno/getpin               controllers.RegisterController.GetPin()
 POST    /clienteExterno/confirm              controllers.RegisterController.confirmPin()
