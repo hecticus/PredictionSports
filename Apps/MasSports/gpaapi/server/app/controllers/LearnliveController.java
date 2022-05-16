@@ -1,6 +1,7 @@
 package controllers;
 
 import modeles.Alta;
+import modeles.LearnLiveActivity;
 import play.libs.ws.WS;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
@@ -36,7 +37,7 @@ public class LearnliveController extends Controller {
         String extras = "NA";
         String subExtras = "NA";
 
-        if(request().queryString().get("jp") != null && request().queryString().get("jp").length >0 ) {
+        if (request().queryString().get("jp") != null && request().queryString().get("jp").length > 0) {
 
             clickValue = request().queryString().get("jp")[0];
 
@@ -50,7 +51,12 @@ public class LearnliveController extends Controller {
 
             }
 
-            sendMessage(clickValue, extras);
+            try {
+                sendMessage(clickValue, extras);
+                addClickId(clickValue);
+            } catch (Exception e) {
+
+            }
         }
 
 
@@ -66,6 +72,11 @@ public class LearnliveController extends Controller {
                 .thenAccept((WSResponse r) -> {
                     String body = r.getBody();
                 });
+    }
+
+    private void addClickId(String clickId) {
+        LearnLiveActivity learnLiveActivity =  new LearnLiveActivity(clickId);
+        learnLiveActivity.save();
     }
 
     //https://smobipiumlink.com/conversion/index.php?jp={CLICKID}&source={SOURCE}
