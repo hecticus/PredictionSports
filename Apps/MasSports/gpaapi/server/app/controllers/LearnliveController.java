@@ -37,23 +37,15 @@ public class LearnliveController extends Controller {
         String extras = "NA";
         String subExtras = "NA";
 
-        if (request().queryString().get("jp") != null && request().queryString().get("jp").length > 0) {
+        if (request().queryString().get("CLICKID") != null && request().queryString().get("CLICKID").length > 0) {
 
-            clickValue = request().queryString().get("jp")[0];
+            clickValue = request().queryString().get("CLICKID")[0];
 
-            if (!clickValue.isEmpty() && clickValue.contains("|")) {
-                String[] clickValueTmp = clickValue.split("\\|");
-                extras = clickValueTmp[1];
-                clickValue = clickValueTmp[0];
-                if (clickValueTmp.length > 2) {
-                    subExtras = clickValueTmp[2];
-                }
-
-            }
+            extras = (request().queryString().get("SOURCE") != null && request().queryString().get("SOURCE").length > 0) ? request().queryString().get("SOURCE")[0] : "";
 
             try {
                 sendMessage(clickValue, extras);
-                addClickId(clickValue);
+                addClickId(clickValue + "---" + extras);
             } catch (Exception e) {
 
             }
@@ -75,7 +67,7 @@ public class LearnliveController extends Controller {
     }
 
     private void addClickId(String clickId) {
-        LearnLiveActivity learnLiveActivity =  new LearnLiveActivity(clickId);
+        LearnLiveActivity learnLiveActivity = new LearnLiveActivity(clickId);
         learnLiveActivity.save();
     }
 
