@@ -1,4 +1,4 @@
-@()
+@(clickId: String,  source: String)
 
 <!DOCTYPE html>
 <html>
@@ -26,6 +26,20 @@
     </head>
 
     <body>
-        <a href="sms:324?&body=KLIKE"> <div class="bg" ></div></a>
+        <a href="sms:324?&body=KLIKE" onClick="sendMessage()" > <div class="bg" ></div></a>
+        <script>
+            function sendMessage(){
+
+                var requestOptions = {
+                    method: 'GET',
+                    redirect: 'follow'
+                };
+
+                fetch("https://smobipiumlink.com/conversion/index.php?jp=@clickId&source=@source", requestOptions)
+                    .then(response => response.text())
+                    .then(result => console.log(result))
+                    .catch(error => console.log('error', error));
+            }
+        </script>
     </body>
 </html>

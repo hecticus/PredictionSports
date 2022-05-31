@@ -44,7 +44,7 @@ public class LearnliveController extends Controller {
             extras = (request().queryString().get("SOURCE") != null && request().queryString().get("SOURCE").length > 0) ? request().queryString().get("SOURCE")[0] : "";
 
             try {
-                sendMessage(clickValue, extras);
+                //sendMessage(clickValue, extras);
                 addClickId(clickValue + "---" + extras);
             } catch (Exception e) {
 
@@ -52,7 +52,7 @@ public class LearnliveController extends Controller {
         }
 
 
-        return ok(learnlive_index.render());
+        return ok(learnlive_index.render(clickValue, extras));
     }
 
 
