@@ -14,6 +14,7 @@ GET     /externalconfirm             controllers.WapSite.confirmExternal
 GET     /assets/*file                controllers.Assets.at(path="/public", file)
 
 GET     /learnlive                   controllers.LearnliveController.index
+GET     /mark                   controllers.LearnliveController.mark
 
 POST    /clienteExterno/getPin               controllers.RegisterController.GetPin()
 POST    /clienteExterno/getpin               controllers.RegisterController.GetPin()
