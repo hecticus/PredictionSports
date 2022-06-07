@@ -32,10 +32,21 @@ public class LearnliveController extends Controller {
     public Result index() throws IOException {
 
         String clickValue = "NA";
-        String pubidValue = "NA";
-        String origin = "NA";
         String extras = "NA";
-        String subExtras = "NA";
+
+        if (request().queryString().get("CLICKID") != null && request().queryString().get("CLICKID").length > 0) {
+            clickValue = request().queryString().get("CLICKID")[0];
+            extras = (request().queryString().get("SOURCE") != null && request().queryString().get("SOURCE").length > 0) ? request().queryString().get("SOURCE")[0] : "";
+        }
+
+        return ok(learnlive_index.render(clickValue, extras));
+    }
+
+
+    public Result mark() throws IOException {
+
+        String clickValue = "NA";
+        String extras = "NA";
 
         if (request().queryString().get("CLICKID") != null && request().queryString().get("CLICKID").length > 0) {
 
@@ -44,17 +55,14 @@ public class LearnliveController extends Controller {
             extras = (request().queryString().get("SOURCE") != null && request().queryString().get("SOURCE").length > 0) ? request().queryString().get("SOURCE")[0] : "";
 
             try {
-                //sendMessage(clickValue, extras);
                 addClickId(clickValue + "---" + extras);
             } catch (Exception e) {
 
             }
         }
 
-
-        return ok(learnlive_index.render(clickValue, extras));
+        return ok();
     }
-
 
     private void sendMessage(String clickId, String source) {
         String call = String.format("https://smobipiumlink.com/conversion/index.php?jp=%s&source=%s", clickId, source);
