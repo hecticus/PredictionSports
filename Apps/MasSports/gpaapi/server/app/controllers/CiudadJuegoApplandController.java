@@ -105,7 +105,7 @@ public class CiudadJuegoApplandController extends Controller {
 
         if (request().getQueryString("tel") != null && !request().getQueryString("tel").equals("")) {
             msisdn = request().getQueryString("tel");
-            return RedirectFromDigitel("","", msisdn);
+            return RedirectFromDigitel("", "", msisdn);
         }
 
         return redirect("http://gprs.digitel.com.ve/suscripcionesPreview.do?idSc=9424&ac=reg&s=null");
@@ -120,21 +120,25 @@ public class CiudadJuegoApplandController extends Controller {
 
     @Nullable
     private Result getResult(String msisdn) {
-        ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRender(msisdn);
-        if (clienteAppland != null) {
-            String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteAppland.identifier, null, subscriptionId);
-            PushStatusClientAppLand payload = new PushStatusClientAppLand();
-            payload.event = "SUBSCRIBE";
-            payload.isEligible = true;
-            payload.nextRenewal = 99999999;
-            payload.numberOfConcurrentSessions = 1;
-            payload.numberOfProfiles = 1;
-            payload.user = clienteAppland.identifier;
+        try {
+            ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRender(msisdn);
+            if (clienteAppland != null) {
+                String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteAppland.identifier, null, subscriptionId);
+                PushStatusClientAppLand payload = new PushStatusClientAppLand();
+                payload.event = "SUBSCRIBE";
+                payload.isEligible = true;
+                payload.nextRenewal = 99999999;
+                payload.numberOfConcurrentSessions = 1;
+                payload.numberOfProfiles = 1;
+                payload.user = clienteAppland.identifier;
 
-            this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload, subscriptionId);
-            Http.Cookie cookie = Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
-            response().setCookie(cookie);
-            return redirect(rutaRedirect);
+                this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload, subscriptionId);
+                Http.Cookie cookie = Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
+                response().setCookie(cookie);
+                return redirect(rutaRedirect);
+            }
+        } catch (Exception e) {
+            return null;
         }
         return null;
     }
