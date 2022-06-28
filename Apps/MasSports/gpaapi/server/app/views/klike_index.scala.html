@@ -1,0 +1,50 @@
+@(clickId: String,  source: String)
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gracias</title>
+        <style>
+                body, html {
+                    height: 100%;
+                    overflow: hidden;
+                }
+
+                .bg {
+                    /* The image used */
+                    background-image: url("../assets/images/paxion.gif");
+
+                    /* Full height */
+                    height: 100%;
+
+                    /* Center and scale the image nicely */
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                }
+        </style>
+    </head>
+
+    <body>
+        <a href="sms:739?&body=KLIKE" onClick="sendMessage()" > <div class="bg" ></div></a>
+        <script>
+            function sendMessage(){
+
+                var requestOptions = {
+                    method: 'GET',
+                    redirect: 'follow'
+                };
+
+                fetch("https://smobipiumlink.com/conversion/index.php?jp=@clickId&source=@source", requestOptions)
+                    .then(response => response.text())
+                    .then(result => console.log(result))
+                    .catch(error => console.log('error', error));
+
+                fetch("mark2?CLICKID=@clickId&SOURCE=@source", requestOptions)
+                        .then(response => response.text())
+                        .then(result => console.log(result))
+                        .catch(error => console.log('error', error));
+            }
+        </script>
+    </body>
+</html>
