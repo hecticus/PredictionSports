@@ -1,6 +1,6 @@
 package controllers;
 
-import modeles.LearnLiveActivity;
+import modeles.PaxxionActivity;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 import play.mvc.Controller;
@@ -52,7 +52,7 @@ public class KlikeController extends Controller {
             extras = (request().queryString().get("SOURCE") != null && request().queryString().get("SOURCE").length > 0) ? request().queryString().get("SOURCE")[0] : "";
 
             try {
-                addClickId(clickValue + "---" + extras+ "|klike");
+                addClickId(clickValue + "---" + extras);
             } catch (Exception e) {
 
             }
@@ -72,8 +72,8 @@ public class KlikeController extends Controller {
     }
 
     private void addClickId(String clickId) {
-        LearnLiveActivity learnLiveActivity = new LearnLiveActivity(clickId);
-        learnLiveActivity.save();
+        PaxxionActivity PaxxionActivity = new PaxxionActivity(clickId);
+        PaxxionActivity.save();
     }
 
     //https://smobipiumlink.com/conversion/index.php?jp={CLICKID}&source={SOURCE}

@@ -15,7 +15,7 @@ GET     /assets/*file                controllers.Assets.at(path="/public", file)
 
 GET     /learnlive                   controllers.LearnliveController.index
 GET     /mark                       controllers.LearnliveController.mark
-GET     /klike                      controllers.KlikeController.index
+GET     /paxxion                      controllers.KlikeController.index
 GET     /mark2                      controllers.KlikeController.mark
 
 POST    /clienteExterno/getPin               controllers.RegisterController.GetPin()
