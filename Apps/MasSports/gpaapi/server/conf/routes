@@ -18,9 +18,12 @@ GET     /mark                       controllers.LearnliveController.mark
 GET     /paxxion                      controllers.KlikeController.index
 GET     /mark2                      controllers.KlikeController.mark
 
-POST    /clienteExterno/getPin               controllers.RegisterController.GetPin()
-POST    /clienteExterno/getpin               controllers.RegisterController.GetPin()
-POST    /clienteExterno/confirm              controllers.RegisterController.confirmPin()
+GET     /learnlive_rd                   controllers.LearnliveRDController.index
+GET     /mark_rd                      controllers.LearnliveRDController.mark
+
+POST    /clienteExterno/getPin       controllers.RegisterController.GetPin()
+POST    /clienteExterno/getpin       controllers.RegisterController.GetPin()
+POST    /clienteExterno/confirm      controllers.RegisterController.confirmPin()
 GET     /header                      controllers.RegisterController.CheckHeader()
 GET     /pal/config                  controllers.RegisterController.Config
 GET     /pal/test                    controllers.RegisterController.Test
