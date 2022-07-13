@@ -14,9 +14,12 @@ GET     /externalconfirm             controllers.WapSite.confirmExternal
 GET     /assets/*file                controllers.Assets.at(path="/public", file)
 
 GET     /learnlive                   controllers.LearnliveController.index
-GET     /mark                       controllers.LearnliveController.mark
-GET     /paxxion                      controllers.KlikeController.index
-GET     /mark2                      controllers.KlikeController.mark
+GET     /blive                       controllers.BliveController.index
+GET     /mark_bl                     controllers.BliveController.mark
+
+GET     /mark                        controllers.LearnliveController.mark
+GET     /paxxion                     controllers.KlikeController.index
+GET     /mark2                       controllers.KlikeController.mark
 
 GET     /learnlive_rd                   controllers.LearnliveRDController.index
 GET     /mark_rd                      controllers.LearnliveRDController.mark
