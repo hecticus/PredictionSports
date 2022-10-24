@@ -4,7 +4,7 @@
 
 # Home page
 #GET    /                            controllers.Application.index
-GET     /                            controllers.WapSite.index
+GET     /                            controllers.MaxgameController.index
 POST    /getpin                      controllers.WapSite.getpin
 GET     /tyc                         controllers.WapSite.tyc
 POST    /confirm                     controllers.WapSite.confirm
