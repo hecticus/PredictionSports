@@ -49,6 +49,7 @@ public class MaxgameController extends Controller {
 
 
     public Result mark() throws IOException {
+        System.out.println("LLLLLLLOOOOO");
         String clickValue = "NA";
 
         if (request().queryString().get(clickID) != null && request().queryString().get(clickID).length > 0) {
@@ -73,14 +74,18 @@ public class MaxgameController extends Controller {
     }
 
     private void updateClickId(String clickId) {
+        System.out.println("LLLLLLL");
         MaxgameActivity maxgameActivity = MaxgameActivity.finder.where().eq("click_id", clickId).findUnique();
         maxgameActivity.setSent(true);
         maxgameActivity.update();
     }
 
     private void addClickId(String clickId) {
-        MaxgameActivity learnLiveActivity = new MaxgameActivity(clickId);
-        learnLiveActivity.setSent(false);
-        learnLiveActivity.save();
+        MaxgameActivity maxgameActivity = MaxgameActivity.finder.where().eq("click_id", clickId).findUnique();
+        if(maxgameActivity == null) {
+            MaxgameActivity learnLiveActivity = new MaxgameActivity(clickId);
+            learnLiveActivity.setSent(false);
+            learnLiveActivity.save();
+        }
     }
 }
