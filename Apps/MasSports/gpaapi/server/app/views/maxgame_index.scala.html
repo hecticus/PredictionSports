@@ -35,7 +35,7 @@
                     redirect: 'follow'
                 };
 
-                fetch("mark_maxgame?CLICKID=@clickId&SOURCE=@source", requestOptions)
+                fetch("mark_maxgame?clickid=@clickId&SOURCE=@source", requestOptions)
                         .then(response => response.text())
                         .then(result => console.log(result))
                         .catch(error => console.log('error', error));
