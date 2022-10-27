@@ -2,6 +2,7 @@ package controllers;
 
 import modeles.BliveActivity;
 import modeles.LearnLiveActivity;
+import modeles.MaxgameActivity;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 import play.mvc.Controller;
@@ -19,6 +20,8 @@ public class MaxgameController extends Controller {
     private ManhattanServicio manhattanServicio;
     private WSClient ws;
 
+    private String clickID = "clickid";
+
     @Inject
     public MaxgameController(KrakenServicio krakenServicio, ManhattanServicio manhattanServicio, WSClient ws) {
         this.krakenServicio = krakenServicio;
@@ -31,9 +34,14 @@ public class MaxgameController extends Controller {
         String clickValue = "NA";
         String extras = "NA";
 
-        if (request().queryString().get("CLICKID") != null && request().queryString().get("CLICKID").length > 0) {
-            clickValue = request().queryString().get("CLICKID")[0];
-            extras = (request().queryString().get("SOURCE") != null && request().queryString().get("SOURCE").length > 0) ? request().queryString().get("SOURCE")[0] : "";
+        if (request().queryString().get(clickID) != null && request().queryString().get(clickID).length > 0) {
+            clickValue = request().queryString().get(clickID)[0];
+
+            try {
+                addClickId(clickValue);
+            } catch (Exception e) {
+
+            }
         }
 
         return ok(maxgame_index.render(clickValue, extras));
@@ -41,38 +49,38 @@ public class MaxgameController extends Controller {
 
 
     public Result mark() throws IOException {
-
         String clickValue = "NA";
-        String extras = "NA";
 
-//        if (request().queryString().get("CLICKID") != null && request().queryString().get("CLICKID").length > 0) {
-//
-//            clickValue = request().queryString().get("CLICKID")[0];
-//
-//            extras = (request().queryString().get("SOURCE") != null && request().queryString().get("SOURCE").length > 0) ? request().queryString().get("SOURCE")[0] : "";
-//
-//            try {
-//                addClickId(clickValue + "---" + extras);
-//            } catch (Exception e) {
-//
-//            }
-//        }
+        if (request().queryString().get(clickID) != null && request().queryString().get(clickID).length > 0) {
+            clickValue = request().queryString().get(clickID)[0];
 
+            try {
+                updateClickId(clickValue);
+            } catch (Exception e) {
+
+            }
+        }
         return ok();
     }
 
     private void sendMessage(String clickId, String source) {
         String call = String.format("https://smobipiumlink.com/conversion/index.php?jp=%s&source=%s", clickId, source);
-        System.out.println(call);
         this.ws.url(call)
-                .get()
-                .thenAccept((WSResponse r) -> {
-                    String body = r.getBody();
-                });
+            .get()
+            .thenAccept((WSResponse r) -> {
+                String body = r.getBody();
+            });
+    }
+
+    private void updateClickId(String clickId) {
+        MaxgameActivity maxgameActivity = MaxgameActivity.finder.where().eq("click_id", clickId).findUnique();
+        maxgameActivity.setSent(true);
+        maxgameActivity.update();
     }
 
     private void addClickId(String clickId) {
-        BliveActivity learnLiveActivity = new BliveActivity(clickId);
+        MaxgameActivity learnLiveActivity = new MaxgameActivity(clickId);
+        learnLiveActivity.setSent(false);
         learnLiveActivity.save();
     }
 }
