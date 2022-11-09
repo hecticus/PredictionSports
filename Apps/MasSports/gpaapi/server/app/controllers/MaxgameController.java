@@ -56,14 +56,14 @@ public class MaxgameController extends Controller {
             clickId = request().queryString().get(clickID)[0];
         }
 
-        String ip = "";
+        String ipID = "";
         if (request().queryString().get(ip) != null && request().queryString().get(ip).length > 0) {
-            ip = request().queryString().get(ip)[0];
+            ipID = request().queryString().get(ip)[0];
         }
 
 
         MaxgameActivity maxgameActivity = MaxgameActivity.finder.where().eq("click_id", clickId).findUnique();
-        maxgameActivity.setIp(ip);
+        maxgameActivity.setIp(ipID);
         maxgameActivity.update();
         return ok();
     }
