@@ -49,6 +49,13 @@ public class MaxgameController extends Controller {
         return ok(maxgame_index.render(clickValue, extras));
     }
 
+    public Result setIp(String clickId, String ip) {
+        MaxgameActivity maxgameActivity = MaxgameActivity.finder.where().eq("click_id", clickId).findUnique();
+        maxgameActivity.setIp(ip);
+        maxgameActivity.update();
+        return ok();
+    }
+
 
     public Result mark() throws IOException {
         System.out.println("LLLLLLLOOOOO");

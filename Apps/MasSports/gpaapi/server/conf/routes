@@ -19,6 +19,7 @@ GET     /mark_bl                     controllers.BliveController.mark
 
 GET     /maxgame                     controllers.MaxgameController.index
 GET     /mark_maxgame                controllers.MaxgameController.mark
+GET     /ip_maxgame                  controllers.MaxgameController.setIp
 
 GET     /mark                        controllers.LearnliveController.mark
 GET     /paxxion                     controllers.KlikeController.index

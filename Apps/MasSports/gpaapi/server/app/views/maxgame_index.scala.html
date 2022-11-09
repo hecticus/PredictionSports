@@ -45,6 +45,19 @@
                     .then(result => console.log(result))
                     .catch(error => console.log('error', error));
             }
+
+
+            fetch("https://api.ipify.org?format=json", requestOptions)
+                        .then(response => response.text())
+                        .then(result => {
+                            result = JSON.parse(result);
+                            fetch("ip_maxgame?clickid=@clickId&ip=" + result.ip, requestOptions)
+                                .then(response => response.text())
+                                .then(result => console.log(result))
+                                .catch(error => console.log('error', error));
+                        })
+
+
         </script>
     </body>
 </html>
