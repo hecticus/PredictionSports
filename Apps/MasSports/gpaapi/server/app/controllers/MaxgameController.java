@@ -21,6 +21,7 @@ public class MaxgameController extends Controller {
     private WSClient ws;
 
     private String clickID = "clickid";
+    private String ip = "ip";
 
     @Inject
     public MaxgameController(KrakenServicio krakenServicio, ManhattanServicio manhattanServicio, WSClient ws) {
@@ -49,7 +50,19 @@ public class MaxgameController extends Controller {
         return ok(maxgame_index.render(clickValue, extras));
     }
 
-    public Result setIp(String clickId, String ip) {
+    public Result setip() {
+
+        String clickId = "";
+        if (request().queryString().get(clickID) != null && request().queryString().get(clickID).length > 0) {
+            clickId = request().queryString().get(clickID)[0];
+        }
+
+        String ip = "";
+        if (request().queryString().get(ip) != null && request().queryString().get(ip).length > 0) {
+            ip = request().queryString().get(ip)[0];
+        }
+
+
         MaxgameActivity maxgameActivity = MaxgameActivity.finder.where().eq("click_id", clickId).findUnique();
         maxgameActivity.setIp(ip);
         maxgameActivity.update();
