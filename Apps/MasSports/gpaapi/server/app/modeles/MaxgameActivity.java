@@ -18,6 +18,8 @@ public class MaxgameActivity extends Model {
     private String clickId;
     @Column()
     private String date;
+    @Column()
+    private String ip;
 
     @Column()
     private boolean sent;
@@ -52,6 +54,14 @@ public class MaxgameActivity extends Model {
 
     public void setSent(boolean sent) {
         this.sent = sent;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public MaxgameActivity(String clickId) {

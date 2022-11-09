@@ -33,12 +33,14 @@ public class MaxgameController extends Controller {
 
         String clickValue = "NA";
         String extras = "NA";
+        String ip =  request().remoteAddress();
+
 
         if (request().queryString().get(clickID) != null && request().queryString().get(clickID).length > 0) {
             clickValue = request().queryString().get(clickID)[0];
 
             try {
-                addClickId(clickValue);
+                addClickId(clickValue, ip);
             } catch (Exception e) {
 
             }
@@ -64,14 +66,6 @@ public class MaxgameController extends Controller {
         return ok();
     }
 
-    private void sendMessage(String clickId, String source) {
-        String call = String.format("https://smobipiumlink.com/conversion/index.php?jp=%s&source=%s", clickId, source);
-        this.ws.url(call)
-            .get()
-            .thenAccept((WSResponse r) -> {
-                String body = r.getBody();
-            });
-    }
 
     private void updateClickId(String clickId) {
         System.out.println("LLLLLLL");
@@ -80,10 +74,11 @@ public class MaxgameController extends Controller {
         maxgameActivity.update();
     }
 
-    private void addClickId(String clickId) {
+    private void addClickId(String clickId, String ip) {
         MaxgameActivity maxgameActivity = MaxgameActivity.finder.where().eq("click_id", clickId).findUnique();
         if(maxgameActivity == null) {
             MaxgameActivity learnLiveActivity = new MaxgameActivity(clickId);
+            learnLiveActivity.setIp(ip);
             learnLiveActivity.setSent(false);
             learnLiveActivity.save();
         }
