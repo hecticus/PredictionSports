@@ -34,14 +34,13 @@ public class MaxgameController extends Controller {
 
         String clickValue = "NA";
         String extras = "NA";
-        String ip =  request().remoteAddress();
 
 
         if (request().queryString().get(clickID) != null && request().queryString().get(clickID).length > 0) {
             clickValue = request().queryString().get(clickID)[0];
 
             try {
-                addClickId(clickValue, ip);
+                addClickId(clickValue, "");
             } catch (Exception e) {
 
             }
