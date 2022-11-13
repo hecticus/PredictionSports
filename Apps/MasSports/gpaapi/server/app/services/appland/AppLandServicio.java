@@ -45,8 +45,8 @@ public class AppLandServicio {
         //payload.nextRenewal = timestamp  + 86400;
 //        timestamp = 1574801566;
 //        payload.nextRenewal = 1574831566;
-        payload.numberOfProfiles = 4;
-        payload.numberOfConcurrentSessions = 4;
+        payload.numberOfProfiles = 999999;
+        payload.numberOfConcurrentSessions = 999999;
         String parsedPayload = gson.toJson(payload).replace(":", ": ").replace(",", ", ");
         // String parsedPayload = "{\"isEligible\": true, \"event\": \"SUBSCRIBE\", \"user\": \"c6f4d0fb-c2bd-4b6a-8393-b638b2620a14\", \"nextRenewal\": 1574831566, \"numberOfProfiles\": 4, \"numberOfConcurrentSessions\": 4}";
 //                                 {"isEligible": true, "event": "SUBSCRIBE", "user": "c6f4d0fb-c2bd-4b6a-8393-b638b2620a14", "nextRenewal": 99999999, "numberOfProfiles": 4, "numberOfConcurrentSessions": 4}

@@ -2,17 +2,160 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Gracias</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
-                body, html {
-                    height: 100%;
-                    overflow: hidden;
-                 }
+            body,
+            html {
+                height: 100%;
+                margin: 0;
+                font: 400 15px/1.8 "Lato", sans-serif;
+                color: #777;
+            }
+
+            .bgimg-1,
+            .bgimg-2,
+            .bgimg-3 {
+                position: relative;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+
+            }
+
+            .bgimg-1 {
+                background-image: url("../assets/images/maxgame/maxgame.png");
+                height: 100%;
+            }
+
+            .caption {
+                color: white;
+                position: absolute;
+                top: 20%;
+                left: 0;
+                right: 0;
+                margin: auto;
+                text-align: center;
+                color: #000;
+                background-color: #71a3e4;
+                padding: 16px;
+                border-radius: 8px;
+                max-width: 80%;
+                max-height: 80%;
+                width: 480px;
+                z-index: 3;
+                box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+            }
+
+            p {
+                color: whitesmoke;
+                font-size: 17px;
+            }
+
+            h1 {
+                margin-top: 32px;
+                color: white;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+
+            .logo {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                text-align: left;
+                color: #000;
+
+            }
+
+
+            .caption span.border {
+                background-color: #111;
+                color: #fff;
+                padding: 18px;
+                font-size: 25px;
+                letter-spacing: 10px;
+            }
+
+            h3 {
+                letter-spacing: 5px;
+                text-transform: uppercase;
+                font: 20px "Lato", sans-serif;
+                color: #111;
+            }
+
+            .logo-img {
+                max-width: 100%;
+
+            }
+
+
+
+            /* CSS */
+            .button-41 {
+                margin-top: 16px;
+                margin-bottom: 16px;
+                background-color: initial;
+                background-image: linear-gradient(-180deg, #00D775, #00BD68);
+                border-radius: 5px;
+                box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+                color: #FFFFFF;
+                cursor: pointer;
+                display: inline-block;
+                font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+                height: 44px;
+                line-height: 44px;
+                outline: 0;
+                overflow: hidden;
+                padding: 0 20px;
+                pointer-events: auto;
+                position: relative;
+                text-align: center;
+                touch-action: manipulation;
+                user-select: none;
+                -webkit-user-select: none;
+                vertical-align: top;
+                white-space: nowrap;
+                width: 100%;
+                z-index: 9;
+                border: 0;
+                width: calc(100% - 40px)
+
+            }
+
+            .button-41:hover {
+                background: #00bd68;
+            }
 
         </style>
     </head>
 
     <body>
-        <a href="/portal_access">LOGIN!!!!</a>
+
+        <div class="caption">
+            <h1>Bienvenido a MaxGame!</h1>
+            <p>
+                Aprovecha y disfruta sin costo
+                de +400 juegos ilimitados
+                que tenemos para ti.</p>
+            <p>
+                ¡Apúrate!
+                Es por muy poco tiempo.
+            </p>
+            <p>
+                ¿Qué esperas para
+                empezar la diversión?
+            </p>
+
+            <a class="button-41" style="text-decoration: none;" href="/portal_access">
+                Continuar
+            </a>
+        </div>
+        <div class="bgimg-1">
+            <div class="logo">
+                <img src="../assets/images/maxgame/logo.png" class="logo-img" alt="">
+            </div>
+        </div>
     </body>
 </html>
