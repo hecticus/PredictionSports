@@ -17,7 +17,7 @@ GET     /learnlive                   controllers.LearnliveController.index
 GET     /blive                       controllers.BliveController.index
 GET     /mark_bl                     controllers.BliveController.mark
 
-GET     /portal2022                  controllers.MaxGamePortalController.index
+GET     /navidad                     controllers.MaxGamePortalController.index
 GET     /portal_access               controllers.MaxGamePortalController.access
 GET     /portalcreate                controllers.MaxGamePortalController.create
 GET     /portalrevoke                controllers.MaxGamePortalController.revoke

@@ -187,7 +187,7 @@ public class AppLandController extends Controller {
                 payload.event = "SUBSCRIPTION_END";
                 payload.isEligible = true;
                 payload.nextRenewal = 99999999;
-                payload.numberOfConcurrentSessions = 1;
+                payload.numberOfConcurrentSessions = 99999999;
                 payload.numberOfProfiles = 1;
                 payload.user = clienteAppland.identifier;
 
