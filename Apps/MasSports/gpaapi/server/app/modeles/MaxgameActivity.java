@@ -20,9 +20,10 @@ public class MaxgameActivity extends Model {
     private String date;
     @Column()
     private String ip;
-
     @Column()
     private boolean sent;
+    @Column()
+    private String origin;
 
     public Long getId() {
         return id;
@@ -62,6 +63,14 @@ public class MaxgameActivity extends Model {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 
     public MaxgameActivity(String clickId) {

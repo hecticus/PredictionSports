@@ -1,30 +1,27 @@
 package controllers;
 
-import modeles.BliveActivity;
-import modeles.LearnLiveActivity;
 import modeles.MaxgameActivity;
 import play.libs.ws.WSClient;
-import play.libs.ws.WSResponse;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.kraken_servicio.KrakenServicio;
 import services.silver_servicio.ManhattanServicio;
-import views.html.maxgame_index;
+import views.html.maxgame_mobi_index;
 
 import javax.inject.Inject;
 import java.io.IOException;
 
-public class MaxgameController extends Controller {
+public class MaxgameMobiController extends Controller {
 
     private KrakenServicio krakenServicio;
     private ManhattanServicio manhattanServicio;
     private WSClient ws;
 
-    private String clickID = "clickid";
+    private String clickID = "CLICKID";
     private String ip = "ip";
 
     @Inject
-    public MaxgameController(KrakenServicio krakenServicio, ManhattanServicio manhattanServicio, WSClient ws) {
+    public MaxgameMobiController(KrakenServicio krakenServicio, ManhattanServicio manhattanServicio, WSClient ws) {
         this.krakenServicio = krakenServicio;
         this.manhattanServicio = manhattanServicio;
         this.ws = ws;
@@ -35,9 +32,9 @@ public class MaxgameController extends Controller {
         String clickValue = "NA";
         String extras = "NA";
 
-
-        if (request().queryString().get(clickID) != null && request().queryString().get(clickID).length > 0) {
-            clickValue = request().queryString().get(clickID)[0];
+        if (request().queryString().get("CLICKID") != null && request().queryString().get("CLICKID").length > 0) {
+            clickValue = request().queryString().get("CLICKID")[0];
+            extras = (request().queryString().get("SOURCE") != null && request().queryString().get("SOURCE").length > 0) ? request().queryString().get("SOURCE")[0] : "";
 
             try {
                 addClickId(clickValue, "");
@@ -46,7 +43,8 @@ public class MaxgameController extends Controller {
             }
         }
 
-        return ok(maxgame_index.render(clickValue, extras));
+
+        return ok(maxgame_mobi_index.render(clickValue, extras));
     }
 
     public Result setip() {
@@ -98,8 +96,8 @@ public class MaxgameController extends Controller {
         if(maxgameActivity == null) {
             MaxgameActivity learnLiveActivity = new MaxgameActivity(clickId);
             learnLiveActivity.setIp(ip);
-            learnLiveActivity.setOrigin("TRA");
             learnLiveActivity.setSent(false);
+            learnLiveActivity.setOrigin("MOBI");
             learnLiveActivity.save();
         }
     }

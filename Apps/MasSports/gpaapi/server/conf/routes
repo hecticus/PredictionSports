@@ -5,6 +5,7 @@
 # Home page
 #GET    /                            controllers.Application.index
 GET     /                            controllers.MaxgameController.index
+GET     /mob                         controllers.MaxgameMobiController.index
 POST    /getpin                      controllers.WapSite.getpin
 GET     /tyc                         controllers.WapSite.tyc
 POST    /confirm                     controllers.WapSite.confirm
@@ -24,6 +25,7 @@ GET     /portalrevoke                controllers.MaxGamePortalController.revoke
 
 GET     /maxgame                     controllers.MaxgameController.index
 GET     /mark_maxgame                controllers.MaxgameController.mark
+GET     /mark_maxgame_mobi           controllers.MaxgameMobiController.mark
 GET     /ip_maxgame                  controllers.MaxgameController.setip
 
 GET     /mark                        controllers.LearnliveController.mark
