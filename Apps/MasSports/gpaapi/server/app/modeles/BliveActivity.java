@@ -10,12 +10,17 @@ import java.util.Calendar;
 
 @Entity
 public class BliveActivity extends Model {
+
+    public static Model.Finder<Long, BliveActivity> finder = new Model.Finder<Long, BliveActivity>(BliveActivity.class);
     @Id
     private Long id;
     @Column()
     private String clickId;
     @Column()
     private String date;
+
+    @Column()
+    private String msisdn;
 
     public Long getId() {
         return id;
@@ -39,6 +44,14 @@ public class BliveActivity extends Model {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getMsisdn() {
+        return msisdn;
+    }
+
+    public void setMsisdn(String msisdn) {
+        this.msisdn = msisdn;
     }
 
     public BliveActivity(String clickId) {
