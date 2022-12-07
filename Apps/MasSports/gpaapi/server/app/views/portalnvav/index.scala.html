@@ -13,6 +13,7 @@
             margin: 0;
             font: 400 15px/1.8 "Lato", sans-serif;
             color: #777;
+            overscroll-behavior-y: none;
         }
 
         .bgimg-1,
@@ -44,7 +45,7 @@
             max-width: 90%;
             max-height: 90%;
             width: 480px;
-            z-index: 3;
+            z-index: 9999;
         }
 
         p {
@@ -123,7 +124,7 @@
             width: 100%;
             top: 0;
             position: absolute;
-            z-index: 22200;
+            z-index: 10;
             height: 100%;
             background-size: 20% auto;
             background-repeat: no-repeat;
@@ -160,9 +161,8 @@
     </p>
 
     </p>
-    <div style="text-align: center; display: flex; justify-content: center;">
-
-        <a class="button-41 " href="/portal_access">
+    <div style="text-align: center; display: flex; justify-content: center; z-index: 9999">
+        <a class="button-41" href="/portal_access">
             Continuar
         </a>
     </div>
