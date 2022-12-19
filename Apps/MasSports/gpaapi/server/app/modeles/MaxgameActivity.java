@@ -25,6 +25,9 @@ public class MaxgameActivity extends Model {
     @Column()
     private String origin;
 
+    @Column()
+    private String msisdn;
+
     public Long getId() {
         return id;
     }
@@ -71,6 +74,14 @@ public class MaxgameActivity extends Model {
 
     public void setOrigin(String origin) {
         this.origin = origin;
+    }
+
+    public String getMsisdn() {
+        return msisdn;
+    }
+
+    public void setMsisdn(String msisdn) {
+        this.msisdn = msisdn;
     }
 
     public MaxgameActivity(String clickId) {
