@@ -30,29 +30,42 @@ public class KlikeController extends Controller {
 
         String clickValue = "NA";
         String extras = "NA";
+        String origin = "MOB";
 
         if (request().queryString().get("CLICKID") != null && request().queryString().get("CLICKID").length > 0) {
             clickValue = request().queryString().get("CLICKID")[0];
             extras = (request().queryString().get("SOURCE") != null && request().queryString().get("SOURCE").length > 0) ? request().queryString().get("SOURCE")[0] : "";
         }
 
-        return ok(klike_index.render(clickValue, extras));
+        if (request().getQueryString("token") != null && !request().getQueryString("token").equals("")) {
+            clickValue = request().getQueryString("token");
+            origin = "VIA";
+        }
+
+        return ok(klike_index.render(clickValue, extras, origin));
     }
 
 
     public Result mark() throws IOException {
-
         String clickValue = "NA";
         String extras = "NA";
+        String origin = "MOB";
 
         if (request().queryString().get("CLICKID") != null && request().queryString().get("CLICKID").length > 0) {
-
             clickValue = request().queryString().get("CLICKID")[0];
-
             extras = (request().queryString().get("SOURCE") != null && request().queryString().get("SOURCE").length > 0) ? request().queryString().get("SOURCE")[0] : "";
-
             try {
-                addClickId(clickValue + "---" + extras);
+                addClickId(clickValue + "---" + extras, origin);
+            } catch (Exception e) {
+
+            }
+        }
+
+        if (request().queryString().get("token") != null) {
+            origin = "VIA";
+            clickValue = request().queryString().get("token")[0];
+            try {
+                addClickId(clickValue, origin );
             } catch (Exception e) {
 
             }
@@ -71,8 +84,9 @@ public class KlikeController extends Controller {
                 });
     }
 
-    private void addClickId(String clickId) {
+    private void addClickId(String clickId, String origin) {
         PaxxionActivity PaxxionActivity = new PaxxionActivity(clickId);
+        PaxxionActivity.setOrigin(origin);
         PaxxionActivity.save();
     }
 

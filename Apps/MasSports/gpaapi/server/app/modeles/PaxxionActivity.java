@@ -23,6 +23,9 @@ public class PaxxionActivity extends Model {
     @Column()
     private String msisdn;
 
+    @Column()
+    private String origin;
+
     public Long getId() {
         return id;
     }
@@ -53,6 +56,14 @@ public class PaxxionActivity extends Model {
 
     public void setMsisdn(String msisdn) {
         this.msisdn = msisdn;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 
     public PaxxionActivity(String clickId) {

@@ -24,6 +24,11 @@ public class ClickToSMSController extends Controller {
     }
 
     public Result markItem(String country, String business, String msisdn) {
+        String command = "";
+        if (request().getQueryString("command") != null && !request().getQueryString("command").equals("")) {
+            command = request().getQueryString("command");
+        }
+
         if (Constants.HAITI_COUNTRY_ID.equals(country) && Constants.HAITI_BLIVE_BUSINESS_ID.equals(business)) {
             BliveActivity blive = BliveActivity.finder.where()
                     .eq("msisdn", null)
@@ -41,10 +46,12 @@ public class ClickToSMSController extends Controller {
             }
         }
 
+
         if (Constants.HAITI_COUNTRY_ID.equals(country) && Constants.HAITI_PAXION_BUSINESS_ID.equals(business)) {
             PaxxionActivity blive = PaxxionActivity.finder.where()
                     .eq("msisdn", null)
                     .lt("date", getDateAddSeconds(-20))
+                    .eq("origin", command.equals("landing2") ? "VIA" : "MOB")
                     .orderBy()
                     .desc("id")
                     .setMaxRows(1)
@@ -53,8 +60,13 @@ public class ClickToSMSController extends Controller {
             if (blive != null) {
                 blive.setMsisdn(msisdn);
                 blive.save();
-                String[] values = blive.getClickId().split("---");
-                sendMessageToMobipium(values[0], values[values.length > 1 ? 1 : 0]);
+                if (blive.getOrigin().equals("VIA")) {
+                    sendMessageToVia(blive.getClickId());
+                }
+                else {
+                    String[] values = blive.getClickId().split("---");
+                    sendMessageToMobipium(values[0], values[values.length > 1 ? 1 : 0]);
+                }
             }
         }
 
@@ -107,6 +119,16 @@ public class ClickToSMSController extends Controller {
 
     private void sendMessageToMobipium(String clickId, String source) {
         String call = String.format("https://smobipiumlink.com/conversion/index.php?jp=%s&source=%s", clickId, source);
+        System.out.println(call);
+        this.ws.url(call)
+                .get()
+                .thenAccept((WSResponse r) -> {
+                    String body = r.getBody();
+                });
+    }
+
+    private void sendMessageToVia(String clickId) {
+        String call = String.format("http://api.doblevialatam.com:9090/cget.php?token=%s", clickId);
         System.out.println(call);
         this.ws.url(call)
                 .get()
