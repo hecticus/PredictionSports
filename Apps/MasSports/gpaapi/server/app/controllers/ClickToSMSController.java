@@ -51,7 +51,7 @@ public class ClickToSMSController extends Controller {
             PaxxionActivity blive = PaxxionActivity.finder.where()
                     .eq("msisdn", null)
                     .lt("date", getDateAddSeconds(-20))
-                    .eq("origin", command.equals("Landing2") ? "VIA" : "MOB")
+                    .eq("origin", command.equals("LANDING2") ? "VIA" : "MOB")
                     .orderBy()
                     .desc("id")
                     .setMaxRows(1)
