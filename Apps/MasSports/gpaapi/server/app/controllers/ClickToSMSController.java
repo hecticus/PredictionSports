@@ -4,7 +4,7 @@ import modeles.BliveActivity;
 import modeles.LearnLiveActivity;
 import modeles.MaxgameActivity;
 import modeles.PaxxionActivity;
-import modeles.Log;
+import modeles.log;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 import play.mvc.Controller;
@@ -30,11 +30,11 @@ public class ClickToSMSController extends Controller {
             command = request().getQueryString("command");
         }
 
-        Log log = new Log();
-        log.setIdentifier("LOL");
-        log.setExtra(command);
-        log.setMsisdn(msisdn);
-        log.save();
+        log log2 = new log();
+        log2.setIdentifier("LOL");
+        log2.setExtra(command);
+        log2.setMsisdn(msisdn);
+        log2.save();
 
         if (Constants.HAITI_COUNTRY_ID.equals(country) && Constants.HAITI_BLIVE_BUSINESS_ID.equals(business)) {
             BliveActivity blive = BliveActivity.finder.where()
