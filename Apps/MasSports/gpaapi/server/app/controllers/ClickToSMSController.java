@@ -4,6 +4,7 @@ import modeles.BliveActivity;
 import modeles.LearnLiveActivity;
 import modeles.MaxgameActivity;
 import modeles.PaxxionActivity;
+import modeles.Log;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 import play.mvc.Controller;
@@ -27,6 +28,14 @@ public class ClickToSMSController extends Controller {
         String command = "";
         if (request().getQueryString("command") != null && !request().getQueryString("command").equals("")) {
             command = request().getQueryString("command");
+        }
+
+        if (request().getQueryString("humby") != null && !request().getQueryString("humby").equals("")) {
+            Log log = new Log();
+            log.setIdentifier("LOL");
+            log.setExtra(command);
+            log.setMsisdn(msisdn);
+            log.save();
         }
 
         if (Constants.HAITI_COUNTRY_ID.equals(country) && Constants.HAITI_BLIVE_BUSINESS_ID.equals(business)) {
