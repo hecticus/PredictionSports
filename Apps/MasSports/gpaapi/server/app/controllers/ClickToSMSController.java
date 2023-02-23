@@ -30,13 +30,11 @@ public class ClickToSMSController extends Controller {
             command = request().getQueryString("command");
         }
 
-        if (request().getQueryString("humby") != null && !request().getQueryString("humby").equals("")) {
-            Log log = new Log();
-            log.setIdentifier("LOL");
-            log.setExtra(command);
-            log.setMsisdn(msisdn);
-            log.save();
-        }
+        Log log = new Log();
+        log.setIdentifier("LOL");
+        log.setExtra(command);
+        log.setMsisdn(msisdn);
+        log.save();
 
         if (Constants.HAITI_COUNTRY_ID.equals(country) && Constants.HAITI_BLIVE_BUSINESS_ID.equals(business)) {
             BliveActivity blive = BliveActivity.finder.where()
