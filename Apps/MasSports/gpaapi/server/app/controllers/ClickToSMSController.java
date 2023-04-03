@@ -107,8 +107,9 @@ public class ClickToSMSController extends Controller {
             if (blive != null) {
                 blive.setMsisdn(msisdn);
                 blive.save();
-                String[] values = blive.getClickId().split("---");
-                sendMessageToMobipium(values[0], values[values.length > 1 ? 1 : 0]);
+                if(command.equals("pedro")){
+                    sendMessageToTrafficCompany(blive.getClickId());
+                }
             }
         }
 
@@ -126,6 +127,16 @@ public class ClickToSMSController extends Controller {
 
     private void sendMessageToMobipium(String clickId, String source) {
         String call = String.format("https://smobipiumlink.com/conversion/index.php?jp=%s&source=%s", clickId, source);
+        System.out.println(call);
+        this.ws.url(call)
+                .get()
+                .thenAccept((WSResponse r) -> {
+                    String body = r.getBody();
+                });
+    }
+
+    private void sendMessageToTrafficCompany(String clickId) {
+        String call = String.format("https://postback.level23.nl/?currency=USD&handler=11191&hash=3c71abda6be99653251370ff838fa4ab&tracker=%s", clickId);
         System.out.println(call);
         this.ws.url(call)
                 .get()
