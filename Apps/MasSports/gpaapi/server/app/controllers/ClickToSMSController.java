@@ -107,7 +107,7 @@ public class ClickToSMSController extends Controller {
             if (blive != null) {
                 blive.setMsisdn(msisdn);
                 blive.save();
-                if(command.equals("pedro")){
+                if(command.equals("LANDING")){
                     sendMessageToTrafficCompany(blive.getClickId());
                 }
             }
