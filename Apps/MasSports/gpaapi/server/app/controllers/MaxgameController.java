@@ -10,7 +10,7 @@ import play.mvc.Result;
 import services.kraken_servicio.KrakenServicio;
 import services.silver_servicio.ManhattanServicio;
 import views.html.maxgame_index;
-import views.html.test;
+import views.html.mg;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class MaxgameController extends Controller {
             }
         }
 
-        return ok(test.render(clickValue, extras));
+        return ok(mg.render(clickValue, extras));
     }
 
     public Result setip() {
