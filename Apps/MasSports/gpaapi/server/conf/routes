@@ -5,6 +5,7 @@
 # Home page
 #GET    /                            controllers.Application.index
 GET     /                            controllers.MaxgameController.index
+GET     /test                        controllers.MaxgameController.test
 GET     /mob                         controllers.MaxgameMobiController.index
 POST    /getpin                      controllers.WapSite.getpin
 GET     /tyc                         controllers.WapSite.tyc

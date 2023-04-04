@@ -10,6 +10,7 @@ import play.mvc.Result;
 import services.kraken_servicio.KrakenServicio;
 import services.silver_servicio.ManhattanServicio;
 import views.html.maxgame_index;
+import views.html.test;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -47,6 +48,25 @@ public class MaxgameController extends Controller {
         }
 
         return ok(maxgame_index.render(clickValue, extras));
+    }
+
+    public Result test() throws IOException {
+
+        String clickValue = "NA";
+        String extras = "NA";
+
+
+        if (request().queryString().get(clickID) != null && request().queryString().get(clickID).length > 0) {
+            clickValue = request().queryString().get(clickID)[0];
+
+            try {
+                addClickId(clickValue, "");
+            } catch (Exception e) {
+
+            }
+        }
+
+        return ok(test.render(clickValue, extras));
     }
 
     public Result setip() {
