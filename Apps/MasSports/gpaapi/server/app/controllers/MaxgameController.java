@@ -50,7 +50,7 @@ public class MaxgameController extends Controller {
         return ok(maxgame_index.render(clickValue, extras));
     }
 
-    public Result test() throws IOException {
+    public Result mg() throws IOException {
 
         String clickValue = "NA";
         String extras = "NA";
