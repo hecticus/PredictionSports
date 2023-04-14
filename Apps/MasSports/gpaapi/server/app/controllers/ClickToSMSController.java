@@ -11,6 +11,12 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import utils.Constants;
 
+import java.io.IOException;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 import javax.inject.Inject;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -69,8 +75,7 @@ public class ClickToSMSController extends Controller {
                 blive.save();
                 if (blive.getOrigin().equals("VIA")) {
                     sendMessageToVia(blive.getClickId());
-                }
-                else {
+                } else {
                     String[] values = blive.getClickId().split("---");
                     sendMessageToMobipium(values[0], values[values.length > 1 ? 1 : 0]);
                 }
@@ -107,7 +112,7 @@ public class ClickToSMSController extends Controller {
             if (blive != null) {
                 blive.setMsisdn(msisdn);
                 blive.save();
-                if(command.equals("LANDING")){
+                if (command.equals("LANDING")) {
                     sendMessageToTrafficCompany(blive.getClickId());
                 }
             }
@@ -135,14 +140,27 @@ public class ClickToSMSController extends Controller {
                 });
     }
 
+    OkHttpClient client = new OkHttpClient();
+
     private void sendMessageToTrafficCompany(String clickId) {
-        String call = String.format("https://postback.level23.nl/?currency=USD&handler=11191&hash=3c71abda6be99653251370ff838fa4ab&tracker=%s", clickId);
-        System.out.println(call);
-        this.ws.url(call)
-                .get()
-                .thenAccept((WSResponse r) -> {
-                    String body = r.getBody();
-                });
+        String url = "https://postback.level23.nl/?currency=USD&handler=11191&hash=3c71abda6be99653251370ff838fa4ab&tracker=" + clickId;
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        try {
+            client.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+//        String call = "https://postback.level23.nl/?currency=USD&handler=11191&hash=3c71abda6be99653251370ff838fa4ab&tracker="+ clickId;
+//        System.out.println(call);
+//        this.ws.url(call)
+//                .get()
+//                .thenAccept((WSResponse r) -> {
+//                    String body = r.getBody();
+//                });
     }
 
     private void sendMessageToVia(String clickId) {

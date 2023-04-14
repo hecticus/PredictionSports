@@ -16,6 +16,7 @@ libraryDependencies ++= Seq(
   specs2 % Test,
   "mysql" % "mysql-connector-java" % "5.1.47",
   "org.modelmapper" % "modelmapper" % "0.7.7",
+  "com.squareup.okhttp3" % "okhttp" % "4.10.0",
   "com.typesafe.play" % "play-mailer_2.11" % "5.0.0",
   "com.google.code.gson" % "gson" % "2.2.4",
   "com.sun.mail" % "javax.mail" % "1.6.2",
@@ -25,4 +26,5 @@ libraryDependencies ++= Seq(
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
+resolvers += "Typesafe Releases" at "https://repo.typesafe.com/typesafe/releases/"
 
