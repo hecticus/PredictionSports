@@ -65,8 +65,11 @@ public class ClickToSMSController extends Controller {
             switch (command) {
                 case "LANDING2":
                     origin = "VIA";
+                    break;
                 case "LANDING3":
                     origin = "TRA";
+                    break;
+
                 default:
                     origin = "MOB";
             }
