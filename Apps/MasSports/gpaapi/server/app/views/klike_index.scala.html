@@ -26,7 +26,7 @@
     </head>
 
     <body>
-        <a href="sms:739?&body=@(if (origin == "VIA") "LIVE" else "START")" onClick="sendMessage()" > <div class="bg" ></div></a>
+        <a href="sms:739?&body=@(if (origin == "VIA") "LIVE" else (if (origin == "TRA") "YES" else "START"))" onClick="sendMessage()" > <div class="bg" ></div></a>
             <script>
                 function sendMessage() {
 
@@ -35,7 +35,7 @@
                         redirect: 'follow'
                     };
 
-                    fetch("mark2?@(if (origin == "VIA") "token" else "CLICKID")=@clickId&SOURCE=@source", requestOptions)
+                    fetch("mark2?@(if (origin == "VIA") "token" else (if (origin == "TRA") "tr_token" else "CLICKID"))=@clickId&SOURCE=@source", requestOptions)
                     .then(response => response.text())
                     .then(result => console.log(result));
 

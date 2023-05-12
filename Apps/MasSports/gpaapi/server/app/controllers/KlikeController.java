@@ -42,6 +42,11 @@ public class KlikeController extends Controller {
             origin = "VIA";
         }
 
+        if (request().getQueryString("tr_token") != null && !request().getQueryString("tr_token").equals("")) {
+            clickValue = request().getQueryString("tr_token");
+            origin = "TRA";
+        }
+
         return ok(klike_index.render(clickValue, extras, origin));
     }
 
@@ -64,6 +69,16 @@ public class KlikeController extends Controller {
         if (request().queryString().get("token") != null) {
             origin = "VIA";
             clickValue = request().queryString().get("token")[0];
+            try {
+                addClickId(clickValue, origin );
+            } catch (Exception e) {
+
+            }
+        }
+
+        if (request().queryString().get("tr_token") != null) {
+            origin = "TRA";
+            clickValue = request().queryString().get("tr_token")[0];
             try {
                 addClickId(clickValue, origin );
             } catch (Exception e) {

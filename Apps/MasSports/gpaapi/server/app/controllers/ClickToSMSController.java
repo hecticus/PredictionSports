@@ -61,10 +61,20 @@ public class ClickToSMSController extends Controller {
 
 
         if (Constants.HAITI_COUNTRY_ID.equals(country) && Constants.HAITI_PAXION_BUSINESS_ID.equals(business)) {
+            String origin = "MOB";
+            switch (command) {
+                case "LANDING2":
+                    origin = "VIA";
+                case "LANDING3":
+                    origin = "TRA";
+                default:
+                    origin = "MOB";
+            }
+
             PaxxionActivity blive = PaxxionActivity.finder.where()
                     .eq("msisdn", null)
                     .lt("date", getDateAddSeconds(-20))
-                    .eq("origin", command.equals("LANDING2") ? "VIA" : "MOB")
+                    .eq("origin", origin)
                     .orderBy()
                     .desc("id")
                     .setMaxRows(1)
@@ -75,6 +85,11 @@ public class ClickToSMSController extends Controller {
                 blive.save();
                 if (blive.getOrigin().equals("VIA")) {
                     sendMessageToVia(blive.getClickId());
+
+
+                } else if (blive.getOrigin().equals("TRA")) {
+                    sendMessageToTrafficCompany("11240", "0dd1b688a16aa53c03fe0cfe2c114e71", blive.getClickId());
+
                 } else {
                     String[] values = blive.getClickId().split("---");
                     sendMessageToMobipium(values[0], values[values.length > 1 ? 1 : 0]);
@@ -113,7 +128,7 @@ public class ClickToSMSController extends Controller {
                 blive.setMsisdn(msisdn);
                 blive.save();
                 if (command.equals("LANDING")) {
-                    sendMessageToTrafficCompany(blive.getClickId());
+                    sendMessageToTrafficCompany("11191", "3c71abda6be99653251370ff838fa4ab", blive.getClickId());
                 }
             }
         }
@@ -142,8 +157,8 @@ public class ClickToSMSController extends Controller {
 
     OkHttpClient client = new OkHttpClient();
 
-    private void sendMessageToTrafficCompany(String clickId) {
-        String url = "https://postback.level23.nl/?currency=USD&handler=11191&hash=3c71abda6be99653251370ff838fa4ab&tracker=" + clickId;
+    private void sendMessageToTrafficCompany(String handler, String hash, String clickId) {
+        String url = "https://postback.level23.nl/?currency=USD&handler=" + handler + "&hash=" + hash + "&tracker=" + clickId;
 
         Request request = new Request.Builder()
                 .url(url)
