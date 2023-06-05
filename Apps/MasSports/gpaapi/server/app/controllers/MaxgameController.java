@@ -90,7 +90,6 @@ public class MaxgameController extends Controller {
 
 
     public Result mark() throws IOException {
-        System.out.println("LLLLLLLOOOOO");
         String clickValue = "NA";
 
         if (request().queryString().get(clickID) != null && request().queryString().get(clickID).length > 0) {
