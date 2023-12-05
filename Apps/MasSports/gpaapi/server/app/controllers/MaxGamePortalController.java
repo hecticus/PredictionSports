@@ -53,6 +53,7 @@ public class MaxGamePortalController extends Controller {
 
     public Result access(){
         String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(userId, null, SubcriptionId);
+        rutaRedirect = "https://dev.front.maxgame.hecticus.com/dashboard";
         return redirect(rutaRedirect);
     }
 }
