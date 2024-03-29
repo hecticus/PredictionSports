@@ -71,6 +71,10 @@ public class CiudadJuegoNativeController extends Controller {
 
         if (request().getQueryString("tel") != null && !request().getQueryString("tel").isEmpty()) {
             msisdn = formatFromDigitel(request().getQueryString("tel"));
+            String route = "https://dev.front.ciudadjuego.hecticus.com/dashboard";
+            Http.Cookie cookie = Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
+            response().setCookie(cookie);
+            return redirect(route);
         }
 
         ObjectMapper objectMapper = new ObjectMapper();

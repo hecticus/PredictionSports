@@ -61,7 +61,7 @@ GET     /extapi/internal-status/:msisdn/:status           controllers.AppLandCon
 
 
 GET     /ciudad_juego               controllers.CiudadJuegoNativeController.Login
-GET     /ciudad_juego/test               controllers.CiudadJuegoNativeController.Login
+GET     /ciudad_juego/test               controllers.CiudadJuegoNativeController.DigitelRedirect
 
 
 GET     /extapi/error/:message      controllers.AppLandController.ForceError(message:String)
