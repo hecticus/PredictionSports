@@ -87,31 +87,19 @@ public class CiudadJuegoNativeController extends Controller {
         String msisdn = "";
 
         if (request().cookie("X-msisdn") != null) {
-            String tmpMsisdn = request().cookie("X-msisdn").value();
-            if (digitelServicio.ValidarMsisdn(msisdn)) {
-                msisdn = tmpMsisdn;
-            }
+            msisdn = request().cookie("X-msisdn").value();
         }
 
         if (request().headers().containsKey("X-msisdn")) {
-            String tmpMsisdn = request().headers().get("X-msisdn")[0];
-            if (digitelServicio.ValidarMsisdn(msisdn)) {
-                msisdn = tmpMsisdn;
-            }
+            msisdn = request().headers().get("X-msisdn")[0];
         }
 
         if (request().cookie("msisdn") != null) {
-            String tmpMsisdn = request().cookie("msisdn").value();
-            if (digitelServicio.ValidarMsisdn(msisdn)) {
-                msisdn = tmpMsisdn;
-            }
+            msisdn = request().cookie("msisdn").value();
         }
 
         if (request().headers().containsKey("msisdn")) {
-            String tmpMsisdn = request().headers().get("msisdn")[0];
-            if (digitelServicio.ValidarMsisdn(msisdn)) {
-                msisdn = tmpMsisdn;
-            }
+            msisdn = request().headers().get("msisdn")[0];
         }
 
         if (request().getQueryString("tel") != null && !request().getQueryString("tel").isEmpty()) {
