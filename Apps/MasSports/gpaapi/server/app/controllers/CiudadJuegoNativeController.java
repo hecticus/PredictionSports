@@ -3,6 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import services.appland.AppLandServicio;
 import services.client_externo_servicio.ClienteExternoServicio;
@@ -70,6 +71,51 @@ public class CiudadJuegoNativeController extends Controller {
 
         if (request().getQueryString("tel") != null && !request().getQueryString("tel").isEmpty()) {
             msisdn = formatFromDigitel(request().getQueryString("tel"));
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode rootNode = objectMapper.createObjectNode();
+        rootNode.put("msisdn", msisdn);
+        return ok(rootNode);
+    }
+
+    public Result DigitelRedirect() throws MalformedURLException {
+        String msisdn = "";
+
+        if (request().cookie("X-msisdn") != null) {
+            String tmpMsisdn = request().cookie("X-msisdn").value();
+            if (digitelServicio.ValidarMsisdn(msisdn)) {
+                msisdn = tmpMsisdn;
+            }
+        }
+
+        if (request().headers().containsKey("X-msisdn")) {
+            String tmpMsisdn = request().headers().get("X-msisdn")[0];
+            if (digitelServicio.ValidarMsisdn(msisdn)) {
+                msisdn = tmpMsisdn;
+            }
+        }
+
+        if (request().cookie("msisdn") != null) {
+            String tmpMsisdn = request().cookie("msisdn").value();
+            if (digitelServicio.ValidarMsisdn(msisdn)) {
+                msisdn = tmpMsisdn;
+            }
+        }
+
+        if (request().headers().containsKey("msisdn")) {
+            String tmpMsisdn = request().headers().get("msisdn")[0];
+            if (digitelServicio.ValidarMsisdn(msisdn)) {
+                msisdn = tmpMsisdn;
+            }
+        }
+
+        if (request().getQueryString("tel") != null && !request().getQueryString("tel").isEmpty()) {
+            msisdn = formatFromDigitel(request().getQueryString("tel"));
+            String route = "https://dev.front.ciudadjuego.hecticus.com/dashboard";
+            Http.Cookie cookie = Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
+            response().setCookie(cookie);
+            return redirect(route);
         }
 
         ObjectMapper objectMapper = new ObjectMapper();
