@@ -8,6 +8,7 @@ import play.mvc.Result;
 import services.appland.AppLandServicio;
 import services.client_externo_servicio.ClienteExternoServicio;
 import services.digitel_servicio.DigitelServicio;
+import services.encrypt.EncryptServicio;
 import services.kraken_servicio.KrakenServicio;
 
 import javax.inject.Inject;
@@ -38,7 +39,7 @@ public class CiudadJuegoNativeController extends Controller {
         return redirect("http://gprs.digitel.com.ve/suscripcionesPreview.do?idSc=9424&ac=reg&s=null");
     }
 
-    public Result Login() throws MalformedURLException {
+    public Result Login() throws Exception {
         String msisdn = "";
 
         if (request().cookie("X-msisdn") != null) {
@@ -71,7 +72,8 @@ public class CiudadJuegoNativeController extends Controller {
 
         if (request().getQueryString("tel") != null && !request().getQueryString("tel").isEmpty()) {
             msisdn = formatFromDigitel(request().getQueryString("tel"));
-            String route = "https://dev.front.ciudadjuego.hecticus.com/dashboard";
+            String encrypt = EncryptServicio.encrypt(msisdn);
+            String route = "https://dev.front.ciudadjuego.hecticus.com/dashboard?msisdn=" + msisdn + "&identifier=" + encrypt;
             Http.Cookie cookie = Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
             response().setCookie(cookie);
             return redirect(route);
@@ -83,7 +85,7 @@ public class CiudadJuegoNativeController extends Controller {
         return ok(rootNode);
     }
 
-    public Result DigitelRedirect() throws MalformedURLException {
+    public Result DigitelRedirect() throws Exception {
         String msisdn = "";
 
         if (request().cookie("X-msisdn") != null) {
@@ -104,7 +106,9 @@ public class CiudadJuegoNativeController extends Controller {
 
         if (request().getQueryString("tel") != null && !request().getQueryString("tel").isEmpty()) {
             msisdn = formatFromDigitel(request().getQueryString("tel"));
-            String route = "https://dev.front.ciudadjuego.hecticus.com/dashboard";
+            String encrypt = EncryptServicio.encrypt(msisdn);
+            String route = "https://dev.front.ciudadjuego.hecticus.com/dashboard?msisdn=" + msisdn + "&identifier=" + encrypt;
+            //String route = "http://localhost:4200/dashboard?msisdn=" + msisdn + "&identifier=" + encrypt;
             Http.Cookie cookie = Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
             response().setCookie(cookie);
             return redirect(route);
