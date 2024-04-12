@@ -1,21 +1,13 @@
 package controllers;
 
-import modeles.BliveActivity;
-import modeles.LearnLiveActivity;
-import modeles.MaxgameActivity;
-import modeles.PaxxionActivity;
-import modeles.log;
+import modeles.*;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utils.Constants;
-
-import java.io.IOException;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 import javax.inject.Inject;
 import java.text.SimpleDateFormat;
@@ -23,6 +15,7 @@ import java.util.Calendar;
 
 public class ClickToSMSController extends Controller {
 
+    OkHttpClient client = new OkHttpClient();
     private WSClient ws;
 
     @Inject
@@ -158,10 +151,8 @@ public class ClickToSMSController extends Controller {
                 });
     }
 
-    OkHttpClient client = new OkHttpClient();
-
     private void sendMessageToTrafficCompany(String handler, String hash, String clickId) {
-        String url = "https://postback.level23.nl/?currency=USD&handler=" + handler + "&hash=" + hash + "&tracker=" + clickId;
+        String url = "http://postback.level23.nl/?currency=USD&handler=" + handler + "&hash=" + hash + "&tracker=" + clickId;
 
         Request request = new Request.Builder()
                 .url(url)
@@ -169,16 +160,9 @@ public class ClickToSMSController extends Controller {
 
         try {
             client.newCall(request).execute();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+
         }
-//        String call = "https://postback.level23.nl/?currency=USD&handler=11191&hash=3c71abda6be99653251370ff838fa4ab&tracker="+ clickId;
-//        System.out.println(call);
-//        this.ws.url(call)
-//                .get()
-//                .thenAccept((WSResponse r) -> {
-//                    String body = r.getBody();
-//                });
     }
 
     private void sendMessageToVia(String clickId) {
