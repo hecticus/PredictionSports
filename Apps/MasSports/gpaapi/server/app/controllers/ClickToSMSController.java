@@ -161,7 +161,7 @@ public class ClickToSMSController extends Controller {
         try {
             client.newCall(request).execute();
         } catch (Exception e) {
-
+            throw new RuntimeException(e);
         }
     }
 
