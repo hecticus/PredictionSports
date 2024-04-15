@@ -158,11 +158,17 @@ public class ClickToSMSController extends Controller {
                 .url(url)
                 .build();
 
-        try {
+        /*try {
             client.newCall(request).execute();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
+        }*/
+
+        try {
+            client.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
     }
 
     private void sendMessageToVia(String clickId) {
