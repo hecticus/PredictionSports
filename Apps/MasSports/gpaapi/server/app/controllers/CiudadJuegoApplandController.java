@@ -125,7 +125,7 @@ public class CiudadJuegoApplandController extends Controller {
         try {
             if (msisdn.contains("4128298099")) {
                 String encrypt = "";
-                String route = "https://dev.front.ciudadjuego.hecticus.com/dashboard?msisdn=" + msisdn + "&identifier=";
+                String route = "https://ciudadjuego-back-3c536exaqq-ue.a.run.app/dashboard?msisdn=" + msisdn + "&identifier=";
                 encrypt = EncryptServicio.encrypt(msisdn);
                 route = route + encrypt;
                 Http.Cookie cookie = Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
