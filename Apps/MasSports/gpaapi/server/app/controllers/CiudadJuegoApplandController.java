@@ -22,7 +22,6 @@ import services.dto.ClienteExternoWebEntity;
 import services.dto.ClienteServicioDisableListResponseDto;
 import services.dto.GetStatusRespuestaDto;
 import services.dto.PushStatusClientAppLand;
-import services.encrypt.EncryptServicio;
 import services.kraken_servicio.KrakenServicio;
 import views.html.ciudadjuego.login;
 import views.html.ciudadjuego.recover_password;
@@ -59,10 +58,7 @@ public class CiudadJuegoApplandController extends Controller {
     @Nullable
     private static Result goToCiudadjuego(String msisdn) {
         try {
-            String encrypt = "";
-            String route = "https://ciudadjuego.com/dashboard?msisdn=" + msisdn + "&identifier=";
-            encrypt = EncryptServicio.encrypt(msisdn);
-            route = route + encrypt;
+            String route = "https://www.ciudadjuego.com/dashboard?msisdn=" + msisdn;
             Http.Cookie cookie = Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
             response().setCookie(cookie);
             return redirect(route);
