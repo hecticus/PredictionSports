@@ -31,7 +31,6 @@ import views.html.ciudadjuego.tyc;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,7 +128,6 @@ public class CiudadJuegoApplandController extends Controller {
     }
 
     public Result RedirectFromDigitel(String id, String red, String msisdn) {
-        msisdn = new BigInteger(msisdn, 36).toString();  //Long.valueOf(msisdn, 36).toString();// Integer.toString(msisdn, 36);
         Result rutaRedirect = getResult(msisdn);
         if (rutaRedirect != null) return rutaRedirect;
         return ok();
