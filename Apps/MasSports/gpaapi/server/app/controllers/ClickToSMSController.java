@@ -10,6 +10,7 @@ import play.mvc.Result;
 import utils.Constants;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -169,6 +170,7 @@ public class ClickToSMSController extends Controller {
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (Exception e) {
+        }
     }
 
     private void sendMessageToVia(String clickId) {
