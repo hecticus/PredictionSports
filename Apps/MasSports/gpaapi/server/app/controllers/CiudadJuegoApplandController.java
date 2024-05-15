@@ -56,6 +56,21 @@ public class CiudadJuegoApplandController extends Controller {
         this.digitelServicio = digitelServicio;
     }
 
+    @Nullable
+    private static Result goToCiudadjuego(String msisdn) {
+        try {
+            String encrypt = "";
+            String route = "https://ciudadjuego.com/dashboard?msisdn=" + msisdn + "&identifier=";
+            encrypt = EncryptServicio.encrypt(msisdn);
+            route = route + encrypt;
+            Http.Cookie cookie = Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
+            response().setCookie(cookie);
+            return redirect(route);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public Result LoginTest(String msisdn) throws MalformedURLException {
         SubscriptionWSImplService subscriptionWSImplService = new SubscriptionWSImplService();
         SubscriptionWS subscriptionWS = subscriptionWSImplService.getSubscriptionWSImplPort();
@@ -122,38 +137,7 @@ public class CiudadJuegoApplandController extends Controller {
 
     @Nullable
     private Result getResult(String msisdn) {
-        try {
-            if (msisdn.contains("4128298099")) {
-                String encrypt = "";
-                String route = "https://ciudadjuego-back-3c536exaqq-ue.a.run.app/dashboard?msisdn=" + msisdn + "&identifier=";
-                encrypt = EncryptServicio.encrypt(msisdn);
-                route = route + encrypt;
-                Http.Cookie cookie = Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
-                response().setCookie(cookie);
-                return redirect(route);
-            }
-
-
-            ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRender(msisdn);
-            if (clienteAppland != null) {
-                String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteAppland.identifier, null, subscriptionId);
-                PushStatusClientAppLand payload = new PushStatusClientAppLand();
-                payload.event = "SUBSCRIBE";
-                payload.isEligible = true;
-                payload.nextRenewal = 99999999;
-                payload.numberOfConcurrentSessions = 1;
-                payload.numberOfProfiles = 1;
-                payload.user = clienteAppland.identifier;
-
-                this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload, subscriptionId);
-                Http.Cookie cookie = Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
-                response().setCookie(cookie);
-                return redirect(rutaRedirect);
-            }
-        } catch (Exception e) {
-            return null;
-        }
-        return null;
+        return goToCiudadjuego(msisdn);
     }
 
     public Result LoginPost() throws IOException {
@@ -161,33 +145,11 @@ public class CiudadJuegoApplandController extends Controller {
         String msisdn = aux.get("msisdn")[0];
         String contrasena = aux.get("contrasena")[0];
 
-//        if(msisdn.startsWith("0412") == false){
-//            return ok(login.render(true));
-//        }
 
         ClienteAppland clienteAppland = clienteExternoServicio.obtenerClienteRenderSincronizadoConKraken(msisdn, contrasena, 6);
         if (clienteAppland != null) {
             if (contrasena != null && contrasena.equals(clienteAppland.password)) {
-                String rutaOpcional = null;
-                String extra = "";
-
-                if (request().cookie("callback") != null) {
-                    extra = request().cookie("ott") != null ? "&ott=" + request().cookie("ott").value() : "";
-                    rutaOpcional = request().cookie("callback").value();
-                }
-
-                String rutaRedirect = this.applandServicio.obternerRutaDeRedirect(clienteAppland.identifier, rutaOpcional, subscriptionId);
-                rutaRedirect = rutaRedirect + extra;
-                PushStatusClientAppLand payload = new PushStatusClientAppLand();
-                payload.event = "SUBSCRIBE";
-                payload.isEligible = true;
-                payload.nextRenewal = 99999999;
-                payload.numberOfConcurrentSessions = 1;
-                payload.numberOfProfiles = 1;
-                payload.user = clienteAppland.identifier;
-
-                this.applandServicio.comunicarStatus("POST", clienteAppland.identifier, payload, subscriptionId);
-                return redirect(rutaRedirect);
+                return goToCiudadjuego(msisdn);
             }
         }
         return ok(login.render(true));
