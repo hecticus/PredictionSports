@@ -22,6 +22,7 @@ import services.dto.ClienteExternoWebEntity;
 import services.dto.ClienteServicioDisableListResponseDto;
 import services.dto.GetStatusRespuestaDto;
 import services.dto.PushStatusClientAppLand;
+import services.encrypt.EncryptServicio;
 import services.kraken_servicio.KrakenServicio;
 import views.html.ciudadjuego.login;
 import views.html.ciudadjuego.recover_password;
@@ -58,7 +59,9 @@ public class CiudadJuegoApplandController extends Controller {
     @Nullable
     private static Result goToCiudadjuego(String msisdn) {
         try {
-            String route = "https://www.ciudadjuego.com/dashboard?msisdn=" + msisdn;
+            String route = "https://www.ciudadjuego.com?msisdn=" + msisdn + "&identifier=";
+            String encrypt = EncryptServicio.encrypt(msisdn);
+            route = route + encrypt;
             Http.Cookie cookie = Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
             response().setCookie(cookie);
             return redirect(route);
@@ -115,7 +118,7 @@ public class CiudadJuegoApplandController extends Controller {
             }
         }
 
-        if (request().getQueryString("tel") != null && !request().getQueryString("tel").equals("")) {
+        if (request().getQueryString("tel") != null && !request().getQueryString("tel").isEmpty()) {
             msisdn = request().getQueryString("tel");
             return RedirectFromDigitel("", "", msisdn);
         }
