@@ -59,7 +59,7 @@ public class CiudadJuegoApplandController extends Controller {
     @Nullable
     private static Result goToCiudadjuego(String msisdn) {
         try {
-            String route = "https://www.ciudadjuego.com?msisdn=" + msisdn + "&identifier=";
+            String route = "https://www.ciudadjuego.com/dashboard?msisdn=" + msisdn + "&identifier=";
             String encrypt = EncryptServicio.encrypt(msisdn);
             route = route + encrypt;
             Http.Cookie cookie = Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
