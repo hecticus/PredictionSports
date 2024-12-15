@@ -33,6 +33,8 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,10 +48,7 @@ public class CiudadJuegoApplandController extends Controller {
     private DigitelServicio digitelServicio;
 
     @Inject
-    public CiudadJuegoApplandController(KrakenServicio krakenServicio,
-                                        AppLandServicio applandServicio,
-                                        ClienteExternoServicio clienteExternoServicio,
-                                        DigitelServicio digitelServicio) {
+    public CiudadJuegoApplandController(KrakenServicio krakenServicio, AppLandServicio applandServicio, ClienteExternoServicio clienteExternoServicio, DigitelServicio digitelServicio) {
         this.krakenServicio = krakenServicio;
         this.applandServicio = applandServicio;
         this.clienteExternoServicio = clienteExternoServicio;
@@ -60,8 +59,10 @@ public class CiudadJuegoApplandController extends Controller {
     private static Result goToCiudadjuego(String msisdn) {
         try {
             String route = "https://www.ciudadjuego.com/dashboard?msisdn=" + msisdn + "&identifier=";
+
             String encrypt = EncryptServicio.encrypt(msisdn);
-            route = route + encrypt;
+            String encodedEncrypt = URLEncoder.encode(encrypt, StandardCharsets.UTF_8.toString());
+            route = route + encodedEncrypt;
             Http.Cookie cookie = Http.Cookie.builder("msisdn", msisdn).withMaxAge(15).build();
             response().setCookie(cookie);
             return redirect(route);

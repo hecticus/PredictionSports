@@ -2,6 +2,8 @@ package services.encrypt;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class EncryptServicio {
@@ -26,11 +28,13 @@ public class EncryptServicio {
 
     public static void main(String[] args) {
         try {
-            String plaintext = "Hello, world!";
+            String plaintext = "584122820598";
 
             // Encrypt
             String encryptedText = encrypt(plaintext);
             System.out.println("Encrypted: " + encryptedText);
+            String encodedEncrypt = URLEncoder.encode(encryptedText, StandardCharsets.UTF_8.toString());
+            System.out.println("Encrypted url encoded: " + encodedEncrypt);
 
             // Decrypt
             String decryptedText = decrypt(encryptedText);
