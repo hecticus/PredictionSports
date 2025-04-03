@@ -79,7 +79,7 @@ public class CiudadJuegoApplandController extends Controller {
     }
 
     public Result LoginRedirect() throws MalformedURLException {
-        return redirect("http://gprs.digitel.com.ve/suscripcionesPreview.do?idSc=9424&ac=reg&s=null");
+        return redirect("https://gprs.digitel.com.ve/contenido/subscription?idSc=9424&ac=reg&s=null");
     }
 
     public Result Login() throws MalformedURLException {
@@ -125,7 +125,7 @@ public class CiudadJuegoApplandController extends Controller {
         }
 
 
-        return redirect("http://gprs.digitel.com.ve/suscripcionesPreview.do?idSc=9424&ac=reg&s=null");
+        return redirect("https://gprs.digitel.com.ve/contenido/subscription?idSc=9424&ac=reg&s=null");
     }
 
     public Result RedirectFromDigitel(String id, String red, String msisdn) {
