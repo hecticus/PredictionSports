@@ -67,6 +67,8 @@ GET     /ciudad_juego/test               controllers.CiudadJuegoNativeController
 GET     /extapi/error/:message      controllers.AppLandController.ForceError(message:String)
 GET     /cj                         controllers.CiudadJuegoApplandController.Login
 POST    /cj                         controllers.CiudadJuegoApplandController.Login
+GET     /cj/                         controllers.CiudadJuegoApplandController.Login
+POST    /cj/                         controllers.CiudadJuegoApplandController.Login
 GET     /cj/test/:msisdn            controllers.CiudadJuegoApplandController.LoginTest(msisdn:String)
 GET     /cj/test                    controllers.CiudadJuegoApplandController.LoginRedirect()
 GET     /cj/login                   controllers.CiudadJuegoApplandController.Login
