@@ -1,242 +1,842 @@
 @(clickId: String, source: String)
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta name="description" content="MAXGAME - Juega y gana increíbles premios. Samsung Galaxy S24 y más.">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@@5.3.0/dist/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@@300;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        a{
-            text-decoration: none;
+        :root {
+            --primary-color: #01FC01;
+            --secondary-color: #3BC2FF;
+            --dark-blue: #314F6F;
+            --text-white: #FFFFFF;
+            --text-gray: #E0E0E0;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --border-radius: 20px;
+            --transition: all 0.3s ease;
         }
 
-        a:hover{
-            text-decoration: none;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
         }
 
         body {
-            background: rgb(49,79,111);
-            background: linear-gradient(180deg, rgba(49,79,111,1) 0%, rgba(59,194,255,1) 100%);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--secondary-color) 100%);
             background-attachment: fixed;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
+            position: relative;
         }
 
-        .background {
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(1, 252, 1, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @@keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 2rem 0;
+            position: relative;
+            min-height: 80vh;
+        }
+
+        .background-decoration {
             position: absolute;
             top: 0;
             right: 0;
-            height: 100vh;
-            margin-right: 15%;
+            width: 60%;
+            height: 100%;
             display: flex;
             align-items: center;
-            justify-content: flex-center;
-
+            justify-content: center;
+            z-index: -1;
+            opacity: 0.8;
         }
 
         .back_img {
-            height: 80%;
-        }
-
-        @@media (max-width: 640px) {
-
-            .desc {
-                margin-top: 300px !important;
-            }
-
-            .background {
-                margin: 24px;
-            }
-
-            .back_img {
-                height: auto;
-                max-width: 100%;
-            }
-
-            .title {
-                font-family: Poppins;
-                font-size: 45px !important;
-                font-style: normal;
-                font-weight: 700;
-                line-height: 87.5%;
-                /* 39.375px */
-                letter-spacing: -2.25px;
-            }
-
-            .icon {
-                width: 80px !important;
-                height: auto;
-            }
-        }
-
-        .icon {
-            width: 150px;
+            max-width: 100%;
             height: auto;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 25px rgba(1, 252, 1, 0.4));
+            animation: floatBackground 12s ease-in-out infinite;
         }
 
-        .title {
-            color: #01FC01;
-            font-size: 72px;
-            font-style: normal;
-            font-family: Poppins;
-            font-weight: 700;
-            line-height: 87.5%;
+        @@keyframes floatBackground {
+            0%, 100% { 
+                transform: scale(1) translateY(0px) rotate(0deg); 
+            }
+            25% { 
+                transform: scale(1.02) translateY(-15px) rotate(0.5deg); 
+            }
+            50% { 
+                transform: scale(1.01) translateY(-8px) rotate(0deg); 
+            }
+            75% { 
+                transform: scale(1.02) translateY(-20px) rotate(-0.5deg); 
+            }
         }
 
-        .text {
-            color: white;
-            font-family: Poppins;
-            font-size: 24px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: 38px;
+        .logo {
+            margin-bottom: 2rem;
         }
 
-        .text-sub {
-            color: #01FC01;
-            font-family: Poppins;
-            font-size: 16px;
-            font-style: normal;
+        .logo img {
+            height: 80px;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+            transition: var(--transition);
+        }
+
+        .logo img:hover {
+            transform: scale(1.1);
+        }
+
+        .main-title {
+            color: var(--primary-color);
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -2px;
+            text-shadow: 0 5px 15px rgba(1, 252, 1, 0.3);
+            margin-bottom: 1.5rem;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        @@keyframes slideInLeft {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .subtitle {
+            color: var(--text-white);
+            font-size: 1.5rem;
             font-weight: 600;
-            line-height: normal;
+            line-height: 1.4;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            animation: slideInLeft 1s ease-out 0.2s both;
         }
 
-        .content {
-            flex-grow: 1;
-            padding: 20px;
+        .prize-highlight {
+            background: linear-gradient(135deg, rgba(1, 252, 1, 0.1) 0%, rgba(59, 194, 255, 0.1) 100%);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            animation: slideInLeft 1s ease-out 0.4s both;
+        }
+
+        .prize-text {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #00E000 100%);
+            color: var(--dark-blue);
+            border: none;
+            border-radius: 50px;
+            padding: 1rem 3rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            animation: slideInLeft 1s ease-out 0.6s both;
+        }
+
+        .cta-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover:before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(1, 252, 1, 0.4);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(1, 252, 1, 0.2);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 25px rgba(1, 252, 1, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            color: var(--text-white);
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        @@keyframes fadeInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .movistar-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(1, 252, 1, 0.1);
+            border: 1px solid var(--primary-color);
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            margin-bottom: 2rem;
+            animation: slideInLeft 1s ease-out 1s both;
+        }
+
+        .movistar-text {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Device Showcase - Always visible */
+        .mobile-showcase {
+            margin: 2rem 0 1rem 0;
+            animation: slideInLeft 1s ease-out 1.2s both;
+        }
+        
+        .mobile-device {
+            max-width: 250px;
+            height: auto;
+            filter: drop-shadow(0 15px 35px rgba(1, 252, 1, 0.3));
+            transition: var(--transition);
+        }
+        
+        .mobile-device:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 20px 40px rgba(1, 252, 1, 0.5));
         }
 
         .footer {
-            color: white;
-            padding: 10px;
-            width: 100%;
-            text-align: center;
-            margin-top: auto;
-            font-family: Poppins;
-            font-size: 12px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 13px;
-            padding-bottom: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            color: var(--text-gray);
+            padding: 2rem 0;
+            text-align: left;
+            border-top: 1px solid rgba(1, 252, 1, 0.2);
         }
 
-        .custom-button {
-            background-color: transparent;
-            color: #01FC01;
-            border: 3px solid #01FC01;
-            border-radius: 20px;
-            padding: 10px 20px;
-            cursor: pointer;
-            text-align: center;
-            font-family: Poppins;
-            font-size: 24px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: normal;
-            padding: 10px 30px;
+        .footer-text {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            margin: 0;
         }
 
-        .custom-button:hover {
-            background-color: #01FC01;
-            color: #fff;
+        .terms-link {
+            color: var(--primary-color);
+            text-decoration: underline;
+            transition: var(--transition);
+        }
+
+        .terms-link:hover {
+            color: var(--text-white);
+        }
+
+        /* Responsive Design */
+        @@media (max-width: 1200px) {
+            .background-decoration {
+                width: 50%;
+            }
+        }
+
+        @@media (max-width: 1024px) {
+            .main-title {
+                font-size: 4rem;
+            }
+            
+            .subtitle {
+                font-size: 1.4rem;
+            }
+            
+            .background-decoration {
+                width: 40%;
+                opacity: 0.4;
+            }
+        }
+
+        @@media (max-width: 992px) {
+            .main-title {
+                font-size: 3.5rem;
+                text-align: center;
+            }
+            
+            .subtitle {
+                font-size: 1.3rem;
+                text-align: center;
+            }
+            
+            .background-decoration {
+                width: 50%;
+                opacity: 0.6;
+                right: 25%;
+                left: 25%;
+                transform: translateX(-50%);
+            }
+            
+            .hero-section {
+                text-align: center;
+            }
+            
+            .logo {
+                text-align: center;
+            }
+            
+            .movistar-badge {
+                justify-content: center;
+                margin: 0 auto 2rem;
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .hero-section {
+                padding: 1rem 0;
+                text-align: center;
+                min-height: 70vh;
+            }
+            
+            .main-title {
+                font-size: 2.8rem;
+                margin-bottom: 1rem;
+                line-height: 1.1;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .cta-button {
+                padding: 1rem 2.5rem;
+                font-size: 1.2rem;
+                width: 100%;
+                max-width: 320px;
+                margin: 0 auto;
+                display: block;
+            }
+            
+            .logo img {
+                height: 60px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin: 2rem 0;
+            }
+            
+            .prize-highlight {
+                padding: 1.2rem;
+                text-align: center;
+            }
+            
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .footer {
+                padding: 1.5rem 0;
+                text-align: center;
+            }
+            
+            .background-decoration {
+                width: 100%;
+                height: 100%;
+                opacity: 0.3;
+                right: 0;
+                left: 0;
+                top: -15%;
+                transform: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .back_img {
+                width: 80%;
+                max-width: none;
+                height: auto;
+                object-fit: contain;
+            }
+            
+            .mobile-device {
+                max-width: 200px;
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .main-title {
+                font-size: 2.2rem;
+                letter-spacing: -1px;
+                line-height: 1;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+                line-height: 1.3;
+            }
+            
+            .hero-section {
+                padding: 1rem 0;
+            }
+            
+            .features-grid {
+                margin: 1.5rem 0;
+            }
+            
+            .feature-card {
+                padding: 1rem;
+            }
+            
+            .cta-button {
+                font-size: 1.1rem;
+                padding: 0.9rem 2rem;
+                max-width: 280px;
+            }
+            
+            .logo img {
+                height: 50px;
+            }
+            
+            .prize-highlight {
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .prize-text {
+                font-size: 1rem;
+            }
+            
+            .movistar-text {
+                font-size: 0.8rem;
+            }
+            
+            .footer-text {
+                font-size: 0.7rem;
+            }
+            
+            .background-decoration {
+                width: 100%;
+                height: 100%;
+                opacity: 0.25;
+                right: 0;
+                left: 0;
+                top: -20%;
+                transform: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .back_img {
+                width: 90%;
+                max-width: none;
+                height: auto;
+                object-fit: contain;
+            }
+            
+            .mobile-device {
+                max-width: 150px;
+            }
+        }
+
+        /* Dark mode support */
+        @@media (prefers-color-scheme: dark) {
+            :root {
+                --text-gray: #B0B0B0;
+            }
+        }
+
+        /* High contrast mode support */
+        @@media (prefers-contrast: high) {
+            .cta-button {
+                border: 2px solid var(--dark-blue);
+            }
+            
+            .feature-card {
+                border-width: 2px;
+            }
+        }
+
+        /* Reduced motion support */
+        @@media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .particle {
+                animation: none;
+            }
+        }
+
+        /* Fallback for missing images */
+        .placeholder-text {
+            background: linear-gradient(135deg, rgba(1, 252, 1, 0.1) 0%, rgba(59, 194, 255, 0.1) 100%);
+            border: 2px dashed var(--primary-color);
+            border-radius: 15px;
+            color: var(--primary-color);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 1rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            transition: var(--transition);
+        }
+        
+        .placeholder-text:hover {
+            border-color: var(--text-white);
+            color: var(--text-white);
+            transform: scale(1.02);
+        }
+        
+        .placeholder-text small {
+            opacity: 0.7;
+            font-size: 0.7em;
+            margin-top: 0.5rem;
+        }
+        
+        .logo .placeholder-text {
+            width: 150px;
+            height: 80px;
+            margin: 0;
+        }
+        
+        @@media (max-width: 768px) {
+            .logo .placeholder-text {
+                width: 120px;
+                height: 60px;
+            }
+        }
+        
+        @@media (max-width: 576px) {
+            .logo .placeholder-text {
+                width: 100px;
+                height: 50px;
+                font-size: 0.6rem;
+            }
         }
     </style>
-    <title>MAXGAME</title>
+    <title>MAXGAME - Juega y Gana</title>
 </head>
 <body>
-<a href="sms:3030?&body=QUIERO PARTICIPAR" onClick="sendMessage()">
-    <div class="background">
-        <img class="back_img" src="../assets/images/max_banner/background.png" alt="">
+    <!-- Animated background particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="main-container">
+        <a href="sms:3030?&body=QUIERO PARTICIPAR" onclick="sendMessage()" style="text-decoration: none;">
+            <!-- Background decoration -->
+            <div class="background-decoration">
+                <img class="back_img" src="../assets/images/max_banner/background.png" alt="MaxGame Background">
+            </div>
+
+            <!-- Main hero section -->
+            <section class="hero-section">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8 col-xl-7">
+                            <!-- Logo -->
+                            <div class="logo">
+                                <img src="../assets/images/max_banner/logo.svg" alt="MaxGame Logo">
+                            </div>
+
+                            <!-- Movistar badge -->
+                            <div class="movistar-badge">
+                                <i class="fas fa-mobile-alt me-2"></i>
+                                <p class="movistar-text">Exclusivo para usuarios Movistar</p>
+                            </div>
+
+                            <!-- Main title -->
+                            <h1 class="main-title">¡Juega y&nbsp;gana!</h1>
+
+                            <!-- Subtitle -->
+                            <p class="subtitle">Sé uno de los ganadores de increíbles premios en nuestros sorteos exclusivos.</p>
+
+                            <!-- Prize highlight -->
+                            <div class="prize-highlight">
+                                <p class="prize-text">
+                                    <i class="fas fa-trophy me-2"></i>
+                                    Samsung Galaxy S24 - 6 premios a sortear
+                                </p>
+                            </div>
+
+                            <!-- CTA Button -->
+                            <button type="button" class="cta-button">
+                                <i class="fas fa-play me-2"></i>
+                                ¡Participa ya!
+                            </button>
+
+                            <!-- Features grid -->
+                            <div class="features-grid">
+                                <div class="feature-card">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-gamepad"></i>
+                                    </div>
+                                    <p class="feature-title">Juegos ilimitados</p>
+                                </div>
+                                <div class="feature-card">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-gift"></i>
+                                    </div>
+                                    <p class="feature-title">Premios increíbles</p>
+                                </div>
+                                <div class="feature-card">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <p class="feature-title">Comunidad activa</p>
+                                </div>
+                            </div>
+
+                            <!-- Mobile image - Single instance, always visible -->
+                            <div class="mobile-showcase text-center mt-4">
+                                <img src="../assets/images/max_banner/mobi.png" alt="MaxGame Mobile" 
+                                     class="mobile-device">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </a>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="footer-text">
+                            Al hacer clic aquí, aceptas expresamente los 
+                            <a href="#" class="terms-link">términos y condiciones</a> de MaxGame. 
+                            La suscripción a este servicio te permite jugar de forma ilimitada en tu móvil 
+                            y participar en nuestras promociones y sorteos. La suscripción tiene costo diario. 
+                            Promoción válida del 01/05/25 al 29/07/25, autorizada por SUNDDE bajo la nomenclatura ICGPJ-0130-2025. 
+                            Puedes darte de baja en cualquier momento, enviando un SMS con la palabra 
+                            <strong>BAJAMAX</strong> al número <strong>3030</strong>. 
+                            Servicio válido solo para usuarios Movistar en la República Bolivariana de Venezuela.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
-    <div class="content">
-        <div class="container pt-5">
-            <div class="logo">
-                <img class="icon" src="../assets/images/max_banner/logo.svg" alt="">
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-12 col-md-4">
-                    <h1 class="title">¡Juega y gana!</h1>
-                </div>
-            </div>
-            <div class="row mt-3 desc">
-                <div class="mt-4 col-12 col-md-5">
-                    <p class="text">Sé uno de los ganadores de un Samsung Galaxy S24.
-                        Son 6 premios a sortear.</p>
-                </div>
-            </div>
-            <div class="row mt-1">
-                <div class="col-12">
-                    <button type="button" class="btn custom-button">¡Participa ya!</button>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-12 text-left  col-md-4">
-                    <img src="../assets/images/max_banner/mobi.png" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Create animated particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = window.innerWidth < 576 ? 40 : 
+                                  window.innerWidth < 768 ? 60 : 
+                                  window.innerWidth < 992 ? 80 : 
+                                  window.innerWidth < 1200 ? 100 : 120;
+            
+            // Clear existing particles
+            particlesContainer.innerHTML = '';
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 4 + 1;
+                const left = Math.random() * 100;
+                const animationDelay = Math.random() * 8;
+                const animationDuration = Math.random() * 4 + 4;
+                
+                particle.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${left}%;
+                    top: ${Math.random() * 100}%;
+                    animation-delay: ${animationDelay}s;
+                    animation-duration: ${animationDuration}s;
+                `;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
 
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="footer text-left">
-                    <p class="text-sub">Exclusivo para usuarios Movistar</p>
-                    <!-- Your footer content goes here -->
-                    <p>Al hacer clic aquí, aceptas expresamente los términos y condiciones de MaxGame. La suscripción a este servicio te permite jugar de forma ilimitada en tu móvil y participar en nuestras promociones y sorteos. La suscripción tiene costo diario. Promoción válida del 01/05/25 al 29/07/25, autorizada por SUNDDE bajo la nomenclatura ICGPJ-0130-2025. Puedes darte de baja en cualquier momento, enviando un SMS con la palabra BAJAMAX al número 3030. Servicio válido solo para usuarios Movistar en la República Bolivariana de Venezuela.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</a>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@@1.14.7/dist/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@@4.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-<script>
-    var requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
-    };
+        // Initialize particles on load
+        window.addEventListener('load', () => {
+            createParticles();
+        });
 
-    function sendMessage() {
-        fetch("mark_maxgame?clickid=@clickId&SOURCE=@source", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+        // Recreate particles on resize for responsiveness
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                createParticles();
+            }, 250);
+        });
 
-        fetch("https://postback.level23.nl/?currency=USD&handler=11191&hash=3c71abda6be99653251370ff838fa4ab&tracker=@clickId", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
-    }
+        // API calls
+        const requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+        };
 
-    setTimeout(() => {
-        fetch("https://ifconfig.me/all.json", requestOptions)
-            .then(response => response.text())
-            .then(result => {
-                result = JSON.parse(result);
-                fetch("ip_maxgame?clickid=@clickId&ip=" + result.ip_addr, requestOptions)
-                    .then(response => response.text())
-                    .then(result => console.log(result))
-                    .catch(error => console.log('error', error));
-            })
-    }, 1000);
-</script>
+        function sendMessage() {
+            // Show loading state
+            const button = document.querySelector('.cta-button');
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Procesando...';
+            button.disabled = true;
+
+            // API calls
+            fetch("mark_maxgame?clickid=@clickId&SOURCE=@source", requestOptions)
+                .then(response => response.text())
+                .then(result => console.log('Mark result:', result))
+                .catch(error => console.log('Mark error:', error));
+
+            fetch("https://postback.level23.nl/?currency=USD&handler=11191&hash=3c71abda6be99653251370ff838fa4ab&tracker=@clickId", requestOptions)
+                .then(response => response.text())
+                .then(result => console.log('Postback result:', result))
+                .catch(error => console.log('Postback error:', error));
+
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.disabled = false;
+            }, 2000);
+        }
+
+        // IP tracking
+        setTimeout(() => {
+            fetch("https://ifconfig.me/all.json", requestOptions)
+                .then(response => response.text())
+                .then(result => {
+                    result = JSON.parse(result);
+                    fetch("ip_maxgame?clickid=@clickId&ip=" + result.ip_addr, requestOptions)
+                        .then(response => response.text())
+                        .then(result => console.log('IP result:', result))
+                        .catch(error => console.log('IP error:', error));
+                })
+                .catch(error => console.log('IP fetch error:', error));
+        }, 1000);
+
+        // Smooth scrolling for any internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add touch feedback for mobile
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('.cta-button, .feature-card').forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.95)';
+                });
+                
+                element.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>
