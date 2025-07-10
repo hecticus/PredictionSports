@@ -867,14 +867,6 @@
           .then((result) => console.log("Mark result:", result))
           .catch((error) => console.log("Mark error:", error));
 
-        fetch(
-          "https://postback.level23.nl/?currency=USD&handler=11191&hash=3c71abda6be99653251370ff838fa4ab&tracker=@clickId",
-          requestOptions
-        )
-          .then((response) => response.text())
-          .then((result) => console.log("Postback result:", result))
-          .catch((error) => console.log("Postback error:", error));
-
         // Reset button after 2 seconds
         setTimeout(() => {
           button.innerHTML = originalText;
