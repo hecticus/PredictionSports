@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
 import modeles.ClienteAppland;
 import modeles.Config;
+import modeles.CiudadJuegoActivity;
 import org.jetbrains.annotations.Nullable;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -28,6 +29,7 @@ import views.html.ciudadjuego.login;
 import views.html.ciudadjuego.recover_password;
 import views.html.ciudadjuego.sms;
 import views.html.ciudadjuego.tyc;
+import views.html.ciudadjuego.landing_new;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -254,6 +256,62 @@ public class CiudadJuegoApplandController extends Controller {
 
         result.set("Clientes", array);
         return ok(result);
+    }
+
+    public Result Landing() {
+        String clickValue = "NA";
+        String clickID = "clickid";
+
+        // Get clickId from query parameters
+        if (request().queryString().get(clickID) != null && request().queryString().get(clickID).length > 0) {
+            clickValue = request().queryString().get(clickID)[0];
+            
+            try {
+                // Save clickId when landing page is accessed (used = false)
+                addClickId(clickValue, "");
+            } catch (Exception e) {
+                // Handle exception silently
+            }
+        }
+
+        return ok(landing_new.render(false, clickValue));
+    }
+
+    public Result mark_ciudadjuego() throws IOException {
+        String clickValue = "NA";
+        String clickID = "clickid";
+
+        if (request().queryString().get(clickID) != null && request().queryString().get(clickID).length > 0) {
+            clickValue = request().queryString().get(clickID)[0];
+
+            try {
+                // Update clickId to used = true when user clicks on screen
+                updateClickId(clickValue);
+                System.out.println("CiudadJuego Click ID marked as used: " + clickValue);
+            } catch (Exception e) {
+                // Handle exception silently
+            }
+        }
+        return ok();
+    }
+
+    private void updateClickId(String clickId) {
+        CiudadJuegoActivity activity = CiudadJuegoActivity.finder.where().eq("click_id", clickId).findUnique();
+        if (activity != null) {
+            activity.setUsed(true);
+            activity.update();
+        }
+    }
+
+    private void addClickId(String clickId, String ip) {
+        CiudadJuegoActivity existingActivity = CiudadJuegoActivity.finder.where().eq("click_id", clickId).findUnique();
+        if (existingActivity == null) {
+            CiudadJuegoActivity activity = new CiudadJuegoActivity(clickId);
+            activity.setIp(ip);
+            activity.setOrigin("CJ");
+            activity.setUsed(false); // Initially set as not used
+            activity.save();
+        }
     }
 }
 

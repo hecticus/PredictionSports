@@ -1,0 +1,427 @@
+@(myError: Boolean, clickId: String)
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ciudad Juego - Promoción Samsung A16</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:700,600,500,400"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@@300;400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        margin: 0;
+        padding: 0;
+        border: none;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: linear-gradient(180deg, #c96193 0%, #7a3287 100%);
+        font-family: "Montserrat", Arial, sans-serif;
+        color: #fff;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0;
+      }
+
+      /* MOBILE STYLES (default) */
+      .mobile-layout {
+        display: block;
+      }
+
+      .desktop-layout {
+        display: none;
+      }
+
+      .logo {
+        font-size: 1.5em;
+        font-weight: 700;
+        letter-spacing: 2px;
+      }
+
+      .desc {
+        margin: 18px 0;
+        font-size: 1.1em;
+        font-weight: 500;
+        text-align: center;
+        color: #fff;
+      }
+
+      .button {
+        display: block;
+        background: linear-gradient(180deg, #e52538 0%, #4c2680 100%);
+        color: #fff;
+        font-weight: bold;
+        font-size: 1.5em;
+        padding: 25px 0;
+        width: 70%;
+        margin: 0 auto 16px auto;
+        border: 3px solid #ffffff;
+        border-radius: 40px;
+        cursor: pointer;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        text-align: center;
+      }
+
+      .button:hover {
+        background: linear-gradient(180deg, #d11e2d 0%, #3a1d60 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .section {
+        margin-top: 30px;
+        text-align: center;
+      }
+
+      .section-title {
+        font-size: 1.4em;
+        font-weight: 700;
+        margin-bottom: 18px;
+        letter-spacing: 1px;
+      }
+
+      .prizes-desc {
+        font-size: 1.1em;
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+
+      .digitel-logo {
+        font-weight: 700;
+        font-size: 1.25em;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+        display: block;
+        text-align: center;
+      }
+
+      .promo-title {
+        font-family: "Poppins", "Open Sans", "Lato", "Roboto", Arial, sans-serif;
+        font-size: 4.2rem;
+        font-weight: light;
+        color: #ffffff;
+        line-height: 1.1;
+        text-align: center;
+        width: 80%;
+        margin: 0 auto;
+        word-wrap: break-word;
+        hyphens: auto;
+      }
+
+      .promo-title .highlight {
+        color: #5d1e84;
+        font-weight: 600;
+      }
+
+      /* DESKTOP STYLES */
+      @@media screen and (min-width: 768px) {
+        .mobile-layout {
+          display: block;
+        }
+
+        .desktop-layout {
+          display: none;
+        }
+
+        .container {
+          padding: 0px;
+        }
+
+        .promo-title {
+          font-size: 5.5rem;
+        }
+
+        /* Ready for desktop development */
+      }
+
+      @@media screen and (min-width: 1024px) {
+        .container {
+          padding: 0px;
+        }
+        
+        .promo-title {
+          font-size: 6.5rem;
+        }
+      }
+
+      /* Responsive font sizing for smaller screens */
+      @@media screen and (max-width: 480px) {
+        .promo-title {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- MOBILE LAYOUT -->
+      <div class="mobile-layout">
+        <header>
+          <img src=@routes.Assets.at("ciudadjuego/images/logo_new.png") alt="CIUDAD
+          JUEGO" class="logo" style="display: block; margin: 0 auto; width: 70%;
+          height: auto" />
+        </header>
+        <img src=@routes.Assets.at("ciudadjuego/images/image1.png")
+        class="promo-img" alt="Samsung Sorteo" style="padding-top: 30px; width: 90%; display:
+        block; margin: 20px auto 0; border: 0; box-shadow: none; border-radius:
+        0; " />
+        <div
+          class="desc"
+          style="
+            width: 80%;
+            margin: 12px auto;
+            text-align: center;
+            line-height: 1.2;
+          "
+        >
+          <div class="promo-title">
+            ¡Participa en el sorteo de 3 <br /><span class="highlight"
+              >Samsung A16</span
+            >!
+          </div>
+        </div>
+        <button class="button">¡Suscríbete aquí!</button>
+
+        <div class="section">
+          <img
+          src=@routes.Assets.at("ciudadjuego/images/juegos_premium_ilimitados.png")
+          alt="Juegos premium ILIMITADOS" style=" width: 90%; display: block;
+          margin: 0 auto 18px auto; height: auto; " /> <img
+          src=@routes.Assets.at("ciudadjuego/images/ronaldo.png")
+          alt="Deportista jugando" style=" width: 100%; display: block; margin:
+          0 auto 16px auto; height: auto; " />
+          <button
+            class="button"
+            style="margin-top: -60px; position: relative; z-index: 10"
+          >
+            ¡Suscríbete aquí!
+          </button>
+        </div>
+
+        <div class="section">
+          <div
+            class="section-title"
+            style="
+              font-family: 'Poppins', sans-serif;
+              font-size: 3.5em;
+              font-weight: 700;
+              margin-bottom: 25px;
+            "
+          >
+            ¡Juega y gana!
+          </div>
+          <img src=@routes.Assets.at("ciudadjuego/images/image3.png")
+          alt="Personaje con hamburguesa" style=" width: 90%; height: auto;
+          border: none; box-shadow: none; border-radius: 0; display: block;
+          margin: 0 0 20px auto; " /> <img
+          src=@routes.Assets.at("ciudadjuego/images/trophy.png") alt="Trofeo"
+          style=" padding-top: 60px; width: 40%; height: auto; display: block;
+          margin: 0 auto 20px auto; border: none; box-shadow: none;
+          border-radius: 0; " />
+          <div
+            class="prizes-desc"
+            style="font-size: 2.5em; margin-bottom: 20px; text-align: center"
+          >
+            Gana muchos premios!
+          </div>
+
+          <button class="button">¡Suscríbete aquí!</button>
+        </div>
+
+        <div class="section">
+          <img src=@routes.Assets.at("ciudadjuego/images/image4.png")
+          alt="Samsung y personajes cartoon" style=" width: 90%; height: auto;
+          display: block; margin: 0 auto 20px auto; border: none; box-shadow:
+          none; border-radius: 0; " />
+          <div
+            class="desc"
+            style="
+              font-size: 3em;
+              font-family: 'Poppins', sans-serif;
+              font-weight: 600;
+            "
+          >
+            Suscríbete y participa en los sorteos
+          </div>
+          <button class="button">¡Suscríbete aquí!</button>
+        </div>
+
+        <hr
+          style="
+            border: none;
+            height: 4px;
+            background-color: white;
+            margin: 30px 0;
+            width: 100%;
+          "
+        />
+        <img src=@routes.Assets.at("ciudadjuego/images/digitel_logo.png")
+        class="digitel-logo" alt="DIGITEL" style="height: auto; width: 60%;
+        display: block; margin: 0 auto 20px auto;" />
+        <div
+          style="
+            width: 90%;
+            margin: 0 auto;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+          "
+        >
+          Al hacer clic aquí, aceptas expresamente los términos y condiciones de
+          MagGame. La suscripción es un servicio de premio jugar de forma
+          ilimitada en tu móvil, participar en nuestras promociones y sorteos,
+          acumular puntos para canjearlos por entradas de cine y líneas Digitel
+          y participar en los torneos. La suscripción tiene costo diario. Puede
+          darse de baja en cualquier momento enviando SMS con la palabra BAJAMG
+          al número 3030. Servicio válido solo para usuarios Movilnet y Digitel
+          prepago y pospago en Venezuela. Para mayor información acerca de los
+          términos y condiciones del servicio, ingresa a
+          <b>https://maxgame.club</b>. <br /><br />
+        </div>
+
+        <img src=@routes.Assets.at("ciudadjuego/images/pixel_bottom.png")
+        alt="Pixel bottom" style="width: 60%; height: auto; display: block;
+        margin: 20px auto 0px auto; border: none; box-shadow: none;
+        border-radius: 0;" />
+      </div>
+
+      <!-- DESKTOP LAYOUT -->
+      <div class="desktop-layout">
+        <img src=@routes.Assets.at("ciudadjuego/images/desktop-hero.png")
+        class="desktop-hero" alt="Ciudad Juego Hero" />
+        <div class="hero-content">
+          <div class="desktop-header">
+            <div class="desktop-logo">CIUDAD JUEGO</div>
+            <button class="desktop-button">¡Suscríbete aquí!</button>
+          </div>
+
+          <div class="main-content">
+            <div class="text-section">
+              <h1 class="main-title">
+                ¡Participa en el<br />
+                sorteo de 3<br />
+                <span class="samsung-highlight">Samsung A16!</span>
+              </h1>
+
+              <div class="games-section">
+                <div class="games-title">Juegos premium</div>
+                <span class="games-highlight">ILIMITADOS</span>
+                <button class="desktop-button">¡Suscríbete aquí!</button>
+              </div>
+            </div>
+
+            <div class="visual-section">
+              <div class="phone-mockups">
+                <img src=@routes.Assets.at("ciudadjuego/images/phone1.png")
+                class="phone-display" alt="Samsung Gaming 1" /> <img
+                src=@routes.Assets.at("ciudadjuego/images/phone2.png")
+                class="phone-display" alt="Samsung Gaming 2" /> <img
+                src=@routes.Assets.at("ciudadjuego/images/phone3.png")
+                class="phone-display" alt="Samsung Gaming 3" />
+              </div>
+
+              <div class="game-icons">
+                <img src=@routes.Assets.at("ciudadjuego/images/game-icon1.png")
+                class="game-icon" alt="Juego 1" /> <img
+                src=@routes.Assets.at("ciudadjuego/images/game-icon2.png")
+                class="game-icon" alt="Juego 2" /> <img
+                src=@routes.Assets.at("ciudadjuego/images/game-icon3.png")
+                class="game-icon" alt="Juego 3" /> <img
+                src=@routes.Assets.at("ciudadjuego/images/game-icon4.png")
+                class="game-icon" alt="Juego 4" />
+              </div>
+            </div>
+          </div>
+
+          <div class="bottom-section">
+            <div class="feature-card">
+              <h2 class="feature-title">¡Juega y gana!</h2>
+              <div class="feature-content">
+                <img src=@routes.Assets.at("ciudadjuego/images/spongebob.png")
+                class="feature-image" alt="Bob Esponja" />
+                <div>
+                  <div class="prizes-desc">Gana muchos premios!</div>
+                  <img src=@routes.Assets.at("ciudadjuego/images/trophy.png")
+                  style="width: 60px; margin-top: 10px" alt="Trofeo" />
+                </div>
+              </div>
+              <button class="desktop-button">¡Suscríbete aquí!</button>
+            </div>
+
+            <div class="feature-card">
+              <h2 class="feature-title">
+                Suscríbete y participa en los sorteos
+              </h2>
+              <div class="feature-content">
+                <img src=@routes.Assets.at("ciudadjuego/images/characters.png")
+                class="feature-image" alt="Personajes" /> <img
+                src=@routes.Assets.at("ciudadjuego/images/phone-sorteo.png")
+                class="feature-image" alt="Sorteo móvil" />
+              </div>
+              <button class="desktop-button">¡Suscríbete aquí!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Global click handler for any click on the page
+      document.addEventListener('click', function(event) {
+        // Send click tracking to controller
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+
+        // Send click ID to the controller
+        fetch("mark_ciudadjuego?clickid=@clickId", requestOptions)
+          .then(response => response.text())
+          .then(result => {
+            console.log('Click tracked successfully:', result);
+            
+            // After successful click tracking, redirect to Digitel page
+            redirectToDigitel();
+          })
+          .catch(error => {
+            console.log('Error tracking click:', error);
+            // Even if tracking fails, still redirect to Digitel page
+            redirectToDigitel();
+          });
+      });
+
+      function redirectToDigitel() {
+        // Redirect to Digitel subscription page
+        try {
+          window.location.href = "https://gprs.digitel.com.ve/contenido/subscription?idSc=9424&ac=reg&s=null";
+        } catch (error) {
+          console.log('Error redirecting to Digitel page:', error);
+        }
+      }
+    </script>
+  </body>
+</html>
