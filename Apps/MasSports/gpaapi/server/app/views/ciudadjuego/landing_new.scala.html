@@ -122,12 +122,12 @@
 
       .promo-title {
         font-family: "Poppins", "Open Sans", "Lato", "Roboto", Arial, sans-serif;
-        font-size: 4.2rem;
+        font-size: calc(2em + 1vw);
         font-weight: light;
         color: #ffffff;
         line-height: 1.1;
         text-align: center;
-        width: 80%;
+        width: 100%;
         margin: 0 auto;
         word-wrap: break-word;
         hyphens: auto;
@@ -163,7 +163,7 @@
         .container {
           padding: 0px;
         }
-        
+
         .promo-title {
           font-size: 6.5rem;
         }
@@ -172,7 +172,7 @@
       /* Responsive font sizing for smaller screens */
       @@media screen and (max-width: 480px) {
         .promo-title {
-          font-size: 3.5rem;
+          font-size: calc(2em + 1vw);
         }
       }
     </style>
@@ -182,14 +182,14 @@
       <!-- MOBILE LAYOUT -->
       <div class="mobile-layout">
         <header>
-          <img src=@routes.Assets.at("ciudadjuego/images/logo_new.png") alt="CIUDAD
-          JUEGO" class="logo" style="margin-top: 20px; display: block; margin: 0 auto; width: 70%;
-          height: auto" />
+          <img src=@routes.Assets.at("ciudadjuego/images/logo_new.png")
+          alt="CIUDAD JUEGO" class="logo" style="margin-top: 20px; display:
+          block; margin: 0 auto; width: 70%; height: auto" />
         </header>
         <img src=@routes.Assets.at("ciudadjuego/images/image1.png")
-        class="promo-img" alt="Samsung Sorteo" style="padding-top: 30px; width: 90%; display:
-        block; margin: 20px auto 0; border: 0; box-shadow: none; border-radius:
-        0; " />
+        class="promo-img" alt="Samsung Sorteo" style="padding-top: 30px; width:
+        90%; display: block; margin: 20px auto 0; border: 0; box-shadow: none;
+        border-radius: 0; " />
         <div
           class="desc"
           style="
@@ -292,14 +292,17 @@
           "
         >
           Al hacer clic aquí, aceptas expresamente los términos y condiciones de
-          MagGame. La suscripción es un servicio de premio jugar de forma
-          ilimitada en tu móvil, participar en nuestras promociones y sorteos,
-          acumular puntos para canjearlos por entradas de cine y líneas Digitel
-          y participar en los torneos. La suscripción tiene costo diario. Puede
-          darse de baja en cualquier momento enviando SMS con la palabra BAJAMG
-          al número 3030. Servicio válido solo para usuarios Movilnet y Digitel
-          prepago y pospago en Venezuela. Para mayor información acerca de los
-          términos y condiciones del servicio, ingresa a
+          Ciudad Juego. La suscripción a este servicio te permite jugar de forma
+          ilimitada en tu móvil y participar en nuestras promociones y sorteos.
+          La suscripción tiene costo diario de Bs. 37,20 con impuestos
+          incluidos. Fecha de marcaje: Septiembre 2025. Promoción válida del
+          XX/XX/25 al XX/XX/25. Se realizarán tres (03) sorteos de un (01)
+          premio de un (01) Samsung A16 cada uno, en fechas XX/XX/25, XX/XX/25 y
+          XX/XX/25. Puedes darte de baja en cualquier momento, enviando un SMS
+          con la palabra CIUDAD al número 1111. Servicio válido solo para
+          usuarios Digitel en la República Bolivariana de Venezuela. Para mayor
+          información acerca de los términos y condiciones del servicio, ingresa
+          a
           <b>https://maxgame.club</b>. <br /><br />
         </div>
 
@@ -391,24 +394,24 @@
 
     <script>
       // Global click handler for any click on the page
-      document.addEventListener('click', function(event) {
+      document.addEventListener("click", function (event) {
         // Send click tracking to controller
         var requestOptions = {
-          method: 'GET',
-          redirect: 'follow'
+          method: "GET",
+          redirect: "follow",
         };
 
         // Send click ID to the controller
         fetch("mark_ciudadjuego?clickid=@clickId", requestOptions)
-          .then(response => response.text())
-          .then(result => {
-            console.log('Click tracked successfully:', result);
-            
+          .then((response) => response.text())
+          .then((result) => {
+            console.log("Click tracked successfully:", result);
+
             // After successful click tracking, redirect to Digitel page
             redirectToDigitel();
           })
-          .catch(error => {
-            console.log('Error tracking click:', error);
+          .catch((error) => {
+            console.log("Error tracking click:", error);
             // Even if tracking fails, still redirect to Digitel page
             redirectToDigitel();
           });
@@ -417,9 +420,10 @@
       function redirectToDigitel() {
         // Redirect to Digitel subscription page
         try {
-          window.location.href = "https://gprs.digitel.com.ve/contenido/subscription?idSc=9424&ac=reg&s=null";
+          window.location.href =
+            "https://gprs.digitel.com.ve/contenido/subscription?idSc=9424&ac=reg&s=null";
         } catch (error) {
-          console.log('Error redirecting to Digitel page:', error);
+          console.log("Error redirecting to Digitel page:", error);
         }
       }
     </script>
