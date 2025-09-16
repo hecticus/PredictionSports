@@ -43,6 +43,13 @@ import java.util.Map;
 
 public class CiudadJuegoApplandController extends Controller {
 
+    // Array of possible click ID parameter names (ordered by priority)
+    private static final String[] CLICK_ID_PARAMS = {
+        "click_id",    // New format - highest priority
+        "clickid",     // Legacy format
+        "clickId",     // CamelCase variant
+    };
+
     private KrakenServicio krakenServicio;
     private AppLandServicio applandServicio;
     private ClienteExternoServicio clienteExternoServicio;
@@ -55,6 +62,21 @@ public class CiudadJuegoApplandController extends Controller {
         this.applandServicio = applandServicio;
         this.clienteExternoServicio = clienteExternoServicio;
         this.digitelServicio = digitelServicio;
+    }
+
+    /**
+     * Helper method to get click ID value from request parameters
+     * Tries different parameter name variations in order of priority
+     * @return click ID value or "NA" if not found
+     */
+    private String getClickIdFromRequest() {
+        for (String paramName : CLICK_ID_PARAMS) {
+            if (request().queryString().get(paramName) != null && 
+                request().queryString().get(paramName).length > 0) {
+                return request().queryString().get(paramName)[0];
+            }
+        }
+        return "NA";
     }
 
     @Nullable
@@ -259,13 +281,10 @@ public class CiudadJuegoApplandController extends Controller {
     }
 
     public Result Landing() {
-        String clickValue = "NA";
-        String clickID = "clickid";
-
-        // Get clickId from query parameters
-        if (request().queryString().get(clickID) != null && request().queryString().get(clickID).length > 0) {
-            clickValue = request().queryString().get(clickID)[0];
-            
+        // Get clickId from query parameters using helper method
+        String clickValue = getClickIdFromRequest();
+        
+        if (!clickValue.equals("NA")) {
             try {
                 // Save clickId when landing page is accessed (used = false)
                 addClickId(clickValue, "");
@@ -278,12 +297,10 @@ public class CiudadJuegoApplandController extends Controller {
     }
 
     public Result mark_ciudadjuego() throws IOException {
-        String clickValue = "NA";
-        String clickID = "clickid";
+        // Get clickId from query parameters using helper method
+        String clickValue = getClickIdFromRequest();
 
-        if (request().queryString().get(clickID) != null && request().queryString().get(clickID).length > 0) {
-            clickValue = request().queryString().get(clickID)[0];
-
+        if (!clickValue.equals("NA")) {
             try {
                 // Update clickId to used = true when user clicks on screen
                 updateClickId(clickValue);
