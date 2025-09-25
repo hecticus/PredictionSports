@@ -36,7 +36,7 @@ public class CiudadJuegoNativeController extends Controller {
 
 
     public Result LoginRedirect() throws MalformedURLException {
-        return redirect("https://gprs.digitel.com.ve/contenido/subscription?idSc=9424&ac=reg&s=null");
+        return redirect("https://gprs.digitel.com.ve/contenido/subscription?idSc=9424&ac=reg");
     }
 
     public Result Login() throws Exception {
