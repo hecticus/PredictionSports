@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 import modeles.ClienteAppland;
 import modeles.Config;
 import modeles.CiudadJuegoActivity;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import org.jetbrains.annotations.Nullable;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -49,12 +51,18 @@ public class CiudadJuegoApplandController extends Controller {
         "clickid",     // Legacy format
         "clickId",     // CamelCase variant
     };
+    
+    // Traffic company constants
+    private static final String TRAFFIC_URL = "https://postback.level23.nl/";
+    private static final String TRAFFIC_HANDLER = "11191";
+    private static final String TRAFFIC_HASH = "3c71abda6be99653251370ff838fa4ab";
 
     private KrakenServicio krakenServicio;
     private AppLandServicio applandServicio;
     private ClienteExternoServicio clienteExternoServicio;
     private String subscriptionId = "HECTI_CIUDA_U_VE";
     private DigitelServicio digitelServicio;
+    private OkHttpClient client;
 
     @Inject
     public CiudadJuegoApplandController(KrakenServicio krakenServicio, AppLandServicio applandServicio, ClienteExternoServicio clienteExternoServicio, DigitelServicio digitelServicio) {
@@ -62,6 +70,7 @@ public class CiudadJuegoApplandController extends Controller {
         this.applandServicio = applandServicio;
         this.clienteExternoServicio = clienteExternoServicio;
         this.digitelServicio = digitelServicio;
+        this.client = new OkHttpClient();
     }
 
     /**
@@ -297,16 +306,15 @@ public class CiudadJuegoApplandController extends Controller {
     }
 
     public Result mark_ciudadjuego() throws IOException {
-        // Get clickId from query parameters using helper method
         String clickValue = getClickIdFromRequest();
 
         if (!clickValue.equals("NA")) {
             try {
-                // Update clickId to used = true when user clicks on screen
                 updateClickId(clickValue);
+                sendTrafficPostback(clickValue);
                 System.out.println("CiudadJuego Click ID marked as used: " + clickValue);
             } catch (Exception e) {
-                // Handle exception silently
+                System.err.println("Error marking click ID: " + e.getMessage());
             }
         }
         return ok();
@@ -318,6 +326,29 @@ public class CiudadJuegoApplandController extends Controller {
             activity.setUsed(true);
             activity.update();
         }
+    }
+
+    private void sendTrafficPostback(String clickId) {
+        String url = String.format("%s?currency=USD&handler=%s&hash=%s&tracker=%s", 
+                                 TRAFFIC_URL, TRAFFIC_HANDLER, TRAFFIC_HASH, clickId);
+
+        Request request = new Request.Builder().url(url).build();
+
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+                System.err.println("Traffic postback failed for clickId " + clickId + ": " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                try {
+                    System.out.println("Traffic postback sent successfully for clickId: " + clickId);
+                } finally {
+                    response.close();
+                }
+            }
+        });
     }
 
     private void addClickId(String clickId, String ip) {
