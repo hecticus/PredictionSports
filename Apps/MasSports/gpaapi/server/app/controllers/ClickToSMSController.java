@@ -56,17 +56,7 @@ public class ClickToSMSController extends Controller {
 
         if (Constants.HAITI_COUNTRY_ID.equals(country) && Constants.HAITI_PAXION_BUSINESS_ID.equals(business)) {
             String origin = "MOB";
-            switch (command) {
-                case "LANDING2":
-                    origin = "VIA";
-                    break;
-                case "LANDING3":
-                    origin = "TRA";
-                    break;
-
-                default:
-                    origin = "MOB";
-            }
+            origin = "TRA";
 
             PaxxionActivity blive = PaxxionActivity.finder.where()
                     .eq("msisdn", null)
@@ -77,21 +67,7 @@ public class ClickToSMSController extends Controller {
                     .setMaxRows(1)
                     .findUnique();
 
-            if (blive != null) {
-                blive.setMsisdn(msisdn);
-                blive.save();
-                if (blive.getOrigin().equals("VIA")) {
-                    sendMessageToVia(blive.getClickId());
-
-
-                } else if (blive.getOrigin().equals("TRA")) {
-                    sendMessageToTrafficCompany("11240", "0dd1b688a16aa53c03fe0cfe2c114e71", blive.getClickId());
-
-                } else {
-                    String[] values = blive.getClickId().split("---");
-                    sendMessageToMobipium(values[0], values[values.length > 1 ? 1 : 0]);
-                }
-            }
+            sendMessageToTrafficCompany("11240", "0dd1b688a16aa53c03fe0cfe2c114e71", blive.getClickId());
         }
 
         if (Constants.HAITI_COUNTRY_ID.equals(country) && Constants.HAITI_TEACH_BUSINESS_ID.equals(business)) {
@@ -159,12 +135,6 @@ public class ClickToSMSController extends Controller {
                 .url(url)
                 .build();
 
-        /*try {
-            client.newCall(request).execute();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }*/
-
         try {
             client.newCall(request).execute();
         } catch (IOException e) {
@@ -182,5 +152,4 @@ public class ClickToSMSController extends Controller {
                     String body = r.getBody();
                 });
     }
-
 }

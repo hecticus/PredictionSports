@@ -32,19 +32,31 @@ public class KlikeController extends Controller {
         String extras = "NA";
         String origin = "MOB";
 
-        if (request().queryString().get("CLICKID") != null && request().queryString().get("CLICKID").length > 0) {
-            clickValue = request().queryString().get("CLICKID")[0];
-            extras = (request().queryString().get("SOURCE") != null && request().queryString().get("SOURCE").length > 0) ? request().queryString().get("SOURCE")[0] : "";
-        }
+        try {
+            // Check for CLICKID parameter
+            String[] clickIdArray = request().queryString().get("CLICKID");
+            if (clickIdArray != null && clickIdArray.length > 0 && clickIdArray[0] != null && !clickIdArray[0].isEmpty()) {
+                clickValue = clickIdArray[0];
+                String[] sourceArray = request().queryString().get("SOURCE");
+                extras = (sourceArray != null && sourceArray.length > 0 && sourceArray[0] != null) ? sourceArray[0] : "NA";
+            }
 
-        if (request().getQueryString("token") != null && !request().getQueryString("token").equals("")) {
-            clickValue = request().getQueryString("token");
-            origin = "VIA";
-        }
+            // Check for token parameter (VIA origin)
+            String token = request().getQueryString("token");
+            if (token != null && !token.trim().isEmpty()) {
+                clickValue = token;
+                origin = "VIA";
+            }
 
-        if (request().getQueryString("tr_token") != null && !request().getQueryString("tr_token").equals("")) {
-            clickValue = request().getQueryString("tr_token");
-            origin = "TRA";
+            // Check for tr_token parameter (TRA origin)
+            String trToken = request().getQueryString("tr_token");
+            if (trToken != null && !trToken.trim().isEmpty()) {
+                clickValue = trToken;
+                origin = "TRA";
+            }
+        } catch (Exception e) {
+            // Log the error and continue with default values
+            play.Logger.error("Error processing query parameters in KlikeController.index()", e);
         }
 
         return ok(klike_index.render(clickValue, extras, origin));
