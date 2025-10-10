@@ -70,11 +70,6 @@ public class KlikeController extends Controller {
             if (clickData.isValid()) {
                 play.Logger.info("Klike mark - Saving: " + clickData.toString());
                 addClickId(clickData.getCombinedValue(), clickData.getOrigin());
-                
-                // Optionally send conversion message
-                if (clickData.getExtras() != null && !ClickData.DEFAULT_EXTRAS.equals(clickData.getExtras())) {
-                    sendMessage(clickData.getClickId(), clickData.getExtras());
-                }
             } else {
                 play.Logger.warn("Klike mark - Invalid click data received");
             }
@@ -84,21 +79,6 @@ public class KlikeController extends Controller {
             play.Logger.error("Error in KlikeController.mark()", e);
             return ok(); // Return OK even on error to not break client flow
         }
-    }
-
-    /**
-     * Send conversion message to external service
-     */
-    private void sendMessage(String clickId, String source) {
-        String call = String.format("https://smobipiumlink.com/conversion/index.php?jp=%s&source=%s", clickId, source);
-        play.Logger.debug("Sending conversion message: " + call);
-        
-        this.ws.url(call)
-                .get()
-                .thenAccept((WSResponse r) -> {
-                    String body = r.getBody();
-                    play.Logger.debug("Conversion response: " + body);
-                });
     }
 
     /**

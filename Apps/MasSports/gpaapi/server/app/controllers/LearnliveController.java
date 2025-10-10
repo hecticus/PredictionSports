@@ -83,21 +83,6 @@ public class LearnliveController extends Controller {
     }
 
     /**
-     * Send conversion message to external service
-     */
-    private void sendMessage(String clickId, String source) {
-        String call = String.format("https://smobipiumlink.com/conversion/index.php?jp=%s&source=%s", clickId, source);
-        play.Logger.debug("Sending conversion message: " + call);
-        
-        this.ws.url(call)
-                .get()
-                .thenAccept((WSResponse r) -> {
-                    String body = r.getBody();
-                    play.Logger.debug("Conversion response: " + body);
-                });
-    }
-
-    /**
      * Save click ID to database
      * Updated to support origin tracking
      */
