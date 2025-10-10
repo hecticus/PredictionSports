@@ -107,7 +107,4 @@ public class LearnliveController extends Controller {
         learnLiveActivity.save();
         play.Logger.info("Saved LearnLiveActivity: clickId=" + clickId + ", origin=" + origin);
     }
-
-    //https://smobipiumlink.com/conversion/index.php?jp={CLICKID}&source={SOURCE}
-
 }
