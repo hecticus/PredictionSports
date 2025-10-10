@@ -22,6 +22,9 @@ public class LearnLiveActivity extends Model {
 
     @Column()
     private String msisdn;
+    
+    @Column()
+    private String origin;
 
     public Long getId() {
         return id;
@@ -53,6 +56,14 @@ public class LearnLiveActivity extends Model {
 
     public void setMsisdn(String msisdn) {
         this.msisdn = msisdn;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 
     public LearnLiveActivity(String clickId) {
