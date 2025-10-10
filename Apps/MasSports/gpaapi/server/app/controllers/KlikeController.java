@@ -62,6 +62,7 @@ public class KlikeController extends Controller {
     /**
      * Mark endpoint - saves click data to database
      * Now supports: CLICKID (MOB), token (VIA), tr_token (TRA)
+     * Returns JSON with status and token information
      */
     public Result mark() throws IOException {
         try {
@@ -70,14 +71,33 @@ public class KlikeController extends Controller {
             if (clickData.isValid()) {
                 play.Logger.info("Klike mark - Saving: " + clickData.toString());
                 addClickId(clickData.getCombinedValue(), clickData.getOrigin());
+                
+                // Return success JSON
+                com.fasterxml.jackson.databind.node.ObjectNode result = play.libs.Json.newObject();
+                result.put("status", "success");
+                result.put("token", clickData.getCombinedValue());
+                result.put("origin", clickData.getOrigin());
+                result.put("message", "Token saved successfully");
+                return ok(result);
             } else {
                 play.Logger.warn("Klike mark - Invalid click data received");
+                
+                // Return error JSON for invalid data
+                com.fasterxml.jackson.databind.node.ObjectNode result = play.libs.Json.newObject();
+                result.put("status", "error");
+                result.put("error", "Invalid or missing token");
+                result.put("message", "No valid click data found in request");
+                return ok(result);
             }
-            
-            return ok();
         } catch (Exception e) {
             play.Logger.error("Error in KlikeController.mark()", e);
-            return ok(); // Return OK even on error to not break client flow
+            
+            // Return error JSON on exception
+            com.fasterxml.jackson.databind.node.ObjectNode result = play.libs.Json.newObject();
+            result.put("status", "error");
+            result.put("error", e.getClass().getSimpleName());
+            result.put("message", e.getMessage() != null ? e.getMessage() : "Unknown error occurred");
+            return ok(result);
         }
     }
 
