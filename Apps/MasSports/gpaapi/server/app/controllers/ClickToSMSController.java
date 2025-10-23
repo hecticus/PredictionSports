@@ -58,13 +58,15 @@ public class ClickToSMSController extends Controller {
             )
         );
 
-        // Haiti - Teach (LearnLive)
+        // Haiti - Teach (LearnLive) 
         configs.put(makeKey(Constants.HAITI_COUNTRY_ID, Constants.HAITI_TEACH_BUSINESS_ID),
             new BusinessConfig(
                 Constants.HAITI_COUNTRY_ID,
                 Constants.HAITI_TEACH_BUSINESS_ID,
                 ActivityType.LEARNLIVE,
-                ConversionType.MOBIPIUM
+                ConversionType.TRAFFIC_COMPANY,
+                "11240",
+                "0dd1b688a16aa53c03fe0cfe2c114e71"
             )
         );
 
