@@ -217,6 +217,14 @@ public class ClickToSMSController extends Controller {
             if (config.getConversionType() == ConversionType.MOBIPIUM) {
                 sendConversionMobipium(activity.getClickId());
             }
+
+            if (config.getConversionType() == ConversionType.TRAFFIC_COMPANY) {
+                conversionService.sendToTrafficCompany(
+                    config.getTrafficHandler(),
+                    config.getTrafficHash(),
+                    activity.getClickId()
+                );
+            }
         } else {
             Logger.warn("No LearnLiveActivity found for msisdn=" + msisdn);
         }
