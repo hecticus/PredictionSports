@@ -176,7 +176,7 @@ public class ClickToSMSController extends Controller {
         PaxxionActivity activity = PaxxionActivity.finder.where()
                 .eq("msisdn", null)
                 .lt("date", dateThreshold)
-                .eq("origin", "TRA")  // Only TRA origin for this business
+                .eq("origin", config.getConversionType().getValue())  // origin from config
                 .orderBy().desc("id")
                 .setMaxRows(1)
                 .findUnique();

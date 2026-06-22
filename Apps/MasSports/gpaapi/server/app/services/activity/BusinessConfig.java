@@ -21,10 +21,20 @@ public class BusinessConfig {
     }
 
     public enum ConversionType {
-        MOBIPIUM,
-        TRAFFIC_COMPANY,
-        VIA,
-        NONE
+        MOBIPIUM("MOB"),
+        TRAFFIC_COMPANY("TRA"),
+        VIA("VIA"),
+        NONE("");
+
+        private final String value;
+
+        ConversionType(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
     }
 
     public BusinessConfig(String country, String business, ActivityType activityType, ConversionType conversionType) {
