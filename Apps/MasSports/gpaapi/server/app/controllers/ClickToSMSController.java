@@ -186,6 +186,10 @@ public class ClickToSMSController extends Controller {
             activity.save();
             Logger.info("Updated PaxxionActivity: id=" + activity.getId() + ", msisdn=" + msisdn);
 
+            if (config.getConversionType() == ConversionType.MOBIPIUM) {
+                sendConversionMobipium(activity.getClickId());
+            }
+
             if (config.getConversionType() == ConversionType.TRAFFIC_COMPANY) {
                 conversionService.sendToTrafficCompany(
                     config.getTrafficHandler(),
@@ -193,8 +197,12 @@ public class ClickToSMSController extends Controller {
                     activity.getClickId()
                 );
             }
+
+            if (config.getConversionType() == ConversionType.VIA) {
+                conversionService.sendToVia(activity.getClickId());
+            }
         } else {
-            Logger.warn("No PaxxionActivity (TRA) found for msisdn=" + msisdn);
+            Logger.warn("No PaxxionActivity found for msisdn=" + msisdn);
         }
     }
 
