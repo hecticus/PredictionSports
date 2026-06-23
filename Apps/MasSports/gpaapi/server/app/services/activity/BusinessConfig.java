@@ -41,7 +41,7 @@ public class BusinessConfig {
         this(country, business, activityType, conversionType, null, null);
     }
 
-    public BusinessConfig(String country, String business, ActivityType activityType, 
+    public BusinessConfig(String country, String business, ActivityType activityType,
                          ConversionType conversionType, String trafficHandler, String trafficHash) {
         this.country = country;
         this.business = business;

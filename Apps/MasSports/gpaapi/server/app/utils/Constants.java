@@ -11,4 +11,7 @@ public class Constants {
 
     public final static String VEN_MAXGAME_BUSINESS_ID = "10";
     public final static String VEN_CJ_BUSINESS_ID = "6";
+
+    public final static String HAITI_PAXION_HANDLER = "11240";
+    public final static String HAITI_PAXION_HASH = "0dd1b688a16aa53c03fe0cfe2c114e71";
 }

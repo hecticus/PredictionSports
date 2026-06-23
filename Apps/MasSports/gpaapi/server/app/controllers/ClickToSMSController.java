@@ -129,7 +129,7 @@ public class ClickToSMSController extends Controller {
                 break;
 
             case PAXXION:
-                handlePaxxionActivity(msisdn, dateThreshold, config);
+                handlePaxxionActivity(msisdn, dateThreshold, command);
                 break;
 
             case LEARNLIVE:
@@ -172,11 +172,11 @@ public class ClickToSMSController extends Controller {
     /**
      * Handle PaxxionActivity
      */
-    private void handlePaxxionActivity(String msisdn, String dateThreshold, BusinessConfig config) {
+    private void handlePaxxionActivity(String msisdn, String dateThreshold, String command) {
         PaxxionActivity activity = PaxxionActivity.finder.where()
                 .eq("msisdn", null)
                 .lt("date", dateThreshold)
-                .eq("origin", config.getConversionType().getValue())  // origin from config
+                .eq("origin", command)  // command IS the origin (TRA, MOB, VIA)
                 .orderBy().desc("id")
                 .setMaxRows(1)
                 .findUnique();
@@ -184,25 +184,27 @@ public class ClickToSMSController extends Controller {
         if (activity != null) {
             activity.setMsisdn(msisdn);
             activity.save();
-            Logger.info("Updated PaxxionActivity: id=" + activity.getId() + ", msisdn=" + msisdn);
+            Logger.info("Updated PaxxionActivity: id=" + activity.getId() + ", msisdn=" + msisdn + ", origin=" + command);
 
-            if (config.getConversionType() == ConversionType.MOBIPIUM) {
-                sendConversionMobipium(activity.getClickId());
-            }
-
-            if (config.getConversionType() == ConversionType.TRAFFIC_COMPANY) {
-                conversionService.sendToTrafficCompany(
-                    config.getTrafficHandler(),
-                    config.getTrafficHash(),
-                    activity.getClickId()
-                );
-            }
-
-            if (config.getConversionType() == ConversionType.VIA) {
-                conversionService.sendToVia(activity.getClickId());
+            switch (command) {
+                case "MOB":
+                    sendConversionMobipium(activity.getClickId());
+                    break;
+                case "TRA":
+                    conversionService.sendToTrafficCompany(
+                        Constants.HAITI_PAXION_HANDLER,
+                        Constants.HAITI_PAXION_HASH,
+                        activity.getClickId()
+                    );
+                    break;
+                case "VIA":
+                    conversionService.sendToVia(activity.getClickId());
+                    break;
+                default:
+                    Logger.warn("Unknown origin/command for PaxxionActivity: " + command);
             }
         } else {
-            Logger.warn("No PaxxionActivity found for msisdn=" + msisdn);
+            Logger.warn("No PaxxionActivity found for msisdn=" + msisdn + ", origin=" + command);
         }
     }
 
