@@ -129,6 +129,7 @@ public class ClickToSMSController extends Controller {
                 break;
 
             case PAXXION:
+                
                 handlePaxxionActivity(msisdn, dateThreshold, command);
                 break;
 
@@ -173,10 +174,19 @@ public class ClickToSMSController extends Controller {
      * Handle PaxxionActivity
      */
     private void handlePaxxionActivity(String msisdn, String dateThreshold, String command) {
+        // Map incoming command to internal origin value
+        String origin;
+        switch (command) {
+            case "LANDING":  origin = "MOB"; break;
+            case "LANDING2": origin = "VIA"; break;
+            case "LANDING3": origin = "TRA"; break;
+            default:         origin = command; break;
+        }
+
         PaxxionActivity activity = PaxxionActivity.finder.where()
                 .eq("msisdn", null)
                 .lt("date", dateThreshold)
-                .eq("origin", command)  // command IS the origin (TRA, MOB, VIA)
+                .eq("origin", origin)
                 .orderBy().desc("id")
                 .setMaxRows(1)
                 .findUnique();
@@ -184,9 +194,9 @@ public class ClickToSMSController extends Controller {
         if (activity != null) {
             activity.setMsisdn(msisdn);
             activity.save();
-            Logger.info("Updated PaxxionActivity: id=" + activity.getId() + ", msisdn=" + msisdn + ", origin=" + command);
+            Logger.info("Updated PaxxionActivity: id=" + activity.getId() + ", msisdn=" + msisdn + ", origin=" + origin);
 
-            switch (command) {
+            switch (origin) {
                 case "MOB":
                     sendConversionMobipium(activity.getClickId());
                     break;
@@ -204,7 +214,7 @@ public class ClickToSMSController extends Controller {
                     Logger.warn("Unknown origin/command for PaxxionActivity: " + command);
             }
         } else {
-            Logger.warn("No PaxxionActivity found for msisdn=" + msisdn + ", origin=" + command);
+            Logger.warn("No PaxxionActivity found for msisdn=" + msisdn + ", origin=" + origin);
         }
     }
 
