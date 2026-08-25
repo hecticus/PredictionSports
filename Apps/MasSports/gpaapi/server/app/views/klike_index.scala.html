@@ -1,7 +1,7 @@
 @(clickId: String,  source: String, origin: String)
 
 @paramName = @{ scala.collection.immutable.Map("VIA" -> "token", "TRA" -> "tr_token", "SEXY" -> "transaction_id", "CHAT" -> "mobidea_id").getOrElse(origin, "CLICKID") }
-@bodyContent = @{ scala.collection.immutable.Map("VIA" -> "OK", "TRA" -> "YES").getOrElse(origin, "START") }
+@bodyContent = @{ scala.collection.immutable.Map("VIA" -> "OK", "TRA" -> "YES", "SEXY" -> "SEXY", "CHAT" -> "CHAT").getOrElse(origin, "START") }
 
 <!DOCTYPE html>
 <html>
