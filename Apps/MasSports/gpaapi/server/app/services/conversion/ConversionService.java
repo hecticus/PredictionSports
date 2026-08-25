@@ -85,6 +85,64 @@ public class ConversionService {
     }
 
     /**
+     * Send conversion to lktrack (SEXY origin) using transaction_id
+     */
+    public void sendToSexy(String transactionId) {
+        if (transactionId == null || transactionId.isEmpty()) {
+            Logger.warn("SEXY: Invalid transaction_id, skipping");
+            return;
+        }
+
+        String url = String.format(
+            "%s?key=%s&transaction_id=%s",
+            utils.Constants.SEXY_POSTBACK_URL,
+            utils.Constants.SEXY_POSTBACK_KEY,
+            transactionId
+        );
+
+        Logger.info("SEXY conversion: " + url);
+
+        wsClient.url(url)
+                .get()
+                .thenAccept((WSResponse response) -> {
+                    Logger.debug("SEXY response: " + response.getBody());
+                })
+                .exceptionally(throwable -> {
+                    Logger.error("SEXY error: " + throwable.getMessage());
+                    return null;
+                });
+    }
+
+    /**
+     * Send conversion to mobidea (CHAT origin) using click_id
+     */
+    public void sendToChat(String clickId) {
+        if (clickId == null || clickId.isEmpty()) {
+            Logger.warn("CHAT: Invalid click_id, skipping");
+            return;
+        }
+
+        String url = String.format(
+            "%s?click_id=%s&security_token=%s",
+            utils.Constants.CHAT_POSTBACK_URL,
+            clickId,
+            utils.Constants.CHAT_SECURITY_TOKEN
+        );
+
+        Logger.info("CHAT conversion: " + url);
+
+        wsClient.url(url)
+                .get()
+                .thenAccept((WSResponse response) -> {
+                    Logger.debug("CHAT response: " + response.getBody());
+                })
+                .exceptionally(throwable -> {
+                    Logger.error("CHAT error: " + throwable.getMessage());
+                    return null;
+                });
+    }
+
+    /**
      * Send conversion to VIA
      */
     public void sendToVia(String clickId) {

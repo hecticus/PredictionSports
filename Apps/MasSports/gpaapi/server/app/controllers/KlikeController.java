@@ -17,7 +17,7 @@ import java.io.IOException;
 
 /**
  * Klike/Paxxion Controller - Refactored with SOLID principles
- * Now supports three origins: MOB, VIA, and TRA
+ * Now supports origins: MOB, VIA, TRA, SEXY, CHAT
  */
 public class KlikeController extends Controller {
 
@@ -36,7 +36,7 @@ public class KlikeController extends Controller {
 
     /**
      * Index page - displays the click landing page
-     * Now supports: CLICKID (MOB), token (VIA), tr_token (TRA)
+     * Now supports: CLICKID (MOB), token (VIA), tr_token (TRA), transaction_id (SEXY), mobidea_id (CHAT)
      */
     public Result index() throws IOException {
         try {
@@ -61,7 +61,7 @@ public class KlikeController extends Controller {
 
     /**
      * Mark endpoint - saves click data to database
-     * Now supports: CLICKID (MOB), token (VIA), tr_token (TRA)
+     * Now supports: CLICKID (MOB), token (VIA), tr_token (TRA), transaction_id (SEXY), mobidea_id (CHAT)
      * Returns JSON with status and token information
      */
     public Result mark() throws IOException {

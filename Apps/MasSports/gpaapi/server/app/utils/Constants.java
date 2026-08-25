@@ -14,4 +14,12 @@ public class Constants {
 
     public final static String HAITI_PAXION_HANDLER = "11240";
     public final static String HAITI_PAXION_HASH = "0dd1b688a16aa53c03fe0cfe2c114e71";
+
+    // SEXY origin - lktrack postback
+    public final static String SEXY_POSTBACK_URL = "http://www.lktrack.com/adserver/delivery/cv.php";
+    public final static String SEXY_POSTBACK_KEY = "QTY3MGg0cy9EbmNncVk4NTZaK2tZQT09";
+
+    // CHAT origin - mobidea postback
+    public final static String CHAT_POSTBACK_URL = "https://postback.mobidea.ai/postback";
+    public final static String CHAT_SECURITY_TOKEN = "9572f574-7324-4cb2-9137-4299b259edcc";
 }

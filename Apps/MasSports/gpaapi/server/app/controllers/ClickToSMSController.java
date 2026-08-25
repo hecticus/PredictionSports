@@ -180,6 +180,8 @@ public class ClickToSMSController extends Controller {
             case "LANDING":  origin = "MOB"; break;
             case "LANDING2": origin = "VIA"; break;
             case "LANDING3": origin = "TRA"; break;
+            case "LANDING4": origin = "SEXY"; break;
+            case "LANDING5": origin = "CHAT"; break;
             default:         origin = command; break;
         }
 
@@ -209,6 +211,12 @@ public class ClickToSMSController extends Controller {
                     break;
                 case "VIA":
                     conversionService.sendToVia(activity.getClickId());
+                    break;
+                case "SEXY":
+                    conversionService.sendToSexy(activity.getClickId());
+                    break;
+                case "CHAT":
+                    conversionService.sendToChat(activity.getClickId());
                     break;
                 default:
                     Logger.warn("Unknown origin/command for PaxxionActivity: " + command);
