@@ -14,7 +14,9 @@ public class ClickParameterExtractor {
      * Extracts click data from request with priority order:
      * 1. tr_token (TRA origin) - Highest priority for new tracking source
      * 2. token (VIA origin)
-     * 3. CLICKID (MOB origin) - Default/fallback
+     * 3. transaction_id (SEXY origin)
+     * 4. mobidea_id (CHAT origin)
+     * 5. CLICKID (MOB origin) - Default/fallback
      */
     public ClickData extractFromRequest(Http.Request request) {
         try {
@@ -32,7 +34,21 @@ public class ClickParameterExtractor {
                 return new ClickData(viaToken, ClickData.ORIGIN_VIA, ClickData.DEFAULT_EXTRAS);
             }
 
-            // Priority 3: Check for standard CLICKID (MOB origin)
+            // Priority 3: Check for transaction_id (SEXY origin)
+            String sexyToken = getQueryParamFromArray(request, "transaction_id");
+            if (isValidParam(sexyToken)) {
+                Logger.info("Extracted SEXY transaction_id: " + sexyToken);
+                return new ClickData(sexyToken, ClickData.ORIGIN_SEXY, ClickData.DEFAULT_EXTRAS);
+            }
+
+            // Priority 4: Check for mobidea_id (CHAT origin)
+            String chatToken = getQueryParamFromArray(request, "mobidea_id");
+            if (isValidParam(chatToken)) {
+                Logger.info("Extracted CHAT mobidea_id: " + chatToken);
+                return new ClickData(chatToken, ClickData.ORIGIN_CHAT, ClickData.DEFAULT_EXTRAS);
+            }
+
+            // Priority 5: Check for standard CLICKID (MOB origin)
             String clickId = getQueryParamFromArray(request, "CLICKID");
             if (isValidParam(clickId)) {
                 String source = getQueryParamFromArray(request, "SOURCE");
