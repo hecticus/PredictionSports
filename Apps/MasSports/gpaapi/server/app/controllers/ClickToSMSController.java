@@ -129,7 +129,6 @@ public class ClickToSMSController extends Controller {
                 break;
 
             case PAXXION:
-                
                 handlePaxxionActivity(msisdn, dateThreshold, command);
                 break;
 

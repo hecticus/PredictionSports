@@ -1,7 +1,7 @@
 
 name := "EXTAPI"
 
-version := "1.0"
+version := "2.6.9"
 
 lazy val `root` = (project in file(".")).enablePlugins(
   PlayJava,
