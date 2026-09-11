@@ -48,6 +48,8 @@ public class ConversionService {
         );
         
         Logger.info("Mobipium conversion: " + url);
+
+        saveConversionLog(msisdn, "CONV_MOBIPIUM", "call url=" + url);
         
         wsClient.url(url)
                 .get()
@@ -78,6 +80,8 @@ public class ConversionService {
         );
 
         Logger.info("TrafficCompany conversion: " + url);
+
+        saveConversionLog(msisdn, "CONV_TRAFFIC", "call url=" + url);
 
         Request request = new Request.Builder()
                 .url(url)
@@ -114,6 +118,8 @@ public class ConversionService {
 
         Logger.info("SEXY conversion: " + url);
 
+        saveConversionLog(msisdn, "CONV_SEXY", "call url=" + url);
+
         wsClient.url(url)
                 .get()
                 .thenAccept((WSResponse response) -> {
@@ -146,6 +152,8 @@ public class ConversionService {
 
         Logger.info("CHAT conversion: " + url);
 
+        saveConversionLog(msisdn, "CONV_CHAT", "call url=" + url);
+
         wsClient.url(url)
                 .get()
                 .thenAccept((WSResponse response) -> {
@@ -175,7 +183,9 @@ public class ConversionService {
         );
         
         Logger.info("VIA conversion: " + url);
-        
+
+        saveConversionLog(msisdn, "CONV_VIA", "call url=" + url);
+
         wsClient.url(url)
                 .get()
                 .thenAccept((WSResponse response) -> {
