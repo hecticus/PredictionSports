@@ -25,8 +25,8 @@ public class log extends Model  {
         this.id = id;
     }
 
-    @Constraints.MaxLength(16)
-    @Column(length = 16, nullable = false)
+    @Constraints.MaxLength(40)
+    @Column(length = 40, nullable = false)
     protected String msisdn;
 
     @Constraints.MaxLength(16)
@@ -34,7 +34,7 @@ public class log extends Model  {
     protected String identifier;
 
     @Constraints.MaxLength(400)
-    @Column(length = 16, nullable = false)
+    @Column(length = 400, nullable = false)
     protected String extra;
 
 
