@@ -10,6 +10,7 @@ public class Constants {
     public final static String HAITI_TEACH_BUSINESS_ID = "4";
 
     public final static String VEN_MAXGAME_BUSINESS_ID = "10";
+    public final static String VEN_MAXGAME_COMMAND = "LANDING6";
     public final static String VEN_CJ_BUSINESS_ID = "6";
 
     public final static String HAITI_PAXION_HANDLER = "11240";

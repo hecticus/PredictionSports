@@ -245,16 +245,22 @@ public class ClickToSMSController extends Controller {
     }
 
     /**
-     * Handle MaxgameActivity
+     * Handle MaxgameActivity.
+     * Only claims a pending click when the incoming command matches the Maxgame
+     * command, so clicks are not consumed by unrelated commands.
      */
     private void handleMaxgameActivity(String msisdn, String dateThreshold, BusinessConfig config, String command) {
+        if (!Constants.VEN_MAXGAME_COMMAND.equalsIgnoreCase(command)) {
+            Logger.warn("Maxgame conversion skipped: unexpected command=" + command);
+            return;
+        }
+
         String clickId = claimPendingClick(TABLE_MAXGAME, msisdn, dateThreshold, null);
 
         if (clickId != null) {
             Logger.info("Claimed MaxgameActivity: msisdn=" + msisdn + ", clickId=" + clickId);
 
-            // Only send conversion if command is LANDING
-            if ("LANDING".equals(command) && config.getConversionType() == ConversionType.TRAFFIC_COMPANY) {
+            if (config.getConversionType() == ConversionType.TRAFFIC_COMPANY) {
                 conversionService.sendToTrafficCompany(
                     msisdn,
                     config.getTrafficHandler(),
