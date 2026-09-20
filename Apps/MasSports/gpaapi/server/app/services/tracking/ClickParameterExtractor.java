@@ -48,14 +48,38 @@ public class ClickParameterExtractor {
                 return new ClickData(chatToken, ClickData.ORIGIN_CHAT, ClickData.DEFAULT_EXTRAS);
             }
 
-            // Priority 5: Check for standard CLICKID (MOB origin)
+            // Priority 5: Check for standard CLICKID (MOB origin), case-insensitive
             String clickId = getQueryParamFromArray(request, "CLICKID");
+            if (!isValidParam(clickId)) {
+                clickId = getQueryParamFromArray(request, "clickid");
+            }
             if (isValidParam(clickId)) {
                 String source = getQueryParamFromArray(request, "SOURCE");
                 Logger.info("Extracted MOB clickId: " + clickId + ", source: " + source);
                 return new ClickData(
                     clickId, 
                     ClickData.ORIGIN_MOBILE, 
+                    isValidParam(source) ? source : ClickData.DEFAULT_EXTRAS
+                );
+            }
+
+            // Priority 6: Check for Google Ads auto-tagging click ids (gclid/gbraid/wbraid/dclid)
+            String googleClickId = getQueryParamFromArray(request, "gclid");
+            if (!isValidParam(googleClickId)) {
+                googleClickId = getQueryParamFromArray(request, "gbraid");
+            }
+            if (!isValidParam(googleClickId)) {
+                googleClickId = getQueryParamFromArray(request, "wbraid");
+            }
+            if (!isValidParam(googleClickId)) {
+                googleClickId = getQueryParamFromArray(request, "dclid");
+            }
+            if (isValidParam(googleClickId)) {
+                String source = getQueryParamFromArray(request, "SOURCE");
+                Logger.info("Extracted Google Ads clickId: " + googleClickId + ", source: " + source);
+                return new ClickData(
+                    googleClickId,
+                    ClickData.ORIGIN_GOOGLE,
                     isValidParam(source) ? source : ClickData.DEFAULT_EXTRAS
                 );
             }

@@ -34,6 +34,9 @@ GET     /mark_maxgame                controllers.MaxgameController.mark
 GET     /mark_maxgame_mobi           controllers.MaxgameMobiController.mark
 GET     /ip_maxgame                  controllers.MaxgameController.setip
 
+GET     /maxgame_2026                controllers.Maxgame2026Controller.index
+GET     /mark_maxgame_2026           controllers.Maxgame2026Controller.mark
+
 GET     /mark                        controllers.LearnliveController.mark
 GET     /paxxion                     controllers.KlikeController.index
 GET     /mark2                       controllers.KlikeController.mark

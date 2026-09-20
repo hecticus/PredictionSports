@@ -18,6 +18,7 @@ public class ClickData {
     public static final String ORIGIN_TRA = "TRA";
     public static final String ORIGIN_SEXY = "SEXY";
     public static final String ORIGIN_CHAT = "CHAT";
+    public static final String ORIGIN_GOOGLE = "GADS";
 
     public ClickData(String clickId, String origin, String extras) {
         this.clickId = clickId != null ? clickId : DEFAULT_CLICK_VALUE;
