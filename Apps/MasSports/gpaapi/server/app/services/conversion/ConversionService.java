@@ -22,6 +22,12 @@ public class ConversionService {
 
     private static final int MAX_DETAIL_LENGTH = 400;
 
+    /**
+     * Timeout for the SEXY/lktrack postback. The provider is failing and
+     * hanging the request, so we cap it at 2 minutes.
+     */
+    private static final long SEXY_REQUEST_TIMEOUT_MS = 2 * 60 * 1000;
+
     private final WSClient wsClient;
     private final OkHttpClient httpClient;
 
@@ -121,6 +127,7 @@ public class ConversionService {
         saveConversionLog(msisdn, "CONV_SEXY", "call url=" + url);
 
         wsClient.url(url)
+                .setRequestTimeout(SEXY_REQUEST_TIMEOUT_MS)
                 .get()
                 .thenAccept((WSResponse response) -> {
                     Logger.debug("SEXY response: " + response.getBody());
