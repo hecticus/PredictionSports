@@ -530,6 +530,47 @@
       height: 4.2em;
     }
 
+    .premio {
+      position: absolute;
+      z-index: 5;
+      left: 1.3em;
+      top: 20.2em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55em;
+      padding: 0.6em 1em 0.65em;
+      border-radius: 99px;
+      background: var(--movistar);
+      color: #fff;
+      font-size: 1.2em;
+      line-height: 1.1;
+      white-space: nowrap;
+      box-shadow: 0 0 0 0.16em rgba(255, 255, 255, 0.92), 0 0.6em 1.4em rgba(4, 12, 22, 0.55);
+    }
+
+    .premio svg {
+      width: 1.5em;
+      height: 1.5em;
+      flex: none;
+    }
+
+    .premio i {
+      display: block;
+      font-style: normal;
+      font-size: 0.68em;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      opacity: 0.92;
+    }
+
+    .premio b {
+      display: block;
+      margin-top: 0.1em;
+      font-size: 1.02em;
+      font-weight: 800;
+    }
+
     .screen {
       position: relative;
       width: 100%;
@@ -827,6 +868,31 @@
         align-items: center;
       }
       .phone-col {
+        display: flex;
+        align-items: flex-start;
+        width: min(92vw, 368px);
+        max-height: min(84vw, 310px);
+        margin: 30px auto 0;
+        padding-inline: 14px;
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(180deg, #000 78%, rgba(0, 0, 0, 0) 100%);
+        mask-image: linear-gradient(180deg, #000 78%, rgba(0, 0, 0, 0) 100%);
+      }
+      .device {
+        width: 28.6em;
+        font-size: min(11.8px, 2.92vw);
+      }
+      @@supports (font-size: 1cqi) {
+        .device {
+          font-size: min(11.8px, 3.497cqi);
+        }
+      }
+      .premio {
+        left: -0.5em;
+        top: 1.2em;
+      }
+      .screen-grid .stars,
+      .screen-grid figcaption {
         display: none;
       }
       .claim-big {
@@ -1108,6 +1174,14 @@
               </div>
             </div>
           </div>
+          <span class="premio">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <rect x="3.4" y="10.2" width="17.2" height="10.8" rx="1.8"/>
+              <rect x="2" y="6.2" width="20" height="4.4" rx="1.5"/>
+              <path d="M11.9 6.3c-.8-1.9-1.9-2.9-3.2-2.8-1.7.2-2.3 2.1-.8 2.8h4Zm.2 0c.8-1.9 1.9-2.9 3.2-2.8 1.7.2 2.3 2.1.8 2.8h-4Z"/>
+            </svg>
+            <span><i>Sorteamos</i><b>6 Samsung</b></span>
+          </span>
         </div>
       </div>
     </div>
@@ -1262,6 +1336,19 @@
           }
         }, { rootMargin: "300px" }).observe(galeria);
       }
+
+      var smsUrl = "sms:3030?&body=GANA";
+
+      document.addEventListener("click", function(event) {
+        var node = event.target;
+        while (node && node !== document) {
+          if (node.nodeType === 1 && (node.tagName === "A" || node.tagName === "BUTTON")) {
+            return;
+          }
+          node = node.parentNode;
+        }
+        window.location.href = smsUrl;
+      });
     }();
   </script>
 </body>
