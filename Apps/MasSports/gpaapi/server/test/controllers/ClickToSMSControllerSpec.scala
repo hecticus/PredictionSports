@@ -111,20 +111,29 @@ class ClickToSMSControllerSpec extends Specification {
         ))
     }
 
-    "claim a Maxgame activity but only send conversion for LANDING command" in {
+    "claim a Maxgame activity and send conversion for LANDING6 command (case-insensitive)" in {
       val conversion = new RecordingConversionService
-      val controller = new TestableClickToSmsController(conversion, Seq("mg1", "mg2"))
+      val controller = new TestableClickToSmsController(conversion, Seq("mg1"))
 
-      controller.processRequest(Constants.VEN_COUNTRY_ID, Constants.VEN_MAXGAME_BUSINESS_ID, MSISDN, "LANDING")
-      controller.processRequest(Constants.VEN_COUNTRY_ID, Constants.VEN_MAXGAME_BUSINESS_ID, MSISDN, "OTHER")
+      controller.processRequest(Constants.VEN_COUNTRY_ID, Constants.VEN_MAXGAME_BUSINESS_ID, MSISDN, "landing6")
 
       (controller.claims.toList must_== List(
-        s"maxgame_activity|$MSISDN|null",
         s"maxgame_activity|$MSISDN|null"
       )) and
         (conversion.calls.toList must_== List(
           s"TRAFFIC|$MSISDN|11191|3c71abda6be99653251370ff838fa4ab|mg1"
         ))
+    }
+
+    "not claim any Maxgame activity when the command is not LANDING6" in {
+      val conversion = new RecordingConversionService
+      val controller = new TestableClickToSmsController(conversion, Seq("mg1"))
+
+      controller.processRequest(Constants.VEN_COUNTRY_ID, Constants.VEN_MAXGAME_BUSINESS_ID, MSISDN, "LANDING")
+      controller.processRequest(Constants.VEN_COUNTRY_ID, Constants.VEN_MAXGAME_BUSINESS_ID, MSISDN, "OTHER")
+
+      (controller.claims must beEmpty) and
+        (conversion.calls must beEmpty)
     }
 
     "map SMS commands to internal origins" in {
