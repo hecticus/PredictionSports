@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="${ttype == 'SPIRALIS'} ? ~{layoutspi :: layout(~{::content})} : (${ttype == 'MOBRAIN'} ? ~{layoutgre :: layout(~{::content})} : ~{layoutrus :: layout(~{::content})})">
+<body>
+<div th:fragment="content">
+    <div id="outPopUp">
+        <span th:if="${outie}">Felicidades ha sido registrado correctamente de +Deportes</span>
+        <span th:unless="${outie}">Pin invalido intente nuevamente</span>
+        <button th:unless="${outie}" onclick="window.history.back()">Go Back</button>
+    </div>
+</div>
+</body>
+</html>

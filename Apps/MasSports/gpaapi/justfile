@@ -1,0 +1,106 @@
+set dotenv-load := true
+set shell := ["bash", "-c"]
+
+zulu := env_var_or_default("JAVA8_HOME", home_directory() + "/.jdks/zulu8/Contents/Home")
+spring_port := env_var_or_default("SPRING_PORT", "8080")
+legacy_port := env_var_or_default("LEGACY_PORT", "9000")
+db_port := env_var_or_default("DB_PORT", "3306")
+db_name := env_var_or_default("DB_NAME", "extapi")
+
+# ============================ ayuda ============================
+default:
+    @just --list
+
+# ============================ base de datos ============================
+# Levanta MySQL en docker (schema + seed) y espera a que esté healthy
+db:
+    docker compose up -d --wait db
+    @echo "MySQL listo en localhost:{{db_port}} (db={{db_name}})"
+
+# Detiene los contenedores (conserva datos)
+db-down:
+    docker compose down
+
+# Borra el volumen y recrea la DB desde cero
+db-reset:
+    docker compose down -v
+    just db
+
+# Consola MySQL
+db-shell:
+    docker exec -it gpaapi-db mysql -u${DB_USER} -p${DB_PASSWORD} ${DB_NAME}
+
+# ============================ apps (nativo) ============================
+# App nueva (Spring Boot) en primer plano -> http://localhost:8080
+spring:
+    cd springboot && mvn spring-boot:run
+
+# App legacy (Play 2.5) en primer plano -> http://localhost:9000
+legacy:
+    cd server && JAVA_HOME="{{zulu}}" PATH="{{zulu}}/bin:$PATH" \
+        sbt -Dhttp.port={{legacy_port}} \
+            -Dhecticusvars.ip=${DB_HOST} \
+            -Dhecticusvars.login=${DB_USER} \
+            -Dhecticusvars.password=${DB_PASSWORD} run
+
+# ============================ ambos en background ============================
+# Levanta DB + legacy + spring, logs en .logs/
+dev: db
+    #!/usr/bin/env bash
+    mkdir -p .logs .run
+    ( cd server && nohup env JAVA_HOME="{{zulu}}" PATH="{{zulu}}/bin:$PATH" \
+        sbt -Dhttp.port={{legacy_port}} \
+            -Dhecticusvars.ip=${DB_HOST} \
+            -Dhecticusvars.login=${DB_USER} \
+            -Dhecticusvars.password=${DB_PASSWORD} run \
+        > ../.logs/legacy.log 2>&1 & echo $! > ../.run/legacy.pid )
+    ( cd springboot && nohup mvn -q spring-boot:run > ../.logs/spring.log 2>&1 & echo $! > ../.run/spring.pid )
+    echo "legacy -> http://localhost:{{legacy_port}}   (just logs-legacy)"
+    echo "spring -> http://localhost:{{spring_port}}   (just logs-spring)"
+
+# Detiene apps locales + contenedores
+stop:
+    #!/usr/bin/env bash
+    for p in {{spring_port}} {{legacy_port}}; do lsof -ti:$p | xargs kill -9 2>/dev/null || true; done
+    pkill -f "spring-boot:run" 2>/dev/null || true
+    pkill -f "sbt" 2>/dev/null || true
+    docker compose down
+    echo "detenido"
+
+logs:
+    tail -f .logs/spring.log
+
+logs-spring:
+    tail -f .logs/spring.log
+
+logs-legacy:
+    tail -f .logs/legacy.log
+
+# ============================ docker / cloud run ============================
+# Construye las dos imagenes listas para Cloud Run
+images:
+    docker build -t gpaapi-spring:2.7.0 springboot
+    docker build -t gpaapi-legacy:2.7.0 server
+
+# Levanta TODO (db + ambas apps) dentro de docker
+full:
+    docker compose --profile apps up --build
+
+# ============================ utilidades ============================
+# Compila y corre tests de la app nueva
+test:
+    cd springboot && mvn -q test
+
+# Compila el legacy
+compile-legacy:
+    cd server && JAVA_HOME="{{zulu}}" PATH="{{zulu}}/bin:$PATH" sbt -batch compile
+
+# Estado de todo
+ps:
+    #!/usr/bin/env bash
+    docker compose ps
+    for pair in "spring {{spring_port}}" "legacy {{legacy_port}}"; do
+        set -- $pair; name=$1; port=$2
+        code=$(curl -s -m 2 -o /dev/null -w '%{http_code}' "localhost:$port/health" 2>/dev/null || true)
+        [ "$code" = "200" ] && echo "$name :$port -> UP" || echo "$name :$port -> down"
+    done

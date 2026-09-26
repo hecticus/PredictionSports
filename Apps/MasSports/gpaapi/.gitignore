@@ -1,0 +1,19 @@
+# Entornos / secretos locales
+.env
+.env.local
+
+# Logs y PIDs de desarrollo
+.run/
+.logs/
+*.log
+**/RUNNING_PID
+
+# Build
+**/target/
+server/dist/
+server/logs/
+
+# IDE / OS
+.idea/
+*.iml
+.DS_Store

@@ -1,0 +1,40 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: gpaapi-db
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: extapi
+      MYSQL_USER: extapi
+      MYSQL_PASSWORD: extapi
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d:ro
+      - gpaapi-dbdata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uextapi", "-pextapi"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build: .
+    container_name: gpaapi-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - ../.env
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      PORT: 8080
+    ports:
+      - "8080:8080"
+
+volumes:
+  gpaapi-dbdata:

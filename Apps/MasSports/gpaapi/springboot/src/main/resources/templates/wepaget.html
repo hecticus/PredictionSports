@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="${ttype == 'SPIRALIS'} ? ~{layoutspi :: layout(~{::content})} : (${ttype == 'MOBRAIN'} ? ~{layoutgre :: layout(~{::content})} : ~{layoutrus :: layout(~{::content})})">
+<body>
+<div th:fragment="content">
+    <form action="/confirm" method="post">
+        <div class="row">
+            <div class="col-md-12">Intruduce el pin que recibiste <br> al telefono!!
+                <hr style="margin-top: 5px; width: 50%; color: white; height: 2px; "/>
+            </div>
+        </div>
+        <div class="row formst">
+            <div class="col-md-12">
+                <input name="msisdn" type="hidden" th:value="${msisdn}">
+                <input name="ttype" type="hidden" th:value="${ttype}"> Pin<br>
+                <input name="pin" type="test" value="" style="width: 50%; color:black; text-align: center; font-size:  2.5vmin;"> <br>
+                <br>
+                <button type="submit" class="submitbutton">Verificar</button>
+                <br><br>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

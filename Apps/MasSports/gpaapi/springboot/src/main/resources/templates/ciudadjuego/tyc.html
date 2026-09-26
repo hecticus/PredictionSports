@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>tyc</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" media="screen" th:href="@{/assets/stylesheets/ciudad-juego.css}">
+</head>
+<body>
+<div class="wrapper fadeInDown">
+    <div class="formContent top">
+        <img id="logo" th:src="@{/assets/ciudadjuego/images/logo.png}">
+    </div>
+    <br>
+    <div class="formContent">
+        <span>
+            <p class="subtitulotyc">
+                La suscripción es diaria y tiene un valor de PMVP: <span th:text="${amount}"></span> Fecha de marcaje: <span th:text="${dater}"></span>
+            </p>
+            <p class="subtitulotyc">El costo de la navegación dependerá del plan contratado.</p>
+            <p class="subtitulotyc">Las siglas IVACS corresponden al IVA del Consumo Suntuario.</p>
+            <p class="subtitulotyc">Al ser parte de Ciudad Juego tendrás derecho a descargar todos los juegos que desees de forma ILIMITADA.</p>
+            <p class="subtitulotyc">
+                Debes tener saldo suficiente en tu línea para poder efectuar las descargas. Si en 90 días no hemos
+                podido hacerte el cobro correspondiente al valor de la suscripción, el sistema te dará de baja
+                de forma automática.
+            </p>
+            <p class="titulotyc"><span style="font-weight: bold;">¿Qué es Ciudad Juego?</span></p>
+            <p class="subtitulotyc">
+                Ciudad Juego es un servicio de suscripción que le da derecho al usuario que forma parte de él, a
+                descargar, instalar y hacer uso de todos los juegos disponibles en Ciudad Juego de forma ilimitada.
+            </p>
+            <p class="titulotyc"><span style="font-weight: bold;">Para afiliarse:</span></p>
+            <p class="subtitulotyc">
+                Puede formar parte de Ciudad Juego haciendo clic <a href="https://gprs.digitel.com.ve/contenido/subscription?idSc=9424&ac=reg">aquí</a>
+                , ingresando a la <a href="http://gprs.digitel.com.ve/">Tienda Digitel</a> o utilizando
+                el acceso directo de apps Digitel. Una vez suscrito, podrá instalar y jugar de forma ilimitada
+                todos los juegos que desee mientras forme parte del servicio.
+            </p>
+            <p class="titulotyc"><span style="font-weight: bold;">Para descargar:</span></p>
+            <p class="subtitulotyc">
+                Para descargar el contenido y disfrutar del juego deseado, solo debe seleccionar el juego y proceder
+                a la descarga. Podrá descargar todos los juegos que desee. La cantidad de juegos exhibidos en
+                el catálogo dependerá del modelo de celular que tenga el usuario.
+            </p>
+            <p class="titulotyc"><span style="font-weight: bold;">Para desafiliarse:</span></p>
+            <p class="subtitulotyc">
+                Si el usuario ya no desea formar parte de este portal sólo deberá hacer clic
+                <a href="https://gprs.digitel.com.ve/contenido/subscription?idSc=9424&ac=eli">aquí</a> También podrá
+                desafiliarse a través de la <a href="http://gprs.digitel.com.ve/">Tienda Digitel</a> en Mi Cuenta -> Mis Suscripciones. En ambos casos, el
+                usuario debe hacerlo utilizando los datos móviles de su celular.
+                <br>También puede desafiliarse enviando la palabra CIUDAD al 1111</br>
+            </p>
+            <p class="subtitulotyc">
+                Si cancela el servicio antes de la fecha de vencimiento, podrá descargar el contenido hasta que
+                llegue su fecha de vencimiento.
+            </p>
+            <p class="subtitulotyc">
+                En caso de ser un usuario prepago, debe asegurarse de tener saldo el día del cobro de la
+                renovación para evitar que se cancele la suscripción automáticamente. Si no se logra realizar
+                la renovación de la suscripción por falta de saldo el día que corresponde, se realizará un (1)
+                intento diario por los siguientes noventa (90) días. En caso de no ser exitosa la renovación
+                en este tiempo, su suscripción será cancelada.
+            </p>
+            <p class="titulotyc"><span style="font-weight: bold;">SMS de Notificación de renovación</span></p>
+            <p class="subtitulotyc">
+                La notificación de renovación de la suscripción se recibirá una vez a la semana. Para poder
+                descargar los contenidos, el usuario debe contar con el saldo suficiente para poder navegar.
+            </p>
+            <p class="subtitulotyc" style="font-weight: bold"> Estos términos y condiciones pueden variar sin previo aviso.</p>
+        </span>
+        <a class="fadeIn fourth rcorners4 smsbutton" href="/cj/login">Volver</a>
+    </div>
+</div>
+</body>
+</html>

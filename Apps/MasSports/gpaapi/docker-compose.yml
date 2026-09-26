@@ -1,0 +1,71 @@
+# ============================================================================
+# GPAAPI - desarrollo local
+#   - db          : MySQL 8 (schema + seed de springboot/docker/mysql/init)
+#   - app-spring  : app nueva      (perfil: apps)
+#   - app-legacy  : app legacy     (perfil: apps)
+#
+# Uso normal (solo DB en docker, apps nativas con `just`):
+#   docker compose up -d db        (o `just db`)
+#
+# Todo dentro de docker:
+#   docker compose --profile apps up --build   (o `just full`)
+# ============================================================================
+services:
+  db:
+    image: mysql:8.0
+    container_name: gpaapi-db
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DB_NAME:-extapi}
+      MYSQL_USER: ${DB_USER:-extapi}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-extapi}
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - ./springboot/docker/mysql/init:/docker-entrypoint-initdb.d:ro
+      - gpaapi-dbdata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u${DB_USER:-extapi}", "-p${DB_PASSWORD:-extapi}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app-spring:
+    profiles: ["apps"]
+    build: ./springboot
+    container_name: gpaapi-app-spring
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      PORT: 8080
+    ports:
+      - "8080:8080"
+
+  app-legacy:
+    profiles: ["apps"]
+    build: ./server
+    container_name: gpaapi-app-legacy
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: extapi
+      PORT: 9000
+    ports:
+      - "9000:9000"
+
+volumes:
+  gpaapi-dbdata:

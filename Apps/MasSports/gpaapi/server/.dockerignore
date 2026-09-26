@@ -1,0 +1,10 @@
+target/
+logs/
+tmp/
+dist/
+RUNNING_PID
+.idea/
+*.iml
+.git/
+.gitignore
+*.pdf

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:with="paramName=${origin == 'VIA' ? 'token' : (origin == 'TRA' ? 'tr_token' : (origin == 'SEXY' ? 'transaction_id' : (origin == 'CHAT' ? 'mobidea_id' : 'CLICKID')))},
+               bodyContent=${origin == 'VIA' ? 'OK' : (origin == 'TRA' ? 'YES' : (origin == 'SEXY' ? 'SEXY' : (origin == 'CHAT' ? 'CHAT' : 'START')))}">
+<head>
+    <title>Gracias</title>
+    <style>
+        body, html { height: 100%; overflow: hidden; }
+        .bg {
+            background-image: url("../assets/images/paxion.gif");
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+    </style>
+</head>
+<body>
+<a href="sms:739?&body=START" th:attr="href='sms:739?&amp;body=' + ${bodyContent}" onClick="sendMessage()"><div class="bg"></div></a>
+<script th:inline="javascript">
+    function sendMessage() {
+        var requestOptions = { method: 'GET', redirect: 'follow' };
+        fetch("mark2?" + [[${paramName}]] + "=" + [[${clickValue}]] + "&SOURCE=" + [[${extras}]], requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result));
+    }
+</script>
+</body>
+</html>

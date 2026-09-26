@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="${ttype == 'SPIRALIS'} ? ~{layoutspi :: layout(~{::content})} : (${ttype == 'MOBRAIN'} ? ~{layoutgre :: layout(~{::content})} : ~{layoutrus :: layout(~{::content})})">
+<body>
+<div th:fragment="content">
+    <div th:if="${validPin}">
+        <div class="row">
+            <div class="col-md-12">Bienvenido a +Deportes
+                <hr style="margin-top: 5px; width: 50%; color: white; height: 2px; "/>
+            </div>
+        </div>
+    </div>
+    <div th:unless="${validPin}">
+        <div class="row">
+            <div class="col-md-12">Pin invalido<br>intente nuevamente
+                <hr style="margin-top: 5px; width: 50%; color: white; height: 2px; "/>
+            </div>
+        </div>
+        <div class="row formst">
+            <div class="col-md-12">
+                <button class="submitbutton" onclick="history.back()">Volver</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

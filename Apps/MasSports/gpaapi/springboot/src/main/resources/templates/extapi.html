@@ -1,0 +1,36 @@
+<head xmlns:th="http://www.thymeleaf.org">
+    <title>login</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" media="screen" th:href="@{/assets/stylesheets/extapi.css}">
+</head>
+<div class="wrapper fadeInDown">
+    <div class="formContent">
+        <img id="logo" th:src="@{/assets/images/logo.png}">
+    </div>
+    <br>
+    <div class="formContent">
+        <form action="/extapi/login" method="post" id="wepa">
+            <p class="titulo">Bienvenido! Indica tu número de teléfono y contraseña para disfrutar de
+                <span style="font-weight: bold;">MAXGAME</span>
+            </p>
+            <input type="text" id="msisdn" class="fadeIn second  textboxes" name="msisdn" placeholder="Numero de Teléfono">
+            <input type="text" id="password" class="fadeIn third  textboxes" name="contrasena" placeholder="Contraseña">
+            <p class="titulo-error" th:if="${error}">usuario o contraseña inválida!</p>
+            <input type="submit" class="fadeIn fourth rcorners4" value="acceder">
+            <div id="formFooter">
+                <a class="underlineHover" href="/extapi/recover-password">Recuperar contraseña</a>
+            </div>
+            <br>
+            <div class="cuadro-info">
+                <span class="subtitulo">
+¿No estás suscrito y quieres disfrutar de MaxGame?
+Haz click <a href="/extapi/login">AQUI</a><br>
+(solo usuarios Movistar)
+</span>
+            </div>
+        </form>
+    </div>
+</div>

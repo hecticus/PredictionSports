@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gracias</title>
+    <style>
+        body, html { height: 100%; overflow: hidden; }
+        .bg {
+            background-image: url("../assets/images/learn_rd.gif");
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+    </style>
+</head>
+<body>
+<a href="sms:6030?&body=OK" onClick="sendMessage()"><div class="bg"></div></a>
+<script th:inline="javascript">
+    function sendMessage(){
+        var requestOptions = { method: 'GET', redirect: 'follow' };
+        fetch("https://smobipiumlink.com/conversion/index.php?jp=" + [[${clickValue}]] + "&source=" + [[${extras}]], requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+        fetch("mark_rd?CLICKID=" + [[${clickValue}]] + "&SOURCE=" + [[${extras}]], requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+server:
+  port: ${PORT:9000}
+  compression:
+    enabled: true
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  application:
+    name: gpaapi
+  datasource:
+    url: "jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:extapi}?characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true"
+    username: ${DB_USER:admin}
+    password: ${DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:10}
+      minimum-idle: 1
+      connection-timeout: 2000
+      connection-test-query: SELECT 1
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: false
+    show-sql: ${JPA_SHOW_SQL:false}
+  thymeleaf:
+    cache: true
+    mode: HTML
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USER:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+gpaapi:
+  application-secret: ${APPLICATION_SECRET:change-me}
+  base-url: ${BASE_URL:http://localhost:${server.port}}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:*}
+  appland:
+    subscription-id: ${APPLAND_SUBSCRIPTION_ID:HECTI_MOVIS_U_VE}
+    service-key: ${APPLAND_SERVICE_KEY:appland-hecticus}
+    service-secret: ${APPLAND_SERVICE_SECRET:}
+  kraken:
+    base-url: ${KRAKEN_BASE_URL:http://api.hecticus.com/client}
+    events-url: ${KRAKEN_EVENTS_URL:http://02.kapp.hecticus.com/ws/receiveMO.php}
+  silver:
+    postback-url: ${SILVER_POSTBACK_URL:http://offers.silversol.affise.com/postback}
+  manhattan:
+    notify-url: ${MANHATTAN_NOTIFY_URL:http://146.20.33.21:8080/man-gateway-web/api/DigitalSuccessNotification/notify}
+  mail:
+    from: ${MAIL_FROM:alarma@hecticus.com}
+    to: ${MAIL_TO:soporte.daemons@hecticus.com}
+  conversion:
+    sexy-postback-url: ${SEXY_POSTBACK_URL:https://www.lktrack.com/adserver/delivery/cv.php}
+    sexy-postback-key: ${SEXY_POSTBACK_KEY:}
+    chat-postback-url: ${CHAT_POSTBACK_URL:https://postback.mobidea.ai/postback}
+    chat-security-token: ${CHAT_SECURITY_TOKEN:}
+    paxxion-handler: ${PAXXION_HANDLER:11240}
+    paxxion-hash: ${PAXXION_HASH:}
+    maxgame-handler: ${MAXGAME_HANDLER:11191}
+    maxgame-hash: ${MAXGAME_HASH:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+logging:
+  level:
+    root: INFO
+    com.hecticus.gpaapi: DEBUG
