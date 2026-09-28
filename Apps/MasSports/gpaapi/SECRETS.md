@@ -22,7 +22,10 @@ uno sin prefijo se puede crear pero no se puede usar.
 | `GPAAPI_MAXGAME_HASH` | `MAXGAME_HASH` | ✅ | ❌ | Hash Level23 de MaxGame / Ciudad Juego (hardcodeado en legacy) |
 | `GPAAPI_MAIL_PASSWORD` | `MAIL_PASSWORD` | ✅ | ❌ | Password SMTP (hardcodeado en legacy) |
 
-Los 8 son obligatorios: si falta uno, Cloud Run no crea la revisión y el tráfico sigue en la anterior.
+El pipeline monta los secretos de la substitution `_SECRETS` (por defecto, los 8). Cada secreto listado tiene que
+existir: si falta uno, Cloud Run no crea la revisión y el tráfico sigue en la anterior. Mientras no existan todos,
+el trigger fija `_SECRETS` solo con los creados; la app arranca sin los demás (quedan vacíos) y las integraciones
+que los usan no funcionan hasta cargarlos. Al crear uno nuevo, agregarlo a `_SECRETS` del trigger.
 
 ### Crearlos
 
