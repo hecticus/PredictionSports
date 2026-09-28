@@ -1,5 +1,9 @@
 # Deploy a Google Cloud Run — GPAAPI
 
+> **Reemplazado por [`../DEPLOY.md`](../DEPLOY.md)** para el proyecto `hecticus-173000`. Esta guía crea red, conector
+> y Cloud SQL en `us-central1` con nombres de secretos sin prefijo; allí ya existen la SA, el repo y el conector, y los
+> secretos usan el prefijo `GPAAPI_`. Se conserva como referencia.
+
 Hay **dos imágenes** listas. Eliges cuál desplegar (o corres ambas en dos servicios separados):
 
 | App | Contexto de build | Dockerfile | Imagen sugerida |

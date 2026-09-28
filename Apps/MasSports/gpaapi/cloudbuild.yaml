@@ -1,0 +1,73 @@
+# Build y deploy de GPAAPI (app Spring Boot) en Cloud Run, proyecto hecticus-173000.
+#
+# Trigger (el código se toma de la raíz del repo PredictionSports):
+#   --build-config=Apps/MasSports/gpaapi/cloudbuild.yaml
+#   --included-files='Apps/MasSports/gpaapi/springboot/**,Apps/MasSports/gpaapi/cloudbuild.yaml'
+#   --branch-pattern='^main_v2$'
+#   --substitutions=_DB_HOST=<IP privada de la BD>,_MAIL_USER=<cuenta SMTP>
+#
+# Manual, desde Apps/MasSports/gpaapi/ (sube solo esa carpeta, ver .gcloudignore). Requiere permiso de escritura
+# en el bucket de staging de Cloud Build; sin él, usar la vía local de DEPLOY.md §3:
+#   gcloud builds submit --config=cloudbuild.yaml \
+#     --substitutions=_APP_DIR=springboot,_DB_HOST=<IP>,_MAIL_USER=<cuenta> .
+#
+# La imagen se etiqueta con el ID del build y se despliega por digest (nunca :latest).
+# Detalle en DEPLOY.md; secretos en SECRETS.md.
+
+substitutions:
+  _REGION: us-east1
+  _SERVICE: gpaapi
+  _REPO: us-east1-docker.pkg.dev/hecticus-173000/gpaapi
+  _IMAGE: gpaapi-spring
+  _APP_DIR: Apps/MasSports/gpaapi/springboot
+  _SERVICE_ACCOUNT: run-gpaapi-sa@hecticus-173000.iam.gserviceaccount.com
+  _VPC_CONNECTOR: connector-dev
+  # private-ranges-only: solo la BD y la red interna pasan por el conector.
+  # all-traffic: todo sale por la IP fija del Cloud NAT del proyecto (para partners con lista blanca de IPs).
+  _VPC_EGRESS: private-ranges-only
+  _MIN_INSTANCES: "0"
+  # _MAX_INSTANCES x _DB_POOL_SIZE = conexiones máximas contra la BD.
+  _MAX_INSTANCES: "5"
+  _DB_HOST: ""
+  _DB_PORT: "3306"
+  _DB_NAME: extapi
+  _DB_USER: extapi
+  _DB_POOL_SIZE: "10"
+  _MAIL_USER: ""
+  _MAIL_FROM: alarma@hecticus.com
+  _MAIL_TO: soporte.daemons@hecticus.com
+  _LOG_LEVEL: INFO
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  substitutionOption: ALLOW_LOOSE
+
+steps:
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    args: ["build", "-t", "${_REPO}/${_IMAGE}:${BUILD_ID}", "${_APP_DIR}"]
+
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    args: ["push", "${_REPO}/${_IMAGE}:${BUILD_ID}"]
+
+  - id: deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        if [ -z "${_DB_HOST}" ]; then echo "Falta la substitution _DB_HOST"; exit 1; fi
+        DIGEST=$(gcloud artifacts docker images describe "${_REPO}/${_IMAGE}:${BUILD_ID}" --format='value(image_summary.digest)')
+        gcloud run deploy "${_SERVICE}" \
+          --project="${PROJECT_ID}" --region="${_REGION}" \
+          --image="${_REPO}/${_IMAGE}@$${DIGEST}" \
+          --service-account="${_SERVICE_ACCOUNT}" \
+          --allow-unauthenticated \
+          --port=8080 --cpu=1 --memory=1Gi --cpu-boost --concurrency=80 --timeout=300 \
+          --min-instances="${_MIN_INSTANCES}" --max-instances="${_MAX_INSTANCES}" \
+          --vpc-connector="${_VPC_CONNECTOR}" --vpc-egress="${_VPC_EGRESS}" \
+          --labels=app=gpaapi,stack=spring \
+          --set-env-vars="^|^DB_HOST=${_DB_HOST}|DB_PORT=${_DB_PORT}|DB_NAME=${_DB_NAME}|DB_USER=${_DB_USER}|DB_POOL_SIZE=${_DB_POOL_SIZE}|APPLAND_SUBSCRIPTION_ID=HECTI_MOVIS_U_VE|APPLAND_SERVICE_KEY=appland-hecticus|KRAKEN_BASE_URL=http://api.hecticus.com/client|KRAKEN_EVENTS_URL=http://02.kapp.hecticus.com/ws/receiveMO.php|SILVER_POSTBACK_URL=http://offers.silversol.affise.com/postback|MANHATTAN_NOTIFY_URL=http://146.20.33.21:8080/man-gateway-web/api/DigitalSuccessNotification/notify|SEXY_POSTBACK_URL=https://www.lktrack.com/adserver/delivery/cv.php|CHAT_POSTBACK_URL=https://postback.mobidea.ai/postback|PAXXION_HANDLER=11240|MAXGAME_HANDLER=11191|MAIL_HOST=smtp.gmail.com|MAIL_PORT=587|MAIL_USER=${_MAIL_USER}|MAIL_FROM=${_MAIL_FROM}|MAIL_TO=${_MAIL_TO}|CORS_ALLOWED_ORIGINS=*|LOGGING_LEVEL_COM_HECTICUS_GPAAPI=${_LOG_LEVEL}|MANAGEMENT_HEALTH_MAIL_ENABLED=false" \
+          --set-secrets="DB_PASSWORD=GPAAPI_DB_PASSWORD:latest,APPLICATION_SECRET=GPAAPI_APPLICATION_SECRET:latest,APPLAND_SERVICE_SECRET=GPAAPI_APPLAND_SERVICE_SECRET:latest,SEXY_POSTBACK_KEY=GPAAPI_SEXY_POSTBACK_KEY:latest,CHAT_SECURITY_TOKEN=GPAAPI_CHAT_SECURITY_TOKEN:latest,PAXXION_HASH=GPAAPI_PAXXION_HASH:latest,MAXGAME_HASH=GPAAPI_MAXGAME_HASH:latest,MAIL_PASSWORD=GPAAPI_MAIL_PASSWORD:latest"

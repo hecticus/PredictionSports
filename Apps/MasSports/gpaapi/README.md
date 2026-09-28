@@ -100,8 +100,8 @@ just full                 # docker compose --profile apps up --build
 
 ## Deploy
 
+- **Cloud Run (`hecticus-173000`)**: ver [`DEPLOY.md`](DEPLOY.md) y el pipeline [`cloudbuild.yaml`](cloudbuild.yaml).
 - **Secretos**: ver [`SECRETS.md`](SECRETS.md).
-- **Cloud Run**: ver [`server/DEPLOY_CLOUD_RUN.md`](server/DEPLOY_CLOUD_RUN.md).
 
 ## Notas
 
