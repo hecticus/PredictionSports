@@ -37,6 +37,9 @@ substitutions:
   _MAIL_FROM: alarma@hecticus.com
   _MAIL_TO: soporte.daemons@hecticus.com
   _LOG_LEVEL: INFO
+  # Secretos montados (VARIABLE=SECRETO:versión, separados por coma). Cada secreto listado tiene que existir o
+  # Cloud Run no crea la revisión. El trigger puede fijar una lista más corta mientras no existan todos.
+  _SECRETS: "DB_PASSWORD=GPAAPI_DB_PASSWORD:latest,APPLICATION_SECRET=GPAAPI_APPLICATION_SECRET:latest,APPLAND_SERVICE_SECRET=GPAAPI_APPLAND_SERVICE_SECRET:latest,SEXY_POSTBACK_KEY=GPAAPI_SEXY_POSTBACK_KEY:latest,CHAT_SECURITY_TOKEN=GPAAPI_CHAT_SECURITY_TOKEN:latest,PAXXION_HASH=GPAAPI_PAXXION_HASH:latest,MAXGAME_HASH=GPAAPI_MAXGAME_HASH:latest,MAIL_PASSWORD=GPAAPI_MAIL_PASSWORD:latest"
 
 options:
   logging: CLOUD_LOGGING_ONLY
@@ -70,4 +73,4 @@ steps:
           --vpc-connector="${_VPC_CONNECTOR}" --vpc-egress="${_VPC_EGRESS}" \
           --labels=app=gpaapi,stack=spring \
           --set-env-vars="^|^DB_HOST=${_DB_HOST}|DB_PORT=${_DB_PORT}|DB_NAME=${_DB_NAME}|DB_USER=${_DB_USER}|DB_POOL_SIZE=${_DB_POOL_SIZE}|APPLAND_SUBSCRIPTION_ID=HECTI_MOVIS_U_VE|APPLAND_SERVICE_KEY=appland-hecticus|KRAKEN_BASE_URL=http://api.hecticus.com/client|KRAKEN_EVENTS_URL=http://02.kapp.hecticus.com/ws/receiveMO.php|SILVER_POSTBACK_URL=http://offers.silversol.affise.com/postback|MANHATTAN_NOTIFY_URL=http://146.20.33.21:8080/man-gateway-web/api/DigitalSuccessNotification/notify|SEXY_POSTBACK_URL=https://www.lktrack.com/adserver/delivery/cv.php|CHAT_POSTBACK_URL=https://postback.mobidea.ai/postback|PAXXION_HANDLER=11240|MAXGAME_HANDLER=11191|MAIL_HOST=smtp.gmail.com|MAIL_PORT=587|MAIL_USER=${_MAIL_USER}|MAIL_FROM=${_MAIL_FROM}|MAIL_TO=${_MAIL_TO}|CORS_ALLOWED_ORIGINS=*|LOGGING_LEVEL_COM_HECTICUS_GPAAPI=${_LOG_LEVEL}|MANAGEMENT_HEALTH_MAIL_ENABLED=false" \
-          --set-secrets="DB_PASSWORD=GPAAPI_DB_PASSWORD:latest,APPLICATION_SECRET=GPAAPI_APPLICATION_SECRET:latest,APPLAND_SERVICE_SECRET=GPAAPI_APPLAND_SERVICE_SECRET:latest,SEXY_POSTBACK_KEY=GPAAPI_SEXY_POSTBACK_KEY:latest,CHAT_SECURITY_TOKEN=GPAAPI_CHAT_SECURITY_TOKEN:latest,PAXXION_HASH=GPAAPI_PAXXION_HASH:latest,MAXGAME_HASH=GPAAPI_MAXGAME_HASH:latest,MAIL_PASSWORD=GPAAPI_MAIL_PASSWORD:latest"
+          --set-secrets="${_SECRETS}"
