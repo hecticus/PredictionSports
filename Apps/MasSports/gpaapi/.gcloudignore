@@ -1,0 +1,16 @@
+# Qué NO sube `gcloud builds submit` desde esta carpeta. Solo hace falta springboot/ y cloudbuild.yaml.
+.gcloudignore
+.git
+.gitignore
+.env
+.env.*
+**/.env
+**/.env.*
+server/
+**/target/
+.logs/
+.run/
+*.log
+.idea/
+*.iml
+.DS_Store
