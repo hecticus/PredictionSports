@@ -12,6 +12,7 @@ import services.activity.BusinessConfig;
 import services.activity.BusinessConfig.ActivityType;
 import services.activity.BusinessConfig.ConversionType;
 import services.conversion.ConversionService;
+import services.tracking.ClickData;
 import utils.Constants;
 
 import javax.inject.Inject;
@@ -260,6 +261,13 @@ public class ClickToSMSController extends Controller {
         if (clickId != null) {
             Logger.info("Claimed MaxgameActivity: msisdn=" + msisdn + ", clickId=" + clickId);
 
+            String origin = findClaimedOrigin(TABLE_MAXGAME, clickId);
+            if (ClickData.ORIGIN_GOOGLE.equalsIgnoreCase(origin)) {
+                // Google Ads clicks are counted only; no postback is sent.
+                Logger.info("Maxgame GADS conversion counted (no postback): msisdn=" + msisdn + ", clickId=" + clickId);
+                return;
+            }
+
             if (config.getConversionType() == ConversionType.TRAFFIC_COMPANY) {
                 conversionService.sendToTrafficCompany(
                     msisdn,
@@ -270,6 +278,20 @@ public class ClickToSMSController extends Controller {
             }
         } else {
             Logger.warn("No MaxgameActivity found for msisdn=" + msisdn);
+        }
+    }
+
+    /**
+     * Resolve the origin stored for a claimed click so conversions can be routed
+     * by source (e.g. Google Ads clicks are counted but not posted back).
+     */
+    protected String findClaimedOrigin(String table, String clickId) {
+        try {
+            MaxgameActivity activity = MaxgameActivity.finder.where().eq("click_id", clickId).findUnique();
+            return activity != null ? activity.getOrigin() : null;
+        } catch (Exception e) {
+            Logger.error("Error resolving origin for " + table + " clickId=" + clickId, e);
+            return null;
         }
     }
 
