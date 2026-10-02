@@ -1,0 +1,21 @@
+# MySQL para desarrollo/pruebas (usado por make dev-db)
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: gpaapi-mysql-dev
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: extapi
+    ports:
+      - "3306:3306"
+    volumes:
+      - gpaapi-mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  gpaapi-mysql-data:

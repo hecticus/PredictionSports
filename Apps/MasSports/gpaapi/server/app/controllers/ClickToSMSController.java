@@ -12,6 +12,7 @@ import services.activity.BusinessConfig;
 import services.activity.BusinessConfig.ActivityType;
 import services.activity.BusinessConfig.ConversionType;
 import services.conversion.ConversionService;
+import services.dashboard.DashboardBuffer;
 import services.tracking.ClickData;
 import utils.Constants;
 
@@ -118,6 +119,9 @@ public class ClickToSMSController extends Controller {
     public void processRequest(String country, String business, String msisdn, String command) {
         // Log the request (file + database) before any processing
         logRequest(msisdn, command, country, business);
+        DashboardBuffer.get().addSms(new DashboardBuffer.SmsTrace(
+            "REQ", country, business, msisdn, command, null, ""
+        ));
 
         // Find matching business config
         BusinessConfig config = businessConfigs.get(makeKey(country, business));
@@ -339,6 +343,7 @@ public class ClickToSMSController extends Controller {
 
     protected String claimPendingClick(String table, String msisdn, String dateThreshold, String origin, String excludeOrigin) {
         String selectSql = buildClaimSelectSql(table, origin, excludeOrigin);
+        String filters = "table=" + table + ", origin=" + origin + ", exclude=" + excludeOrigin;
 
         Transaction tx = Ebean.beginTransaction();
         try {
@@ -354,6 +359,9 @@ public class ClickToSMSController extends Controller {
             List<SqlRow> rows = query.findList();
 
             if (rows.isEmpty()) {
+                DashboardBuffer.get().addSms(new DashboardBuffer.SmsTrace(
+                    "CLAIM", "", "", msisdn, "", null, filters + ", no pending match"
+                ));
                 return null;
             }
 
@@ -368,10 +376,16 @@ public class ClickToSMSController extends Controller {
 
             if (updated != 1) {
                 Logger.error("Could not mark " + table + ": id=" + id + ", msisdn=" + msisdn);
+                DashboardBuffer.get().addSms(new DashboardBuffer.SmsTrace(
+                    "CLAIM", "", "", msisdn, "", null, filters + ", update failed id=" + id
+                ));
                 return null;
             }
 
             tx.commit();
+            DashboardBuffer.get().addSms(new DashboardBuffer.SmsTrace(
+                "CLAIM", "", "", msisdn, "", clickId, filters + ", claimed=" + clickId
+            ));
             return clickId;
 
         } catch (Exception e) {

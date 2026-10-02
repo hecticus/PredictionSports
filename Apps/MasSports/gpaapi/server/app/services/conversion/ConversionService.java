@@ -4,6 +4,7 @@ import modeles.log;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
+import services.dashboard.DashboardBuffer;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -211,6 +212,7 @@ public class ConversionService {
      * Persist the conversion call result in the log table
      */
     private void saveConversionLog(String msisdn, String identifier, String detail) {
+        DashboardBuffer.get().addConversion(new DashboardBuffer.ConvTrace(identifier, msisdn, detail));
         try {
             log entry = new log();
             entry.setMsisdn(msisdn != null ? msisdn : "");

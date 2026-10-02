@@ -2,6 +2,7 @@ package services.tracking;
 
 import play.Logger;
 import play.mvc.Http;
+import services.dashboard.DashboardBuffer;
 
 /**
  * Service to extract click tracking parameters from HTTP requests
@@ -19,6 +20,18 @@ public class ClickParameterExtractor {
      * 5. CLICKID (MOB origin) - Default/fallback
      */
     public ClickData extractFromRequest(Http.Request request) {
+        ClickData clickData = doExtract(request);
+        DashboardBuffer.get().addClick(new DashboardBuffer.ClickTrace(
+            request.path(),
+            request.uri(),
+            clickData.getClickId(),
+            clickData.getOrigin(),
+            clickData.getExtras()
+        ));
+        return clickData;
+    }
+
+    private ClickData doExtract(Http.Request request) {
         try {
             // Priority 1: Check for TRA token (new source)
             String trToken = getQueryParam(request, "tr_token");

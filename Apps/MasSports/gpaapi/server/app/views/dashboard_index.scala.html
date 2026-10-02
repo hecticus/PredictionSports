@@ -1,0 +1,417 @@
+@(clicksMem: java.util.List[services.dashboard.DashboardBuffer.ClickTrace],
+  clicksDb: java.util.List[controllers.DashboardController.DbClickRow],
+  smsMem: java.util.List[services.dashboard.DashboardBuffer.SmsTrace],
+  smsDb: java.util.List[modeles.log],
+  convMem: java.util.List[controllers.DashboardController.ConvRow],
+  convDb: java.util.List[controllers.DashboardController.DbConvRow])
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard de tracking</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #131820;
+      color: #e6edf3;
+      padding: 1.5rem;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    h1 { font-size: 1.1rem; color: #58d68d; }
+    header .spacer { flex: 1; }
+    button, label { font-size: .8rem; }
+    button {
+      padding: .4rem .8rem;
+      border-radius: 6px;
+      border: 1px solid #2a3548;
+      background: #1b2330;
+      color: #e6edf3;
+      cursor: pointer;
+    }
+
+    /* ------- flujo del pipeline ------- */
+    .flow {
+      background: #1b2330;
+      border: 1px solid #2a3548;
+      border-radius: 8px;
+      padding: .8rem;
+      margin-bottom: 1.4rem;
+      font-size: .78rem;
+      line-height: 1.5;
+    }
+    .flow b { color: #58d68d; }
+    .flow .arrow { color: #6ab8ff; padding: 0 .35rem; }
+    .flowcode {
+      font-family: ui-monospace, monospace;
+      color: #ffb84d;
+      word-break: break-all;
+    }
+
+    /* ------- secciones ------- */
+    .step {
+      display: inline-block;
+      background: #2ecc71;
+      color: #131820;
+      font-weight: 700;
+      border-radius: 4px;
+      padding: .1rem .45rem;
+      margin-right: .4rem;
+      font-size: .78rem;
+    }
+    .src {
+      display: inline-block;
+      border-radius: 4px;
+      padding: .05rem .4rem;
+      font-size: .68rem;
+      margin-left: .3rem;
+    }
+    .src.mem { background: #10304a; color: #6ab8ff; }
+    .src.db { background: #3c2c12; color: #ffb84d; }
+    h2 {
+      font-size: .95rem;
+      margin: 1.5rem 0 .25rem;
+    }
+    .desc { font-size: .75rem; color: #8b98a9; margin-bottom: .5rem; }
+    .count { color: #8b98a9; font-size: .75rem; font-weight: 400; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #1b2330;
+      border: 1px solid #2a3548;
+      border-radius: 8px;
+      font-size: .78rem;
+    }
+    th, td {
+      text-align: left;
+      padding: .35rem .55rem;
+      border-bottom: 1px solid #232d3f;
+      vertical-align: top;
+    }
+    th { color: #8b98a9; font-weight: 600; white-space: nowrap; }
+    td.mono, th.mono { font-family: ui-monospace, monospace; }
+    td.wrap { word-break: break-all; }
+    tr:hover td { background: #20293a; }
+
+    .tag {
+      display: inline-block;
+      padding: .05rem .4rem;
+      border-radius: 4px;
+      font-family: ui-monospace, monospace;
+      font-size: .72rem;
+    }
+    .tag.tra { background: #123c22; color: #58d68d; }
+    .tag.mob { background: #10304a; color: #6ab8ff; }
+    .tag.via { background: #3c2c12; color: #ffb84d; }
+    .tag.sexy { background: #43101f; color: #ff6a8a; }
+    .tag.chat { background: #2f1243; color: #c68aff; }
+    .tag.gads { background: #1c2f4a; color: #8ab4f8; }
+    .tag.mg2026 { background: #0f3a3a; color: #4dd0c4; }
+    .tag.req { background: #10304a; color: #6ab8ff; }
+    .tag.claim { background: #123c22; color: #58d68d; }
+    .tag.empty { background: #33241a; color: #ffb84d; }
+    .tag.na { background: #2a3548; color: #8b98a9; }
+
+    .legend {
+      background: #1b2330;
+      border: 1px solid #2a3548;
+      border-radius: 8px;
+      padding: .7rem .8rem;
+      font-size: .72rem;
+      color: #8b98a9;
+      margin-bottom: 1.4rem;
+      line-height: 1.9;
+    }
+
+    /* ------- panel de test ------- */
+    .testbar {
+      background: #1b2330;
+      border: 1px solid #2a3548;
+      border-radius: 8px;
+      padding: .8rem;
+      display: flex;
+      gap: .6rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: .4rem;
+    }
+    .testbar input {
+      padding: .35rem .5rem;
+      border-radius: 6px;
+      border: 1px solid #2a3548;
+      background: #131820;
+      color: #e6edf3;
+      font-family: ui-monospace, monospace;
+      font-size: .75rem;
+      width: 13rem;
+    }
+    .testbar button:disabled { opacity: .45; cursor: not-allowed; }
+    #test-out { font-size: .75rem; color: #58d68d; font-family: ui-monospace, monospace; }
+    .note { font-size: .72rem; color: #8b98a9; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dashboard de tracking</h1>
+    <span class="count">memoria: @clicksMem.size() clicks / @smsMem.size() sms / @convMem.size() conv (desde el último deploy)</span>
+    <span class="spacer"></span>
+    <label><input type="checkbox" id="auto" /> auto-refresh 20s</label>
+    <button onclick="location.reload()">Refrescar</button>
+  </header>
+
+  <div class="flow">
+    <b>Cómo funciona el tracking:</b>
+    <span class="arrow">1</span> el provider manda el usuario a la landing con su id en un query param
+    <span class="arrow">→</span>
+    <span class="arrow">2</span> al cargar la página el id se guarda en la tabla de actividad
+    <span class="arrow">→</span>
+    <span class="arrow">3</span> cuando el usuario le da al CTA se marca (sent=true) y sale a enviar el SMS
+    <span class="arrow">→</span>
+    <span class="arrow">4</span> si el usuario se da de alta, la plataforma SMS llama <span class="flowcode">/clicktosms/6/10/:msisdn?command=LANDING</span>
+    <span class="arrow">→</span>
+    <span class="arrow">5</span> se reclama el click pendiente más reciente (&gt;20s)
+    <span class="arrow">→</span>
+    <span class="arrow">6</span> se envía el postback al provider con ese id y se guarda su respuesta
+  </div>
+
+  <div class="legend">
+    <b>Origins (de dónde viene el click):</b>
+    <span class="tag tra">TRA</span> traffic company (tr_token)
+    <span class="tag mob">MOB</span> mobipium (CLICKID)
+    <span class="tag via">VIA</span> doble via (token)
+    <span class="tag sexy">SEXY</span> lktrack (transaction_id)
+    <span class="tag chat">CHAT</span> mobidea (mobidea_id)
+    <span class="tag gads">GADS</span> google ads (gclid) — solo se cuenta, no manda postback
+    <span class="tag mg2026">MG2026</span> landing 2026
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <b>Eventos:</b>
+    <span class="tag req">REQ</span> request a clicktosms
+    <span class="tag claim">CLAIM</span> click reclamado (msisdn asignado)
+  </div>
+
+  <h2>Test extremo a extremo</h2>
+  <div class="testbar">
+    <span class="note">paso 1 — lado landing</span>
+    <select id="t-landing" onchange="syncParams()">
+      <option value="/maxgame">/maxgame (MaxGame legacy)</option>
+      <option value="/mg">/mg (MaxGame banner)</option>
+      <option value="/mob">/mob (MaxGame mobi)</option>
+      <option value="/paxxion">/paxxion (Klike)</option>
+      <option value="/learnlive">/learnlive (Teach)</option>
+      <option value="/blive">/blive (Blive)</option>
+      <option value="/maxgame_2026">/maxgame_2026</option>
+    </select>
+    <select id="t-param">
+      <option value="tr_token">tr_token (TRA)</option>
+      <option value="token">token (VIA)</option>
+      <option value="transaction_id">transaction_id (SEXY)</option>
+      <option value="mobidea_id">mobidea_id (CHAT)</option>
+      <option value="CLICKID">CLICKID (MOB)</option>
+      <option value="gclid">gclid (GADS)</option>
+    </select>
+    <input id="t-value" placeholder="(auto) TEST-..." class="mono" />
+    <button id="btn-click" onclick="testMark()">1. Enviar click + mark</button>
+  </div>
+  <div class="testbar">
+    <span class="note">paso 2 — lado plataforma (espera ~21s para que el click sea reclamarle)</span>
+    <select id="t-flow">
+      <option value="MAXGAME">MaxGame legacy (6/10, LANDING)</option>
+      <option value="MG2026">MaxGame 2026 (6/10, LANDING6)</option>
+      <option value="BLIVE">Blive (14/6, LANDING)</option>
+      <option value="PAXXION-MOB">Paxxion MOB (14/5, LANDING)</option>
+      <option value="PAXXION-VIA">Paxxion VIA (14/5, LANDING2)</option>
+      <option value="PAXXION-TRA">Paxxion TRA (14/5, LANDING3)</option>
+      <option value="PAXXION-SEXY">Paxxion SEXY (14/5, LANDING4)</option>
+      <option value="PAXXION-CHAT">Paxxion CHAT (14/5, LANDING5)</option>
+      <option value="TEACH">LearnLive/Teach (14/4, LANDING)</option>
+    </select>
+    <input id="test-msisdn" value="9999999999" class="mono" />
+    <button id="btn-sms" onclick="testSms()">2. Enviar ClickToSMS</button>
+    <span id="test-out"></span>
+  </div>
+  <div class="note">El paso 2 reclama el click pendiente más reciente del flow elegido (debe tener &gt;20s) y envía el postback de verdad; usa un token TEST- que el proveedor ignora o dará error en la respuesta. Para la prueba completa: elige la misma landing/param y valor en ambos pasos.</div>
+
+  <h2><span class="step">1</span>Clicks que llegan a las landings <span class="src mem">memoria</span> <span class="count">— @clicksMem.size()</span></h2>
+  <p class="desc">Cada carga de una landing: la URL cruda que llegó (con el query param del provider), el id extraído y el origin asignado. Muestra la transformación provider → id interno.</p>
+  <table>
+    <tr><th>time</th><th>landing</th><th>raw query (lo que llegó)</th><th>clickId extraído</th><th>origin</th><th>extras</th></tr>
+    @for(c <- clicksMem) {
+      <tr>
+        <td class="mono">@c.time</td>
+        <td class="mono">@c.path</td>
+        <td class="mono wrap">@c.rawQuery</td>
+        <td class="mono">@c.clickId</td>
+        <td><span class="tag @{c.origin.toLowerCase}">@c.origin</span></td>
+        <td class="mono">@c.extras</td>
+      </tr>
+    }
+  </table>
+
+  <h2><span class="step">1</span>Clicks guardados en BD <span class="src db">base de datos</span> <span class="count">— @clicksDb.size()</span></h2>
+  <p class="desc">Las 4 tablas de actividad. msisdn vacío = click pendiente de ser reclamado por un alta; sent=true = el usuario apretó el CTA.</p>
+  <table>
+    <tr><th>fuente</th><th>id</th><th>date</th><th>click_id</th><th>origin</th><th>msisdn</th><th>extra</th></tr>
+    @for(c <- clicksDb) {
+      <tr>
+        <td>@c.source</td>
+        <td class="mono">@c.id</td>
+        <td class="mono">@c.date</td>
+        <td class="mono wrap">@c.clickId</td>
+        <td>@if(c.origin != null) {<span class="tag @{c.origin.toLowerCase}">@c.origin</span>} else {<span class="tag empty">-</span>}</td>
+        <td class="mono">@c.msisdn</td>
+        <td class="mono">@c.extra</td>
+      </tr>
+    }
+  </table>
+
+  <h2><span class="step">2</span>ClickToSMS entrantes y claims <span class="src mem">memoria</span> <span class="count">— @smsMem.size()</span></h2>
+  <p class="desc">REQ = un comando que llegó de la plataforma SMS (el alta). CLAIM = el click pendiente más reciente que se le asignó a ese msisdn. Si un CLAIM dice "no pending match" no había click pendiente.</p>
+  <table>
+    <tr><th>time</th><th>kind</th><th>country</th><th>business</th><th>msisdn</th><th>command</th><th>detalle</th></tr>
+    @for(s <- smsMem) {
+      <tr>
+        <td class="mono">@s.time</td>
+        <td><span class="tag @{s.kind.toLowerCase}">@s.kind</span></td>
+        <td class="mono">@s.country</td>
+        <td class="mono">@s.business</td>
+        <td class="mono">@s.msisdn</td>
+        <td class="mono">@s.command</td>
+        <td class="mono wrap">@s.detail</td>
+      </tr>
+    }
+  </table>
+
+  <h2><span class="step">2</span>ClickToSMS en BD <span class="src db">base de datos</span> <span class="count">— @smsDb.size()</span></h2>
+  <p class="desc">Registro persistido de cada clicktosms (tabla log, identifier=SMS_CLICK): comando + msisdn.</p>
+  <table>
+    <tr><th>id</th><th>time</th><th>msisdn</th><th>command</th></tr>
+    @for(s <- smsDb) {
+      <tr>
+        <td class="mono">@s.getId</td>
+        <td class="mono">@s.getLastUpdate</td>
+        <td class="mono">@s.getMsisdn</td>
+        <td class="mono">@s.getExtra</td>
+      </tr>
+    }
+  </table>
+
+  <h2><span class="step">3</span>Conversiones enviadas y respuestas <span class="src mem">memoria</span> <span class="count">— @convMem.size()</span></h2>
+  <p class="desc">Cada llamada de postback al provider (la URL incluye el id transformado) y su respuesta real: http + body, o el error. Dos filas por conversión: "call url=" y luego "http=... body=...". La columna clicktosms asocia la conversión con el comando que la disparó y el click que se reclamó.</p>
+  <table>
+    <tr><th>time</th><th>provider</th><th>msisdn</th><th>clicktosms asociado</th><th>detalle</th></tr>
+    @for(c <- convMem) {
+      <tr>
+        <td class="mono">@c.time</td>
+        <td class="mono">@c.identifier</td>
+        <td class="mono">@c.msisdn</td>
+        <td class="mono">@if(c.reqCommand != null) {@c.reqCommand @@ @c.reqTime @if(c.claimedClickId != null) {<br/>claim: @c.claimedClickId}} else {<span class="tag empty">-</span>}</td>
+        <td class="mono wrap">@c.detail</td>
+      </tr>
+    }
+  </table>
+
+  <h2><span class="step">3</span>Conversiones en BD <span class="src db">base de datos</span> <span class="count">— @convDb.size()</span></h2>
+  <p class="desc">Registro persistido (tabla log, identifier=CONV_*), asociado por msisdn al SMS_CLICK previo y con el id del provider extraído de la URL. El detalle está truncado a 400 caracteres por límite de columna; en memoria está completo.</p>
+  <table>
+    <tr><th>id</th><th>time</th><th>provider</th><th>msisdn</th><th>clicktosms asociado</th><th>detalle</th></tr>
+    @for(c <- convDb) {
+      <tr>
+        <td class="mono">@c.id</td>
+        <td class="mono">@c.time</td>
+        <td class="mono">@c.identifier</td>
+        <td class="mono">@c.msisdn</td>
+        <td class="mono">@if(c.command != null) {@c.command @@ @c.commandTime @if(c.providerId != null) {<br/>provider id: @c.providerId}} else {<span class="tag empty">-</span>}</td>
+        <td class="mono wrap">@c.detail</td>
+      </tr>
+    }
+  </table>
+
+  <script>
+    var auto = document.getElementById("auto");
+    auto.checked = localStorage.getItem("dash_auto") === "1";
+    auto.addEventListener("change", function() {
+      localStorage.setItem("dash_auto", auto.checked ? "1" : "0");
+      if (!auto.checked) location.reload();
+    });
+    if (auto.checked) setTimeout(function() { location.reload(); }, 20000);
+
+    function out(msg) {
+      document.getElementById("test-out").textContent = msg + " — " + new Date().toLocaleTimeString();
+    }
+
+    var LANDINGS = {
+      "/maxgame": {mark: "/mark_maxgame"},
+      "/mg": {mark: "/mark_maxgame"},
+      "/mob": {mark: "/mark_maxgame_mobi"},
+      "/paxxion": {mark: "/mark2"},
+      "/learnlive": {mark: "/mark"},
+      "/blive": {mark: "/mark_bl"},
+      "/maxgame_2026": {mark: "/mark_maxgame_2026"}
+    };
+
+    var FLOWS = {
+      "MAXGAME": {country: "6", business: "10", command: "LANDING"},
+      "MG2026": {country: "6", business: "10", command: "LANDING6"},
+      "BLIVE": {country: "14", business: "6", command: "LANDING"},
+      "PAXXION-MOB": {country: "14", business: "5", command: "LANDING"},
+      "PAXXION-VIA": {country: "14", business: "5", command: "LANDING2"},
+      "PAXXION-TRA": {country: "14", business: "5", command: "LANDING3"},
+      "PAXXION-SEXY": {country: "14", business: "5", command: "LANDING4"},
+      "PAXXION-CHAT": {country: "14", business: "5", command: "LANDING5"},
+      "TEACH": {country: "14", business: "4", command: "LANDING"}
+    };
+
+    var currentToken = null;
+
+    function testMark() {
+      var landing = document.getElementById("t-landing").value;
+      var param = document.getElementById("t-param").value;
+      var value = document.getElementById("t-value").value || ("TEST-" + Date.now());
+      document.getElementById("t-value").value = value;
+      currentToken = value;
+      var markPath = LANDINGS[landing].mark;
+      Promise.all([
+        fetch(landing + "?" + param + "=" + encodeURIComponent(value)),
+        fetch(markPath + "?clickid=" + encodeURIComponent(value) + "&SOURCE=test")
+      ]).then(function() {
+        out("ok: click " + value + " creado y marcado (" + landing + ", " + param + "); espera ~21s y corre paso 2");
+      }).catch(function(e) {
+        out("error: " + e);
+      });
+      var btn = document.getElementById("btn-sms");
+      var secs = 21;
+      btn.disabled = true;
+      btn.textContent = "2. Enviar ClickToSMS (espera " + secs + "s)";
+      var timer = setInterval(function() {
+        secs--;
+        if (secs <= 0) {
+          clearInterval(timer);
+          btn.disabled = false;
+          btn.textContent = "2. Enviar ClickToSMS";
+        } else {
+          btn.textContent = "2. Enviar ClickToSMS (espera " + secs + "s)";
+        }
+      }, 1000);
+    }
+
+    function testSms() {
+      var flow = FLOWS[document.getElementById("t-flow").value];
+      var msisdn = document.getElementById("test-msisdn").value || "9999999999";
+      fetch("/clicktosms/" + flow.country + "/" + flow.business + "/" + msisdn + "?command=" + flow.command).then(function() {
+        out("ok: clicktosms enviado (" + flow.country + "/" + flow.business + ", command=" + flow.command + ", msisdn=" + msisdn + "); refresca para ver claim + conversión");
+      }).catch(function(e) {
+        out("error: " + e);
+      });
+    }
+  </script>
+</body>
+</html>
