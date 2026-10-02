@@ -54,7 +54,7 @@ public class DashboardController extends Controller {
             buffer.lastClicks(100),
             lastDbClicks(),
             smsMem,
-            smsDbShown,
+            toDbSmsRows(smsDbShown),
             correlateConvMem(convMem, smsMem),
             correlateConvDb(convDb, smsDb)
         ));
@@ -94,16 +94,18 @@ public class DashboardController extends Controller {
     public static class ConvRow {
         public final String time;
         public final String identifier;
+        public final String business;
         public final String msisdn;
         public final String detail;
         public final String reqCommand;
         public final String reqTime;
         public final String claimedClickId;
 
-        public ConvRow(String time, String identifier, String msisdn, String detail,
+        public ConvRow(String time, String identifier, String business, String msisdn, String detail,
                        String reqCommand, String reqTime, String claimedClickId) {
             this.time = time;
             this.identifier = identifier;
+            this.business = business;
             this.msisdn = msisdn;
             this.detail = detail;
             this.reqCommand = reqCommand;
@@ -120,17 +122,19 @@ public class DashboardController extends Controller {
         public final Long id;
         public final String time;
         public final String identifier;
+        public final String business;
         public final String msisdn;
         public final String detail;
         public final String command;
         public final String commandTime;
         public final String providerId;
 
-        public DbConvRow(Long id, String time, String identifier, String msisdn, String detail,
+        public DbConvRow(Long id, String time, String identifier, String business, String msisdn, String detail,
                          String command, String commandTime, String providerId) {
             this.id = id;
             this.time = time;
             this.identifier = identifier;
+            this.business = business;
             this.msisdn = msisdn;
             this.detail = detail;
             this.command = command;
@@ -144,6 +148,7 @@ public class DashboardController extends Controller {
         for (DashboardBuffer.ConvTrace c : convs) {
             String reqCommand = null;
             String reqTime = null;
+            String reqBusiness = null;
             String claimed = null;
 
             for (DashboardBuffer.SmsTrace s : sms) {
@@ -153,12 +158,14 @@ public class DashboardController extends Controller {
                 if ("REQ".equals(s.kind) && reqCommand == null) {
                     reqCommand = s.command;
                     reqTime = s.time;
+                    reqBusiness = businessLabel(s.country, s.business);
                 }
                 if ("CLAIM".equals(s.kind) && claimed == null && s.clickId != null) {
                     claimed = s.clickId;
                 }
             }
-            rows.add(new ConvRow(c.time, c.identifier, c.msisdn, c.detail, reqCommand, reqTime, claimed));
+            String business = reqBusiness != null ? reqBusiness : convBusiness(c.identifier, c.detail);
+            rows.add(new ConvRow(c.time, c.identifier, business, c.msisdn, c.detail, reqCommand, reqTime, claimed));
         }
         return rows;
     }
@@ -176,18 +183,111 @@ public class DashboardController extends Controller {
                 }
                 if (bestId == null || s.getId() > bestId) {
                     bestId = s.getId();
-                    command = s.getExtra();
+                    command = parseDbCommand(s.getExtra());
                     commandTime = formatDate(s.getLastUpdate());
                 }
             }
             rows.add(new DbConvRow(c.getId(), formatDate(c.getLastUpdate()), c.getIdentifier(),
-                c.getMsisdn(), c.getExtra(), command, commandTime, extractProviderId(c.getExtra())));
+                convBusiness(c.getIdentifier(), c.getExtra()), c.getMsisdn(), c.getExtra(),
+                command, commandTime, extractProviderId(c.getExtra())));
         }
         return rows;
     }
 
     private static boolean equalsSafe(String a, String b) {
         return a == null ? b == null : a.equals(b);
+    }
+
+    /**
+     * Parsed SMS_CLICK log row (new format carries country/business/command,
+     * legacy rows carry the plain command).
+     */
+    public static class DbSmsRow {
+        public final Long id;
+        public final String time;
+        public final String country;
+        public final String business;
+        public final String msisdn;
+        public final String command;
+
+        public DbSmsRow(Long id, String time, String country, String business, String msisdn, String command) {
+            this.id = id;
+            this.time = time;
+            this.country = country;
+            this.business = business;
+            this.msisdn = msisdn;
+            this.command = command;
+        }
+    }
+
+    private List<DbSmsRow> toDbSmsRows(List<log> smsClicks) {
+        List<DbSmsRow> rows = new ArrayList<>();
+        for (log s : smsClicks) {
+            rows.add(new DbSmsRow(s.getId(), formatDate(s.getLastUpdate()),
+                parseDbField(s.getExtra(), "country"), parseDbField(s.getExtra(), "business"),
+                s.getMsisdn(), parseDbCommand(s.getExtra())));
+        }
+        return rows;
+    }
+
+    /**
+     * Parse "command=..." from the SMS_CLICK extra; legacy rows carry the plain command.
+     */
+    static String parseDbCommand(String extra) {
+        String field = parseDbField(extra, "command");
+        return field != null ? field : (extra == null ? "" : extra);
+    }
+
+    static String parseDbField(String extra, String field) {
+        if (extra == null) {
+            return null;
+        }
+        int at = extra.indexOf(field + "=");
+        if (at < 0) {
+            return null;
+        }
+        int start = at + field.length() + 1;
+        int end = start;
+        while (end < extra.length()) {
+            char ch = extra.charAt(end);
+            if (ch == ',' || ch == ' ') {
+                break;
+            }
+            end++;
+        }
+        return extra.substring(start, end);
+    }
+
+    /**
+     * Label the business from the clicktosms country/business pair.
+     */
+    static String businessLabel(String country, String business) {
+        if (country == null) {
+            return null;
+        }
+        if ("6".equals(country) && "10".equals(business)) return "MAXGAME";
+        if ("6".equals(country) && "6".equals(business)) return "CIUDADJUEGO";
+        if ("14".equals(country) && "6".equals(business)) return "BLIVE";
+        if ("14".equals(country) && "5".equals(business)) return "PAXXION";
+        if ("14".equals(country) && "4".equals(business)) return "TEACH";
+        return country + ":" + business;
+    }
+
+    /**
+     * Label the business from a conversion identifier (and handler for shared
+     * identifiers: CONV_TRAFFIC is used by both Haiti and Maxgame).
+     */
+    static String convBusiness(String identifier, String detail) {
+        if ("CONV_MOBIPIUM".equals(identifier)) {
+            return "BLIVE";
+        }
+        if ("CONV_VIA".equals(identifier) || "CONV_SEXY".equals(identifier) || "CONV_CHAT".equals(identifier)) {
+            return "PAXXION";
+        }
+        if ("CONV_TRAFFIC".equals(identifier)) {
+            return detail != null && detail.contains("handler=11191") ? "MAXGAME" : "HAITI";
+        }
+        return identifier;
     }
 
     private static String formatDate(Date date) {

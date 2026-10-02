@@ -1,7 +1,7 @@
 @(clicksMem: java.util.List[services.dashboard.DashboardBuffer.ClickTrace],
   clicksDb: java.util.List[controllers.DashboardController.DbClickRow],
   smsMem: java.util.List[services.dashboard.DashboardBuffer.SmsTrace],
-  smsDb: java.util.List[modeles.log],
+  smsDb: java.util.List[controllers.DashboardController.DbSmsRow],
   convMem: java.util.List[controllers.DashboardController.ConvRow],
   convDb: java.util.List[controllers.DashboardController.DbConvRow])
 
@@ -238,7 +238,7 @@
     <button id="btn-sms" onclick="testSms()">2. Enviar ClickToSMS</button>
     <span id="test-out"></span>
   </div>
-  <div class="note">El paso 2 reclama el click pendiente más reciente del flow elegido (debe tener &gt;20s) y envía el postback de verdad; usa un token TEST- que el proveedor ignora o dará error en la respuesta. Para la prueba completa: elige la misma landing/param y valor en ambos pasos.</div>
+  <div class="note">El paso 2 reclama el click pendiente más reciente del flow elegido (debe tener &gt;20s) y envía el postback de verdad; usa un token TEST- que el proveedor ignora o dará error en la respuesta. Ojo: /maxgame, /mg y /mob guardan el click al cargar la página (mark solo lo marca); /learnlive, /paxxion, /blive y /maxgame_2026 guardan al hacer el mark.</div>
 
   <h2><span class="step">1</span>Clicks que llegan a las landings <span class="src mem">memoria</span> <span class="count">— @clicksMem.size()</span></h2>
   <p class="desc">Cada carga de una landing: la URL cruda que llegó (con el query param del provider), el id extraído y el origin asignado. Muestra la transformación provider → id interno.</p>
@@ -291,15 +291,17 @@
   </table>
 
   <h2><span class="step">2</span>ClickToSMS en BD <span class="src db">base de datos</span> <span class="count">— @smsDb.size()</span></h2>
-  <p class="desc">Registro persistido de cada clicktosms (tabla log, identifier=SMS_CLICK): comando + msisdn.</p>
+  <p class="desc">Registro persistido de cada clicktosms (tabla log, identifier=SMS_CLICK): país/negocio + comando + msisdn. Las filas viejas solo traen el comando.</p>
   <table>
-    <tr><th>id</th><th>time</th><th>msisdn</th><th>command</th></tr>
+    <tr><th>id</th><th>time</th><th>country</th><th>business</th><th>msisdn</th><th>command</th></tr>
     @for(s <- smsDb) {
       <tr>
-        <td class="mono">@s.getId</td>
-        <td class="mono">@s.getLastUpdate</td>
-        <td class="mono">@s.getMsisdn</td>
-        <td class="mono">@s.getExtra</td>
+        <td class="mono">@s.id</td>
+        <td class="mono">@s.time</td>
+        <td class="mono">@s.country</td>
+        <td class="mono">@s.business</td>
+        <td class="mono">@s.msisdn</td>
+        <td class="mono">@s.command</td>
       </tr>
     }
   </table>
@@ -307,11 +309,12 @@
   <h2><span class="step">3</span>Conversiones enviadas y respuestas <span class="src mem">memoria</span> <span class="count">— @convMem.size()</span></h2>
   <p class="desc">Cada llamada de postback al provider (la URL incluye el id transformado) y su respuesta real: http + body, o el error. Dos filas por conversión: "call url=" y luego "http=... body=...". La columna clicktosms asocia la conversión con el comando que la disparó y el click que se reclamó.</p>
   <table>
-    <tr><th>time</th><th>provider</th><th>msisdn</th><th>clicktosms asociado</th><th>detalle</th></tr>
+    <tr><th>time</th><th>provider</th><th>negocio</th><th>msisdn</th><th>clicktosms asociado</th><th>detalle</th></tr>
     @for(c <- convMem) {
       <tr>
         <td class="mono">@c.time</td>
         <td class="mono">@c.identifier</td>
+        <td><span class="tag na">@c.business</span></td>
         <td class="mono">@c.msisdn</td>
         <td class="mono">@if(c.reqCommand != null) {@c.reqCommand @@ @c.reqTime @if(c.claimedClickId != null) {<br/>claim: @c.claimedClickId}} else {<span class="tag empty">-</span>}</td>
         <td class="mono wrap">@c.detail</td>
@@ -322,12 +325,13 @@
   <h2><span class="step">3</span>Conversiones en BD <span class="src db">base de datos</span> <span class="count">— @convDb.size()</span></h2>
   <p class="desc">Registro persistido (tabla log, identifier=CONV_*), asociado por msisdn al SMS_CLICK previo y con el id del provider extraído de la URL. El detalle está truncado a 400 caracteres por límite de columna; en memoria está completo.</p>
   <table>
-    <tr><th>id</th><th>time</th><th>provider</th><th>msisdn</th><th>clicktosms asociado</th><th>detalle</th></tr>
+    <tr><th>id</th><th>time</th><th>provider</th><th>negocio</th><th>msisdn</th><th>clicktosms asociado</th><th>detalle</th></tr>
     @for(c <- convDb) {
       <tr>
         <td class="mono">@c.id</td>
         <td class="mono">@c.time</td>
         <td class="mono">@c.identifier</td>
+        <td><span class="tag na">@c.business</span></td>
         <td class="mono">@c.msisdn</td>
         <td class="mono">@if(c.command != null) {@c.command @@ @c.commandTime @if(c.providerId != null) {<br/>provider id: @c.providerId}} else {<span class="tag empty">-</span>}</td>
         <td class="mono wrap">@c.detail</td>
@@ -379,9 +383,10 @@
       document.getElementById("t-value").value = value;
       currentToken = value;
       var markPath = LANDINGS[landing].mark;
+      var enc = encodeURIComponent(value);
       Promise.all([
-        fetch(landing + "?" + param + "=" + encodeURIComponent(value)),
-        fetch(markPath + "?clickid=" + encodeURIComponent(value) + "&SOURCE=test")
+        fetch(landing + "?" + param + "=" + enc),
+        fetch(markPath + "?" + param + "=" + enc + "&clickid=" + enc + "&CLICKID=" + enc + "&SOURCE=test")
       ]).then(function() {
         out("ok: click " + value + " creado y marcado (" + landing + ", " + param + "); espera ~21s y corre paso 2");
       }).catch(function(e) {

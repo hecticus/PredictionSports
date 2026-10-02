@@ -413,7 +413,9 @@ public class ClickToSMSController extends Controller {
     }
 
     /**
-     * Log request to application log and database
+     * Log request to application log and database.
+     * The database extra carries country, business and command so every
+     * SMS_CLICK row can be attributed to its business (Haiti vs Maxgame, etc.).
      */
     protected void logRequest(String msisdn, String command, String country, String business) {
         Logger.info("[SMS_CLICK] country=" + country + ", business=" + business + ", msisdn=" + msisdn + ", command=" + command);
@@ -421,7 +423,7 @@ public class ClickToSMSController extends Controller {
         try {
             log logEntry = new log();
             logEntry.setIdentifier("SMS_CLICK");
-            logEntry.setExtra(command);
+            logEntry.setExtra("country=" + country + ", business=" + business + ", command=" + command);
             logEntry.setMsisdn(msisdn);
             logEntry.setLastUpdate(new Date());
             logEntry.save();
