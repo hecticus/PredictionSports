@@ -247,26 +247,25 @@ public class ClickToSMSController extends Controller {
 
     /**
      * Handle MaxgameActivity.
-     * Only claims a pending click when the incoming command matches the Maxgame
-     * command, so clicks are not consumed by unrelated commands.
+     * Only claims a pending click when the incoming command matches a Maxgame
+     * command (LANDING6 for the 2026 flow, LANDING for the legacy flow), so
+     * clicks are not consumed by unrelated commands.
+     * The main claim excludes Google Ads (GADS) clicks so they are never
+     * consumed in place of a postback-able click; a pending GADS click is
+     * claimed (counted only, no postback) as a fallback.
      */
     private void handleMaxgameActivity(String msisdn, String dateThreshold, BusinessConfig config, String command) {
-        if (!Constants.VEN_MAXGAME_COMMAND.equalsIgnoreCase(command)) {
+        boolean isMaxgameCommand = Constants.VEN_MAXGAME_COMMAND.equalsIgnoreCase(command)
+                || Constants.VEN_MAXGAME_COMMAND_LEGACY.equalsIgnoreCase(command);
+        if (!isMaxgameCommand) {
             Logger.warn("Maxgame conversion skipped: unexpected command=" + command);
             return;
         }
 
-        String clickId = claimPendingClick(TABLE_MAXGAME, msisdn, dateThreshold, null);
+        String clickId = claimPendingClick(TABLE_MAXGAME, msisdn, dateThreshold, null, ClickData.ORIGIN_GOOGLE);
 
         if (clickId != null) {
-            Logger.info("Claimed MaxgameActivity: msisdn=" + msisdn + ", clickId=" + clickId);
-
-            String origin = findClaimedOrigin(TABLE_MAXGAME, clickId);
-            if (ClickData.ORIGIN_GOOGLE.equalsIgnoreCase(origin)) {
-                // Google Ads clicks are counted only; no postback is sent.
-                Logger.info("Maxgame GADS conversion counted (no postback): msisdn=" + msisdn + ", clickId=" + clickId);
-                return;
-            }
+            Logger.info("Claimed MaxgameActivity: msisdn=" + msisdn + ", clickId=" + clickId + ", command=" + command);
 
             if (config.getConversionType() == ConversionType.TRAFFIC_COMPANY) {
                 conversionService.sendToTrafficCompany(
@@ -276,22 +275,14 @@ public class ClickToSMSController extends Controller {
                     clickId
                 );
             }
+            return;
+        }
+
+        String gadsClickId = claimPendingClick(TABLE_MAXGAME, msisdn, dateThreshold, ClickData.ORIGIN_GOOGLE);
+        if (gadsClickId != null) {
+            Logger.info("Maxgame GADS conversion counted (no postback): msisdn=" + msisdn + ", clickId=" + gadsClickId);
         } else {
             Logger.warn("No MaxgameActivity found for msisdn=" + msisdn);
-        }
-    }
-
-    /**
-     * Resolve the origin stored for a claimed click so conversions can be routed
-     * by source (e.g. Google Ads clicks are counted but not posted back).
-     */
-    protected String findClaimedOrigin(String table, String clickId) {
-        try {
-            MaxgameActivity activity = MaxgameActivity.finder.where().eq("click_id", clickId).findUnique();
-            return activity != null ? activity.getOrigin() : null;
-        } catch (Exception e) {
-            Logger.error("Error resolving origin for " + table + " clickId=" + clickId, e);
-            return null;
         }
     }
 
@@ -314,11 +305,22 @@ public class ClickToSMSController extends Controller {
      * claims a different pending row (no lost clicks).
      */
     static String buildClaimSelectSql(String table, String origin) {
+        return buildClaimSelectSql(table, origin, null);
+    }
+
+    /**
+     * Overload that also skips rows of an excluded origin (e.g. GADS clicks
+     * must not be consumed in place of a postback-able click).
+     */
+    static String buildClaimSelectSql(String table, String origin, String excludeOrigin) {
         StringBuilder select = new StringBuilder(
             "select id, click_id from " + table +
             " where msisdn is null and date < ? ");
         if (origin != null) {
             select.append("and origin = ? ");
+        }
+        if (excludeOrigin != null) {
+            select.append("and (origin is null or origin <> ?) ");
         }
         select.append("order by id desc limit 1 for update");
         return select.toString();
@@ -332,14 +334,22 @@ public class ClickToSMSController extends Controller {
      * @return claimed clickId, or null when no pending activity matches
      */
     protected String claimPendingClick(String table, String msisdn, String dateThreshold, String origin) {
-        String selectSql = buildClaimSelectSql(table, origin);
+        return claimPendingClick(table, msisdn, dateThreshold, origin, null);
+    }
+
+    protected String claimPendingClick(String table, String msisdn, String dateThreshold, String origin, String excludeOrigin) {
+        String selectSql = buildClaimSelectSql(table, origin, excludeOrigin);
 
         Transaction tx = Ebean.beginTransaction();
         try {
             SqlQuery query = Ebean.createSqlQuery(selectSql)
                 .setParameter(1, dateThreshold);
+            int index = 2;
             if (origin != null) {
-                query.setParameter(2, origin);
+                query.setParameter(index++, origin);
+            }
+            if (excludeOrigin != null) {
+                query.setParameter(index, excludeOrigin);
             }
             List<SqlRow> rows = query.findList();
 

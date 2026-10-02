@@ -81,7 +81,7 @@ public class ConversionService {
         }
 
         String url = String.format(
-            "http://postback.level23.nl/?currency=USD&handler=%s&hash=%s&tracker=%s",
+            "https://postback.level23.nl/?currency=USD&handler=%s&hash=%s&tracker=%s",
             handler, hash, clickId
         );
 
@@ -94,8 +94,9 @@ public class ConversionService {
                 .build();
 
         try (Response response = httpClient.newCall(request).execute()) {
-            Logger.debug("TrafficCompany request sent successfully");
-            saveConversionLog(msisdn, "CONV_TRAFFIC", "http=" + response.code());
+            String body = response.body() != null ? response.body().string() : "";
+            Logger.info("TrafficCompany response: http=" + response.code() + ", body=" + body);
+            saveConversionLog(msisdn, "CONV_TRAFFIC", "http=" + response.code() + " body=" + body);
         } catch (IOException e) {
             Logger.error("TrafficCompany error: " + e.getMessage(), e);
             saveConversionLog(msisdn, "CONV_TRAFFIC", "error=" + e.getMessage());
