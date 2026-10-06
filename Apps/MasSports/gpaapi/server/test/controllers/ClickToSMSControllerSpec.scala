@@ -33,10 +33,7 @@ class TestableClickToSmsController(conversionService: ConversionService, claimed
   val logs = ListBuffer.empty[String]
   private val pending = Queue[String](claimedClickIds: _*)
 
-  override protected def claimPendingClick(table: String, msisdn: String, dateThreshold: String, origin: String): String =
-    claimPendingClick(table, msisdn, dateThreshold, origin, null)
-
-  override protected def claimPendingClick(table: String, msisdn: String, dateThreshold: String, origin: String, excludeOrigin: String): String = {
+  override protected def claimPendingClick(table: String, msisdn: String, dateThreshold: String, origin: String): String = {
     claims += s"$table|$msisdn|$origin"
     var claimed: String = null
     val scanSize = pending.size
@@ -45,8 +42,7 @@ class TestableClickToSmsController(conversionService: ConversionService, claimed
       val id = pending.dequeue()
       val idOrigin = originByClickId.getOrElse(id, null)
       val matchesOrigin = origin == null || origin.equalsIgnoreCase(idOrigin)
-      val isExcluded = excludeOrigin != null && idOrigin != null && idOrigin.equalsIgnoreCase(excludeOrigin)
-      if (matchesOrigin && !isExcluded) claimed = id
+      if (matchesOrigin) claimed = id
       else pending.enqueue(id)
       scanned += 1
     }
@@ -163,18 +159,31 @@ class ClickToSMSControllerSpec extends Specification {
         (controller.remaining must_== List("mg1"))
     }
 
-    "claim a Maxgame activity and send conversion for legacy LANDING command" in {
+    "claim a Maxgame TRA activity and send conversion for legacy LANDING command" in {
       val conversion = new RecordingConversionService
-      val controller = new TestableClickToSmsController(conversion, Seq("mg0"))
+      val controller = new TestableClickToSmsController(conversion, Seq("mg0"), Map("mg0" -> ClickData.ORIGIN_TRA))
 
       controller.processRequest(Constants.VEN_COUNTRY_ID, Constants.VEN_MAXGAME_BUSINESS_ID, MSISDN, "LANDING")
 
       (controller.claims.toList must_== List(
-        s"maxgame_activity|$MSISDN|null"
+        s"maxgame_activity|$MSISDN|TRA"
       )) and
         (conversion.calls.toList must_== List(
           s"TRAFFIC|$MSISDN|11191|3c71abda6be99653251370ff838fa4ab|mg0"
         ))
+    }
+
+    "not claim a GADS click for the legacy LANDING command" in {
+      val conversion = new RecordingConversionService
+      val controller = new TestableClickToSmsController(conversion, Seq("gads1"), Map("gads1" -> ClickData.ORIGIN_GOOGLE))
+
+      controller.processRequest(Constants.VEN_COUNTRY_ID, Constants.VEN_MAXGAME_BUSINESS_ID, MSISDN, "LANDING")
+
+      (controller.claims.toList must_== List(
+        s"maxgame_activity|$MSISDN|TRA"
+      )) and
+        (conversion.calls must beEmpty) and
+        (controller.remaining must_== List("gads1"))
     }
 
     "not claim any Maxgame activity when the command is not a Maxgame command" in {
@@ -211,14 +220,6 @@ class ClickToSMSControllerSpec extends Specification {
 
       (sql must contain("origin = ?")) and
         (sql must contain("for update"))
-    }
-
-    "build an atomic claim SQL excluding an origin when excludeOrigin is present" in {
-      val sql = ClickToSMSController.buildClaimSelectSql("maxgame_activity", null, ClickData.ORIGIN_GOOGLE)
-
-      (sql must contain("origin is null or origin <> ?")) and
-        (sql must contain("for update")) and
-        (sql must not(contain("origin = ?")))
     }
 
     "keep the original origin = '' filter when the Paxxion command is empty" in {
