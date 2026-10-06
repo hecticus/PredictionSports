@@ -251,21 +251,34 @@ public class ClickToSMSController extends Controller {
 
     /**
      * Handle MaxgameActivity.
-     * Only claims a pending click when the incoming command matches a Maxgame
-     * command (LANDING6 for the 2026 flow, LANDING for the legacy flow), so
-     * clicks are not consumed by unrelated commands.
-     * The main claim excludes Google Ads (GADS) clicks so they are never
-     * consumed in place of a postback-able click; a pending GADS click is
-     * claimed (counted only, no postback) as a fallback.
+     * The command selects the flow:
+     * - LANDING6 is the Google Ads (2026) flow: it claims a pending GADS click
+     *   and counts it only, never sending a postback.
+     * - LANDING is the legacy Traffic Company flow: it claims a postback-able
+     *   (non-GADS) click and sends the Traffic Company conversion.
+     * Unrelated commands are ignored so clicks are not consumed by them.
      */
     private void handleMaxgameActivity(String msisdn, String dateThreshold, BusinessConfig config, String command) {
-        boolean isMaxgameCommand = Constants.VEN_MAXGAME_COMMAND.equalsIgnoreCase(command)
-                || Constants.VEN_MAXGAME_COMMAND_LEGACY.equalsIgnoreCase(command);
-        if (!isMaxgameCommand) {
+        boolean isMaxgame2026 = Constants.VEN_MAXGAME_COMMAND.equalsIgnoreCase(command);
+        boolean isMaxgameLegacy = Constants.VEN_MAXGAME_COMMAND_LEGACY.equalsIgnoreCase(command);
+        if (!isMaxgame2026 && !isMaxgameLegacy) {
             Logger.warn("Maxgame conversion skipped: unexpected command=" + command);
             return;
         }
 
+        // LANDING6: Google Ads only. Claim a pending GADS click and count it,
+        // no postback is ever sent in this flow.
+        if (isMaxgame2026) {
+            String gadsClickId = claimPendingClick(TABLE_MAXGAME, msisdn, dateThreshold, ClickData.ORIGIN_GOOGLE);
+            if (gadsClickId != null) {
+                Logger.info("Maxgame GADS conversion counted (no postback): msisdn=" + msisdn + ", clickId=" + gadsClickId);
+            } else {
+                Logger.warn("No Maxgame GADS click found for msisdn=" + msisdn);
+            }
+            return;
+        }
+
+        // Legacy LANDING: Traffic Company. Claim a non-GADS click and postback.
         String clickId = claimPendingClick(TABLE_MAXGAME, msisdn, dateThreshold, null, ClickData.ORIGIN_GOOGLE);
 
         if (clickId != null) {
@@ -279,12 +292,6 @@ public class ClickToSMSController extends Controller {
                     clickId
                 );
             }
-            return;
-        }
-
-        String gadsClickId = claimPendingClick(TABLE_MAXGAME, msisdn, dateThreshold, ClickData.ORIGIN_GOOGLE);
-        if (gadsClickId != null) {
-            Logger.info("Maxgame GADS conversion counted (no postback): msisdn=" + msisdn + ", clickId=" + gadsClickId);
         } else {
             Logger.warn("No MaxgameActivity found for msisdn=" + msisdn);
         }

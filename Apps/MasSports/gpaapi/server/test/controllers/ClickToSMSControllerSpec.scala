@@ -38,21 +38,19 @@ class TestableClickToSmsController(conversionService: ConversionService, claimed
 
   override protected def claimPendingClick(table: String, msisdn: String, dateThreshold: String, origin: String, excludeOrigin: String): String = {
     claims += s"$table|$msisdn|$origin"
-    if (excludeOrigin == null) {
-      if (pending.isEmpty) null else pending.dequeue()
-    } else {
-      var claimed: String = null
-      val scanSize = pending.size
-      var scanned = 0
-      while (scanned < scanSize && claimed == null) {
-        val id = pending.dequeue()
-        val idOrigin = originByClickId.getOrElse(id, null)
-        if (idOrigin == null || !idOrigin.equalsIgnoreCase(excludeOrigin)) claimed = id
-        else pending.enqueue(id)
-        scanned += 1
-      }
-      claimed
+    var claimed: String = null
+    val scanSize = pending.size
+    var scanned = 0
+    while (scanned < scanSize && claimed == null) {
+      val id = pending.dequeue()
+      val idOrigin = originByClickId.getOrElse(id, null)
+      val matchesOrigin = origin == null || origin.equalsIgnoreCase(idOrigin)
+      val isExcluded = excludeOrigin != null && idOrigin != null && idOrigin.equalsIgnoreCase(excludeOrigin)
+      if (matchesOrigin && !isExcluded) claimed = id
+      else pending.enqueue(id)
+      scanned += 1
     }
+    claimed
   }
 
   def remaining: Seq[String] = pending.toList
@@ -110,7 +108,7 @@ class ClickToSMSControllerSpec extends Specification {
 
       expectations.forall { case (command, origin, expectedCall) =>
         val conversion = new RecordingConversionService
-        val controller = new TestableClickToSmsController(conversion, Seq("px1"))
+        val controller = new TestableClickToSmsController(conversion, Seq("px1"), Map("px1" -> origin))
 
         controller.processRequest(Constants.HAITI_COUNTRY_ID, Constants.HAITI_PAXION_BUSINESS_ID, MSISDN, command)
 
@@ -131,50 +129,38 @@ class ClickToSMSControllerSpec extends Specification {
         ))
     }
 
-    "claim a Maxgame activity and send conversion for LANDING6 command (case-insensitive)" in {
+    "claim only a pending GADS click for LANDING6, never a postback-able click, and never send a conversion (case-insensitive)" in {
       val conversion = new RecordingConversionService
-      val controller = new TestableClickToSmsController(conversion, Seq("mg1"))
+      val controller = new TestableClickToSmsController(
+        conversion,
+        Seq("mg1", "gads1"),
+        Map("gads1" -> ClickData.ORIGIN_GOOGLE, "mg1" -> ClickData.ORIGIN_TRA)
+      )
 
       controller.processRequest(Constants.VEN_COUNTRY_ID, Constants.VEN_MAXGAME_BUSINESS_ID, MSISDN, "landing6")
 
       (controller.claims.toList must_== List(
-        s"maxgame_activity|$MSISDN|null"
+        s"maxgame_activity|$MSISDN|GADS"
       )) and
-        (conversion.calls.toList must_== List(
-          s"TRAFFIC|$MSISDN|11191|3c71abda6be99653251370ff838fa4ab|mg1"
-        ))
+        (conversion.calls must beEmpty) and
+        (controller.remaining must_== List("mg1"))
     }
 
-    "never consume a GADS click in place of a postback-able click" in {
+    "not claim any Maxgame activity for LANDING6 when there is no pending GADS click" in {
       val conversion = new RecordingConversionService
       val controller = new TestableClickToSmsController(
         conversion,
-        Seq("gads1", "mg1"),
-        Map("gads1" -> ClickData.ORIGIN_GOOGLE, "mg1" -> ClickData.ORIGIN_TRA)
+        Seq("mg1"),
+        Map("mg1" -> ClickData.ORIGIN_TRA)
       )
 
       controller.processRequest(Constants.VEN_COUNTRY_ID, Constants.VEN_MAXGAME_BUSINESS_ID, MSISDN, "LANDING6")
 
       (controller.claims.toList must_== List(
-        s"maxgame_activity|$MSISDN|null"
-      )) and
-        (conversion.calls.toList must_== List(
-          s"TRAFFIC|$MSISDN|11191|3c71abda6be99653251370ff838fa4ab|mg1"
-        )) and
-        (controller.remaining must_== List("gads1"))
-    }
-
-    "count a pending Maxgame GADS click only when no postback-able click is pending" in {
-      val conversion = new RecordingConversionService
-      val controller = new TestableClickToSmsController(conversion, Seq("gads1"), Map("gads1" -> ClickData.ORIGIN_GOOGLE))
-
-      controller.processRequest(Constants.VEN_COUNTRY_ID, Constants.VEN_MAXGAME_BUSINESS_ID, MSISDN, "LANDING6")
-
-      (controller.claims.toList must_== List(
-        s"maxgame_activity|$MSISDN|null",
         s"maxgame_activity|$MSISDN|GADS"
       )) and
-        (conversion.calls must beEmpty)
+        (conversion.calls must beEmpty) and
+        (controller.remaining must_== List("mg1"))
     }
 
     "claim a Maxgame activity and send conversion for legacy LANDING command" in {
