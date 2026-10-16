@@ -20,6 +20,10 @@ public class ManhattanServicio {
     }
 
     public void crearAlta(String subId, String status, String msisdn) {
+        if (properties.isDisableProviderEvents()) {
+            log.warn("Provider events disabled (gpaapi.disable-provider-events=true), skipping Manhattan notify for msisdn={}", msisdn);
+            return;
+        }
         try {
             http.get(properties.getManhattan().getNotifyUrl()
                     + "?sub_id=" + subId + "&status=" + status + "&msisdn=" + msisdn);

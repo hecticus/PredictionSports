@@ -20,6 +20,10 @@ public class SilverServicio {
     }
 
     public void crearAlta(String clickid, String pid) {
+        if (properties.isDisableProviderEvents()) {
+            log.warn("Provider events disabled (gpaapi.disable-provider-events=true), skipping Silver postback for clickid={}", clickid);
+            return;
+        }
         try {
             http.get(properties.getSilver().getPostbackUrl() + "?clickid=" + clickid + "&pid=" + pid);
         } catch (Exception e) {

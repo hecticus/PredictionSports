@@ -40,7 +40,7 @@ public class Maxgame2026Controller {
             ClickData clickData = parameterExtractor.extractFromRequest(request);
             log.info("Maxgame2026 index - ClickData: {}", clickData);
             if (clickData.isValid()) {
-                addClickId(clickData.getCombinedValue());
+                addClickId(clickData.getCombinedValue(), resolveOrigin(clickData));
             }
         } catch (Exception e) {
             log.error("Error in Maxgame2026Controller.index()", e);
@@ -54,11 +54,12 @@ public class Maxgame2026Controller {
         try {
             ClickData clickData = parameterExtractor.extractFromRequest(request);
             if (clickData.isValid()) {
+                String origin = resolveOrigin(clickData);
                 log.info("Maxgame2026 mark - Saving: {}", clickData);
-                addClickId(clickData.getCombinedValue());
+                addClickId(clickData.getCombinedValue(), origin);
                 result.put("status", "success");
                 result.put("token", clickData.getCombinedValue());
-                result.put("origin", ORIGIN);
+                result.put("origin", origin);
                 result.put("message", "Token saved successfully");
             } else {
                 result.put("status", "error");
@@ -74,15 +75,23 @@ public class Maxgame2026Controller {
         return result;
     }
 
-    private void addClickId(String clickId) {
+    private void addClickId(String clickId, String origin) {
         if (activityRepository.findFirstByClickIdOrderByIdDesc(clickId).isEmpty()) {
             MaxgameActivity activity = new MaxgameActivity();
             activity.setClickId(clickId);
             activity.setDate(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
-            activity.setOrigin(ORIGIN);
+            activity.setOrigin(origin);
             activity.setSent(false);
             activityRepository.save(activity);
-            log.info("Saved MaxgameActivity: clickId={}, origin={}", clickId, ORIGIN);
+            log.info("Saved MaxgameActivity: clickId={}, origin={}", clickId, origin);
         }
+    }
+
+    /**
+     * Keep the Google Ads origin (GADS) when the click comes from Google,
+     * otherwise fall back to the MaxGame 2026 origin.
+     */
+    private String resolveOrigin(ClickData clickData) {
+        return ClickData.ORIGIN_GOOGLE.equals(clickData.getOrigin()) ? ClickData.ORIGIN_GOOGLE : ORIGIN;
     }
 }

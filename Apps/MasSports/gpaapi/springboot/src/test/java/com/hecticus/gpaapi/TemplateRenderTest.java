@@ -24,6 +24,7 @@ class TemplateRenderTest {
             "ciudadjuego/recover_password",
             "ciudadjuego/sms",
             "ciudadjuego/tyc",
+            "dashboard_index",
             "extapi",
             "maxgame_2026",
             "klike_index",
@@ -95,6 +96,12 @@ class TemplateRenderTest {
             ctx.setVariable("used", false);
             ctx.setVariable("outie", true);
             ctx.setVariable("goodie", true);
+            ctx.setVariable("clicksMem", List.of());
+            ctx.setVariable("clicksDb", List.of());
+            ctx.setVariable("smsMem", List.of());
+            ctx.setVariable("smsDb", List.of());
+            ctx.setVariable("convMem", List.of());
+            ctx.setVariable("convDb", List.of());
 
             String html = engine.process(template, ctx);
             assertNotNull(html, "null output for " + template);

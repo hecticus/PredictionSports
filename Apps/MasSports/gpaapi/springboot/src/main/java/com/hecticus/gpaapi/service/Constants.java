@@ -15,5 +15,6 @@ public final class Constants {
 
     public static final String VEN_MAXGAME_BUSINESS_ID = "10";
     public static final String VEN_MAXGAME_COMMAND = "LANDING6";
+    public static final String VEN_MAXGAME_COMMAND_LEGACY = "LANDING";
     public static final String VEN_CJ_BUSINESS_ID = "6";
 }

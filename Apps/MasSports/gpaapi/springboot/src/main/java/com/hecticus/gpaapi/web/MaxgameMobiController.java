@@ -2,6 +2,11 @@ package com.hecticus.gpaapi.web;
 
 import com.hecticus.gpaapi.domain.MaxgameActivity;
 import com.hecticus.gpaapi.repository.MaxgameActivityRepository;
+import com.hecticus.gpaapi.service.tracking.ClickData;
+import com.hecticus.gpaapi.service.tracking.ClickParameterExtractor;
+import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,29 +16,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MaxgameMobiController {
 
+    private static final Logger log = LoggerFactory.getLogger(MaxgameMobiController.class);
+
     private static final String CLICK_ID = "CLICKID";
     private static final String IP = "ip";
-    private static final String SOURCE = "SOURCE";
 
     private final MaxgameActivityRepository activityRepository;
+    private final ClickParameterExtractor parameterExtractor;
 
-    public MaxgameMobiController(MaxgameActivityRepository activityRepository) {
+    public MaxgameMobiController(MaxgameActivityRepository activityRepository,
+                                 ClickParameterExtractor parameterExtractor) {
         this.activityRepository = activityRepository;
+        this.parameterExtractor = parameterExtractor;
     }
 
     @GetMapping("/mob")
-    public String index(@RequestParam(name = CLICK_ID, required = false) String clickId,
-                        @RequestParam(name = SOURCE, required = false) String source,
-                        Model model) {
-        String clickValue = "NA";
-        String extras = "NA";
-        if (clickId != null && !clickId.isEmpty()) {
-            clickValue = clickId;
-            extras = source != null && !source.isEmpty() ? source : "";
-            try {
-                addClickId(clickValue, "");
-            } catch (Exception ignored) {
+    public String index(HttpServletRequest request, Model model) {
+        String clickValue = ClickData.DEFAULT_CLICK_VALUE;
+        String extras = ClickData.DEFAULT_EXTRAS;
+        try {
+            ClickData clickData = parameterExtractor.extractFromRequest(request);
+            clickValue = clickData.getClickId();
+            extras = clickData.getExtras();
+            if (clickData.isValid()) {
+                addClickId(clickData.getClickId(), "");
             }
+        } catch (Exception e) {
+            log.error("Error in MaxgameMobiController.index()", e);
         }
         model.addAttribute("clickValue", clickValue);
         model.addAttribute("extras", extras);

@@ -36,6 +36,10 @@ public class KrakenServicio {
     }
 
     public void crearAlta(String msisdn, String numeroCorto, String msg) {
+        if (properties.isDisableProviderEvents()) {
+            log.warn("Provider events disabled (gpaapi.disable-provider-events=true), skipping Kraken MO event for msisdn={}", msisdn);
+            return;
+        }
         try {
             http.get(properties.getKraken().getEventsUrl()
                     + "?source=" + msisdn

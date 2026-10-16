@@ -31,7 +31,7 @@ db-shell:
     docker exec -it gpaapi-db mysql -u${DB_USER} -p${DB_PASSWORD} ${DB_NAME}
 
 # ============================ apps (nativo) ============================
-# App nueva (Spring Boot) en primer plano -> http://localhost:8080
+# App nueva (Spring Boot) en primer plano -> http://localhost:8080 (panel admin: /admin/dashboard)
 spring:
     cd springboot && mvn spring-boot:run
 
@@ -57,6 +57,7 @@ dev: db
     ( cd springboot && nohup mvn -q spring-boot:run > ../.logs/spring.log 2>&1 & echo $! > ../.run/spring.pid )
     echo "legacy -> http://localhost:{{legacy_port}}   (just logs-legacy)"
     echo "spring -> http://localhost:{{spring_port}}   (just logs-spring)"
+    echo "dashboard -> http://localhost:{{spring_port}}/admin/dashboard (admin / humbilumby_2026)"
 
 # Detiene apps locales + contenedores
 stop:
@@ -79,8 +80,8 @@ logs-legacy:
 # ============================ docker / cloud run ============================
 # Construye las dos imagenes listas para Cloud Run
 images:
-    docker build -t gpaapi-spring:2.7.0 springboot
-    docker build -t gpaapi-legacy:2.7.0 server
+    docker build -t gpaapi-spring:2.7.1 springboot
+    docker build -t gpaapi-legacy:2.7.1 server
 
 # Levanta TODO (db + ambas apps) dentro de docker
 full:
