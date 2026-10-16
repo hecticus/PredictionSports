@@ -133,9 +133,12 @@ public class ClickToSMSController {
 
     private void handleBliveActivity(String msisdn, String dateThreshold, BusinessConfig config) {
         String clickId = claimPendingClick(TABLE_BLIVE, msisdn, dateThreshold, null);
-        if (clickId != null && config.getConversionType() == ConversionType.MOBIPIUM) {
-            sendConversionMobipium(msisdn, clickId);
-        } else if (clickId == null) {
+        if (clickId != null) {
+            log.info("Claimed BliveActivity: msisdn={}, clickId={}", msisdn, clickId);
+            if (config.getConversionType() == ConversionType.MOBIPIUM) {
+                sendConversionMobipium(msisdn, clickId);
+            }
+        } else {
             log.warn("No BliveActivity found for msisdn={}", msisdn);
         }
     }
@@ -147,6 +150,7 @@ public class ClickToSMSController {
             log.warn("No PaxxionActivity found for msisdn={}, origin={}", msisdn, origin);
             return;
         }
+        log.info("Claimed PaxxionActivity: msisdn={}, clickId={}, origin={}", msisdn, clickId, origin);
         switch (origin) {
             case "MOB":
                 sendConversionMobipium(msisdn, clickId);
@@ -176,6 +180,7 @@ public class ClickToSMSController {
             log.warn("No LearnLiveActivity found for msisdn={}", msisdn);
             return;
         }
+        log.info("Claimed LearnLiveActivity: msisdn={}, clickId={}", msisdn, clickId);
         if (config.getConversionType() == ConversionType.MOBIPIUM) {
             sendConversionMobipium(msisdn, clickId);
         }
