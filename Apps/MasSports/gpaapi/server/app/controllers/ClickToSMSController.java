@@ -12,6 +12,8 @@ import services.activity.BusinessConfig;
 import services.activity.BusinessConfig.ActivityType;
 import services.activity.BusinessConfig.ConversionType;
 import services.conversion.ConversionService;
+import services.dashboard.DashboardBuffer;
+import services.tracking.ClickData;
 import utils.Constants;
 
 import javax.inject.Inject;
@@ -117,6 +119,9 @@ public class ClickToSMSController extends Controller {
     public void processRequest(String country, String business, String msisdn, String command) {
         // Log the request (file + database) before any processing
         logRequest(msisdn, command, country, business);
+        DashboardBuffer.get().addSms(new DashboardBuffer.SmsTrace(
+            "REQ", country, business, msisdn, command, null, ""
+        ));
 
         // Find matching business config
         BusinessConfig config = businessConfigs.get(makeKey(country, business));
@@ -245,32 +250,48 @@ public class ClickToSMSController extends Controller {
     }
 
     /**
-     * Handle MaxgameActivity.
-     * Only claims a pending click when the incoming command matches the Maxgame
-     * command, so clicks are not consumed by unrelated commands.
+     * Handle MaxgameActivity by command:
+     * - LANDING6 is the Google Ads (2026) flow: it claims a pending GADS click
+     *   and counts it only, never sending a postback.
+     * - LANDING is the legacy Traffic Company flow: it claims a pending TRA
+     *   click and sends the Traffic Company conversion.
+     * Any other command is ignored so clicks are not consumed by them.
      */
     private void handleMaxgameActivity(String msisdn, String dateThreshold, BusinessConfig config, String command) {
-        if (!Constants.VEN_MAXGAME_COMMAND.equalsIgnoreCase(command)) {
-            Logger.warn("Maxgame conversion skipped: unexpected command=" + command);
+        // LANDING6: Google Ads only. Claim a pending GADS click and count it,
+        // no postback is ever sent in this flow.
+        if (Constants.VEN_MAXGAME_COMMAND.equalsIgnoreCase(command)) {
+            String gadsClickId = claimPendingClick(TABLE_MAXGAME, msisdn, dateThreshold, ClickData.ORIGIN_GOOGLE);
+            if (gadsClickId != null) {
+                Logger.info("Maxgame GADS conversion counted (no postback): msisdn=" + msisdn + ", clickId=" + gadsClickId);
+            } else {
+                Logger.warn("No Maxgame GADS click found for msisdn=" + msisdn);
+            }
             return;
         }
 
-        String clickId = claimPendingClick(TABLE_MAXGAME, msisdn, dateThreshold, null);
+        // LANDING (legacy): Traffic Company only. Claim a pending TRA click and
+        // send the Traffic Company conversion.
+        if (Constants.VEN_MAXGAME_COMMAND_LEGACY.equalsIgnoreCase(command)) {
+            String clickId = claimPendingClick(TABLE_MAXGAME, msisdn, dateThreshold, ClickData.ORIGIN_TRA);
+            if (clickId != null) {
+                Logger.info("Claimed Maxgame TRA activity: msisdn=" + msisdn + ", clickId=" + clickId);
 
-        if (clickId != null) {
-            Logger.info("Claimed MaxgameActivity: msisdn=" + msisdn + ", clickId=" + clickId);
-
-            if (config.getConversionType() == ConversionType.TRAFFIC_COMPANY) {
-                conversionService.sendToTrafficCompany(
-                    msisdn,
-                    config.getTrafficHandler(),
-                    config.getTrafficHash(),
-                    clickId
-                );
+                if (config.getConversionType() == ConversionType.TRAFFIC_COMPANY) {
+                    conversionService.sendToTrafficCompany(
+                        msisdn,
+                        config.getTrafficHandler(),
+                        config.getTrafficHash(),
+                        clickId
+                    );
+                }
+            } else {
+                Logger.warn("No Maxgame TRA activity found for msisdn=" + msisdn);
             }
-        } else {
-            Logger.warn("No MaxgameActivity found for msisdn=" + msisdn);
+            return;
         }
+
+        Logger.warn("Maxgame conversion skipped: unexpected command=" + command);
     }
 
     /**
@@ -311,6 +332,7 @@ public class ClickToSMSController extends Controller {
      */
     protected String claimPendingClick(String table, String msisdn, String dateThreshold, String origin) {
         String selectSql = buildClaimSelectSql(table, origin);
+        String filters = "table=" + table + ", origin=" + origin;
 
         Transaction tx = Ebean.beginTransaction();
         try {
@@ -322,6 +344,9 @@ public class ClickToSMSController extends Controller {
             List<SqlRow> rows = query.findList();
 
             if (rows.isEmpty()) {
+                DashboardBuffer.get().addSms(new DashboardBuffer.SmsTrace(
+                    "CLAIM", "", "", msisdn, "", null, filters + ", no pending match"
+                ));
                 return null;
             }
 
@@ -336,10 +361,16 @@ public class ClickToSMSController extends Controller {
 
             if (updated != 1) {
                 Logger.error("Could not mark " + table + ": id=" + id + ", msisdn=" + msisdn);
+                DashboardBuffer.get().addSms(new DashboardBuffer.SmsTrace(
+                    "CLAIM", "", "", msisdn, "", null, filters + ", update failed id=" + id
+                ));
                 return null;
             }
 
             tx.commit();
+            DashboardBuffer.get().addSms(new DashboardBuffer.SmsTrace(
+                "CLAIM", "", "", msisdn, "", clickId, filters + ", claimed=" + clickId
+            ));
             return clickId;
 
         } catch (Exception e) {
@@ -367,7 +398,9 @@ public class ClickToSMSController extends Controller {
     }
 
     /**
-     * Log request to application log and database
+     * Log request to application log and database.
+     * The database extra carries country, business and command so every
+     * SMS_CLICK row can be attributed to its business (Haiti vs Maxgame, etc.).
      */
     protected void logRequest(String msisdn, String command, String country, String business) {
         Logger.info("[SMS_CLICK] country=" + country + ", business=" + business + ", msisdn=" + msisdn + ", command=" + command);
@@ -375,7 +408,7 @@ public class ClickToSMSController extends Controller {
         try {
             log logEntry = new log();
             logEntry.setIdentifier("SMS_CLICK");
-            logEntry.setExtra(command);
+            logEntry.setExtra("country=" + country + ", business=" + business + ", command=" + command);
             logEntry.setMsisdn(msisdn);
             logEntry.setLastUpdate(new Date());
             logEntry.save();

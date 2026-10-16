@@ -4,6 +4,7 @@ import modeles.log;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
+import services.dashboard.DashboardBuffer;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -81,7 +82,7 @@ public class ConversionService {
         }
 
         String url = String.format(
-            "http://postback.level23.nl/?currency=USD&handler=%s&hash=%s&tracker=%s",
+            "https://postback.level23.nl/?currency=USD&handler=%s&hash=%s&tracker=%s",
             handler, hash, clickId
         );
 
@@ -94,8 +95,9 @@ public class ConversionService {
                 .build();
 
         try (Response response = httpClient.newCall(request).execute()) {
-            Logger.debug("TrafficCompany request sent successfully");
-            saveConversionLog(msisdn, "CONV_TRAFFIC", "http=" + response.code());
+            String body = response.body() != null ? response.body().string() : "";
+            Logger.info("TrafficCompany response: http=" + response.code() + ", body=" + body);
+            saveConversionLog(msisdn, "CONV_TRAFFIC", "http=" + response.code() + " body=" + body);
         } catch (IOException e) {
             Logger.error("TrafficCompany error: " + e.getMessage(), e);
             saveConversionLog(msisdn, "CONV_TRAFFIC", "error=" + e.getMessage());
@@ -210,6 +212,7 @@ public class ConversionService {
      * Persist the conversion call result in the log table
      */
     private void saveConversionLog(String msisdn, String identifier, String detail) {
+        DashboardBuffer.get().addConversion(new DashboardBuffer.ConvTrace(identifier, msisdn, detail));
         try {
             log entry = new log();
             entry.setMsisdn(msisdn != null ? msisdn : "");

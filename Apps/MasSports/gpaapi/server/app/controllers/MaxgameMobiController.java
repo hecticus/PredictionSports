@@ -6,6 +6,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import services.kraken_servicio.KrakenServicio;
 import services.silver_servicio.ManhattanServicio;
+import services.tracking.ClickData;
+import services.tracking.ClickParameterExtractor;
 import views.html.maxgame_mobi_index;
 
 import javax.inject.Inject;
@@ -16,6 +18,7 @@ public class MaxgameMobiController extends Controller {
     private KrakenServicio krakenServicio;
     private ManhattanServicio manhattanServicio;
     private WSClient ws;
+    private ClickParameterExtractor parameterExtractor;
 
     private String clickID = "CLICKID";
     private String ip = "ip";
@@ -25,24 +28,25 @@ public class MaxgameMobiController extends Controller {
         this.krakenServicio = krakenServicio;
         this.manhattanServicio = manhattanServicio;
         this.ws = ws;
+        this.parameterExtractor = new ClickParameterExtractor();
     }
 
     public Result index() throws IOException {
 
-        String clickValue = "NA";
-        String extras = "NA";
+        String clickValue = ClickData.DEFAULT_CLICK_VALUE;
+        String extras = ClickData.DEFAULT_EXTRAS;
 
-        if (request().queryString().get("CLICKID") != null && request().queryString().get("CLICKID").length > 0) {
-            clickValue = request().queryString().get("CLICKID")[0];
-            extras = (request().queryString().get("SOURCE") != null && request().queryString().get("SOURCE").length > 0) ? request().queryString().get("SOURCE")[0] : "";
+        try {
+            ClickData clickData = parameterExtractor.extractFromRequest(request());
+            clickValue = clickData.getClickId();
+            extras = clickData.getExtras();
 
-            try {
-                addClickId(clickValue, "");
-            } catch (Exception e) {
-
+            if (clickData.isValid()) {
+                addClickId(clickData.getClickId(), "");
             }
+        } catch (Exception e) {
+            play.Logger.error("Error in MaxgameMobiController.index()", e);
         }
-
 
         return ok(maxgame_mobi_index.render(clickValue, extras));
     }
