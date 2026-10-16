@@ -9,6 +9,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import services.kraken_servicio.KrakenServicio;
 import services.silver_servicio.ManhattanServicio;
+import services.tracking.ClickData;
+import services.tracking.ClickParameterExtractor;
 import views.html.maxgame_index;
 import views.html.mg;
 
@@ -20,6 +22,7 @@ public class MaxgameController extends Controller {
     private KrakenServicio krakenServicio;
     private ManhattanServicio manhattanServicio;
     private WSClient ws;
+    private ClickParameterExtractor parameterExtractor;
 
     private String clickID = "clickid";
     private String ip = "ip";
@@ -29,22 +32,24 @@ public class MaxgameController extends Controller {
         this.krakenServicio = krakenServicio;
         this.manhattanServicio = manhattanServicio;
         this.ws = ws;
+        this.parameterExtractor = new ClickParameterExtractor();
     }
 
     public Result index() throws IOException {
 
-        String clickValue = "NA";
-        String extras = "NA";
+        String clickValue = ClickData.DEFAULT_CLICK_VALUE;
+        String extras = ClickData.DEFAULT_EXTRAS;
 
+        try {
+            ClickData clickData = parameterExtractor.extractFromRequest(request());
+            clickValue = clickData.getClickId();
+            extras = clickData.getExtras();
 
-        if (request().queryString().get(clickID) != null && request().queryString().get(clickID).length > 0) {
-            clickValue = request().queryString().get(clickID)[0];
-
-            try {
-                addClickId(clickValue, "");
-            } catch (Exception e) {
-
+            if (clickData.isValid()) {
+                addClickId(clickData.getClickId(), "");
             }
+        } catch (Exception e) {
+            play.Logger.error("Error in MaxgameController.index()", e);
         }
 
         return ok(maxgame_index.render(clickValue, extras));
@@ -52,18 +57,19 @@ public class MaxgameController extends Controller {
 
     public Result mg() throws IOException {
 
-        String clickValue = "NA";
-        String extras = "NA";
+        String clickValue = ClickData.DEFAULT_CLICK_VALUE;
+        String extras = ClickData.DEFAULT_EXTRAS;
 
+        try {
+            ClickData clickData = parameterExtractor.extractFromRequest(request());
+            clickValue = clickData.getClickId();
+            extras = clickData.getExtras();
 
-        if (request().queryString().get(clickID) != null && request().queryString().get(clickID).length > 0) {
-            clickValue = request().queryString().get(clickID)[0];
-
-            try {
-                addClickId(clickValue, "");
-            } catch (Exception e) {
-
+            if (clickData.isValid()) {
+                addClickId(clickData.getClickId(), "");
             }
+        } catch (Exception e) {
+            play.Logger.error("Error in MaxgameController.mg()", e);
         }
 
         return ok(mg.render(clickValue, extras));

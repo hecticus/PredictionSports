@@ -46,8 +46,13 @@ spring:
 gpaapi:
   application-secret: ${APPLICATION_SECRET:change-me}
   base-url: ${BASE_URL:http://localhost:${server.port}}
+  # true = no se envía ningún evento/notificación a los providers (AppLand, Kraken MO, postbacks, ...)
+  disable-provider-events: ${DISABLE_PROVIDER_EVENTS:false}
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:*}
+  dashboard:
+    user: ${DASHBOARD_ADMIN_USER:admin}
+    pass: ${DASHBOARD_ADMIN_PASS:humbilumby_2026}
   appland:
     subscription-id: ${APPLAND_SUBSCRIPTION_ID:HECTI_MOVIS_U_VE}
     service-key: ${APPLAND_SERVICE_KEY:appland-hecticus}

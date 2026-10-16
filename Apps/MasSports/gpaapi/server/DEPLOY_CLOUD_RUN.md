@@ -8,8 +8,8 @@ Hay **dos imágenes** listas. Eliges cuál desplegar (o corres ambas en dos serv
 
 | App | Contexto de build | Dockerfile | Imagen sugerida |
 |---|---|---|---|
-| **Nueva** (Spring Boot 3 / JDK 17) | `springboot/` | `springboot/Dockerfile` | `gpaapi-spring:2.7.0` |
-| **Legacy** (Play 2.5 / JDK 8) | `server/` | `server/Dockerfile` | `gpaapi-legacy:2.7.0` |
+| **Nueva** (Spring Boot 3 / JDK 17) | `springboot/` | `springboot/Dockerfile` | `gpaapi-spring:2.7.1` |
+| **Legacy** (Play 2.5 / JDK 8) | `server/` | `server/Dockerfile` | `gpaapi-legacy:2.7.1` |
 
 Ambas exponen `$PORT` (Cloud Run lo inyecta, por defecto **8080**) y tienen health check en `GET /health`.
 
@@ -128,12 +128,12 @@ printf '%s' '<MAIL_PASSWORD>'      | gcloud secrets create mail-password --data-
 
 ```bash
 # App nueva
-docker build -t $REPO/gpaapi-spring:2.7.0 springboot
-docker push $REPO/gpaapi-spring:2.7.0
+docker build -t $REPO/gpaapi-spring:2.7.1 springboot
+docker push $REPO/gpaapi-spring:2.7.1
 
 # Legacy
-docker build -t $REPO/gpaapi-legacy:2.7.0 server
-docker push $REPO/gpaapi-legacy:2.7.0
+docker build -t $REPO/gpaapi-legacy:2.7.1 server
+docker push $REPO/gpaapi-legacy:2.7.1
 ```
 
 ## 6. Deploy
@@ -141,7 +141,7 @@ docker push $REPO/gpaapi-legacy:2.7.0
 **App nueva:**
 ```bash
 gcloud run deploy gpaapi-spring \
-  --image $REPO/gpaapi-spring:2.7.0 \
+  --image $REPO/gpaapi-spring:2.7.1 \
   --region $REGION --allow-unauthenticated --port 8080 \
   --vpc-connector gpaapi-conn --vpc-egress private-ranges-only \
   --add-cloudsql-instances $PROJECT:$REGION:mysql-gpaapi \
@@ -152,7 +152,7 @@ gcloud run deploy gpaapi-spring \
 **Legacy:**
 ```bash
 gcloud run deploy gpaapi-legacy \
-  --image $REPO/gpaapi-legacy:2.7.0 \
+  --image $REPO/gpaapi-legacy:2.7.1 \
   --region $REGION --allow-unauthenticated --port 8080 \
   --vpc-connector gpaapi-conn --vpc-egress private-ranges-only \
   --add-cloudsql-instances $PROJECT:$REGION:mysql-gpaapi \

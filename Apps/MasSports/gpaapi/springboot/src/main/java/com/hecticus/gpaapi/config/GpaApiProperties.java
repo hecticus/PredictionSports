@@ -7,7 +7,9 @@ public class GpaApiProperties {
 
     private String applicationSecret = "change-me";
     private String baseUrl = "http://localhost:9000";
+    private boolean disableProviderEvents = false;
     private final Cors cors = new Cors();
+    private final Dashboard dashboard = new Dashboard();
     private final Appland appland = new Appland();
     private final Kraken kraken = new Kraken();
     private final Silver silver = new Silver();
@@ -31,8 +33,20 @@ public class GpaApiProperties {
         this.baseUrl = baseUrl;
     }
 
+    public boolean isDisableProviderEvents() {
+        return disableProviderEvents;
+    }
+
+    public void setDisableProviderEvents(boolean disableProviderEvents) {
+        this.disableProviderEvents = disableProviderEvents;
+    }
+
     public Cors getCors() {
         return cors;
+    }
+
+    public Dashboard getDashboard() {
+        return dashboard;
     }
 
     public Appland getAppland() {
@@ -68,6 +82,27 @@ public class GpaApiProperties {
 
         public void setAllowedOrigins(String allowedOrigins) {
             this.allowedOrigins = allowedOrigins;
+        }
+    }
+
+    public static class Dashboard {
+        private String user = "admin";
+        private String pass = "humbilumby_2026";
+
+        public String getUser() {
+            return user;
+        }
+
+        public void setUser(String user) {
+            this.user = user;
+        }
+
+        public String getPass() {
+            return pass;
+        }
+
+        public void setPass(String pass) {
+            this.pass = pass;
         }
     }
 

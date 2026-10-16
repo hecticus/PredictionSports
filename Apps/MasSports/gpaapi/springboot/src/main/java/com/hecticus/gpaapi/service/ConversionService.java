@@ -4,6 +4,7 @@ import com.hecticus.gpaapi.config.GpaApiProperties;
 import com.hecticus.gpaapi.domain.LogEntry;
 import com.hecticus.gpaapi.integration.HttpGateway;
 import com.hecticus.gpaapi.repository.LogEntryRepository;
+import com.hecticus.gpaapi.service.dashboard.DashboardBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,10 @@ public class ConversionService {
     }
 
     public void sendToMobipium(String msisdn, String clickId, String source) {
+        if (properties.isDisableProviderEvents()) {
+            disabledLog(msisdn, "CONV_MOBIPIUM", "Mobipium");
+            return;
+        }
         if (clickId == null || clickId.isEmpty()) {
             log.warn("Mobipium: Invalid clickId, skipping");
             saveConversionLog(msisdn, "CONV_MOBIPIUM", "skipped: empty clickId");
@@ -49,19 +54,25 @@ public class ConversionService {
     }
 
     public void sendToTrafficCompany(String msisdn, String handler, String hash, String clickId) {
+        if (properties.isDisableProviderEvents()) {
+            disabledLog(msisdn, "CONV_TRAFFIC", "TrafficCompany");
+            return;
+        }
         if (clickId == null || clickId.isEmpty()) {
             log.warn("TrafficCompany: Invalid clickId, skipping");
             saveConversionLog(msisdn, "CONV_TRAFFIC", "skipped: empty clickId");
             return;
         }
         String url = String.format(
-                "http://postback.level23.nl/?currency=USD&handler=%s&hash=%s&tracker=%s",
+                "https://postback.level23.nl/?currency=USD&handler=%s&hash=%s&tracker=%s",
                 handler, hash, clickId);
         log.info("TrafficCompany conversion: {}", url);
         saveConversionLog(msisdn, "CONV_TRAFFIC", "call url=" + url);
         try {
-            http.get(url);
-            saveConversionLog(msisdn, "CONV_TRAFFIC", "http=200");
+            HttpGateway.HttpResult result = http.getResult(url);
+            String body = result.getBody();
+            log.info("TrafficCompany response: http={}, body={}", result.getCode(), body);
+            saveConversionLog(msisdn, "CONV_TRAFFIC", "http=" + result.getCode() + " body=" + body);
         } catch (Exception e) {
             log.error("TrafficCompany error: {}", e.getMessage());
             saveConversionLog(msisdn, "CONV_TRAFFIC", "error=" + e.getMessage());
@@ -69,6 +80,10 @@ public class ConversionService {
     }
 
     public void sendToSexy(String msisdn, String transactionId) {
+        if (properties.isDisableProviderEvents()) {
+            disabledLog(msisdn, "CONV_SEXY", "SEXY");
+            return;
+        }
         if (transactionId == null || transactionId.isEmpty()) {
             log.warn("SEXY: Invalid transaction_id, skipping");
             saveConversionLog(msisdn, "CONV_SEXY", "skipped: empty transaction_id");
@@ -89,6 +104,10 @@ public class ConversionService {
     }
 
     public void sendToChat(String msisdn, String clickId) {
+        if (properties.isDisableProviderEvents()) {
+            disabledLog(msisdn, "CONV_CHAT", "CHAT");
+            return;
+        }
         if (clickId == null || clickId.isEmpty()) {
             log.warn("CHAT: Invalid click_id, skipping");
             saveConversionLog(msisdn, "CONV_CHAT", "skipped: empty click_id");
@@ -109,6 +128,10 @@ public class ConversionService {
     }
 
     public void sendToVia(String msisdn, String clickId) {
+        if (properties.isDisableProviderEvents()) {
+            disabledLog(msisdn, "CONV_VIA", "VIA");
+            return;
+        }
         if (clickId == null || clickId.isEmpty()) {
             log.warn("VIA: Invalid clickId, skipping");
             saveConversionLog(msisdn, "CONV_VIA", "skipped: empty clickId");
@@ -126,7 +149,16 @@ public class ConversionService {
         }
     }
 
+    /**
+     * Kill switch: cuando gpaapi.disable-provider-events=true no se llama al provider.
+     */
+    private void disabledLog(String msisdn, String identifier, String provider) {
+        log.warn("Provider events disabled (gpaapi.disable-provider-events=true), skipping {} for msisdn={}", provider, msisdn);
+        saveConversionLog(msisdn, identifier, "skipped: provider events disabled");
+    }
+
     private void saveConversionLog(String msisdn, String identifier, String detail) {
+        DashboardBuffer.get().addConversion(new DashboardBuffer.ConvTrace(identifier, msisdn, detail));
         try {
             LogEntry entry = new LogEntry();
             entry.setMsisdn(msisdn != null ? msisdn : "");

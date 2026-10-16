@@ -60,9 +60,13 @@ mv ~/.jdks/zulu8.96.0.205-ca-jdk8.0.504-macosx_aarch64 ~/.jdks/zulu8
 ```bash
 cp .env.example .env      # ajustar JAVA8_HOME si hace falta
 just db                   # MySQL en docker (schema + seed)
-just spring               # app nueva   -> http://localhost:8080
+just spring               # app nueva   -> http://localhost:8080 (panel admin: /admin/dashboard)
 just legacy               # app legacy  -> http://localhost:9000   (otra terminal)
 ```
+
+Panel admin de tracking: http://localhost:8080/admin/dashboard (Basic auth; por defecto
+`admin` / `humbilumby_2026`, configurables con `DASHBOARD_ADMIN_USER` / `DASHBOARD_ADMIN_PASS`).
+Para probar sin enviar eventos reales a los providers usar `DISABLE_PROVIDER_EVENTS=true`.
 
 Levantar **ambas** en background y ver logs:
 
@@ -95,7 +99,7 @@ just full                 # docker compose --profile apps up --build
 | `just dev` / `just stop` / `just logs-*` / `just ps` | ambos en background + logs |
 | `just test` | tests de la app nueva |
 | `just compile-legacy` | compila el legacy |
-| `just images` | construye `gpaapi-spring:2.7.0` y `gpaapi-legacy:2.7.0` |
+| `just images` | construye `gpaapi-spring:2.7.1` y `gpaapi-legacy:2.7.1` |
 | `just full` | db + ambas apps en docker |
 
 ## Deploy

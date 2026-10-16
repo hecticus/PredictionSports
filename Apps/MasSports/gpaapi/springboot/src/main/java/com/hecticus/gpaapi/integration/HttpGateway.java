@@ -46,6 +46,35 @@ public class HttpGateway {
         }
     }
 
+    /**
+     * GET que devuelve codigo http y body (para registrar la respuesta real del provider).
+     */
+    public HttpResult getResult(String url) throws IOException {
+        Request request = new Request.Builder().url(url).get().build();
+        try (Response response = client.newCall(request).execute()) {
+            ResponseBody body = response.body();
+            return new HttpResult(response.code(), body == null ? "" : body.string());
+        }
+    }
+
+    public static class HttpResult {
+        private final int code;
+        private final String body;
+
+        public HttpResult(int code, String body) {
+            this.code = code;
+            this.body = body;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public String getBody() {
+            return body;
+        }
+    }
+
     public JsonNode getJson(String url) throws IOException {
         String body = get(url);
         if (body == null || body.isBlank()) {

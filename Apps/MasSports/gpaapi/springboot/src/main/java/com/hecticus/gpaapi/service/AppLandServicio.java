@@ -47,6 +47,11 @@ public class AppLandServicio {
     }
 
     public void comunicarStatus(String metodo, String userId, PushStatusClientAppLand payload, String subscriptionId) {
+        if (properties.isDisableProviderEvents()) {
+            log.warn("Provider events disabled (gpaapi.disable-provider-events=true), skipping AppLand event {} for user={}",
+                    payload != null ? payload.event : metodo, userId);
+            return;
+        }
         long timestamp = obtenerTimeStamp();
         payload.numberOfProfiles = 999999;
         payload.numberOfConcurrentSessions = 999999;

@@ -1,5 +1,6 @@
 package com.hecticus.gpaapi.service.tracking;
 
+import com.hecticus.gpaapi.service.dashboard.DashboardBuffer;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,22 @@ public class ClickParameterExtractor {
     private static final Logger log = LoggerFactory.getLogger(ClickParameterExtractor.class);
 
     public ClickData extractFromRequest(HttpServletRequest request) {
+        ClickData clickData = doExtract(request);
+        String query = request.getQueryString();
+        String rawUri = query != null && !query.isEmpty()
+                ? request.getRequestURI() + "?" + query
+                : request.getRequestURI();
+        DashboardBuffer.get().addClick(new DashboardBuffer.ClickTrace(
+                request.getRequestURI(),
+                rawUri,
+                clickData.getClickId(),
+                clickData.getOrigin(),
+                clickData.getExtras()
+        ));
+        return clickData;
+    }
+
+    private ClickData doExtract(HttpServletRequest request) {
         try {
             String trToken = request.getParameter("tr_token");
             if (isValidParam(trToken)) {

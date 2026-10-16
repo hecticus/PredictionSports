@@ -187,16 +187,16 @@ gcloud artifacts repositories create gpaapi \
   --repository-format=docker --location=us-central1
 
 # build + push (app nueva)
-docker build -t us-central1-docker.pkg.dev/$PROJECT/gpaapi/gpaapi-spring:2.7.0 springboot
-docker push us-central1-docker.pkg.dev/$PROJECT/gpaapi/gpaapi-spring:2.7.0
+docker build -t us-central1-docker.pkg.dev/$PROJECT/gpaapi/gpaapi-spring:2.7.1 springboot
+docker push us-central1-docker.pkg.dev/$PROJECT/gpaapi/gpaapi-spring:2.7.1
 
 # build + push (legacy)
-docker build -t us-central1-docker.pkg.dev/$PROJECT/gpaapi/gpaapi-legacy:2.7.0 server
-docker push us-central1-docker.pkg.dev/$PROJECT/gpaapi/gpaapi-legacy:2.7.0
+docker build -t us-central1-docker.pkg.dev/$PROJECT/gpaapi/gpaapi-legacy:2.7.1 server
+docker push us-central1-docker.pkg.dev/$PROJECT/gpaapi/gpaapi-legacy:2.7.1
 
 # deploy
 gcloud run deploy gpaapi-spring \
-  --image us-central1-docker.pkg.dev/$PROJECT/gpaapi/gpaapi-spring:2.7.0 \
+  --image us-central1-docker.pkg.dev/$PROJECT/gpaapi/gpaapi-spring:2.7.1 \
   --region us-central1 --allow-unauthenticated --port 8080 \
   --service-account gpaapi-runtime@$PROJECT.iam.gserviceaccount.com
 ```
