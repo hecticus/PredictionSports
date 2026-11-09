@@ -285,16 +285,16 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 14px;
+      gap: 12px;
       margin-top: 30px;
       text-decoration: none;
       color: var(--cta-texto);
       background: linear-gradient(180deg, var(--cta-claro) 0, var(--cta) 46%, var(--cta-oscuro) 100%);
       font-weight: 800;
-      font-size: clamp(20px, 2.4vw, 27px);
+      font-size: clamp(17px, 1.95vw, 24px);
       letter-spacing: 0.005em;
       line-height: 1.1;
-      padding: 21px 56px;
+      padding: 20px 44px;
       border-radius: 999px;
       border: 0;
       box-shadow:
@@ -309,6 +309,10 @@
       flex: none;
       width: 1.15em;
       height: 1.15em;
+    }
+
+    .cta-label {
+      text-wrap: balance;
     }
 
     .cta:hover {
@@ -380,8 +384,17 @@
       }
     }
 
+    .nota-sms {
+      margin-top: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #d7e3f1;
+      line-height: 1.45;
+      text-shadow: 0 1px 6px rgba(9, 17, 28, 0.85);
+    }
+
     .nota-baja {
-      margin-top: 14px;
+      margin-top: 9px;
       font-size: 12px;
       font-weight: 400;
       color: #9fb3c9;
@@ -913,8 +926,11 @@
           inset 0 -5px 0 rgba(0, 0, 0, 0.22),
           inset 0 2px 0 rgba(255, 255, 255, 0.55);
       }
+      .nota-sms {
+        padding-inline: 6px;
+      }
       .nota-baja {
-        margin-top: 12px;
+        margin-top: 9px;
         padding-inline: 6px;
       }
       .hero-veil {
@@ -972,8 +988,8 @@
         display: flex;
         width: 100%;
         margin: 0;
-        padding: 16px 20px;
-        font-size: 19px;
+        padding: 15px 16px;
+        font-size: clamp(14px, 4vw, 17px);
         animation: none;
       }
       .barra .cta::after {
@@ -983,6 +999,12 @@
         transform: translateY(115%);
         opacity: 0;
         pointer-events: none;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .barra .cta svg {
+        display: none;
       }
     }
 
@@ -1101,9 +1123,9 @@
           <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M3.5 6.2A2.2 2.2 0 0 1 5.7 4h12.6a2.2 2.2 0 0 1 2.2 2.2v8.3a2.2 2.2 0 0 1-2.2 2.2H9.9L5 20.4v-3.7h-.8a.7.7 0 0 1-.7-.7V6.2Z" fill="currentColor"/>
           </svg>
-          Juega GRATIS
+          <span class="cta-label">ENVIAR SMS PARA JUGAR GRATIS</span>
         </a>
-        <p class="nota-baja">Cancela cuando quieras enviando BAJAMAX al 3030.</p>
+        <p class="nota-sms">Se abrirá tu app de mensajes; pulsa Enviar para activar. Cancela cuando quieras enviando BAJAMAX al 3030.</p>
       </div>
 
       <div class="phone-col" aria-hidden="true">
@@ -1268,7 +1290,7 @@
       <div>
         <h2>Exclusivo para usuarios Movistar</h2>
         <p class="disclaimer">
-          Al hacer clic aquí, aceptas expresamente los términos y condiciones de MaxGame. La suscripción a este servicio te permite jugar de forma ilimitada en tu móvil y participar en nuestras promociones y sorteos. La suscripción tiene costo diario de Bs. 170,99, impuestos incluidos, cobrados a tu línea Movistar. Promoción válida del 01/08/26 al 29/10/26, autorizada por SUNDDE bajo la nomenclatura ICGPJ-1299-2026. Puedes darte de baja en cualquier momento, enviando un SMS con la palabra BAJAMAX al número 3030. Servicio válido solo para usuarios Movistar en la República Bolivariana de Venezuela.
+          Al hacer clic aquí, aceptas expresamente los términos y condiciones de MaxGame. La suscripción a este servicio te permite jugar de forma ilimitada en tu móvil y participar en nuestras promociones y sorteos. La suscripción tiene costo diario. Promoción válida del 01/11/26 al 29/01/27, autorizada por SUNDDE bajo la nomenclatura ICGPJ-1874-2026. Puedes darte de baja en cualquier momento, enviando un SMS con la palabra BAJAMAX al número 3030. Servicio válido solo para usuarios Movistar en la República Bolivariana de Venezuela.
         </p>
       </div>
     </div>
@@ -1290,7 +1312,7 @@
       <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M3.5 6.2A2.2 2.2 0 0 1 5.7 4h12.6a2.2 2.2 0 0 1 2.2 2.2v8.3a2.2 2.2 0 0 1-2.2 2.2H9.9L5 20.4v-3.7h-.8a.7.7 0 0 1-.7-.7V6.2Z" fill="currentColor"/>
       </svg>
-      Juega GRATIS
+      <span class="cta-label">ENVIAR SMS PARA JUGAR GRATIS</span>
     </a>
   </div>
 
